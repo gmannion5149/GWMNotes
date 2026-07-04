@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0063)file:///C:/Users/gerar/Downloads/GWM_Clio_Note_Generator_2.html -->
+<!-- saved from url=(0057)file:///C:/Users/gerar/Downloads/Clio_Note_Generator.html -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,8 +10,10 @@
 html, body { height: 100%; font-size: 16px; }
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
-  background: #0e1118;
-  color: #e6e9f0;
+  background: #0A1220;
+  background-image: radial-gradient(1100px 520px at 50% -8%,#182A49 0%,rgba(24,42,73,0) 60%),linear-gradient(180deg,#0C1526 0%,#0A1220 58%,#070E1B 100%);
+  background-attachment: fixed;
+  color: #F2F4F7;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
@@ -19,41 +21,43 @@ body {
 
 /* ── HEADER ───────────────────────────────────────────── */
 header {
-  background: #b3284a;
-  color:#f3edef;
+  background: linear-gradient(180deg,#14203A 0%,#0E1A2E 100%);
+  color:#F2F4F7;
   padding: 18px 32px;
   display: flex;
   align-items: center;
   gap: 14px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.55);
+  border-bottom: 2px solid #8E7530;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.55);
   flex-shrink: 0;
 }
 header .badge {
-  background: #2e3542;
-  color: #b3284a;
+  background: linear-gradient(165deg,#F0DDA0 0%,#D4AF37 52%,#C6A233 100%);
+  color: #0D1424;
   font-weight: 800;
   font-size: 17px;
   width: 40px; height: 40px;
   border-radius: 8px;
   display: flex; align-items: center; justify-content: center;
   flex-shrink: 0;
+  box-shadow: 0 0 12px rgba(212,175,55,0.28);
 }
 header h1 {
   font-size: 18px;
   font-weight: 700;
-  color:#f3edef;
+  color:#F2F4F7;
   letter-spacing: 0.2px;
 }
 header p {
   font-size: 13px;
-  color: #8893a6;
+  color: #8A93A3;
   margin-top: 2px;
 }
 
 /* ── NOTE TYPE TABS ───────────────────────────────────── */
 .tab-bar {
-  background: #161b24;
-  border-bottom: 2px solid #2a313d;
+  background: #111C30;
+  border-bottom: 2px solid #27324A;
   display: flex;
   padding: 0 32px;
   gap: 4px;
@@ -66,15 +70,15 @@ header p {
   border: none;
   border-bottom: 3px solid transparent;
   background: transparent;
-  color: #8a93a4;
+  color: #8A93A3;
   cursor: pointer;
   transition: all 0.15s;
   margin-bottom: -2px;
 }
-.tab-btn:hover { color: #b3284a; background: #131820; }
+.tab-btn:hover { color: #D4AF37; background: #0A1220; }
 .tab-btn.active {
-  color: #b3284a;
-  border-bottom-color: #b3284a;
+  color: #D4AF37;
+  border-bottom-color: #D4AF37;
   font-weight: 700;
 }
 
@@ -90,8 +94,8 @@ header p {
 
 /* ── FORM PANEL ───────────────────────────────────────── */
 .form-panel {
-  background: #161b24;
-  border-right: 2px solid #2a313d;
+  background: #111C30;
+  border-right: 2px solid #27324A;
   overflow-y: auto;
   padding: 28px 30px 40px;
 }
@@ -100,11 +104,11 @@ header p {
   font-size: 11px;
   font-weight: 800;
   letter-spacing: 1.5px;
-  color: #97a0b1;
+  color: #9AA6BC;
   text-transform: uppercase;
   margin: 24px 0 14px;
   padding-bottom: 6px;
-  border-bottom: 1px solid #232a35;
+  border-bottom: 1px solid #1B2A44;
 }
 .section-label:first-of-type { margin-top: 0; }
 
@@ -113,13 +117,13 @@ header p {
   display: block;
   font-size: 13px;
   font-weight: 700;
-  color: #e8ebf2;
+  color: #F2F4F7;
   margin-bottom: 5px;
 }
 .field .hint {
   font-size: 12px;
   font-weight: 400;
-  color: #838c9c;
+  color: #8A93A3;
   margin-left: 6px;
 }
 
@@ -128,19 +132,19 @@ textarea, select {
   width: 100%;
   padding: 9px 12px;
   font-size: 14px;
-  border: 2px solid #2a313d;
+  border: 2px solid #27324A;
   border-radius: 8px;
-  background: #1a212b;
-  color: #e6e9f0;
+  background: #16223A;
+  color: #F2F4F7;
   transition: border 0.15s;
   font-family: inherit;
   appearance: none;
 }
 input:focus, textarea:focus, select:focus {
   outline: none;
-  border-color: #c43050;
-  background: #161b24;
-  box-shadow: 0 0 0 3px rgba(196,48,80,0.18);
+  border-color: #C2A033;
+  background: #111C30;
+  box-shadow: 0 0 0 3px rgba(180,144,42,0.18);
 }
 input[type="date"] { color-scheme: dark; }
 textarea { resize: vertical; line-height: 1.6; min-height: 90px; }
@@ -158,41 +162,41 @@ select { cursor: pointer; background-image: url("data:image/svg+xml,%3Csvg xmlns
   padding: 8px 16px;
   font-size: 14px;
   font-weight: 600;
-  border: 2px solid #2a313d;
+  border: 2px solid #27324A;
   border-radius: 8px;
-  background: #161c25;
-  color: #aab2c2;
+  background: #111C30;
+  color: #9AA6BC;
   cursor: pointer;
   transition: all 0.12s;
   user-select: none;
 }
-.pill:hover { border-color: #4a5566; background: #1c2330; }
-.pill.active { background: #b3284a; color:#f3edef; border-color: #b3284a; }
-.pill.active-teal { background: #1f9e86; color:#f3edef; border-color: #1f9e86; }
-.pill.active-orange { background: #c08f33; color:#f3edef; border-color: #c08f33; }
-.pill.active-red { background: #e0485a; color:#f3edef; border-color: #e0485a; }
-.pill.active-green { background: #2f9e5a; color:#f3edef; border-color: #2f9e5a; }
+.pill:hover { border-color: #44506A; background: #16223A; }
+.pill.active { background: #D4AF37; color:#0D1424; border-color: #D4AF37; }
+.pill.active-teal { background: #3E9E8F; color:#F2F4F7; border-color: #3E9E8F; }
+.pill.active-orange { background: #C2A033; color:#0D1424; border-color: #C2A033; }
+.pill.active-red { background: #E7CE84; color:#0D1424; border-color: #E7CE84; }
+.pill.active-green { background: #2f9e5a; color:#F2F4F7; border-color: #2f9e5a; }
 
 /* Count number buttons */
 .count-grid { display: flex; flex-wrap: wrap; gap: 8px; }
 .count-btn {
   width: 46px; height: 46px;
   font-size: 16px; font-weight: 700;
-  border: 2px solid #2a313d;
+  border: 2px solid #27324A;
   border-radius: 8px;
-  background: #161c25;
-  color: #aab2c2;
+  background: #111C30;
+  color: #9AA6BC;
   cursor: pointer;
   transition: all 0.12s;
 }
-.count-btn:hover { border-color: #c43050; background: #1c2330; }
-.count-btn.active { background: #b3284a; color:#f3edef; border-color: #b3284a; }
+.count-btn:hover { border-color: #C2A033; background: #16223A; }
+.count-btn.active { background: #D4AF37; color:#0D1424; border-color: #D4AF37; }
 
 /* ── COUNT DETAIL CARDS ───────────────────────────────── */
 .count-card {
-  background: #131820;
-  border: 2px solid #2c333f;
-  border-left: 5px solid #b3284a;
+  background: #0A1220;
+  border: 2px solid #27324A;
+  border-left: 5px solid #D4AF37;
   border-radius: 10px;
   padding: 18px 20px;
   margin-bottom: 14px;
@@ -200,18 +204,18 @@ select { cursor: pointer; background-image: url("data:image/svg+xml,%3Csvg xmlns
 .count-card-title {
   font-size: 12px;
   font-weight: 800;
-  color: #b3284a;
+  color: #D4AF37;
   letter-spacing: 1.5px;
   text-transform: uppercase;
   margin-bottom: 14px;
 }
 .count-preview {
-  background: #11161e;
-  border: 1px solid #323a48;
+  background: #0A1220;
+  border: 1px solid #2E3A54;
   border-radius: 6px;
   padding: 10px 14px;
   font-size: 13px;
-  color: #b9c1d0;
+  color: #C2C8D4;
   font-family: 'Courier New', monospace;
   line-height: 1.6;
   margin-top: 12px;
@@ -219,7 +223,7 @@ select { cursor: pointer; background-image: url("data:image/svg+xml,%3Csvg xmlns
 .count-preview-label {
   font-size: 11px;
   font-weight: 700;
-  color: #97a0b1;
+  color: #9AA6BC;
   letter-spacing: 0.8px;
   text-transform: uppercase;
   margin-bottom: 4px;
@@ -230,22 +234,23 @@ select { cursor: pointer; background-image: url("data:image/svg+xml,%3Csvg xmlns
   width: 100%;
   padding: 16px;
   margin-top: 24px;
-  background: #b3284a;
-  color:#f3edef;
+  background: linear-gradient(165deg,#F7ECC8 0%,#E7CE84 34%,#D4AF37 50%,#E1C574 66%,#F4E7BC 100%);
+  color:#231B04;
   font-size: 16px;
   font-weight: 800;
   border: none;
-  border-bottom: 4px solid #5e1228;
+  border-bottom: 4px solid #8E7530;
   border-radius: 10px;
   cursor: pointer;
   letter-spacing: 0.5px;
+  text-shadow: 0 1px 0 rgba(255,255,255,0.25);
   transition: all 0.14s;
   box-shadow: 0 4px 14px rgba(0,0,0,0.45);
 }
 .generate-btn:hover {
-  background: #7a1a34;
+  filter: brightness(1.06);
   transform: translateY(-1px);
-  box-shadow: 0 6px 20px rgba(0,0,0,0.45);
+  box-shadow: 0 6px 20px rgba(212,175,55,0.4);
 }
 .generate-btn:active {
   transform: translateY(2px);
@@ -255,13 +260,13 @@ select { cursor: pointer; background-image: url("data:image/svg+xml,%3Csvg xmlns
 
 /* ── OUTPUT PANEL ─────────────────────────────────────── */
 .output-panel {
-  background: #0d1016;
+  background: #0A1220;
   display: flex;
   flex-direction: column;
   overflow: hidden;
 }
 .output-header {
-  background: #12161e;
+  background: #111C30;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -271,14 +276,14 @@ select { cursor: pointer; background-image: url("data:image/svg+xml,%3Csvg xmlns
 .output-header-label {
   font-size: 12px;
   font-weight: 800;
-  color: #9aa6ba;
+  color: #9AA6BC;
   letter-spacing: 2px;
   text-transform: uppercase;
 }
 .output-header-copy {
   padding: 7px 20px;
   background: #2f9e5a;
-  color:#f3edef;
+  color:#F2F4F7;
   font-size: 14px;
   font-weight: 700;
   border: none;
@@ -301,14 +306,14 @@ select { cursor: pointer; background-image: url("data:image/svg+xml,%3Csvg xmlns
 
 /* The rendered note — matches image style */
 .note-output {
-  background: #161b24;
-  border: 2px solid #2a313d;
+  background: #111C30;
+  border: 2px solid #27324A;
   border-radius: 10px;
   padding: 24px 28px;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
   font-size: 15px;
   line-height: 1.7;
-  color: #e6e9f0;
+  color: #F2F4F7;
   word-break: break-word;
   min-height: 200px;
 }
@@ -322,7 +327,7 @@ select { cursor: pointer; background-image: url("data:image/svg+xml,%3Csvg xmlns
   width: 100%;
   padding: 15px;
   background: #2f9e5a;
-  color:#f3edef;
+  color:#F2F4F7;
   font-size: 16px;
   font-weight: 800;
   border: none;
@@ -341,23 +346,23 @@ select { cursor: pointer; background-image: url("data:image/svg+xml,%3Csvg xmlns
 .placeholder {
   text-align: center;
   padding: 60px 30px;
-  color: #6f7889;
+  color: #7E889C;
 }
 .placeholder .icon { font-size: 48px; margin-bottom: 16px; opacity: 0.4; }
-.placeholder h3 { font-size: 18px; font-weight: 700; color: #97a0b1; margin-bottom: 8px; }
+.placeholder h3 { font-size: 18px; font-weight: 700; color: #9AA6BC; margin-bottom: 8px; }
 .placeholder p { font-size: 14px; line-height: 1.7; }
 
 /* ── SCROLLBARS ───────────────────────────────────────── */
 ::-webkit-scrollbar { width: 8px; height: 8px; }
-::-webkit-scrollbar-track { background: #0e1118; }
-::-webkit-scrollbar-thumb { background: #3a4250; border-radius: 4px; }
-::-webkit-scrollbar-thumb:hover { background: #6f7889; }
+::-webkit-scrollbar-track { background: #0A1220; }
+::-webkit-scrollbar-thumb { background: #34405C; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #7E889C; }
 
 /* ── STEP BADGE ───────────────────────────────────────── */
 .step-badge {
   display: inline-flex; align-items: center; justify-content: center;
   width: 26px; height: 26px;
-  background: #b3284a; color:#f3edef;
+  background: #D4AF37; color:#0D1424;
   font-size: 13px; font-weight: 800;
   border-radius: 50%;
   margin-right: 8px;
@@ -367,9 +372,9 @@ select { cursor: pointer; background-image: url("data:image/svg+xml,%3Csvg xmlns
 .step-row .field { flex: 1; margin-bottom: 0; }
 /* ── DWI PANEL ───────────────────────────────────────── */
 .dwi-panel {
-  background: #131820;
-  border: 2px solid #323a48;
-  border-left: 5px solid #b3284a;
+  background: #0A1220;
+  border: 2px solid #2E3A54;
+  border-left: 5px solid #D4AF37;
   border-radius: 12px;
   margin-top: 4px;
   overflow: hidden;
@@ -380,7 +385,7 @@ select { cursor: pointer; background-image: url("data:image/svg+xml,%3Csvg xmlns
   to   { opacity:1; transform: translateY(0); }
 }
 .dwi-panel-header {
-  background: #b3284a;
+  background: #D4AF37;
   padding: 11px 18px;
   display: flex;
   align-items: center;
@@ -389,7 +394,7 @@ select { cursor: pointer; background-image: url("data:image/svg+xml,%3Csvg xmlns
 .dwi-panel-header span {
   font-size: 13px;
   font-weight: 800;
-  color: #f0eaec;
+  color: #F2F4F7;
   letter-spacing: 1.5px;
   text-transform: uppercase;
 }
@@ -399,14 +404,14 @@ select { cursor: pointer; background-image: url("data:image/svg+xml,%3Csvg xmlns
   padding-left: 8px;
   margin-bottom: 18px;
   padding-bottom: 18px;
-  border-bottom: 1px solid #2a313d;
+  border-bottom: 1px solid #27324A;
 }
 .dwi-section:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 28px; }
 .dwi-section-title {
   font-size: 10px;
   font-weight: 800;
   letter-spacing: 1.5px;
-  color: #b3284a;
+  color: #D4AF37;
   text-transform: uppercase;
   margin-bottom: 10px;
   display: flex;
@@ -417,7 +422,7 @@ select { cursor: pointer; background-image: url("data:image/svg+xml,%3Csvg xmlns
   content: '';
   width: 3px;
   height: 12px;
-  background: #b3284a;
+  background: #D4AF37;
   border-radius: 2px;
   flex-shrink: 0;
 }
@@ -426,75 +431,75 @@ select { cursor: pointer; background-image: url("data:image/svg+xml,%3Csvg xmlns
   padding: 6px 13px;
   font-size: 13px;
   font-weight: 600;
-  border: 2px solid #323a48;
+  border: 2px solid #2E3A54;
   border-radius: 7px;
-  background: #161b24;
-  color: #b9c1d0;
+  background: #111C30;
+  color: #C2C8D4;
   cursor: pointer;
   transition: all 0.11s;
   user-select: none;
   white-space: nowrap;
 }
-.mini-pill:hover { border-color: #4a5566; background: #1c2330; }
-.mini-pill.mp-active { background: #b3284a; color:#f3edef; border-color: #b3284a; }
-.mini-pill.mp-yes { background: #2f9e5a; color:#f3edef; border-color: #2f9e5a; }
-.mini-pill.mp-no  { background: #d8455a; color:#f3edef; border-color: #d8455a; }
-.mini-pill.mp-warn{ background: #b8842e; color:#f3edef; border-color: #b8842e; }
+.mini-pill:hover { border-color: #44506A; background: #16223A; }
+.mini-pill.mp-active { background: #D4AF37; color:#0D1424; border-color: #D4AF37; }
+.mini-pill.mp-yes { background: #2f9e5a; color:#F2F4F7; border-color: #2f9e5a; }
+.mini-pill.mp-no  { background: #DFC072; color:#0D1424; border-color: #DFC072; }
+.mini-pill.mp-warn{ background: #B4902A; color:#F2F4F7; border-color: #B4902A; }
 .dwi-input {
   width: 100%;
   padding: 9px 12px;
   font-size: 14px;
-  border: 2px solid #323a48;
+  border: 2px solid #2E3A54;
   border-radius: 7px;
-  background: #161b24;
-  color: #e6e9f0;
+  background: #111C30;
+  color: #F2F4F7;
   font-family: inherit;
   outline: none;
   transition: border 0.13s;
   box-sizing: border-box;
 }
-.dwi-input:focus { border-color: #c43050; box-shadow: 0 0 0 2px rgba(196,48,80,0.18); }
+.dwi-input:focus { border-color: #C2A033; box-shadow: 0 0 0 2px rgba(180,144,42,0.18); }
 .dwi-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 .dwi-field { display: flex; flex-direction: column; gap: 5px; }
-.dwi-field label { font-size: 12px; font-weight: 700; color: #e8ebf2; }
+.dwi-field label { font-size: 12px; font-weight: 700; color: #F2F4F7; }
 .county-widget { position:relative; display:inline-block; }
-.county-trigger { padding:7px 10px; height:36px; min-height:0; max-height:36px; font-size:13px; border:2px solid #2a313d; border-radius:7px; background:#1a212b; color:#e6e9f0; font-family:inherit; cursor:pointer; text-align:left; display:inline-flex; align-items:center; gap:8px; outline:none; white-space:nowrap; line-height:1; box-sizing:border-box; overflow:hidden; flex-shrink:0; }
-.county-trigger:hover { border-color:#c43050; }
-.county-trigger .placeholder { color:#69717f; font-size:13px; white-space:nowrap; }
-.county-trigger .arrow { font-size:9px; color:#8a93a4; flex-shrink:0; }
-.county-dropdown { position:absolute; top:calc(100% + 3px); left:0; min-width:260px; background:#161b24; border:2px solid #c43050; border-radius:10px; box-shadow:0 8px 30px rgba(0,0,0,0.4); z-index:999; overflow:hidden; }
-.county-search-box { padding:7px 10px; border-bottom:2px solid #232a35; }
-.county-search-box input { width:100%; padding:6px 10px; font-size:13px; border:2px solid #2a313d; border-radius:6px; background:#1a212b; color:#e6e9f0; font-family:inherit; outline:none; box-sizing:border-box; }
-.county-search-box input:focus { border-color:#c43050; }
+.county-trigger { padding:7px 10px; height:36px; min-height:0; max-height:36px; font-size:13px; border:2px solid #27324A; border-radius:7px; background:#16223A; color:#F2F4F7; font-family:inherit; cursor:pointer; text-align:left; display:inline-flex; align-items:center; gap:8px; outline:none; white-space:nowrap; line-height:1; box-sizing:border-box; overflow:hidden; flex-shrink:0; }
+.county-trigger:hover { border-color:#C2A033; }
+.county-trigger .placeholder { color:#7E889C; font-size:13px; white-space:nowrap; }
+.county-trigger .arrow { font-size:9px; color:#8A93A3; flex-shrink:0; }
+.county-dropdown { position:absolute; top:calc(100% + 3px); left:0; min-width:260px; background:#111C30; border:2px solid #C2A033; border-radius:10px; box-shadow:0 8px 30px rgba(0,0,0,0.4); z-index:999; overflow:hidden; }
+.county-search-box { padding:7px 10px; border-bottom:2px solid #1B2A44; }
+.county-search-box input { width:100%; padding:6px 10px; font-size:13px; border:2px solid #27324A; border-radius:6px; background:#16223A; color:#F2F4F7; font-family:inherit; outline:none; box-sizing:border-box; }
+.county-search-box input:focus { border-color:#C2A033; }
 .county-list { max-height:200px; overflow-y:auto; }
-.county-option { padding:6px 12px; font-size:13px; color:#e6e9f0; cursor:pointer; display:flex; gap:8px; align-items:center; }
-.county-option:hover { background:#1c2330; }
-.county-option.selected { background:#1f2a3a; }
-.county-num { font-size:12px; font-weight:800; color:#b3284a; min-width:28px; flex-shrink:0; }
-.county-name { font-weight:700; color:#b3284a; }
-.county-clear-btn { background:none; border:none; color:#6f7889; font-size:14px; cursor:pointer; line-height:1; padding:0; flex-shrink:0; }
-.county-clear-btn:hover { color:#ff6b78; }
+.county-option { padding:6px 12px; font-size:13px; color:#F2F4F7; cursor:pointer; display:flex; gap:8px; align-items:center; }
+.county-option:hover { background:#16223A; }
+.county-option.selected { background:#16223A; }
+.county-num { font-size:12px; font-weight:800; color:#D4AF37; min-width:28px; flex-shrink:0; }
+.county-name { font-weight:700; color:#D4AF37; }
+.county-clear-btn { background:none; border:none; color:#7E889C; font-size:14px; cursor:pointer; line-height:1; padding:0; flex-shrink:0; }
+.county-clear-btn:hover { color:#F0DDA0; }
 .retainer-check { display:flex; align-items:center; gap:12px; padding:12px 16px; background:#11231a; border:2px solid #2c5e40; border-radius:8px; cursor:pointer; user-select:none; margin-top:10px; transition:all 0.12s; }
 .retainer-check:hover { background:#16301f; border-color:#3fbf78; }
 .retainer-check input[type=checkbox] { width:20px; height:20px; accent-color:#2f9e5a; cursor:pointer; flex-shrink:0; }
 .retainer-check-label { font-size:14px; font-weight:700; color:#c7ead4; }
 .currency-input { font-variant-numeric: tabular-nums; letter-spacing: 0.3px; }
-.factor-pill{display:inline-flex;align-items:center;gap:6px;padding:7px 13px;font-size:13px;font-weight:600;color:#aab2c2;background:#161c25;border:2px solid #2a313d;border-radius:8px;cursor:pointer;transition:all 0.12s;user-select:none}
+.factor-pill{display:inline-flex;align-items:center;gap:6px;padding:7px 13px;font-size:13px;font-weight:600;color:#9AA6BC;background:#111C30;border:2px solid #27324A;border-radius:8px;cursor:pointer;transition:all 0.12s;user-select:none}
 .factor-pill input[type=checkbox]{width:14px;height:14px;cursor:pointer}
-.factor-pill-on{background:#b3284a!important;color:#f3edef!important;border-color:#b3284a!important}
+.factor-pill-on{background:#D4AF37!important;color:#0D1424!important;border-color:#D4AF37!important}
 
 .srch-wrap { position:relative; display:inline-block; }
 .srch-wrap input[type=text] {
   width:100%; padding:5px 8px; font-size:12px;
-  border:2px solid #2a313d; border-bottom:1px solid #232a35;
-  border-radius:7px 7px 0 0; background:#1a212b;
+  border:2px solid #27324A; border-bottom:1px solid #1B2A44;
+  border-radius:7px 7px 0 0; background:#16223A;
   font-family:inherit; box-sizing:border-box;
 }
-.srch-wrap input[type=text]:focus { outline:none; border-color:#c43050; }
+.srch-wrap input[type=text]:focus { outline:none; border-color:#C2A033; }
 .srch-list {
   max-height:160px; overflow-y:auto;
-  border:2px solid #c43050; border-top:none;
-  border-radius:0 0 7px 7px; background:#161b24;
+  border:2px solid #C2A033; border-top:none;
+  border-radius:0 0 7px 7px; background:#111C30;
   position:absolute; z-index:200; left:0; right:0;
   box-shadow:0 4px 12px rgba(0,0,0,0.5);
 }
@@ -502,29 +507,29 @@ select { cursor: pointer; background-image: url("data:image/svg+xml,%3Csvg xmlns
   padding:6px 10px; font-size:12px; cursor:pointer;
   transition:background 0.1s;
 }
-.srch-list div:hover, .srch-list div.sel { background:#1c2330; font-weight:700; color:#b3284a; }
+.srch-list div:hover, .srch-list div.sel { background:#16223A; font-weight:700; color:#D4AF37; }
 .srch-val {
   padding:6px 10px; font-size:12px; font-weight:700;
-  border:2px solid #2a313d; border-radius:7px;
-  background:#1a212b; cursor:pointer; color:#b3284a;
+  border:2px solid #27324A; border-radius:7px;
+  background:#16223A; cursor:pointer; color:#D4AF37;
   display:flex; align-items:center; justify-content:space-between; gap:6px;
 }
-.srch-val:hover { border-color:#4a5566; }
-.srch-val .sarr { color:#8a93a4; font-size:10px; }
+.srch-val:hover { border-color:#44506A; }
+.srch-val .sarr { color:#8A93A3; font-size:10px; }
 
 .print-btn {
   padding: 6px 14px;
   background: transparent;
-  border: 2px solid #3a4452;
+  border: 2px solid #34405C;
   border-radius: 7px;
-  color: #2e3542;
+  color: #20304C;
   font-size: 12px;
   font-weight: 700;
   cursor: pointer;
   display: none;
   transition: all 0.12s;
 }
-.print-btn:hover { background: #1d2533; border-color: #9aa6ba; }
+.print-btn:hover { background: #16223A; border-color: #9AA6BC; }
 @media print {
   header, .tab-bar, .form-panel, .copy-btn-wrap { display: none !important; }
   .output-panel { width: 100% !important; }
@@ -538,45 +543,45 @@ select { cursor: pointer; background-image: url("data:image/svg+xml,%3Csvg xmlns
 
 /* Header: dark bar with a glowing maroon-LED rule + glowing badge */
 header {
-  background: linear-gradient(180deg,#11161f 0%,#0c1119 100%) !important;
-  color: #e8ebf2 !important;
-  border-bottom: 2px solid #b3284a !important;
-  box-shadow: 0 2px 16px rgba(179,40,74,0.28), 0 2px 10px rgba(0,0,0,0.6);
+  background: linear-gradient(180deg,#0A1220 0%,#0A1220 100%) !important;
+  color: #F2F4F7 !important;
+  border-bottom: 2px solid #D4AF37 !important;
+  box-shadow: 0 2px 16px rgba(212,175,55,0.28), 0 2px 10px rgba(0,0,0,0.6);
 }
 header h1 { color: #f2f4f7 !important; }
-header p  { color: #8893a6 !important; }
+header p  { color: #8A93A3 !important; }
 header .badge {
-  background: #14181f !important;
-  color: #e34663 !important;
-  border: 1.5px solid #b3284a !important;
-  box-shadow: 0 0 10px rgba(179,40,74,0.55), inset 0 0 6px rgba(179,40,74,0.25);
-  text-shadow: 0 0 8px rgba(227,70,99,0.7) !important;
+  background: #0A1220 !important;
+  color: #E2C36A !important;
+  border: 1.5px solid #D4AF37 !important;
+  box-shadow: 0 0 10px rgba(212,175,55,0.55), inset 0 0 6px rgba(212,175,55,0.25);
+  text-shadow: 0 0 8px rgba(212,175,55,0.7) !important;
 }
 
 /* Tabs: glowing maroon-LED active underline */
 .tab-btn.active {
-  color: #e34663 !important;
-  border-bottom-color: #e34663 !important;
-  text-shadow: 0 0 8px rgba(227,70,99,0.45) !important;
-  box-shadow: 0 2px 10px -4px rgba(227,70,99,0.6) !important;
+  color: #E2C36A !important;
+  border-bottom-color: #E2C36A !important;
+  text-shadow: 0 0 8px rgba(212,175,55,0.45) !important;
+  box-shadow: 0 2px 10px -4px rgba(212,175,55,0.6) !important;
 }
 
 /* ── PLATINUM brushed-metal commit buttons (Generate / Copy) ── */
 .generate-btn, .copy-btn-below, .output-header-copy {
-  background: linear-gradient(180deg,#f4f6f8 0%,#d8dde3 46%,#c2c8d0 54%,#aeb5bf 100%) !important;
-  color: #1b2230 !important;
-  border: 1px solid #9aa2ad !important;
-  border-bottom: 3px solid #878f9b !important;
+  background: linear-gradient(180deg,#F2F4F7 0%,#C8CDD6 46%,#C8CDD6 54%,#9AA6BC 100%) !important;
+  color: #16223A !important;
+  border: 1px solid #9AA6BC !important;
+  border-bottom: 3px solid #8A93A3 !important;
   text-shadow: 0 1px 0 rgba(255,255,255,0.55) !important;
   box-shadow: 0 3px 12px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.85) !important;
 }
 .generate-btn:hover, .copy-btn-below:hover, .output-header-copy:hover {
-  background: linear-gradient(180deg,#ffffff 0%,#e2e7ec 46%,#cdd3da 54%,#b8bfc8 100%) !important;
-  color: #141a26 !important;
+  background: linear-gradient(180deg,#ffffff 0%,#F2F4F7 46%,#C8CDD6 54%,#C2C8D4 100%) !important;
+  color: #0C1526 !important;
   box-shadow: 0 5px 16px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.9) !important;
 }
 .generate-btn:active, .copy-btn-below:active, .output-header-copy:active {
-  background: linear-gradient(180deg,#cdd3da 0%,#dde2e8 100%) !important;
+  background: linear-gradient(180deg,#C8CDD6 0%,#E6E9F0 100%) !important;
   border-bottom-width: 1px !important;
 }
 .copy-btn-below.copied, .output-header-copy.copied {
@@ -589,38 +594,38 @@ header .badge {
 .ai-btn {
   display:inline-flex; align-items:center; gap:6px;
   padding:11px 20px; font-size:14px; font-weight:800; letter-spacing:0.3px;
-  background:#161b24; color:#e34663;
-  border:1.5px solid #b3284a; border-radius:9px; cursor:pointer;
+  background:#111C30; color:#E2C36A;
+  border:1.5px solid #D4AF37; border-radius:9px; cursor:pointer;
   transition:all 0.14s;
-  box-shadow:0 0 0 rgba(227,70,99,0); text-shadow:0 0 6px rgba(227,70,99,0.25);
+  box-shadow:0 0 0 rgba(212,175,55,0); text-shadow:0 0 6px rgba(212,175,55,0.25);
 }
 .ai-btn:hover {
-  background:#1d1016; color:#ff5f7d; border-color:#e34663;
-  box-shadow:0 0 14px rgba(227,70,99,0.4), inset 0 0 8px rgba(227,70,99,0.12);
+  background:#0F1420; color:#F0DDA0; border-color:#E2C36A;
+  box-shadow:0 0 14px rgba(212,175,55,0.4), inset 0 0 8px rgba(212,175,55,0.12);
 }
 .ai-btn:active { transform:translateY(1px); }
 .ai-btn:disabled { opacity:0.6; cursor:default; box-shadow:none; }
-.ai-btn-revert { color:#9aa6ba; border-color:#3a4250; text-shadow:none; }
-.ai-btn-revert:hover { color:#cdd3da; border-color:#5a6575; background:#171d27; box-shadow:none; }
+.ai-btn-revert { color:#9AA6BC; border-color:#34405C; text-shadow:none; }
+.ai-btn-revert:hover { color:#C8CDD6; border-color:#44506A; background:#131C30; box-shadow:none; }
 .ai-msg {
   margin-top:12px; padding:11px 14px; font-size:13px; line-height:1.5;
-  background:#1a1410; color:#e7c98a; border:1px solid #6b4e1f; border-radius:8px;
+  background:#12100C; color:#E7CE84; border:1px solid #6E5A2A; border-radius:8px;
 }
-.ai-msg strong { color:#f0d89a; }
+.ai-msg strong { color:#F0DDA0; }
 
 /* Locked attorney display (replaces dropdown — always GWM) */
 .locked-atty {
   display:inline-flex; align-items:center; gap:8px;
   padding:8px 14px; font-size:14px; font-weight:800; letter-spacing:0.4px;
-  color:#e6e9f0; background:#141a23;
-  border:2px solid #2a313d; border-left:3px solid #b3284a; border-radius:7px;
+  color:#F2F4F7; background:#0C1526;
+  border:2px solid #27324A; border-left:3px solid #D4AF37; border-radius:7px;
 }
-.locked-atty-tag { font-size:10px; font-weight:700; letter-spacing:0.6px; text-transform:uppercase; color:#6f7889; }
+.locked-atty-tag { font-size:10px; font-weight:700; letter-spacing:0.6px; text-transform:uppercase; color:#7E889C; }
 
 /* PMM directive hint shown above the client-note textbox */
 .pmm-directive-hint {
   padding:9px 12px; margin-bottom:8px; font-size:12.5px; line-height:1.5;
-  color:#c8cdd6; background:#141a23; border:1px dashed #3a4250; border-left:3px solid #b3284a;
+  color:#c8cdd6; background:#0C1526; border:1px dashed #34405C; border-left:3px solid #D4AF37;
   border-radius:7px; font-style:italic;
 }
 
@@ -630,16 +635,16 @@ header .badge {
 .form-panel select:focus,
 .form-panel textarea:focus {
   outline:none !important;
-  border-color:#c43050 !important;
-  box-shadow:0 0 0 2px rgba(196,48,80,0.20), 0 0 10px rgba(196,48,80,0.18) !important;
+  border-color:#C2A033 !important;
+  box-shadow:0 0 0 2px rgba(180,144,42,0.20), 0 0 10px rgba(180,144,42,0.18) !important;
 }
 /* Active factor-pills get a subtle maroon-LED glow */
-.factor-pill-on { box-shadow:0 0 10px rgba(179,40,74,0.4) !important; }
+.factor-pill-on { box-shadow:0 0 10px rgba(212,175,55,0.4) !important; }
 /* Section labels: small glowing maroon tick */
-.section-label { position:relative; padding-left:12px; border-bottom-color:#262d39 !important; }
+.section-label { position:relative; padding-left:12px; border-bottom-color:#1B2A44 !important; }
 .section-label::before {
   content:''; position:absolute; left:0; top:1px; bottom:7px; width:3px;
-  background:#b3284a; border-radius:2px; box-shadow:0 0 6px rgba(227,70,99,0.6);
+  background:#D4AF37; border-radius:2px; box-shadow:0 0 6px rgba(212,175,55,0.6);
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -647,11 +652,11 @@ header .badge {
    ═══════════════════════════════════════════════════════════════════════════ */
 
 /* Top moving LED strip */
-.led-strip { position:relative; height:2px; background:#12161e; overflow:hidden; flex-shrink:0; }
+.led-strip { position:relative; height:2px; background:#111C30; overflow:hidden; flex-shrink:0; }
 .led-strip::before {
   content:''; position:absolute; top:0; left:-25%; height:100%; width:25%;
-  background:linear-gradient(90deg,transparent,#e34663,#ff8fa3,#e34663,transparent);
-  box-shadow:0 0 12px #e34663, 0 0 4px #fff;
+  background:linear-gradient(90deg,transparent,#E2C36A,#F7ECC8,#E2C36A,transparent);
+  box-shadow:0 0 12px #E2C36A, 0 0 4px #fff;
   animation:ledRun 3.2s linear infinite;
 }
 @keyframes ledRun { 0%{left:-25%} 100%{left:125%} }
@@ -659,27 +664,27 @@ header .badge {
 /* Header breathing glow */
 header { animation:hdrGlow 4.5s ease-in-out infinite; }
 @keyframes hdrGlow {
-  0%,100% { box-shadow:0 2px 16px rgba(179,40,74,0.22), 0 2px 10px rgba(0,0,0,0.6); }
-  50%     { box-shadow:0 2px 28px rgba(179,40,74,0.5), 0 2px 10px rgba(0,0,0,0.6); }
+  0%,100% { box-shadow:0 2px 16px rgba(212,175,55,0.22), 0 2px 10px rgba(0,0,0,0.6); }
+  50%     { box-shadow:0 2px 28px rgba(212,175,55,0.5), 0 2px 10px rgba(0,0,0,0.6); }
 }
 /* Badge pulse */
 header .badge { animation:badgePulse 2.6s ease-in-out infinite; }
 @keyframes badgePulse {
-  0%,100% { box-shadow:0 0 10px rgba(179,40,74,0.55), inset 0 0 6px rgba(179,40,74,0.25); }
-  50%     { box-shadow:0 0 20px rgba(227,70,99,0.9), inset 0 0 10px rgba(227,70,99,0.45); }
+  0%,100% { box-shadow:0 0 10px rgba(212,175,55,0.55), inset 0 0 6px rgba(212,175,55,0.25); }
+  50%     { box-shadow:0 0 20px rgba(212,175,55,0.9), inset 0 0 10px rgba(212,175,55,0.45); }
 }
 
 /* Tab icons */
 .tab-btn { display:inline-flex; align-items:center; gap:9px; }
-.tab-ico { width:19px; height:19px; flex-shrink:0; color:#6f7889; transition:all 0.15s; }
-.tab-btn:hover .tab-ico { color:#b3284a; }
-.tab-btn.active .tab-ico { color:#e34663; filter:drop-shadow(0 0 5px rgba(227,70,99,0.6)); }
+.tab-ico { width:19px; height:19px; flex-shrink:0; color:#7E889C; transition:all 0.15s; }
+.tab-btn:hover .tab-ico { color:#D4AF37; }
+.tab-btn.active .tab-ico { color:#E2C36A; filter:drop-shadow(0 0 5px rgba(212,175,55,0.6)); }
 /* Active tab: traveling LED dot along the underline */
 .tab-btn.active { position:relative; overflow:hidden; }
 .tab-btn.active::after {
   content:''; position:absolute; left:-45%; bottom:0; height:3px; width:45%;
-  background:linear-gradient(90deg,transparent,#ff8fa3,transparent);
-  box-shadow:0 0 9px #e34663; animation:tabRun 2.4s linear infinite; pointer-events:none;
+  background:linear-gradient(90deg,transparent,#F7ECC8,transparent);
+  box-shadow:0 0 9px #E2C36A; animation:tabRun 2.4s linear infinite; pointer-events:none;
 }
 @keyframes tabRun { 0%{left:-45%} 100%{left:100%} }
 
@@ -697,8 +702,8 @@ header .badge { animation:badgePulse 2.6s ease-in-out infinite; }
 .ai-btn:not(.ai-btn-revert):not(:disabled) { animation:aiBreath 3s ease-in-out infinite; }
 .ai-btn:hover { animation:none; }
 @keyframes aiBreath {
-  0%,100% { box-shadow:0 0 0 rgba(227,70,99,0); }
-  50%     { box-shadow:0 0 13px rgba(227,70,99,0.4); }
+  0%,100% { box-shadow:0 0 0 rgba(212,175,55,0); }
+  50%     { box-shadow:0 0 13px rgba(212,175,55,0.4); }
 }
 
 /* ── DICTATION MIC ── */
@@ -708,48 +713,48 @@ header .badge { animation:badgePulse 2.6s ease-in-out infinite; }
   position:absolute; right:8px; bottom:8px; width:30px; height:30px;
   display:flex; align-items:center; justify-content:center; border-radius:50%;
   cursor:pointer; z-index:5;
-  background:linear-gradient(180deg,#eef1f4,#c2c8d0); border:1px solid #9aa2ad;
+  background:linear-gradient(180deg,#F2F4F7,#C8CDD6); border:1px solid #9AA6BC;
   box-shadow:0 2px 6px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.85);
   transition:all 0.14s;
 }
-.mic-btn svg { width:15px; height:15px; color:#3a1118; }
-.mic-btn:hover { background:linear-gradient(180deg,#fff,#d2d8de); transform:translateY(-1px); }
-.mic-btn.mic-live { background:linear-gradient(180deg,#ff5f7d,#b3284a); border-color:#e34663; animation:micPulse 1.1s ease-in-out infinite; }
+.mic-btn svg { width:15px; height:15px; color:#241C0C; }
+.mic-btn:hover { background:linear-gradient(180deg,#fff,#C8CDD6); transform:translateY(-1px); }
+.mic-btn.mic-live { background:linear-gradient(180deg,#F0DDA0,#D4AF37); border-color:#E2C36A; animation:micPulse 1.1s ease-in-out infinite; }
 .mic-btn.mic-live svg { color:#fff; }
 @keyframes micPulse {
-  0%,100% { box-shadow:0 0 0 0 rgba(227,70,99,0.65); }
-  50%     { box-shadow:0 0 0 7px rgba(227,70,99,0); }
+  0%,100% { box-shadow:0 0 0 0 rgba(212,175,55,0.65); }
+  50%     { box-shadow:0 0 0 7px rgba(212,175,55,0); }
 }
 /* Section-label inline mic (smaller, for non-textarea sections) */
-.sec-mic { display:inline-flex; vertical-align:middle; margin-left:8px; width:22px; height:22px; align-items:center; justify-content:center; border-radius:50%; cursor:pointer; background:linear-gradient(180deg,#eef1f4,#c2c8d0); border:1px solid #9aa2ad; box-shadow:0 1px 4px rgba(0,0,0,0.5); }
-.sec-mic svg { width:12px; height:12px; color:#3a1118; }
-.sec-mic.mic-live { background:linear-gradient(180deg,#ff5f7d,#b3284a); animation:micPulse 1.1s ease-in-out infinite; }
+.sec-mic { display:inline-flex; vertical-align:middle; margin-left:8px; width:22px; height:22px; align-items:center; justify-content:center; border-radius:50%; cursor:pointer; background:linear-gradient(180deg,#F2F4F7,#C8CDD6); border:1px solid #9AA6BC; box-shadow:0 1px 4px rgba(0,0,0,0.5); }
+.sec-mic svg { width:12px; height:12px; color:#241C0C; }
+.sec-mic.mic-live { background:linear-gradient(180deg,#F0DDA0,#D4AF37); animation:micPulse 1.1s ease-in-out infinite; }
 .sec-mic.mic-live svg { color:#fff; }
 
 /* ── UPLOAD ZONE (citation / complaint) ── */
 .upload-zone {
-  border:2px dashed #3a4250; border-radius:12px;
-  background:linear-gradient(180deg,#141a23,#10151d);
+  border:2px dashed #34405C; border-radius:12px;
+  background:linear-gradient(180deg,#0C1526,#0A1220);
   padding:18px; cursor:pointer; transition:all 0.15s; margin-bottom:6px;
 }
-.upload-zone:hover { border-color:#b3284a; box-shadow:inset 0 0 16px rgba(179,40,74,0.22); }
-.upload-zone.drag { border-color:#e34663; background:#171019; box-shadow:inset 0 0 20px rgba(227,70,99,0.35); }
+.upload-zone:hover { border-color:#D4AF37; box-shadow:inset 0 0 16px rgba(212,175,55,0.22); }
+.upload-zone.drag { border-color:#E2C36A; background:#0F1420; box-shadow:inset 0 0 20px rgba(212,175,55,0.35); }
 .upload-inner { display:flex; align-items:center; gap:14px; }
-.upload-inner svg { width:30px; height:30px; color:#b3284a; flex-shrink:0; filter:drop-shadow(0 0 5px rgba(179,40,74,0.5)); }
+.upload-inner svg { width:30px; height:30px; color:#D4AF37; flex-shrink:0; filter:drop-shadow(0 0 5px rgba(212,175,55,0.5)); }
 .upload-text { display:flex; flex-direction:column; gap:2px; }
-.upload-text strong { font-size:13px; color:#e6e9f0; font-weight:800; letter-spacing:0.3px; }
-.upload-text span { font-size:11.5px; color:#6f7889; }
+.upload-text strong { font-size:13px; color:#F2F4F7; font-weight:800; letter-spacing:0.3px; }
+.upload-text span { font-size:11.5px; color:#7E889C; }
 .doc-chip {
   display:inline-flex; align-items:center; gap:6px; padding:6px 12px; margin-right:10px;
-  font-size:12.5px; font-weight:700; color:#cdd3da; background:#141a23;
-  border:1px solid #2a313d; border-left:3px solid #2f9e5a; border-radius:7px;
+  font-size:12.5px; font-weight:700; color:#C8CDD6; background:#0C1526;
+  border:1px solid #27324A; border-left:3px solid #2f9e5a; border-radius:7px;
 }
 .doc-scan-msg {
   margin-top:10px; padding:10px 13px; font-size:12.5px; line-height:1.5; border-radius:8px;
 }
 .doc-scan-msg.ok  { background:#10231a; color:#9fe0bb; border:1px solid #2c5e40; }
-.doc-scan-msg.err { background:#1a1410; color:#e7c98a; border:1px solid #6b4e1f; }
-.doc-scan-msg.work{ background:#141a23; color:#c8cdd6; border:1px solid #2a313d; }
+.doc-scan-msg.err { background:#12100C; color:#E7CE84; border:1px solid #6E5A2A; }
+.doc-scan-msg.work{ background:#0C1526; color:#c8cdd6; border:1px solid #27324A; }
 
 @media (prefers-reduced-motion: reduce) {
   .led-strip::before, header, header .badge, .tab-btn.active::after,
@@ -875,14 +880,12 @@ header .badge { animation:badgePulse 2.6s ease-in-out infinite; }
           renderDegreePills();
         ">
           <option value="">Select</option>
-          <option value="Traffic">Traffic</option><option value="DWI">DWI</option><option value="Domestic">Domestic</option><option value="Drugs">Drugs</option><option value="Theft">Theft</option><option value="Other">Other</option>
+          <option value="Traffic">Traffic</option><option value="DWI" selected="">DWI</option><option value="Domestic">Domestic</option><option value="Drugs">Drugs</option><option value="Theft">Theft</option><option value="Other">Other</option>
         </select>
       </div>
-      <div class="field" id="degreeSec" style="flex:0 0 auto;min-width:150px;max-width:190px;display:none">
-        <label id="degreeLabel">Degree</label>
-        <select id="degreePills" onchange="selectDegree(this)">
-          <option value="">Select degree</option>
-        </select>
+      <div class="field" id="degreeSec" style="flex:0 0 auto;min-width:150px;max-width:190px;display:block">
+        <label id="degreeLabel">Degree of DWI</label>
+        <select id="degreePills" onchange="selectDegree(this)"><option value="">Select degree</option><option value="4th Degree">4th Degree</option><option value="3rd Degree" selected="">3rd Degree</option><option value="2nd Degree">2nd Degree</option><option value="1st Degree">1st Degree</option></select>
       </div>
       <div class="field" style="flex:0 0 auto;min-width:160px;max-width:220px">
         <label>Level of Offense</label>
@@ -902,11 +905,11 @@ header .badge { animation:badgePulse 2.6s ease-in-out infinite; }
           if(intake.severity!==&#39;Felony&#39;&amp;&amp;intake.degree!==&#39;1st Degree&#39;){ intake.dwi.priorFelonyDWI=&#39;&#39;; intake.dwi.priorFelonyYear=&#39;&#39;; intake.dwi.priorFelonyCounty=&#39;&#39;; }
         ">
           <option value="">Select level</option>
-          <option value="Petty Misdemeanor">Petty Misdemeanor</option><option value="Misdemeanor">Misdemeanor</option><option value="Gross Misdemeanor">Gross Misdemeanor</option><option value="Felony">Felony</option>
+          <option value="Petty Misdemeanor">Petty Misdemeanor</option><option value="Misdemeanor">Misdemeanor</option><option value="Gross Misdemeanor" selected="">Gross Misdemeanor</option><option value="Felony">Felony</option>
         </select>
       </div>
     </div>
-    <div id="levelError" style="display:none;margin-top:4px;padding:8px 12px;background:#2a1417;border:2px solid #e2485a;border-left:5px solid #e2485a;border-radius:8px;font-size:13px;font-weight:700;color:#e0485a;">
+    <div id="levelError" style="display:none;margin-top:4px;padding:8px 12px;background:#241C0C;border:2px solid #E7CE84;border-left:5px solid #E7CE84;border-radius:8px;font-size:13px;font-weight:700;color:#E7CE84;">
       ⚠ ERROR: DWIs are not petty misdemeanors under Minnesota law.
     </div>
     <div class="field" id="trafficTypeField" style="display:none">
@@ -918,11 +921,11 @@ header .badge { animation:badgePulse 2.6s ease-in-out infinite; }
       <input type="text" value="" placeholder="e.g., Harassment, Terroristic Threats..." oninput="intake.otherType=this.value" style="max-width:320px">
     </div>
     <div id="felonyDWIBox" style="display:none; margin-bottom:4px">
-      <div style="background:#261316;border:2px solid #e2485a;border-left:5px solid #e2485a;border-radius:10px;padding:16px 18px">
-        <div style="font-size:11px;font-weight:800;color:#e0485a;letter-spacing:0.8px;margin-bottom:6px">FELONY DWI — PRIOR FELONY CONVICTION</div>
-        <div style="font-size:11px;color:#d8a0a4;margin-bottom:12px;line-height:1.5">If the Potential Client has a prior felony DWI conviction, the new case carries a presumptive commitment to state prison if convicted.</div>
-        <label class="factor-pill " style="background:#2a1417;border-color:#5e3034;color:#e0485a;margin-bottom:10px">
-          <input type="checkbox" onchange="intake.dwi.priorFelonyDWI=this.checked?&#39;Yes&#39;:&#39;No&#39;;var l=this.closest(&#39;label&#39;);l.style.background=this.checked?&#39;#e0485a&#39;:&#39;#2a1417&#39;;l.style.borderColor=this.checked?&#39;#e0485a&#39;:&#39;#5e3034&#39;;l.style.color=this.checked?&#39;#161b24&#39;:&#39;#e0485a&#39;;var s=document.getElementById(&#39;priorFelonyFields&#39;);if(s)s.style.display=this.checked?&#39;grid&#39;:&#39;none&#39;">
+      <div style="background:#1A1320;border:2px solid #E7CE84;border-left:5px solid #E7CE84;border-radius:10px;padding:16px 18px">
+        <div style="font-size:11px;font-weight:800;color:#E7CE84;letter-spacing:0.8px;margin-bottom:6px">FELONY DWI — PRIOR FELONY CONVICTION</div>
+        <div style="font-size:11px;color:#E3CFA0;margin-bottom:12px;line-height:1.5">If the Potential Client has a prior felony DWI conviction, the new case carries a presumptive commitment to state prison if convicted.</div>
+        <label class="factor-pill " style="background:#241C0C;border-color:#5E4A2A;color:#E7CE84;margin-bottom:10px">
+          <input type="checkbox" onchange="intake.dwi.priorFelonyDWI=this.checked?&#39;Yes&#39;:&#39;No&#39;;var l=this.closest(&#39;label&#39;);l.style.background=this.checked?&#39;#E7CE84&#39;:&#39;#241C0C&#39;;l.style.borderColor=this.checked?&#39;#E7CE84&#39;:&#39;#5E4A2A&#39;;l.style.color=this.checked?&#39;#111C30&#39;:&#39;#E7CE84&#39;;var s=document.getElementById(&#39;priorFelonyFields&#39;);if(s)s.style.display=this.checked?&#39;grid&#39;:&#39;none&#39;">
           Prior Felony DWI Conviction
         </label>
         <div id="priorFelonyFields" style="display:none;margin-top:10px">
@@ -945,10 +948,10 @@ header .badge { animation:badgePulse 2.6s ease-in-out infinite; }
     
 
     
-  <div class="dwi-panel" id="dwiPanel" style="display:none">
+  <div class="dwi-panel" id="dwiPanel" style="display:block">
     <div class="dwi-panel-header">DWI — Additional Information</div>
     <div class="dwi-panel-body">
-      
+      <div class="dwi-section"><div class="dwi-section-title">Aggravating Factors</div><div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px"><label class="factor-pill"><input type="checkbox" onchange="intake.dwi.aggPriorWithin10=this.checked;this.closest(&#39;label&#39;).classList.toggle(&#39;factor-pill-on&#39;,this.checked)">Prior Qualifying Impaired Driving Offense(s) Within 10 Years</label><label class="factor-pill"><input type="checkbox" onchange="intake.dwi.aggChildrenInVehicle=this.checked;this.closest(&#39;label&#39;).classList.toggle(&#39;factor-pill-on&#39;,this.checked)">Child Under Age 16 in Vehicle</label><label class="factor-pill"><input type="checkbox" onchange="intake.dwi.aggReading16=this.checked;this.closest(&#39;label&#39;).classList.toggle(&#39;factor-pill-on&#39;,this.checked)">Alcohol Reading of .16 or More</label></div></div>
 
       <div class="dwi-section">
         <div class="dwi-section-title">Stop &amp; Vehicle</div>
@@ -1101,9 +1104,9 @@ header .badge { animation:badgePulse 2.6s ease-in-out infinite; }
             <input type="checkbox" onchange="intake.dwi.interlockRequired=this.checked;this.closest(&#39;label&#39;).classList.toggle(&#39;factor-pill-on&#39;,this.checked)"> Interlock Required
           </label>
         </div>
-          <div class="dwi-field" style="max-width:280px;margin-top:10px"><label>Implied Consent / Revocation Deadline <span style="font-weight:600;color:#8a93a4">(offense + 60 days)</span></label>
+          <div class="dwi-field" style="max-width:280px;margin-top:10px"><label>Implied Consent / Revocation Deadline <span style="font-weight:600;color:#8A93A3">(offense + 60 days)</span></label>
             <input type="date" id="icDeadlineInput" class="dwi-input" value="" onchange="intake.dwi.impliedConsentDeadline=this.value">
-            <div style="font-size:11px;color:#6f7889;margin-top:4px">Auto-fills from Offense Date; override if needed.</div>
+            <div style="font-size:11px;color:#7E889C;margin-top:4px">Auto-fills from Offense Date; override if needed.</div>
           </div>
         </div>
       </div>
@@ -1117,7 +1120,7 @@ header .badge { animation:badgePulse 2.6s ease-in-out infinite; }
         </div>
         <div id="priorsSub" style="display:none;margin-bottom:10px">
           <div id="priorRowsContainer"></div>
-          <button onclick="intake.dwi.priorsList.push({year:2026,type:&#39;&#39;,state:&#39;MN&#39;,county:&#39;&#39;});renderPriorRows();" style="margin-top:6px;padding:5px 14px;background:#b3284a;color:#f3edef;border:none;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer">+ Add Prior</button>
+          <button onclick="intake.dwi.priorsList.push({year:2026,type:&#39;&#39;,state:&#39;MN&#39;,county:&#39;&#39;});renderPriorRows();" style="margin-top:6px;padding:5px 14px;background:#D4AF37;color:#F2F4F7;border:none;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer">+ Add Prior</button>
         </div>
       </div>
 
@@ -1175,7 +1178,7 @@ header .badge { animation:badgePulse 2.6s ease-in-out infinite; }
         </select>
         <div id="domPriorsSub" style="display:none;margin-top:8px">
           <div id="domPriorRowsContainer"></div>
-          <button onclick="intake.domestic.priorsList.push({year:&#39;&#39;,type:&#39;&#39;});renderDomesticPriorRows();" style="margin-top:6px;padding:5px 12px;background:#b3284a;color:#f3edef;border:none;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer">+ Add Prior</button>
+          <button onclick="intake.domestic.priorsList.push({year:&#39;&#39;,type:&#39;&#39;});renderDomesticPriorRows();" style="margin-top:6px;padding:5px 12px;background:#D4AF37;color:#F2F4F7;border:none;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer">+ Add Prior</button>
         </div></div>
     </div></div></div></div>
     <div class="dwi-panel" id="drugsPanel" style="display:none">
@@ -1197,7 +1200,7 @@ header .badge { animation:badgePulse 2.6s ease-in-out infinite; }
         </select>
         <div id="drugPriorsSub" style="display:none;margin-top:8px">
           <div id="drugPriorRowsContainer"></div>
-          <button onclick="intake.drugs.priorsList.push({year:&#39;&#39;});renderDrugPriorRows();" style="margin-top:6px;padding:5px 12px;background:#b3284a;color:#f3edef;border:none;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer">+ Add Prior</button>
+          <button onclick="intake.drugs.priorsList.push({year:&#39;&#39;});renderDrugPriorRows();" style="margin-top:6px;padding:5px 12px;background:#D4AF37;color:#F2F4F7;border:none;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer">+ Add Prior</button>
         </div></div>
     </div></div></div></div>
 
@@ -1501,11 +1504,11 @@ header .badge { animation:badgePulse 2.6s ease-in-out infinite; }
 
     <div class="field">
       <label>Court Date</label>
-      <label style="display:inline-flex;align-items:center;gap:7px;cursor:pointer;padding:7px 13px;background:#161c25;border:2px solid #2a313d;border-radius:8px;font-size:13px;font-weight:700;color:#aab2c2;margin-bottom:6px" id="courtDatePill">
+      <label style="display:inline-flex;align-items:center;gap:7px;cursor:pointer;padding:7px 13px;background:#111C30;border:2px solid #27324A;border-radius:8px;font-size:13px;font-weight:700;color:#9AA6BC;margin-bottom:6px" id="courtDatePill">
         <input type="checkbox" style="width:15px;height:15px;cursor:pointer;margin:0" onchange="
           intake.hasCourtDate=this.checked?&#39;Yes&#39;:&#39;No&#39;;
           var p=document.getElementById(&#39;courtDatePill&#39;);
-          if(p){p.style.background=this.checked?&#39;#b3284a&#39;:&#39;#161c25&#39;;p.style.borderColor=this.checked?&#39;#b3284a&#39;:&#39;#2a313d&#39;;p.style.color=this.checked?&#39;#161b24&#39;:&#39;#aab2c2&#39;;}
+          if(p){p.style.background=this.checked?&#39;#D4AF37&#39;:&#39;#111C30&#39;;p.style.borderColor=this.checked?&#39;#D4AF37&#39;:&#39;#27324A&#39;;p.style.color=this.checked?&#39;#111C30&#39;:&#39;#9AA6BC&#39;;}
           var sub=document.getElementById(&#39;courtDateSub&#39;);
           if(sub) sub.style.display=this.checked?&#39;block&#39;:&#39;none&#39;;
           if(!this.checked){ intake.courtDate=&#39;&#39;; intake.hearingType=&#39;&#39;; intake.hearingTypeOther=&#39;&#39;; }
@@ -1524,15 +1527,15 @@ header .badge { animation:badgePulse 2.6s ease-in-out infinite; }
         </div>
         <input type="date" value="" onchange="intake.courtDate=this.value" style="max-width:180px">
         <div style="display:flex;align-items:center;gap:6px;margin-top:8px;flex-wrap:wrap">
-          <select onchange="intake.courtHour=this.value" style="width:70px;padding:7px 8px;font-size:13px;border:2px solid #2a313d;border-radius:7px;background:#1a212b;font-family:inherit">
+          <select onchange="intake.courtHour=this.value" style="width:70px;padding:7px 8px;font-size:13px;border:2px solid #27324A;border-radius:7px;background:#16223A;font-family:inherit">
             <option value="">Hr</option>
             <option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option>
           </select>
-          <span style="font-size:16px;font-weight:700;color:#97a0b1">:</span>
-          <select onchange="intake.courtMinute=this.value" style="width:70px;padding:7px 8px;font-size:13px;border:2px solid #2a313d;border-radius:7px;background:#1a212b;font-family:inherit">
+          <span style="font-size:16px;font-weight:700;color:#9AA6BC">:</span>
+          <select onchange="intake.courtMinute=this.value" style="width:70px;padding:7px 8px;font-size:13px;border:2px solid #27324A;border-radius:7px;background:#16223A;font-family:inherit">
             <option value="00" selected="">00</option><option value="05">05</option><option value="10">10</option><option value="15">15</option><option value="20">20</option><option value="25">25</option><option value="30">30</option><option value="35">35</option><option value="40">40</option><option value="45">45</option><option value="50">50</option><option value="55">55</option>
           </select>
-          <select onchange="intake.courtAmPm=this.value" style="width:70px;padding:7px 8px;font-size:13px;border:2px solid #2a313d;border-radius:7px;background:#1a212b;font-family:inherit">
+          <select onchange="intake.courtAmPm=this.value" style="width:70px;padding:7px 8px;font-size:13px;border:2px solid #27324A;border-radius:7px;background:#16223A;font-family:inherit">
             <option value="AM" selected="">AM</option><option value="PM">PM</option>
           </select>
         </div>
@@ -1585,7 +1588,7 @@ header .badge { animation:badgePulse 2.6s ease-in-out infinite; }
         <div class="field" style="flex:0 0 auto;margin-bottom:0">
           <label>Bail Amount</label>
           <div style="display:flex;align-items:center">
-            <div style="padding:9px 10px;background:#11161e;border:2px solid #2a313d;border-right:none;border-radius:8px 0 0 8px;font-size:13px;font-weight:700;color:#b9c1d0">$</div>
+            <div style="padding:9px 10px;background:#0A1220;border:2px solid #27324A;border-right:none;border-radius:8px 0 0 8px;font-size:13px;font-weight:700;color:#C2C8D4">$</div>
             <input type="text" value="" placeholder="0" oninput="formatCurrency(this);intake.custody.bailAmount=rawCurrency(this.value);" class="currency-input" style="border-radius:0 8px 8px 0;border-left:none;max-width:110px">
           </div>
         </div>
@@ -1598,7 +1601,7 @@ header .badge { animation:badgePulse 2.6s ease-in-out infinite; }
         <div class="field" style="flex:0 0 auto;margin-bottom:0">
           <label>Bail Amount</label>
           <div style="display:flex;align-items:center">
-            <div style="padding:9px 10px;background:#11161e;border:2px solid #2a313d;border-right:none;border-radius:8px 0 0 8px;font-size:13px;font-weight:700;color:#b9c1d0">$</div>
+            <div style="padding:9px 10px;background:#0A1220;border:2px solid #27324A;border-right:none;border-radius:8px 0 0 8px;font-size:13px;font-weight:700;color:#C2C8D4">$</div>
             <input type="text" value="" placeholder="0" oninput="formatCurrency(this);intake.custody.bailAmount=rawCurrency(this.value);" class="currency-input" style="border-radius:0 8px 8px 0;border-left:none;max-width:110px">
           </div>
         </div>
@@ -1607,18 +1610,18 @@ header .badge { animation:badgePulse 2.6s ease-in-out infinite; }
 
     <div id="custodyInCustodySub" style="display:none;margin-bottom:8px">
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
-        <label style="display:inline-flex;align-items:center;gap:7px;cursor:pointer;padding:7px 13px;background:#161c25;border:2px solid #2a313d;border-radius:8px;font-size:13px;font-weight:700;color:#aab2c2;transition:all 0.12s;white-space:nowrap" id="bailSetPill">
+        <label style="display:inline-flex;align-items:center;gap:7px;cursor:pointer;padding:7px 13px;background:#111C30;border:2px solid #27324A;border-radius:8px;font-size:13px;font-weight:700;color:#9AA6BC;transition:all 0.12s;white-space:nowrap" id="bailSetPill">
           <input type="checkbox" style="width:15px;height:15px;cursor:pointer;margin:0" onchange="
             intake.custody.inCustodyBail=this.checked?&#39;Bail Set&#39;:&#39;No Bail Set&#39;;
             var p=document.getElementById(&#39;bailSetPill&#39;);
-            if(p){p.style.background=this.checked?&#39;#b8842e&#39;:&#39;#161c25&#39;;p.style.borderColor=this.checked?&#39;#b8842e&#39;:&#39;#2a313d&#39;;p.style.color=this.checked?&#39;#161b24&#39;:&#39;#aab2c2&#39;;}
+            if(p){p.style.background=this.checked?&#39;#B4902A&#39;:&#39;#111C30&#39;;p.style.borderColor=this.checked?&#39;#B4902A&#39;:&#39;#27324A&#39;;p.style.color=this.checked?&#39;#111C30&#39;:&#39;#9AA6BC&#39;;}
             document.getElementById(&#39;inCustodyBailAmtSub&#39;).style.display=this.checked?&#39;flex&#39;:&#39;none&#39;;
             document.getElementById(&#39;hourRuleSub&#39;).style.display=this.checked?&#39;none&#39;:&#39;block&#39;;
             if(!this.checked){intake.custody.inCustodyBailAmount=&#39;&#39;;intake.custody.inCustodyBailType=&#39;&#39;;document.getElementById(&#39;bailConditionsSub&#39;).style.display=&#39;none&#39;;}
           ">
           Bail Set
         </label>
-        <select onchange="intake.custody.inCustodyBailType=this.value;document.getElementById(&#39;bailConditionsSub&#39;).style.display=this.value===&#39;Conditional&#39;?&#39;block&#39;:&#39;none&#39;" style="padding:7px 13px;font-size:13px;font-weight:600;border:2px solid #2a313d;border-radius:8px;background:#1a212b;font-family:inherit;max-width:160px">
+        <select onchange="intake.custody.inCustodyBailType=this.value;document.getElementById(&#39;bailConditionsSub&#39;).style.display=this.value===&#39;Conditional&#39;?&#39;block&#39;:&#39;none&#39;" style="padding:7px 13px;font-size:13px;font-weight:600;border:2px solid #27324A;border-radius:8px;background:#16223A;font-family:inherit;max-width:160px">
           <option value="">Bail Type</option>
           <option value="Conditional">Conditional</option><option value="Unconditional">Unconditional</option>
         </select>
@@ -1640,7 +1643,7 @@ header .badge { animation:badgePulse 2.6s ease-in-out infinite; }
           <div class="field" style="flex:0 0 auto;margin-bottom:0">
             <label>Bail Amount</label>
             <div style="display:flex;align-items:center">
-              <div style="padding:9px 10px;background:#11161e;border:2px solid #2a313d;border-right:none;border-radius:8px 0 0 8px;font-size:13px;font-weight:700;color:#b9c1d0">$</div>
+              <div style="padding:9px 10px;background:#0A1220;border:2px solid #27324A;border-right:none;border-radius:8px 0 0 8px;font-size:13px;font-weight:700;color:#C2C8D4">$</div>
               <input type="text" value="" placeholder="0" oninput="formatCurrency(this);intake.custody.inCustodyBailAmount=rawCurrency(this.value);" class="currency-input" style="border-radius:0 8px 8px 0;border-left:none;max-width:110px">
             </div>
           </div>
@@ -1649,7 +1652,7 @@ header .badge { animation:badgePulse 2.6s ease-in-out infinite; }
           <div class="field" style="flex:0 0 auto;margin-bottom:0">
             <label>36-Hour Rule Deadline</label>
             <input type="date" value="" onchange="intake.custody.hourRuleDate=this.value" style="max-width:180px;color-scheme:dark">
-            <div style="font-size:11px;color:#8a93a4;margin-top:3px">Will read: "[Date] by noon"</div>
+            <div style="font-size:11px;color:#8A93A3;margin-top:3px">Will read: "[Date] by noon"</div>
           </div>
         </div>
       </div>
@@ -1663,11 +1666,11 @@ header .badge { animation:badgePulse 2.6s ease-in-out infinite; }
       </div>
       <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:flex-start;flex-direction:column">
         <div class="field" style="margin-bottom:0">
-          <label style="display:inline-flex;align-items:center;gap:7px;cursor:pointer;padding:7px 13px;background:#161c25;border:2px solid #2a313d;border-radius:8px;font-size:13px;font-weight:700;color:#aab2c2;transition:all 0.12s" id="naBailPill">
+          <label style="display:inline-flex;align-items:center;gap:7px;cursor:pointer;padding:7px 13px;background:#111C30;border:2px solid #27324A;border-radius:8px;font-size:13px;font-weight:700;color:#9AA6BC;transition:all 0.12s" id="naBailPill">
             <input type="checkbox" style="width:15px;height:15px;cursor:pointer;margin:0" onchange="
               intake.custody.neverArrestedBail=this.checked;
               var p=document.getElementById(&#39;naBailPill&#39;);
-              if(p){p.style.background=this.checked?&#39;#b8842e&#39;:&#39;#161c25&#39;;p.style.borderColor=this.checked?&#39;#b8842e&#39;:&#39;#2a313d&#39;;p.style.color=this.checked?&#39;#161b24&#39;:&#39;#aab2c2&#39;;}
+              if(p){p.style.background=this.checked?&#39;#B4902A&#39;:&#39;#111C30&#39;;p.style.borderColor=this.checked?&#39;#B4902A&#39;:&#39;#27324A&#39;;p.style.color=this.checked?&#39;#111C30&#39;:&#39;#9AA6BC&#39;;}
               document.getElementById(&#39;naBailSub&#39;).style.display=this.checked?&#39;block&#39;:&#39;none&#39;;
               if(!this.checked){intake.custody.neverArrestedBailAmount=&#39;&#39;;intake.custody.neverArrestedBailType=&#39;&#39;;intake.custody.neverArrestedConditions=&#39;&#39;;}
             ">
@@ -1679,7 +1682,7 @@ header .badge { animation:badgePulse 2.6s ease-in-out infinite; }
             <div class="field" style="flex:0 0 auto;margin-bottom:0">
               <label>Bail Amount</label>
               <div style="display:flex;align-items:center">
-                <div style="padding:9px 10px;background:#11161e;border:2px solid #2a313d;border-right:none;border-radius:8px 0 0 8px;font-size:13px;font-weight:700;color:#b9c1d0">$</div>
+                <div style="padding:9px 10px;background:#0A1220;border:2px solid #27324A;border-right:none;border-radius:8px 0 0 8px;font-size:13px;font-weight:700;color:#C2C8D4">$</div>
                 <input type="text" value="" placeholder="0" oninput="formatCurrency(this);intake.custody.neverArrestedBailAmount=rawCurrency(this.value);" class="currency-input" style="border-radius:0 8px 8px 0;border-left:none;max-width:110px">
               </div>
             </div>
@@ -1708,8 +1711,8 @@ header .badge { animation:badgePulse 2.6s ease-in-out infinite; }
 
     <div class="section-label" style="margin-top:16px">Probation</div>
     <div class="field" style="margin-bottom:8px">
-      <label class="mini-pill" style="display:inline-flex;align-items:center;gap:7px;cursor:pointer;padding:7px 13px;background:#161c25;border:2px solid #2a313d;border-radius:8px;font-size:13px;font-weight:700;color:#aab2c2;transition:all 0.12s" id="probPill">
-        <input type="checkbox" style="width:15px;height:15px;cursor:pointer;margin:0" onchange="intake.dwi.onProbation=this.checked?&#39;Yes&#39;:&#39;No&#39;;var p=document.getElementById(&#39;probPill&#39;);if(p){p.style.background=this.checked?&#39;#b3284a&#39;:&#39;#161c25&#39;;p.style.borderColor=this.checked?&#39;#b3284a&#39;:&#39;#2a313d&#39;;p.style.color=this.checked?&#39;#161b24&#39;:&#39;#aab2c2&#39;;}var s=document.getElementById(&#39;probCaseFileSub&#39;);if(s)s.style.display=this.checked?&#39;block&#39;:&#39;none&#39;;">
+      <label class="mini-pill" style="display:inline-flex;align-items:center;gap:7px;cursor:pointer;padding:7px 13px;background:#111C30;border:2px solid #27324A;border-radius:8px;font-size:13px;font-weight:700;color:#9AA6BC;transition:all 0.12s" id="probPill">
+        <input type="checkbox" style="width:15px;height:15px;cursor:pointer;margin:0" onchange="intake.dwi.onProbation=this.checked?&#39;Yes&#39;:&#39;No&#39;;var p=document.getElementById(&#39;probPill&#39;);if(p){p.style.background=this.checked?&#39;#D4AF37&#39;:&#39;#111C30&#39;;p.style.borderColor=this.checked?&#39;#D4AF37&#39;:&#39;#27324A&#39;;p.style.color=this.checked?&#39;#111C30&#39;:&#39;#9AA6BC&#39;;}var s=document.getElementById(&#39;probCaseFileSub&#39;);if(s)s.style.display=this.checked?&#39;block&#39;:&#39;none&#39;;">
         Currently on Probation
       </label>
     </div>
@@ -1731,22 +1734,22 @@ Client denies consuming alcohol" oninput="intake.details=this.value" data-mic="1
       <label>Flat Fee</label>
       <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
         <div style="display:flex;align-items:center;max-width:180px">
-          <div style="padding:9px 10px;background:#11161e;border:2px solid #2a313d;border-right:none;border-radius:8px 0 0 8px;font-size:14px;font-weight:700;color:#b9c1d0;flex-shrink:0">$</div>
+          <div style="padding:9px 10px;background:#0A1220;border:2px solid #27324A;border-right:none;border-radius:8px 0 0 8px;font-size:14px;font-weight:700;color:#C2C8D4;flex-shrink:0">$</div>
           <input type="text" value="" placeholder="0" oninput="formatCurrency(this); intake.fee=rawCurrency(this.value);" class="currency-input" style="border-radius:0 8px 8px 0;border-left:none;max-width:120px">
         </div>
-        <label style="display:inline-flex;align-items:center;gap:7px;cursor:pointer;padding:7px 14px;background:#161c25;border:2px solid #2a313d;border-radius:8px;white-space:nowrap;font-size:13px;font-weight:700;color:#aab2c2;transition:all 0.12s" id="retainerPill">
-          <input type="checkbox" onchange="intake.retainerSent=this.checked; var p=document.getElementById(&#39;retainerPill&#39;); if(p){p.style.background=this.checked?&#39;#2f9e5a&#39;:&#39;#161c25&#39;;p.style.borderColor=this.checked?&#39;#2f9e5a&#39;:&#39;#2a313d&#39;;p.style.color=this.checked?&#39;#161b24&#39;:&#39;#aab2c2&#39;;}" style="width:15px;height:15px;accent-color:#2f9e5a;cursor:pointer;flex-shrink:0">
+        <label style="display:inline-flex;align-items:center;gap:7px;cursor:pointer;padding:7px 14px;background:#111C30;border:2px solid #27324A;border-radius:8px;white-space:nowrap;font-size:13px;font-weight:700;color:#9AA6BC;transition:all 0.12s" id="retainerPill">
+          <input type="checkbox" onchange="intake.retainerSent=this.checked; var p=document.getElementById(&#39;retainerPill&#39;); if(p){p.style.background=this.checked?&#39;#2f9e5a&#39;:&#39;#111C30&#39;;p.style.borderColor=this.checked?&#39;#2f9e5a&#39;:&#39;#27324A&#39;;p.style.color=this.checked?&#39;#111C30&#39;:&#39;#9AA6BC&#39;;}" style="width:15px;height:15px;accent-color:#2f9e5a;cursor:pointer;flex-shrink:0">
           Retainer Sent
         </label>
       </div>
     </div>
     <div class="field">
       <label>Payment Plan</label>
-      <label style="display:inline-flex;align-items:center;gap:7px;cursor:pointer;padding:7px 13px;background:#161c25;border:2px solid #2a313d;border-radius:8px;font-size:13px;font-weight:700;color:#aab2c2;margin-bottom:6px" id="paymentPlanPill">
+      <label style="display:inline-flex;align-items:center;gap:7px;cursor:pointer;padding:7px 13px;background:#111C30;border:2px solid #27324A;border-radius:8px;font-size:13px;font-weight:700;color:#9AA6BC;margin-bottom:6px" id="paymentPlanPill">
         <input type="checkbox" style="width:15px;height:15px;cursor:pointer;margin:0" onchange="
           intake.paymentPlan=this.checked?&#39;Yes&#39;:&#39;No&#39;;
           var p=document.getElementById(&#39;paymentPlanPill&#39;);
-          if(p){p.style.background=this.checked?&#39;#1f9e86&#39;:&#39;#161c25&#39;;p.style.borderColor=this.checked?&#39;#1f9e86&#39;:&#39;#2a313d&#39;;p.style.color=this.checked?&#39;#161b24&#39;:&#39;#aab2c2&#39;;}
+          if(p){p.style.background=this.checked?&#39;#3E9E8F&#39;:&#39;#111C30&#39;;p.style.borderColor=this.checked?&#39;#3E9E8F&#39;:&#39;#27324A&#39;;p.style.color=this.checked?&#39;#111C30&#39;:&#39;#9AA6BC&#39;;}
           var pt=document.getElementById(&#39;paymentTermsField&#39;);
           if(pt) pt.style.display=this.checked?&#39;block&#39;:&#39;none&#39;;
           if(!this.checked) intake.paymentTerms=&#39;&#39;;
@@ -1754,9 +1757,9 @@ Client denies consuming alcohol" oninput="intake.details=this.value" data-mic="1
         Payment Plan
       </label>
       <div id="paymentTermsField" style="display:none">
-        <label style="font-size:12px;font-weight:700;color:#e8ebf2;display:block;margin-bottom:5px">Terms</label>
+        <label style="font-size:12px;font-weight:700;color:#F2F4F7;display:block;margin-bottom:5px">Terms</label>
         <div class="mic-wrap"><textarea placeholder="e.g., $1,500 down, $500/month x 4 months
-Payment due 1st of each month" rows="3" oninput="intake.paymentTerms=this.value" onblur="formatPaymentTerms(this)" style="width:100%;padding:9px 12px;font-size:14px;border:2px solid #2a313d;border-radius:8px;background:#1a212b;color:#e6e9f0;font-family:inherit;outline:none;resize:vertical;line-height:1.6;box-sizing:border-box" data-mic="1"></textarea><div class="mic-btn" title="Dictate"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"></path><path d="M19 10v1a7 7 0 0 1-14 0v-1"></path><path d="M12 18.5V22"></path></svg></div></div>
+Payment due 1st of each month" rows="3" oninput="intake.paymentTerms=this.value" onblur="formatPaymentTerms(this)" style="width:100%;padding:9px 12px;font-size:14px;border:2px solid #27324A;border-radius:8px;background:#16223A;color:#F2F4F7;font-family:inherit;outline:none;resize:vertical;line-height:1.6;box-sizing:border-box" data-mic="1"></textarea><div class="mic-btn" title="Dictate"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"></path><path d="M19 10v1a7 7 0 0 1-14 0v-1"></path><path d="M12 18.5V22"></path></svg></div></div>
       </div>
     </div>
     <div class="field">
@@ -1771,16 +1774,17 @@ Send payment link" oninput="intake.nextSteps=this.value" data-mic="1"></textarea
   <div class="output-panel">
     <div class="output-header">
       <span class="output-header-label" id="outputLabel">INTAKE NOTE</span>
-      <button class="output-header-copy" id="headerCopyBtn" onclick="copyNote()" style="display:none">Copy</button>
-      <button class="output-header-copy" id="headerPrintBtn" onclick="printNote()" style="display:none;margin-left:8px">Print</button>
+      <button class="output-header-copy" id="headerCopyBtn" onclick="copyNote()" style="display: block;">Copy</button>
+      <button class="output-header-copy" id="headerPrintBtn" onclick="printNote()" style="display: block; margin-left: 8px;">Print</button>
       <button class="output-header-copy" id="headerPrintBtn" onclick="printNote()" style="display:none">Print</button>
     </div>
     <div class="output-body" id="outputBody">
-    <div class="placeholder">
-      <div class="icon">§</div>
-      <h3>Your Clio note will appear here</h3>
-      <p>Fill in the form on the left,<br>then click <strong>Generate Clio Note</strong>.</p>
-    </div></div>
+    <div class="note-output" id="noteRendered"><p>Potential client called regarding their third-degree gross misdemeanor DWI case.</p><div class="note-spacer"></div><p><strong><u>Assigned Attorney:</u></strong> GWM</p><div class="note-spacer"></div><p><strong><u>Caller:</u></strong> [ENTER]</p></div>
+    <div class="ai-btn-row">
+      <button class="ai-btn" id="aiCleanBtn" onclick="aiCleanup()">✨ AI Clean-Up</button>
+      <button class="ai-btn ai-btn-revert" id="aiRevertBtn" onclick="revertNote()" style="display: inline-flex;">↩ Revert</button>
+    </div>
+    <button class="copy-btn-below" id="copyBtnBelow" onclick="copyNote()">📋 Copy Note</button></div>
   </div>
 
 </div>
@@ -2005,7 +2009,7 @@ function selectCounty(c) {
   var trig = document.getElementById('countyTrigger');
   if (trig) {
     trig.innerHTML = c
-      ? '<span style="font-weight:700;color:#b3284a">' + escHtml(c) + '</span>'
+      ? '<span style="font-weight:700;color:#D4AF37">' + escHtml(c) + '</span>'
         + '<button class="county-clear-btn" onclick="event.stopPropagation();clearCounty()">\u00d7</button>'
         + '<span class="arrow">\u25bc</span>'
       : '<span class="placeholder">Select county...</span><span class="arrow">\u25bc</span>';
@@ -2153,8 +2157,8 @@ function printNote() {
   win.document.write(
     '<!DOCTYPE html><html><head><title>' + title + '</title>'
     + '<style>'
-    + 'body{font-family:"Courier New",Courier,monospace;font-size:13px;line-height:1.9;color:#14181f;padding:40px 50px;max-width:720px;margin:0 auto}'
-    + 'h2{font-family:Arial,sans-serif;font-size:15px;font-weight:800;color:#7a1228;margin:0 0 18px;padding-bottom:10px;border-bottom:2px solid #7a1228}'
+    + 'body{font-family:"Courier New",Courier,monospace;font-size:13px;line-height:1.9;color:#0A1220;padding:40px 50px;max-width:720px;margin:0 auto}'
+    + 'h2{font-family:Arial,sans-serif;font-size:15px;font-weight:800;color:#8E7530;margin:0 0 18px;padding-bottom:10px;border-bottom:2px solid #8E7530}'
     + 'p{margin:2px 0}'
     + '@media print{body{padding:20px 30px}}'
     + '</style></head><body>'
@@ -2770,7 +2774,7 @@ function renderIntakeForm() {
         </select>
       </div>
     </div>
-    <div id="levelError" style="display:none;margin-top:4px;padding:8px 12px;background:#2a1417;border:2px solid #e2485a;border-left:5px solid #e2485a;border-radius:8px;font-size:13px;font-weight:700;color:#e0485a;">
+    <div id="levelError" style="display:none;margin-top:4px;padding:8px 12px;background:#241C0C;border:2px solid #E7CE84;border-left:5px solid #E7CE84;border-radius:8px;font-size:13px;font-weight:700;color:#E7CE84;">
       ⚠ ERROR: DWIs are not petty misdemeanors under Minnesota law.
     </div>
     <div class="field" id="trafficTypeField" style="display:${intake.chargeType==='Traffic'?'block':'none'}">
@@ -2782,12 +2786,12 @@ function renderIntakeForm() {
       <input type="text" value="${escHtml(intake.otherType)}" placeholder="e.g., Harassment, Terroristic Threats..." oninput="intake.otherType=this.value" style="max-width:320px">
     </div>
     <div id="felonyDWIBox" style="display:${intake.chargeType==='DWI'&&(intake.severity==='Felony'||intake.degree==='1st Degree')?'block':'none'}; margin-bottom:4px">
-      <div style="background:#261316;border:2px solid #e2485a;border-left:5px solid #e2485a;border-radius:10px;padding:16px 18px">
-        <div style="font-size:11px;font-weight:800;color:#e0485a;letter-spacing:0.8px;margin-bottom:6px">FELONY DWI — PRIOR FELONY CONVICTION</div>
-        <div style="font-size:11px;color:#d8a0a4;margin-bottom:12px;line-height:1.5">If the Potential Client has a prior felony DWI conviction, the new case carries a presumptive commitment to state prison if convicted.</div>
-        <label class="factor-pill${intake.dwi.priorFelonyDWI==='Yes'?' factor-pill-on ':' '}" style="background:${intake.dwi.priorFelonyDWI==='Yes'?'#e0485a':'#2a1417'};border-color:${intake.dwi.priorFelonyDWI==='Yes'?'#e0485a':'#5e3034'};color:${intake.dwi.priorFelonyDWI==='Yes'?'#161b24':'#e0485a'};margin-bottom:10px">
+      <div style="background:#1A1320;border:2px solid #E7CE84;border-left:5px solid #E7CE84;border-radius:10px;padding:16px 18px">
+        <div style="font-size:11px;font-weight:800;color:#E7CE84;letter-spacing:0.8px;margin-bottom:6px">FELONY DWI — PRIOR FELONY CONVICTION</div>
+        <div style="font-size:11px;color:#E3CFA0;margin-bottom:12px;line-height:1.5">If the Potential Client has a prior felony DWI conviction, the new case carries a presumptive commitment to state prison if convicted.</div>
+        <label class="factor-pill${intake.dwi.priorFelonyDWI==='Yes'?' factor-pill-on ':' '}" style="background:${intake.dwi.priorFelonyDWI==='Yes'?'#E7CE84':'#241C0C'};border-color:${intake.dwi.priorFelonyDWI==='Yes'?'#E7CE84':'#5E4A2A'};color:${intake.dwi.priorFelonyDWI==='Yes'?'#111C30':'#E7CE84'};margin-bottom:10px">
           <input type="checkbox" ${intake.dwi.priorFelonyDWI==='Yes'?'checked':''}
-            onchange="intake.dwi.priorFelonyDWI=this.checked?'Yes':'No';var l=this.closest('label');l.style.background=this.checked?'#e0485a':'#2a1417';l.style.borderColor=this.checked?'#e0485a':'#5e3034';l.style.color=this.checked?'#161b24':'#e0485a';var s=document.getElementById('priorFelonyFields');if(s)s.style.display=this.checked?'grid':'none'">
+            onchange="intake.dwi.priorFelonyDWI=this.checked?'Yes':'No';var l=this.closest('label');l.style.background=this.checked?'#E7CE84':'#241C0C';l.style.borderColor=this.checked?'#E7CE84':'#5E4A2A';l.style.color=this.checked?'#111C30':'#E7CE84';var s=document.getElementById('priorFelonyFields');if(s)s.style.display=this.checked?'grid':'none'">
           Prior Felony DWI Conviction
         </label>
         <div id="priorFelonyFields" style="display:${intake.dwi.priorFelonyDWI==='Yes'?'block':'none'};margin-top:10px">
@@ -2837,7 +2841,7 @@ function renderIntakeForm() {
         <div class="county-widget" id="countyWidget">
           <button type="button" class="county-trigger" id="countyTrigger" onclick="toggleCountyDropdown()">
             ${intake.county
-              ? `<span style="font-weight:700;color:#b3284a">${escHtml(intake.county)}</span>`
+              ? `<span style="font-weight:700;color:#D4AF37">${escHtml(intake.county)}</span>`
               : `<span class="placeholder">Select county...</span>`}
             ${intake.county ? `<button class="county-clear-btn" onclick="event.stopPropagation();intake.county='';renderForm()">×</button>` : ''}
             <span class="arrow">▼</span>
@@ -2864,11 +2868,11 @@ function renderIntakeForm() {
 
     <div class="field">
       <label>Court Date</label>
-      <label style="display:inline-flex;align-items:center;gap:7px;cursor:pointer;padding:7px 13px;background:${intake.hasCourtDate==='Yes'?'#b3284a':'#161c25'};border:2px solid ${intake.hasCourtDate==='Yes'?'#b3284a':'#2a313d'};border-radius:8px;font-size:13px;font-weight:700;color:${intake.hasCourtDate==='Yes'?'#161b24':'#aab2c2'};margin-bottom:6px" id="courtDatePill">
+      <label style="display:inline-flex;align-items:center;gap:7px;cursor:pointer;padding:7px 13px;background:${intake.hasCourtDate==='Yes'?'#D4AF37':'#111C30'};border:2px solid ${intake.hasCourtDate==='Yes'?'#D4AF37':'#27324A'};border-radius:8px;font-size:13px;font-weight:700;color:${intake.hasCourtDate==='Yes'?'#111C30':'#9AA6BC'};margin-bottom:6px" id="courtDatePill">
         <input type="checkbox" ${intake.hasCourtDate==='Yes'?'checked':''} style="width:15px;height:15px;cursor:pointer;margin:0" onchange="
           intake.hasCourtDate=this.checked?'Yes':'No';
           var p=document.getElementById('courtDatePill');
-          if(p){p.style.background=this.checked?'#b3284a':'#161c25';p.style.borderColor=this.checked?'#b3284a':'#2a313d';p.style.color=this.checked?'#161b24':'#aab2c2';}
+          if(p){p.style.background=this.checked?'#D4AF37':'#111C30';p.style.borderColor=this.checked?'#D4AF37':'#27324A';p.style.color=this.checked?'#111C30':'#9AA6BC';}
           var sub=document.getElementById('courtDateSub');
           if(sub) sub.style.display=this.checked?'block':'none';
           if(!this.checked){ intake.courtDate=''; intake.hearingType=''; intake.hearingTypeOther=''; }
@@ -2884,15 +2888,15 @@ function renderIntakeForm() {
         </div>
         <input type="date" value="${intake.courtDate}" onchange="intake.courtDate=this.value" style="max-width:180px">
         <div style="display:flex;align-items:center;gap:6px;margin-top:8px;flex-wrap:wrap">
-          <select onchange="intake.courtHour=this.value" style="width:70px;padding:7px 8px;font-size:13px;border:2px solid #2a313d;border-radius:7px;background:#1a212b;font-family:inherit">
+          <select onchange="intake.courtHour=this.value" style="width:70px;padding:7px 8px;font-size:13px;border:2px solid #27324A;border-radius:7px;background:#16223A;font-family:inherit">
             <option value="">Hr</option>
             ${['1','2','3','4','5','6','7','8','9','10','11','12'].map(h=>`<option value="${h}"${intake.courtHour===h?' selected':''}>${h}</option>`).join('')}
           </select>
-          <span style="font-size:16px;font-weight:700;color:#97a0b1">:</span>
-          <select onchange="intake.courtMinute=this.value" style="width:70px;padding:7px 8px;font-size:13px;border:2px solid #2a313d;border-radius:7px;background:#1a212b;font-family:inherit">
+          <span style="font-size:16px;font-weight:700;color:#9AA6BC">:</span>
+          <select onchange="intake.courtMinute=this.value" style="width:70px;padding:7px 8px;font-size:13px;border:2px solid #27324A;border-radius:7px;background:#16223A;font-family:inherit">
             ${['00','05','10','15','20','25','30','35','40','45','50','55'].map(m=>`<option value="${m}"${intake.courtMinute===m?' selected':''}>${m}</option>`).join('')}
           </select>
-          <select onchange="intake.courtAmPm=this.value" style="width:70px;padding:7px 8px;font-size:13px;border:2px solid #2a313d;border-radius:7px;background:#1a212b;font-family:inherit">
+          <select onchange="intake.courtAmPm=this.value" style="width:70px;padding:7px 8px;font-size:13px;border:2px solid #27324A;border-radius:7px;background:#16223A;font-family:inherit">
             ${['AM','PM'].map(a=>`<option value="${a}"${intake.courtAmPm===a?' selected':''}>${a}</option>`).join('')}
           </select>
         </div>
@@ -2946,7 +2950,7 @@ function renderIntakeForm() {
         <div class="field" style="flex:0 0 auto;margin-bottom:0">
           <label>Bail Amount</label>
           <div style="display:flex;align-items:center">
-            <div style="padding:9px 10px;background:#11161e;border:2px solid #2a313d;border-right:none;border-radius:8px 0 0 8px;font-size:13px;font-weight:700;color:#b9c1d0">$</div>
+            <div style="padding:9px 10px;background:#0A1220;border:2px solid #27324A;border-right:none;border-radius:8px 0 0 8px;font-size:13px;font-weight:700;color:#C2C8D4">$</div>
             <input type="text" value="${intake.custody.bailAmount?'$'+Number(intake.custody.bailAmount.replace(/,/g,'')).toLocaleString('en-US'):''}" placeholder="0" oninput="formatCurrency(this);intake.custody.bailAmount=rawCurrency(this.value);" class="currency-input" style="border-radius:0 8px 8px 0;border-left:none;max-width:110px">
           </div>
         </div>
@@ -2959,7 +2963,7 @@ function renderIntakeForm() {
         <div class="field" style="flex:0 0 auto;margin-bottom:0">
           <label>Bail Amount</label>
           <div style="display:flex;align-items:center">
-            <div style="padding:9px 10px;background:#11161e;border:2px solid #2a313d;border-right:none;border-radius:8px 0 0 8px;font-size:13px;font-weight:700;color:#b9c1d0">$</div>
+            <div style="padding:9px 10px;background:#0A1220;border:2px solid #27324A;border-right:none;border-radius:8px 0 0 8px;font-size:13px;font-weight:700;color:#C2C8D4">$</div>
             <input type="text" value="${intake.custody.bailAmount?'$'+Number(intake.custody.bailAmount.replace(/,/g,'')).toLocaleString('en-US'):''}" placeholder="0" oninput="formatCurrency(this);intake.custody.bailAmount=rawCurrency(this.value);" class="currency-input" style="border-radius:0 8px 8px 0;border-left:none;max-width:110px">
           </div>
         </div>
@@ -2968,18 +2972,18 @@ function renderIntakeForm() {
 
     <div id="custodyInCustodySub" style="display:${intake.custody.custodyStatus==='Currently In Custody'?'block':'none'};margin-bottom:8px">
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
-        <label style="display:inline-flex;align-items:center;gap:7px;cursor:pointer;padding:7px 13px;background:${intake.custody.inCustodyBail==='Bail Set'?'#b8842e':'#161c25'};border:2px solid ${intake.custody.inCustodyBail==='Bail Set'?'#b8842e':'#2a313d'};border-radius:8px;font-size:13px;font-weight:700;color:${intake.custody.inCustodyBail==='Bail Set'?'#161b24':'#aab2c2'};transition:all 0.12s;white-space:nowrap" id="bailSetPill">
+        <label style="display:inline-flex;align-items:center;gap:7px;cursor:pointer;padding:7px 13px;background:${intake.custody.inCustodyBail==='Bail Set'?'#B4902A':'#111C30'};border:2px solid ${intake.custody.inCustodyBail==='Bail Set'?'#B4902A':'#27324A'};border-radius:8px;font-size:13px;font-weight:700;color:${intake.custody.inCustodyBail==='Bail Set'?'#111C30':'#9AA6BC'};transition:all 0.12s;white-space:nowrap" id="bailSetPill">
           <input type="checkbox" ${intake.custody.inCustodyBail==='Bail Set'?'checked':''} style="width:15px;height:15px;cursor:pointer;margin:0" onchange="
             intake.custody.inCustodyBail=this.checked?'Bail Set':'No Bail Set';
             var p=document.getElementById('bailSetPill');
-            if(p){p.style.background=this.checked?'#b8842e':'#161c25';p.style.borderColor=this.checked?'#b8842e':'#2a313d';p.style.color=this.checked?'#161b24':'#aab2c2';}
+            if(p){p.style.background=this.checked?'#B4902A':'#111C30';p.style.borderColor=this.checked?'#B4902A':'#27324A';p.style.color=this.checked?'#111C30':'#9AA6BC';}
             document.getElementById('inCustodyBailAmtSub').style.display=this.checked?'flex':'none';
             document.getElementById('hourRuleSub').style.display=this.checked?'none':'block';
             if(!this.checked){intake.custody.inCustodyBailAmount='';intake.custody.inCustodyBailType='';document.getElementById('bailConditionsSub').style.display='none';}
           ">
           Bail Set
         </label>
-        <select onchange="intake.custody.inCustodyBailType=this.value;document.getElementById('bailConditionsSub').style.display=this.value==='Conditional'?'block':'none'" style="padding:7px 13px;font-size:13px;font-weight:600;border:2px solid #2a313d;border-radius:8px;background:#1a212b;font-family:inherit;max-width:160px">
+        <select onchange="intake.custody.inCustodyBailType=this.value;document.getElementById('bailConditionsSub').style.display=this.value==='Conditional'?'block':'none'" style="padding:7px 13px;font-size:13px;font-weight:600;border:2px solid #27324A;border-radius:8px;background:#16223A;font-family:inherit;max-width:160px">
           <option value="">Bail Type</option>
           ${['Conditional','Unconditional'].map(o=>`<option value="${o}"${intake.custody.inCustodyBailType===o?' selected':''}>${o}</option>`).join('')}
         </select>
@@ -3003,7 +3007,7 @@ function renderIntakeForm() {
           <div class="field" style="flex:0 0 auto;margin-bottom:0">
             <label>Bail Amount</label>
             <div style="display:flex;align-items:center">
-              <div style="padding:9px 10px;background:#11161e;border:2px solid #2a313d;border-right:none;border-radius:8px 0 0 8px;font-size:13px;font-weight:700;color:#b9c1d0">$</div>
+              <div style="padding:9px 10px;background:#0A1220;border:2px solid #27324A;border-right:none;border-radius:8px 0 0 8px;font-size:13px;font-weight:700;color:#C2C8D4">$</div>
               <input type="text" value="${intake.custody.inCustodyBailAmount?'$'+Number(intake.custody.inCustodyBailAmount.replace(/,/g,'')).toLocaleString('en-US'):''}" placeholder="0" oninput="formatCurrency(this);intake.custody.inCustodyBailAmount=rawCurrency(this.value);" class="currency-input" style="border-radius:0 8px 8px 0;border-left:none;max-width:110px">
             </div>
           </div>
@@ -3012,7 +3016,7 @@ function renderIntakeForm() {
           <div class="field" style="flex:0 0 auto;margin-bottom:0">
             <label>36-Hour Rule Deadline</label>
             <input type="date" value="${intake.custody.hourRuleDate||''}" onchange="intake.custody.hourRuleDate=this.value" style="max-width:180px;color-scheme:dark">
-            <div style="font-size:11px;color:#8a93a4;margin-top:3px">Will read: "[Date] by noon"</div>
+            <div style="font-size:11px;color:#8A93A3;margin-top:3px">Will read: "[Date] by noon"</div>
           </div>
         </div>
       </div>
@@ -3027,11 +3031,11 @@ function renderIntakeForm() {
       </div>
       <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:flex-start;flex-direction:column">
         <div class="field" style="margin-bottom:0">
-          <label style="display:inline-flex;align-items:center;gap:7px;cursor:pointer;padding:7px 13px;background:${intake.custody.neverArrestedBail?'#b8842e':'#161c25'};border:2px solid ${intake.custody.neverArrestedBail?'#b8842e':'#2a313d'};border-radius:8px;font-size:13px;font-weight:700;color:${intake.custody.neverArrestedBail?'#161b24':'#aab2c2'};transition:all 0.12s" id="naBailPill">
+          <label style="display:inline-flex;align-items:center;gap:7px;cursor:pointer;padding:7px 13px;background:${intake.custody.neverArrestedBail?'#B4902A':'#111C30'};border:2px solid ${intake.custody.neverArrestedBail?'#B4902A':'#27324A'};border-radius:8px;font-size:13px;font-weight:700;color:${intake.custody.neverArrestedBail?'#111C30':'#9AA6BC'};transition:all 0.12s" id="naBailPill">
             <input type="checkbox" ${intake.custody.neverArrestedBail?'checked':''} style="width:15px;height:15px;cursor:pointer;margin:0" onchange="
               intake.custody.neverArrestedBail=this.checked;
               var p=document.getElementById('naBailPill');
-              if(p){p.style.background=this.checked?'#b8842e':'#161c25';p.style.borderColor=this.checked?'#b8842e':'#2a313d';p.style.color=this.checked?'#161b24':'#aab2c2';}
+              if(p){p.style.background=this.checked?'#B4902A':'#111C30';p.style.borderColor=this.checked?'#B4902A':'#27324A';p.style.color=this.checked?'#111C30':'#9AA6BC';}
               document.getElementById('naBailSub').style.display=this.checked?'block':'none';
               if(!this.checked){intake.custody.neverArrestedBailAmount='';intake.custody.neverArrestedBailType='';intake.custody.neverArrestedConditions='';}
             ">
@@ -3043,7 +3047,7 @@ function renderIntakeForm() {
             <div class="field" style="flex:0 0 auto;margin-bottom:0">
               <label>Bail Amount</label>
               <div style="display:flex;align-items:center">
-                <div style="padding:9px 10px;background:#11161e;border:2px solid #2a313d;border-right:none;border-radius:8px 0 0 8px;font-size:13px;font-weight:700;color:#b9c1d0">$</div>
+                <div style="padding:9px 10px;background:#0A1220;border:2px solid #27324A;border-right:none;border-radius:8px 0 0 8px;font-size:13px;font-weight:700;color:#C2C8D4">$</div>
                 <input type="text" value="${intake.custody.neverArrestedBailAmount?'$'+Number(intake.custody.neverArrestedBailAmount.replace(/,/g,'')).toLocaleString('en-US'):''}" placeholder="0" oninput="formatCurrency(this);intake.custody.neverArrestedBailAmount=rawCurrency(this.value);" class="currency-input" style="border-radius:0 8px 8px 0;border-left:none;max-width:110px">
               </div>
             </div>
@@ -3072,9 +3076,9 @@ function renderIntakeForm() {
 
     <div class="section-label" style="margin-top:16px">Probation</div>
     <div class="field" style="margin-bottom:8px">
-      <label class="mini-pill${intake.dwi.onProbation==='Yes'?' mp-active':''}" style="display:inline-flex;align-items:center;gap:7px;cursor:pointer;padding:7px 13px;background:${intake.dwi.onProbation==='Yes'?'#b3284a':'#161c25'};border:2px solid ${intake.dwi.onProbation==='Yes'?'#b3284a':'#2a313d'};border-radius:8px;font-size:13px;font-weight:700;color:${intake.dwi.onProbation==='Yes'?'#161b24':'#aab2c2'};transition:all 0.12s" id="probPill">
+      <label class="mini-pill${intake.dwi.onProbation==='Yes'?' mp-active':''}" style="display:inline-flex;align-items:center;gap:7px;cursor:pointer;padding:7px 13px;background:${intake.dwi.onProbation==='Yes'?'#D4AF37':'#111C30'};border:2px solid ${intake.dwi.onProbation==='Yes'?'#D4AF37':'#27324A'};border-radius:8px;font-size:13px;font-weight:700;color:${intake.dwi.onProbation==='Yes'?'#111C30':'#9AA6BC'};transition:all 0.12s" id="probPill">
         <input type="checkbox" ${intake.dwi.onProbation==='Yes'?'checked':''} style="width:15px;height:15px;cursor:pointer;margin:0"
-          onchange="intake.dwi.onProbation=this.checked?'Yes':'No';var p=document.getElementById('probPill');if(p){p.style.background=this.checked?'#b3284a':'#161c25';p.style.borderColor=this.checked?'#b3284a':'#2a313d';p.style.color=this.checked?'#161b24':'#aab2c2';}var s=document.getElementById('probCaseFileSub');if(s)s.style.display=this.checked?'block':'none';">
+          onchange="intake.dwi.onProbation=this.checked?'Yes':'No';var p=document.getElementById('probPill');if(p){p.style.background=this.checked?'#D4AF37':'#111C30';p.style.borderColor=this.checked?'#D4AF37':'#27324A';p.style.color=this.checked?'#111C30':'#9AA6BC';}var s=document.getElementById('probCaseFileSub');if(s)s.style.display=this.checked?'block':'none';">
         Currently on Probation
       </label>
     </div>
@@ -3095,22 +3099,22 @@ function renderIntakeForm() {
       <label>Flat Fee</label>
       <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
         <div style="display:flex;align-items:center;max-width:180px">
-          <div style="padding:9px 10px;background:#11161e;border:2px solid #2a313d;border-right:none;border-radius:8px 0 0 8px;font-size:14px;font-weight:700;color:#b9c1d0;flex-shrink:0">$</div>
+          <div style="padding:9px 10px;background:#0A1220;border:2px solid #27324A;border-right:none;border-radius:8px 0 0 8px;font-size:14px;font-weight:700;color:#C2C8D4;flex-shrink:0">$</div>
           <input type="text" value="${intake.fee?'$'+Number(intake.fee.replace(/,/g,'')).toLocaleString('en-US'):''}" placeholder="0" oninput="formatCurrency(this); intake.fee=rawCurrency(this.value);" class="currency-input" style="border-radius:0 8px 8px 0;border-left:none;max-width:120px">
         </div>
-        <label style="display:inline-flex;align-items:center;gap:7px;cursor:pointer;padding:7px 14px;background:${intake.retainerSent?'#2f9e5a':'#161c25'};border:2px solid ${intake.retainerSent?'#2f9e5a':'#2a313d'};border-radius:8px;white-space:nowrap;font-size:13px;font-weight:700;color:${intake.retainerSent?'#161b24':'#aab2c2'};transition:all 0.12s" id="retainerPill">
-          <input type="checkbox" ${intake.retainerSent?'checked':''} onchange="intake.retainerSent=this.checked; var p=document.getElementById('retainerPill'); if(p){p.style.background=this.checked?'#2f9e5a':'#161c25';p.style.borderColor=this.checked?'#2f9e5a':'#2a313d';p.style.color=this.checked?'#161b24':'#aab2c2';}" style="width:15px;height:15px;accent-color:#2f9e5a;cursor:pointer;flex-shrink:0">
+        <label style="display:inline-flex;align-items:center;gap:7px;cursor:pointer;padding:7px 14px;background:${intake.retainerSent?'#2f9e5a':'#111C30'};border:2px solid ${intake.retainerSent?'#2f9e5a':'#27324A'};border-radius:8px;white-space:nowrap;font-size:13px;font-weight:700;color:${intake.retainerSent?'#111C30':'#9AA6BC'};transition:all 0.12s" id="retainerPill">
+          <input type="checkbox" ${intake.retainerSent?'checked':''} onchange="intake.retainerSent=this.checked; var p=document.getElementById('retainerPill'); if(p){p.style.background=this.checked?'#2f9e5a':'#111C30';p.style.borderColor=this.checked?'#2f9e5a':'#27324A';p.style.color=this.checked?'#111C30':'#9AA6BC';}" style="width:15px;height:15px;accent-color:#2f9e5a;cursor:pointer;flex-shrink:0">
           Retainer Sent
         </label>
       </div>
     </div>
     <div class="field">
       <label>Payment Plan</label>
-      <label style="display:inline-flex;align-items:center;gap:7px;cursor:pointer;padding:7px 13px;background:${intake.paymentPlan==='Yes'?'#1f9e86':'#161c25'};border:2px solid ${intake.paymentPlan==='Yes'?'#1f9e86':'#2a313d'};border-radius:8px;font-size:13px;font-weight:700;color:${intake.paymentPlan==='Yes'?'#161b24':'#aab2c2'};margin-bottom:6px" id="paymentPlanPill">
+      <label style="display:inline-flex;align-items:center;gap:7px;cursor:pointer;padding:7px 13px;background:${intake.paymentPlan==='Yes'?'#3E9E8F':'#111C30'};border:2px solid ${intake.paymentPlan==='Yes'?'#3E9E8F':'#27324A'};border-radius:8px;font-size:13px;font-weight:700;color:${intake.paymentPlan==='Yes'?'#111C30':'#9AA6BC'};margin-bottom:6px" id="paymentPlanPill">
         <input type="checkbox" ${intake.paymentPlan==='Yes'?'checked':''} style="width:15px;height:15px;cursor:pointer;margin:0" onchange="
           intake.paymentPlan=this.checked?'Yes':'No';
           var p=document.getElementById('paymentPlanPill');
-          if(p){p.style.background=this.checked?'#1f9e86':'#161c25';p.style.borderColor=this.checked?'#1f9e86':'#2a313d';p.style.color=this.checked?'#161b24':'#aab2c2';}
+          if(p){p.style.background=this.checked?'#3E9E8F':'#111C30';p.style.borderColor=this.checked?'#3E9E8F':'#27324A';p.style.color=this.checked?'#111C30':'#9AA6BC';}
           var pt=document.getElementById('paymentTermsField');
           if(pt) pt.style.display=this.checked?'block':'none';
           if(!this.checked) intake.paymentTerms='';
@@ -3118,9 +3122,9 @@ function renderIntakeForm() {
         Payment Plan
       </label>
       <div id="paymentTermsField" style="display:${intake.paymentPlan==='Yes'?'block':'none'}">
-        <label style="font-size:12px;font-weight:700;color:#e8ebf2;display:block;margin-bottom:5px">Terms</label>
+        <label style="font-size:12px;font-weight:700;color:#F2F4F7;display:block;margin-bottom:5px">Terms</label>
         <textarea placeholder="e.g., $1,500 down, $500/month x 4 months&#10;Payment due 1st of each month" rows="3"
-          oninput="intake.paymentTerms=this.value" onblur="formatPaymentTerms(this)" style="width:100%;padding:9px 12px;font-size:14px;border:2px solid #2a313d;border-radius:8px;background:#1a212b;color:#e6e9f0;font-family:inherit;outline:none;resize:vertical;line-height:1.6;box-sizing:border-box">${escHtml(intake.paymentTerms)}</textarea>
+          oninput="intake.paymentTerms=this.value" onblur="formatPaymentTerms(this)" style="width:100%;padding:9px 12px;font-size:14px;border:2px solid #27324A;border-radius:8px;background:#16223A;color:#F2F4F7;font-family:inherit;outline:none;resize:vertical;line-height:1.6;box-sizing:border-box">${escHtml(intake.paymentTerms)}</textarea>
       </div>
     </div>
     <div class="field">
@@ -3138,9 +3142,9 @@ function renderWitnessList() {
   court.witnessList.forEach(function(w, i) {
     html += '<div style="display:flex;gap:8px;align-items:center;margin-bottom:6px">';
     html += '<input type="text" value="' + escHtml(w) + '" placeholder="Witness Identity" oninput="court.witnessList[' + i + ']=this.value"'
-      + ' style="max-width:280px;padding:8px 12px;font-size:14px;border:2px solid #2a313d;border-radius:8px;background:#1a212b;font-family:inherit">';
+      + ' style="max-width:280px;padding:8px 12px;font-size:14px;border:2px solid #27324A;border-radius:8px;background:#16223A;font-family:inherit">';
     if (i > 0) {
-      html += '<button onclick="court.witnessList.splice(' + i + ',1);renderWitnessList();" style="padding:6px 10px;background:#2a1417;border:2px solid #5e2c30;border-radius:6px;color:#e0485a;font-size:13px;font-weight:700;cursor:pointer">&times;</button>';
+      html += '<button onclick="court.witnessList.splice(' + i + ',1);renderWitnessList();" style="padding:6px 10px;background:#241C0C;border:2px solid #6E5A2A;border-radius:6px;color:#E7CE84;font-size:13px;font-weight:700;cursor:pointer">&times;</button>';
     }
     html += '</div>';
   });
@@ -3201,7 +3205,7 @@ function renderCourtForm() {
         </label>
         <div id="witnessIdentitySub" style="display:${court.witnessTestimony?'block':'none'}">
           <div id="witnessListContainer"></div>
-          <button onclick="court.witnessList.push('');renderWitnessList();" style="margin-top:6px;padding:5px 14px;background:#b3284a;color:#f3edef;border:none;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer">+ Witness</button>
+          <button onclick="court.witnessList.push('');renderWitnessList();" style="margin-top:6px;padding:5px 14px;background:#D4AF37;color:#F2F4F7;border:none;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer">+ Witness</button>
         </div>
       </div>
     </div>
@@ -3325,13 +3329,13 @@ function renderPleaForm() {
           <input type="text" value="${escHtml(pc.pleaStatute)}" placeholder="e.g., 169A.28" oninput="plea.pleaCounts[${i}].pleaStatute=this.value">
         </div>
       </div>
-      ${i > 0 ? `<button onclick="plea.pleaCounts.splice(${i},1); renderForm()" style="margin-top:6px;padding:5px 12px;background:#161c25;border:1px solid #2a313d;border-radius:6px;color:#e0485a;font-size:12px;font-weight:700;cursor:pointer">Remove Count</button>` : ''}
+      ${i > 0 ? `<button onclick="plea.pleaCounts.splice(${i},1); renderForm()" style="margin-top:6px;padding:5px 12px;background:#111C30;border:1px solid #27324A;border-radius:6px;color:#E7CE84;font-size:12px;font-weight:700;cursor:pointer">Remove Count</button>` : ''}
     </div>`).join('');
 
   const dismissedRows = plea.dismissed.map((d,i) => `
     <div style="display:flex;gap:10px;align-items:flex-start;margin-bottom:10px">
       <input type="text" value="${escHtml(d)}" placeholder="e.g., Count 2 — DWI Test Refusal" oninput="plea.dismissed[${i}]=this.value" style="flex:1">
-      <button onclick="plea.dismissed.splice(${i},1); renderForm()" style="padding:11px 14px;background:#161c25;border:2px solid #2a313d;border-radius:8px;color:#e0485a;font-size:13px;font-weight:700;cursor:pointer;flex-shrink:0">✕</button>
+      <button onclick="plea.dismissed.splice(${i},1); renderForm()" style="padding:11px 14px;background:#111C30;border:2px solid #27324A;border-radius:8px;color:#E7CE84;font-size:13px;font-weight:700;cursor:pointer;flex-shrink:0">✕</button>
     </div>`).join('');
 
   return `
@@ -3390,11 +3394,11 @@ function renderPleaForm() {
 
     <div class="section-label">Counts — Original &amp; Plea-To</div>
     ${pleaCountRows}
-    <button onclick="plea.pleaCounts.push({charge:'',statute:'',pleaTo:'',pleaStatute:''}); renderForm()" style="padding:10px 18px;background:#161c25;border:2px dashed #2a313d;border-radius:8px;color:#aab2c2;font-size:14px;font-weight:700;cursor:pointer;width:100%;margin-bottom:8px">+ Add Count</button>
+    <button onclick="plea.pleaCounts.push({charge:'',statute:'',pleaTo:'',pleaStatute:''}); renderForm()" style="padding:10px 18px;background:#111C30;border:2px dashed #27324A;border-radius:8px;color:#9AA6BC;font-size:14px;font-weight:700;cursor:pointer;width:100%;margin-bottom:8px">+ Add Count</button>
 
     <div class="section-label">Counts Dismissed</div>
     ${dismissedRows}
-    <button onclick="plea.dismissed.push(''); renderForm()" style="padding:10px 18px;background:#161c25;border:2px dashed #2a313d;border-radius:8px;color:#aab2c2;font-size:14px;font-weight:700;cursor:pointer;width:100%;margin-bottom:8px">+ Add Dismissed Count</button>
+    <button onclick="plea.dismissed.push(''); renderForm()" style="padding:10px 18px;background:#111C30;border:2px dashed #27324A;border-radius:8px;color:#9AA6BC;font-size:14px;font-weight:700;cursor:pointer;width:100%;margin-bottom:8px">+ Add Dismissed Count</button>
 
     <div class="section-label">Agreed Sentence</div>
     <div class="field">
@@ -3418,14 +3422,14 @@ function renderPleaForm() {
       <div class="field">
         <label>Fine</label>
         <div style="display:flex;align-items:center;gap:0">
-          <div style="padding:11px 14px;background:#11161e;border:2px solid #2a313d;border-right:none;border-radius:8px 0 0 8px;font-size:15px;font-weight:700;color:#b9c1d0;flex-shrink:0">$</div>
+          <div style="padding:11px 14px;background:#0A1220;border:2px solid #27324A;border-right:none;border-radius:8px 0 0 8px;font-size:15px;font-weight:700;color:#C2C8D4;flex-shrink:0">$</div>
           <input type="text" value="${plea.fine?'$'+Number(plea.fine.replace(/,/g,'')).toLocaleString('en-US'):''}" placeholder="$0" oninput="formatCurrency(this); plea.fine=rawCurrency(this.value);" class="currency-input" style="border-radius:0 8px 8px 0;border-left:none">
         </div>
       </div>
       <div class="field">
         <label>Restitution</label>
         <div style="display:flex;align-items:center;gap:0">
-          <div style="padding:11px 14px;background:#11161e;border:2px solid #2a313d;border-right:none;border-radius:8px 0 0 8px;font-size:15px;font-weight:700;color:#b9c1d0;flex-shrink:0">$</div>
+          <div style="padding:11px 14px;background:#0A1220;border:2px solid #27324A;border-right:none;border-radius:8px 0 0 8px;font-size:15px;font-weight:700;color:#C2C8D4;flex-shrink:0">$</div>
           <input type="text" value="${plea.restitution?'$'+Number(plea.restitution.replace(/,/g,'')).toLocaleString('en-US'):''}" placeholder="$0 or TBD" oninput="formatCurrency(this); plea.restitution=rawCurrency(this.value);" class="currency-input" style="border-radius:0 8px 8px 0;border-left:none">
         </div>
       </div>
@@ -3560,28 +3564,28 @@ function renderPriorRows(){
   var list=intake.dwi.priorsList||[];
   var html='';
   list.forEach(function(pr,i){
-    html+='<div style="margin-bottom:10px;padding:10px 12px;background:#11161e;border:1px solid #2c333f;border-radius:8px">';
+    html+='<div style="margin-bottom:10px;padding:10px 12px;background:#0A1220;border:1px solid #27324A;border-radius:8px">';
     html+='<div style="display:flex;align-items:flex-end;gap:10px;flex-wrap:wrap;margin-bottom:8px">';
-    html+='<div><label style="display:block;font-size:11px;font-weight:700;color:#e8ebf2;margin-bottom:4px">Year</label>';
-    html+='<input type="number" min="1901" max="2099" value="'+(pr.year||2026)+'" oninput="intake.dwi.priorsList['+i+'].year=parseInt(this.value)||2026" style="width:80px;padding:7px 6px;font-size:15px;font-weight:700;text-align:center;border:2px solid #2a313d;border-radius:8px;background:#161b24;font-family:inherit"></div>';
-    html+='<div style="flex:1;min-width:180px"><label style="display:block;font-size:11px;font-weight:700;color:#e8ebf2;margin-bottom:4px">Prior Type</label>';
-    html+='<select onchange="intake.dwi.priorsList['+i+'].type=this.value" style="max-width:320px;width:100%;padding:7px 10px;font-size:12px;border:2px solid #2a313d;border-radius:8px;background:#161b24;font-family:inherit">';
+    html+='<div><label style="display:block;font-size:11px;font-weight:700;color:#F2F4F7;margin-bottom:4px">Year</label>';
+    html+='<input type="number" min="1901" max="2099" value="'+(pr.year||2026)+'" oninput="intake.dwi.priorsList['+i+'].year=parseInt(this.value)||2026" style="width:80px;padding:7px 6px;font-size:15px;font-weight:700;text-align:center;border:2px solid #27324A;border-radius:8px;background:#111C30;font-family:inherit"></div>';
+    html+='<div style="flex:1;min-width:180px"><label style="display:block;font-size:11px;font-weight:700;color:#F2F4F7;margin-bottom:4px">Prior Type</label>';
+    html+='<select onchange="intake.dwi.priorsList['+i+'].type=this.value" style="max-width:320px;width:100%;padding:7px 10px;font-size:12px;border:2px solid #27324A;border-radius:8px;background:#111C30;font-family:inherit">';
     html+='<option value="">Select type...</option>';
     [['qualifying-10','Criminal and Civil Qualifying Offense (Within 10 Years Old)'],['civil-10-20','Civil Qualifying Offense Only (10+ to 20 Years Old)'],['non-qualifying','Non-Qualifying Offense (Outside 20 Years Old)']].forEach(function(t){
       html+='<option value="'+t[0]+'"'+(pr.type===t[0]?' selected':'')+'>'+t[1]+'</option>';
     });
     html+='</select></div>';
-    if(i>0)html+='<button onclick="intake.dwi.priorsList.splice('+i+',1);renderPriorRows();" style="padding:6px 10px;background:#2a1417;border:2px solid #5e2c30;border-radius:6px;color:#e0485a;font-size:13px;font-weight:700;cursor:pointer">&times;</button>';
+    if(i>0)html+='<button onclick="intake.dwi.priorsList.splice('+i+',1);renderPriorRows();" style="padding:6px 10px;background:#241C0C;border:2px solid #6E5A2A;border-radius:6px;color:#E7CE84;font-size:13px;font-weight:700;cursor:pointer">&times;</button>';
     html+='</div>';
     var stVal=pr.state||'MN';
     html+='<div style="display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap">';
-    html+='<div style="flex:0 0 90px"><label style="display:block;font-size:11px;font-weight:700;color:#e8ebf2;margin-bottom:4px">State</label>';
-    html+='<select onchange="intake.dwi.priorsList['+i+'].state=this.value;intake.dwi.priorsList['+i+'].county=\'\';renderPriorRows();" style="width:100%;padding:7px 8px;font-size:13px;font-weight:700;border:2px solid #2a313d;border-radius:8px;background:#161b24;font-family:inherit">';
+    html+='<div style="flex:0 0 90px"><label style="display:block;font-size:11px;font-weight:700;color:#F2F4F7;margin-bottom:4px">State</label>';
+    html+='<select onchange="intake.dwi.priorsList['+i+'].state=this.value;intake.dwi.priorsList['+i+'].county=\'\';renderPriorRows();" style="width:100%;padding:7px 8px;font-size:13px;font-weight:700;border:2px solid #27324A;border-radius:8px;background:#111C30;font-family:inherit">';
     ["MN", "AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA", "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY"].forEach(function(s){html+='<option value="'+s+'"'+(stVal===s?' selected':'')+'>'+s+'</option>';});
     html+='</select></div>';
     if(stVal==='MN'){
-      html+='<div style="flex:1;max-width:200px"><label style="display:block;font-size:11px;font-weight:700;color:#e8ebf2;margin-bottom:4px">County</label>';
-      html+='<input type="text" value="'+(pr.county||'')+'" placeholder="e.g., Scott" oninput="intake.dwi.priorsList['+i+'].county=this.value" style="width:100%;padding:7px 8px;font-size:13px;border:2px solid #2a313d;border-radius:8px;background:#161b24;font-family:inherit"></div>';
+      html+='<div style="flex:1;max-width:200px"><label style="display:block;font-size:11px;font-weight:700;color:#F2F4F7;margin-bottom:4px">County</label>';
+      html+='<input type="text" value="'+(pr.county||'')+'" placeholder="e.g., Scott" oninput="intake.dwi.priorsList['+i+'].county=this.value" style="width:100%;padding:7px 8px;font-size:13px;border:2px solid #27324A;border-radius:8px;background:#111C30;font-family:inherit"></div>';
     }
     html+='</div>';
     html+='</div>';
@@ -3764,9 +3768,9 @@ function renderDWIPanel() {
               onchange="intake.dwi.interlockRequired=this.checked;this.closest('label').classList.toggle('factor-pill-on',this.checked)"> Interlock Required
           </label>
         </div>
-          <div class="dwi-field" style="max-width:280px;margin-top:10px"><label>Implied Consent / Revocation Deadline <span style="font-weight:600;color:#8a93a4">(offense + 60 days)</span></label>
+          <div class="dwi-field" style="max-width:280px;margin-top:10px"><label>Implied Consent / Revocation Deadline <span style="font-weight:600;color:#8A93A3">(offense + 60 days)</span></label>
             <input type="date" id="icDeadlineInput" class="dwi-input" value="${d.impliedConsentDeadline||''}" onchange="intake.dwi.impliedConsentDeadline=this.value">
-            <div style="font-size:11px;color:#6f7889;margin-top:4px">Auto-fills from Offense Date; override if needed.</div>
+            <div style="font-size:11px;color:#7E889C;margin-top:4px">Auto-fills from Offense Date; override if needed.</div>
           </div>
         </div>
       </div>
@@ -3781,7 +3785,7 @@ function renderDWIPanel() {
         </div>
         <div id="priorsSub" style="display:${d.priors==='Has Priors'?'block':'none'};margin-bottom:10px">
           <div id="priorRowsContainer"></div>
-          <button onclick="intake.dwi.priorsList.push({year:2026,type:'',state:'MN',county:''});renderPriorRows();" style="margin-top:6px;padding:5px 14px;background:#b3284a;color:#f3edef;border:none;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer">+ Add Prior</button>
+          <button onclick="intake.dwi.priorsList.push({year:2026,type:'',state:'MN',county:''});renderPriorRows();" style="margin-top:6px;padding:5px 14px;background:#D4AF37;color:#F2F4F7;border:none;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer">+ Add Prior</button>
         </div>
       </div>
 
@@ -3846,7 +3850,7 @@ function renderDomesticPanel() {
         </select>
         <div id="domPriorsSub" style="display:${d.priors==='Has Priors'?'block':'none'};margin-top:8px">
           <div id="domPriorRowsContainer"></div>
-          <button onclick="intake.domestic.priorsList.push({year:'',type:''});renderDomesticPriorRows();" style="margin-top:6px;padding:5px 12px;background:#b3284a;color:#f3edef;border:none;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer">+ Add Prior</button>
+          <button onclick="intake.domestic.priorsList.push({year:'',type:''});renderDomesticPriorRows();" style="margin-top:6px;padding:5px 12px;background:#D4AF37;color:#F2F4F7;border:none;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer">+ Add Prior</button>
         </div></div>
     </div></div></div></div>`;
 }
@@ -3875,7 +3879,7 @@ function renderDrugsPanel() {
         </select>
         <div id="drugPriorsSub" style="display:${d.priors==='Has Priors'?'block':'none'};margin-top:8px">
           <div id="drugPriorRowsContainer"></div>
-          <button onclick="intake.drugs.priorsList.push({year:''});renderDrugPriorRows();" style="margin-top:6px;padding:5px 12px;background:#b3284a;color:#f3edef;border:none;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer">+ Add Prior</button>
+          <button onclick="intake.drugs.priorsList.push({year:''});renderDrugPriorRows();" style="margin-top:6px;padding:5px 12px;background:#D4AF37;color:#F2F4F7;border:none;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer">+ Add Prior</button>
         </div></div>
     </div></div></div></div>`;
 }
@@ -3890,7 +3894,7 @@ function makeSearchDrop(containerId, items, selectedVal, onSelect, placeholder) 
     var val = selectedVal || '';
     wrap.innerHTML =
       '<div class="srch-val" onclick="toggleSD(\''+containerId+'\')">'
-      + (val ? val : '<span style="color:#6f7889">' + (placeholder||'Select...') + '</span>')
+      + (val ? val : '<span style="color:#7E889C">' + (placeholder||'Select...') + '</span>')
       + '<span class="sarr">&#9660;</span></div>'
       + '<div class="srch-wrap" id="sd_'+containerId+'" style="display:'+(open?'block':'none')+';position:absolute;z-index:200;left:0;right:0">'
       + '<input type="text" placeholder="Search..." oninput="filterSD(\''+containerId+'\',this.value,'+JSON.stringify(items)+','+JSON.stringify(onSelect)+')" autocomplete="off" onclick="event.stopPropagation()">'
@@ -4016,16 +4020,16 @@ function renderDomesticPriorRows() {
   var html = '';
   list.forEach(function(pr, i) {
     html += '<div style="display:flex;align-items:flex-end;gap:10px;flex-wrap:wrap;margin-bottom:8px">';
-    html += '<div><label style="display:block;font-size:11px;font-weight:700;color:#e8ebf2;margin-bottom:4px">Year</label>';
+    html += '<div><label style="display:block;font-size:11px;font-weight:700;color:#F2F4F7;margin-bottom:4px">Year</label>';
     html += '<input type="number" min="1901" max="2099" value="'+(pr.year||2026)+'"'
       + ' oninput="intake.domestic.priorsList['+i+'].year=parseInt(this.value)||2026"'
-      + ' style="width:80px;padding:7px 6px;font-size:15px;font-weight:700;text-align:center;border:2px solid #2a313d;border-radius:8px;background:#161b24;font-family:inherit"></div>';
-    html += '<div style="flex:1;min-width:160px"><label style="display:block;font-size:11px;font-weight:700;color:#e8ebf2;margin-bottom:4px">Prior Type</label>';
+      + ' style="width:80px;padding:7px 6px;font-size:15px;font-weight:700;text-align:center;border:2px solid #27324A;border-radius:8px;background:#111C30;font-family:inherit"></div>';
+    html += '<div style="flex:1;min-width:160px"><label style="display:block;font-size:11px;font-weight:700;color:#F2F4F7;margin-bottom:4px">Prior Type</label>';
     html += '<input type="text" value="'+(pr.type||'')+'" placeholder="e.g., Domestic Assault"'
       + ' oninput="intake.domestic.priorsList['+i+'].type=this.value"'
-      + ' style="width:100%;padding:7px 10px;font-size:12px;border:2px solid #2a313d;border-radius:8px;background:#161b24;font-family:inherit"></div>';
+      + ' style="width:100%;padding:7px 10px;font-size:12px;border:2px solid #27324A;border-radius:8px;background:#111C30;font-family:inherit"></div>';
     if (i > 0) {
-      html += '<button onclick="intake.domestic.priorsList.splice('+i+',1);renderDomesticPriorRows();" style="padding:6px 10px;background:#2a1417;border:2px solid #5e2c30;border-radius:6px;color:#e0485a;font-size:13px;font-weight:700;cursor:pointer">&times;</button>';
+      html += '<button onclick="intake.domestic.priorsList.splice('+i+',1);renderDomesticPriorRows();" style="padding:6px 10px;background:#241C0C;border:2px solid #6E5A2A;border-radius:6px;color:#E7CE84;font-size:13px;font-weight:700;cursor:pointer">&times;</button>';
     }
     html += '</div>';
   });
@@ -4039,12 +4043,12 @@ function renderDrugPriorRows() {
   var html = '';
   list.forEach(function(pr, i) {
     html += '<div style="display:flex;align-items:flex-end;gap:10px;flex-wrap:wrap;margin-bottom:8px">';
-    html += '<div><label style="display:block;font-size:11px;font-weight:700;color:#e8ebf2;margin-bottom:4px">Year</label>';
+    html += '<div><label style="display:block;font-size:11px;font-weight:700;color:#F2F4F7;margin-bottom:4px">Year</label>';
     html += '<input type="number" min="1901" max="2099" value="'+(pr.year||2026)+'"'
       + ' oninput="intake.drugs.priorsList['+i+'].year=parseInt(this.value)||2026"'
-      + ' style="width:80px;padding:7px 6px;font-size:15px;font-weight:700;text-align:center;border:2px solid #2a313d;border-radius:8px;background:#161b24;font-family:inherit"></div>';
+      + ' style="width:80px;padding:7px 6px;font-size:15px;font-weight:700;text-align:center;border:2px solid #27324A;border-radius:8px;background:#111C30;font-family:inherit"></div>';
     if (i > 0) {
-      html += '<button onclick="intake.drugs.priorsList.splice('+i+',1);renderDrugPriorRows();" style="padding:6px 10px;background:#2a1417;border:2px solid #5e2c30;border-radius:6px;color:#e0485a;font-size:13px;font-weight:700;cursor:pointer">&times;</button>';
+      html += '<button onclick="intake.drugs.priorsList.splice('+i+',1);renderDrugPriorRows();" style="padding:6px 10px;background:#241C0C;border:2px solid #6E5A2A;border-radius:6px;color:#E7CE84;font-size:13px;font-weight:700;cursor:pointer">&times;</button>';
     }
     html += '</div>';
   });
@@ -4060,8 +4064,8 @@ function printNote() {
   win.document.write(
     '<!DOCTYPE html><html><head><title>' + title + '</title>'
     + '<style>'
-    + 'body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;font-size:14px;line-height:1.8;color:#14181f;padding:40px 50px;max-width:720px;margin:0 auto}'
-    + 'h2{font-size:16px;font-weight:800;color:#7a1228;margin:0 0 18px;padding-bottom:10px;border-bottom:2px solid #7a1228}'
+    + 'body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;font-size:14px;line-height:1.8;color:#0A1220;padding:40px 50px;max-width:720px;margin:0 auto}'
+    + 'h2{font-size:16px;font-weight:800;color:#8E7530;margin:0 0 18px;padding-bottom:10px;border-bottom:2px solid #8E7530}'
     + 'p{margin:2px 0}'
     + '@media print{body{padding:20px 30px}}'
     + '</style></head><body>'
@@ -4093,10 +4097,10 @@ function renderJudgeField() {
   var current = court.judge || '';
   var otherOpen = (!current && !!court.judgeOther);
   host.innerHTML =
-    '<label>Judge <span style="font-weight:600;color:#6f7889">(' + escHtml(countyKey(county)) + ')</span></label>'
+    '<label>Judge <span style="font-weight:600;color:#7E889C">(' + escHtml(countyKey(county)) + ')</span></label>'
     + '<div class="srch-wrap" id="judgeWrap" style="display:block">'
     +   '<div class="srch-val" onclick="toggleJudgeDrop()">'
-    +     (current ? escHtml(current) : (otherOpen ? '<span style="color:#6f7889">Other (typed below)</span>' : '<span style="color:#6f7889">Select judge...</span>'))
+    +     (current ? escHtml(current) : (otherOpen ? '<span style="color:#7E889C">Other (typed below)</span>' : '<span style="color:#7E889C">Select judge...</span>'))
     +     '<span class="sarr">&#9660;</span>'
     +   '</div>'
     +   '<div id="judgeDrop" style="display:none;position:absolute;z-index:200;left:0;right:0">'
@@ -4116,7 +4120,7 @@ function judgeListItems(judges, q) {
     var sel = (j === court.judge) ? ' class="sel"' : '';
     return '<div' + sel + ' data-jname="' + escHtml(j) + '" onclick="pickJudge(this.getAttribute(\'data-jname\'))">' + escHtml(j) + '</div>';
   }).join('');
-  html += '<div data-other="1" onclick="pickJudgeOther()" style="border-top:1px solid #232a35;color:#b3284a;font-weight:700">+ Other (type a name)</div>';
+  html += '<div data-other="1" onclick="pickJudgeOther()" style="border-top:1px solid #1B2A44;color:#D4AF37;font-weight:700">+ Other (type a name)</div>';
   return html;
 }
 function renderJudgeList(judges, q) {
@@ -4152,7 +4156,7 @@ function pickJudgeOther() {
   if (ow) { ow.style.display = 'block'; var i = ow.querySelector('input'); if (i) { i.focus(); court.judge = i.value; } }
   var host = document.getElementById('judgeFieldHost');
   var val = host ? host.querySelector('.srch-val') : null;
-  if (val) val.innerHTML = '<span style="color:#6f7889">Other (typed below)</span><span class="sarr">&#9660;</span>';
+  if (val) val.innerHTML = '<span style="color:#7E889C">Other (typed below)</span><span class="sarr">&#9660;</span>';
 }
 document.addEventListener('click', function(e) {
   if (!e.target.closest('#judgeWrap')) {
@@ -4340,6 +4344,7 @@ function renderForm() {
 renderForm();
 startMicObserver();
 </script>
+
 
 
 
