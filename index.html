@@ -6187,7 +6187,7 @@ startMicObserver();
           </div>
         </div>
         <div class="clio-f">
-          <span class="clio-fl">Note Body <em style="text-transform:none;letter-spacing:0;font-weight:600;color:#4E5765">&mdash; the finished note, sent whole</em></span>
+          <span class="clio-fl">Note Body <em style="text-transform:none;letter-spacing:0;font-weight:600;color:#4E5765">&mdash; exactly what Clio will store</em></span>
           <div id="clioNotePreview" class="clio-hint" style="max-height:120px;overflow:auto;padding:9px 11px;background:#0A0D12;border:1px solid var(--line2);border-radius:6px;color:var(--dim2);line-height:1.6"></div>
         </div>
       </div>
@@ -6644,11 +6644,141 @@ function noteBodyHTML(){
   var box=$('noteRendered'); return box?box.innerHTML:'';
 }
 function noteBodyText(){ return htmlToText(noteBodyHTML()); }
+
+/* ── 10b · CLIO NOTE RENDERER ─────────────────────────────────────────────
+   Clio stores a note's body as PLAIN TEXT, so the on-screen HTML cannot go
+   over the wire — it arrives as literal tags. This rebuilds the finished
+   note as structured text: a header block identifying the case, then real
+   section headings taken from the note's own bold/underlined labels.
+   Nothing is invented; every heading already exists in the note. */
+var NOTE_RULE = '==================================================';
+
+function noteAttorney(){
+  try{
+    if(curMode()==='court')  return (court  && court.attorney)  || '';
+    if(curMode()==='review') return (review && review.attorney) || '';
+    return (intake && intake.assignedAtty) || '';
+  }catch(e){ return ''; }
+}
+
+/* Turn the rendered note into typed blocks we can lay out as text. */
+function noteBlocks(){
+  var host=document.createElement('div');
+  host.innerHTML=noteBodyHTML();
+  var out=[];
+  Array.prototype.forEach.call(host.children,function(node){
+    var cls=' '+(node.getAttribute('class')||'')+' ';
+    var txt=(node.textContent||'').replace(/ /g,' ').replace(/\s+/g,' ').trim();
+
+    if(/\snote-spacer\s/.test(cls) || !txt){ out.push({k:'blank'}); return; }
+
+    if(/\snote-bullet\s/.test(cls) || /^[•·]/.test(txt)){
+      out.push({ k:'bullet', t:txt.replace(/^[•·]\s*/,'') });
+      return;
+    }
+    var strong=node.querySelector('strong');
+    if(strong){
+      var label=(strong.textContent||'').replace(/\s+/g,' ').trim().replace(/:\s*$/,'');
+      var clone=node.cloneNode(true);
+      var s2=clone.querySelector('strong');
+      if(s2 && s2.parentNode) s2.parentNode.removeChild(s2);
+      var rest=(clone.textContent||'').replace(/ /g,' ').replace(/\s+/g,' ').trim();
+      if(label){ out.push(rest ? { k:'kv', label:label, v:rest } : { k:'head', t:label }); return; }
+    }
+    out.push({ k:'para', t:txt, intro:/\snote-intro\s/.test(cls) });
+  });
+  return out;
+}
+
+function buildClioNoteText(){
+  var blocks=noteBlocks();
+  if(!blocks.some(function(b){ return b.k!=='blank'; })) return '';
+
+  var lines=[], pendingBlank=false;
+  function blank(){ if(lines.length) pendingBlank=true; }
+  function push(s){ if(pendingBlank){ lines.push(''); pendingBlank=false; } lines.push(s); }
+
+  /* ── header block ── */
+  var n=N(), m=n.matter||{};
+  push(String(n.title || MODE_NOTE_LABEL[curMode()] || 'Note').toUpperCase());
+  push(NOTE_RULE);
+  if(m.client_name)    push('Client: '      + m.client_name);
+  if(m.description)    push('Matter: '      + m.description);
+  if(m.display_number) push('Clio Matter: ' + m.display_number);
+  if(m.court_file)     push('Court File: '  + m.court_file);
+  var cty=effectiveCounty(); if(cty) push('County: ' + cty);
+  if(n.date)           push('Note Date: '   + isoToLong(n.date));
+  var atty=noteAttorney(); if(atty) push('Attorney: ' + atty);
+  push(NOTE_RULE);
+  blank();
+
+  /* ── body ── */
+  var expectClientNote=false, inClientNote=false;
+  var underHeading=false, introDone=false, detailsAdded=false;
+
+  blocks.forEach(function(b){
+    /* a blank line closes whatever section was open */
+    if(b.k==='blank'){ blank(); underHeading=false; return; }
+
+    /* the generator ends the PMM directive with "the following note:" and then
+       emits the client-facing message — give that message its own heading */
+    if(expectClientNote && (b.k==='para' || b.k==='bullet')){
+      blank(); push('CLIENT NOTE');
+      push(b.t);
+      expectClientNote=false; inClientNote=true; underHeading=true;
+      return;
+    }
+    if(inClientNote && b.k==='bullet'){ push(b.t); return; }
+    if(b.k!=='bullet') inClientNote=false;
+
+    if(b.k==='head'){ blank(); push(b.t.toUpperCase()); underHeading=true; return; }
+
+    if(b.k==='kv'){
+      /* a long value reads better under its own heading than trailing a label */
+      if(b.v.length>90){ blank(); push(b.label.toUpperCase()); push(b.v); underHeading=true; }
+      else { push(b.label + ': ' + b.v); underHeading=false; }
+      return;
+    }
+
+    /* the opening narrative stands on its own, with no heading above it */
+    if(b.k==='para' && b.intro && !introDone){
+      push(b.t); introDone=true; underHeading=false; return;
+    }
+
+    var isPMM = (b.k==='para' && /^PMM\s*:/i.test(b.t));
+
+    /* the court summary emits its free-text Details field with no label of its
+       own — everything else in every mode is already labelled, so this is the
+       one place a heading has to be supplied */
+    if(!underHeading && introDone && !detailsAdded && !isPMM){
+      blank(); push('DETAILS'); detailsAdded=true; underHeading=true;
+    }
+
+    /* the generator bullets any multi-line free-text field, so a long block of
+       flowing prose can arrive as a single bullet — render that as a paragraph */
+    if(b.k==='bullet'){ push(b.t.length>180 ? b.t : ('  \u2022 ' + b.t)); return; }
+
+    if(isPMM){
+      blank(); push('PMM');
+      push(b.t.replace(/^PMM\s*:\s*/i,''));
+      expectClientNote=/following note:?\s*$/i.test(b.t);
+      underHeading=true;
+      return;
+    }
+    expectClientNote=/following note:?\s*$/i.test(b.t);
+    push(b.t);
+  });
+
+  return lines.join('\n').replace(/\n{3,}/g,'\n\n').replace(/[ \t]+$/gm,'').trim();
+}
+
 function renderNotePreview(){
   var host=$('clioNotePreview'); if(!host) return;
-  var t=noteBodyText();
-  host.innerHTML = t ? E(t.length>700?t.slice(0,700)+'…':t).replace(/\n/g,'<br>')
-                     : '<i style="color:#4E5765">The note is still empty — build it on the left first.</i>';
+  var t=buildClioNoteText();
+  host.style.whiteSpace='pre-wrap';
+  host.style.fontFamily='var(--mono)';
+  host.style.fontSize='10.5px';
+  host.textContent = t || 'The note is still empty — build it on the left first.';
 }
 
 /* ── 11 · TIME ───────────────────────────────────────────────────────────── */
@@ -7096,7 +7226,7 @@ function renderReview(){
 function payloadNote(){
   var n=N();
   return { matter_id:n.matter.id, subject:String(n.title||'').trim(), date:n.date,
-           body_html:noteBodyHTML(), body_text:noteBodyText() };
+           body_html:noteBodyHTML(), body_text:buildClioNoteText() };
 }
 function payloadTime(){
   var n=N();
@@ -7261,6 +7391,7 @@ window.clioReloadMatters= loadMatters;
 window.clioSaveToClio   = send;
 window.clioRetry        = retry;
 window.clioRescanNote   = function(){ runDetection(true); syncDrawerFields(); };
+window.clioNoteText     = buildClioNoteText;   /* exactly what Clio will store */
 window.clioUnlock       = function(){ var n=N(); n.locked=false; n.results=null; renderResults(); renderReview(); };
 window.clioPopCursor    = function(i){ if(C.pop.cursor!==i){ C.pop.cursor=i; renderPopList(); } };
 window.clioAutoTitle    = function(){
