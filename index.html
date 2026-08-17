@@ -1292,7 +1292,18 @@ select{color-scheme:dark}
 </style>
 </head>
 <body>
-
+<div style="padding:16px;">
+  <button id="connectClioBtn" style="
+    padding:12px 18px;
+    font-size:16px;
+    font-weight:700;
+    cursor:pointer;
+    border-radius:8px;
+    border:1px solid #888;
+  ">
+    Connect to Clio
+  </button>
+</div>
 <div class="led-strip"></div>
 
 <header>
@@ -5611,6 +5622,22 @@ refreshBankBtn();
 startMicObserver();
 
 
+</script>
+
+<script>
+  const CLIO_CLIENT_ID = "7GPSasDi2azVtPxlSzdFfcwj3zNC3O9vsUt1Emry";
+  const CLIO_REDIRECT_URI =
+    "https://gmannion5149.github.io/GWMNotes/callback.html";
+
+  document.getElementById("connectClioBtn").addEventListener("click", function () {
+    const authorizeUrl =
+      "https://app.clio.com/oauth/authorize" +
+      "?response_type=code" +
+      "&client_id=" + encodeURIComponent(CLIO_CLIENT_ID) +
+      "&redirect_uri=" + encodeURIComponent(CLIO_REDIRECT_URI);
+
+    window.location.href = authorizeUrl;
+  });
 </script>
 </body>
 </html>
