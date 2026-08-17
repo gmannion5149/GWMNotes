@@ -2,28 +2,94 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Clio Connection</title>
 </head>
 <body>
+
   <h1>Clio Connection</h1>
-  <p id="status">Receiving authorization from Clio...</p>
+  <p id="status">Connecting to Clio...</p>
 
   <script>
-    const params = new URLSearchParams(window.location.search);
-    const code = params.get("code");
-    const error = params.get("error");
+    const WORKER_URL = "https://gwm-clio-api.gmannion.workers.dev";
 
-    if (error) {
-      document.getElementById("status").textContent =
-        "Clio authorization was not approved: " + error;
-    } else if (code) {
-      document.getElementById("status").textContent =
-        "Clio authorization received successfully.";
-      console.log("Authorization code received.");
-    } else {
-      document.getElementById("status").textContent =
-        "No Clio authorization information was received.";
+    async function connectClio() {
+      const params = new URLSearchParams(window.location.search);
+      const code = params.get("code");
+      const error = params.get("error");
+
+      const status = document.getElementById("status");
+
+      if (error) {
+        status.textContent =
+          "Clio authorization failed: " + error;
+        return;
+      }
+
+      if (!code) {
+        status.textContent =
+          "No Clio authorization code was received.";
+        return;
+      }
+
+      status.textContent =
+        "Authorization received. Connecting to Clio...";
+
+      try {
+        const response = await fetch(
+          WORKER_URL + "/oauth/exchange",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              code: code
+            })
+          }
+        );
+
+        const data = await response.json();
+
+        if (!response.ok || !data.success) {
+          console.error(data);
+
+          status.textContent =
+            "Clio connection failed. Check the browser console for details.";
+
+          return;
+        }
+
+        console.log("Clio response:", data);
+
+        let userName = "";
+
+        if (data.user) {
+          userName =
+            data.user.name ||
+            data.user.full_name ||
+            data.user.email ||
+            "";
+        }
+
+        if (userName) {
+          status.textContent =
+            "Clio connected successfully. Signed in as " + userName + ".";
+        } else {
+          status.textContent =
+            "Clio connected successfully.";
+        }
+
+      } catch (err) {
+        console.error(err);
+
+        status.textContent =
+          "Unable to contact the GWM Clio API.";
+      }
     }
+
+    connectClio();
   </script>
+
 </body>
 </html>
