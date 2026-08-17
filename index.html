@@ -1292,10 +1292,32 @@ select{color-scheme:dark}
 </style>
 </head>
 <body>
-<div style="padding:16px;">
+<div id="clioStatusBar" style="
+  padding:12px 16px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+">
+
+  <span id="clioStatusLight" style="
+    width:12px;
+    height:12px;
+    border-radius:50%;
+    background:#777;
+    display:inline-block;
+  "></span>
+
+  <span id="clioStatusText" style="
+    font-size:14px;
+    font-weight:700;
+  ">
+    Checking Clio...
+  </span>
+
   <button id="connectClioBtn" style="
-    padding:12px 18px;
-    font-size:16px;
+    display:none;
+    padding:8px 14px;
+    font-size:14px;
     font-weight:700;
     cursor:pointer;
     border-radius:8px;
@@ -1303,6 +1325,7 @@ select{color-scheme:dark}
   ">
     Connect to Clio
   </button>
+
 </div>
 <div class="led-strip"></div>
 
@@ -5629,15 +5652,79 @@ startMicObserver();
   const CLIO_REDIRECT_URI =
     "https://gmannion5149.github.io/GWMNotes/callback.html";
 
-  document.getElementById("connectClioBtn").addEventListener("click", function () {
-    const authorizeUrl =
-      "https://app.clio.com/oauth/authorize" +
-      "?response_type=code" +
-      "&client_id=" + encodeURIComponent(CLIO_CLIENT_ID) +
-      "&redirect_uri=" + encodeURIComponent(CLIO_REDIRECT_URI);
+  const CLIO_API =
+    "https://gwm-clio-api.gmannion.workers.dev";
 
-    window.location.href = authorizeUrl;
-  });
+  const statusLight =
+    document.getElementById("clioStatusLight");
+
+  const statusText =
+    document.getElementById("clioStatusText");
+
+  const connectBtn =
+    document.getElementById("connectClioBtn");
+
+  async function checkClioStatus() {
+    try {
+      const response =
+        await fetch(CLIO_API + "/status");
+
+      const data =
+        await response.json();
+
+      if (data.connected) {
+        statusLight.style.background = "#22c55e";
+
+        const userName =
+          data.user?.name || "Clio";
+
+        statusText.textContent =
+          "Clio Connected — " + userName;
+
+        connectBtn.style.display = "none";
+      } else {
+        statusLight.style.background = "#ef4444";
+
+        statusText.textContent =
+          "Clio Not Connected";
+
+        connectBtn.style.display =
+          "inline-block";
+      }
+    } catch (error) {
+      console.error(
+        "Clio status check failed:",
+        error
+      );
+
+      statusLight.style.background =
+        "#f59e0b";
+
+      statusText.textContent =
+        "Unable to verify Clio";
+
+      connectBtn.style.display =
+        "inline-block";
+    }
+  }
+
+  connectBtn.addEventListener(
+    "click",
+    function () {
+      const authorizeUrl =
+        "https://app.clio.com/oauth/authorize" +
+        "?response_type=code" +
+        "&client_id=" +
+        encodeURIComponent(CLIO_CLIENT_ID) +
+        "&redirect_uri=" +
+        encodeURIComponent(CLIO_REDIRECT_URI);
+
+      window.location.href =
+        authorizeUrl;
+    }
+  );
+
+  checkClioStatus();
 </script>
 </body>
 </html>
