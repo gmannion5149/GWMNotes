@@ -1,95 +1,178 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Clio Connection</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Connecting to Clio…</title>
+<style>
+  :root{
+    --bg:#08090C; --panel:#0F1318; --line:#1E242D; --line2:#2A323D;
+    --txt:#E4E9F0; --dim:#6C7686; --bronze:#B8873B; --bronze-l:#DCB878;
+    --go:#3F9E63; --go-l:#7FC095; --stop:#B4544A;
+    --mono:'SF Mono',ui-monospace,Menlo,Consolas,'Courier New',monospace;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;
+    background:var(--bg);
+    background-image:
+      radial-gradient(700px 320px at 50% -10%, rgba(184,135,59,.10) 0%, transparent 62%),
+      linear-gradient(180deg,#0E1116 0%,#08090C 60%,#060709 100%);
+    color:var(--txt);
+    display:flex;align-items:center;justify-content:center;padding:26px;
+  }
+  .card{
+    width:100%;max-width:420px;text-align:center;
+    background:linear-gradient(180deg,#12161C 0%,#0C0F14 100%);
+    border:1px solid var(--line2);border-radius:12px;
+    padding:34px 30px 30px;position:relative;
+    box-shadow:0 26px 70px rgba(0,0,0,.75);
+  }
+  .card::before{
+    content:'';position:absolute;top:0;left:16px;right:16px;height:1px;
+    background:linear-gradient(90deg,transparent,var(--bronze),transparent);
+    box-shadow:0 0 10px rgba(184,135,59,.45);
+  }
+  .badge{
+    width:46px;height:46px;border-radius:10px;margin:0 auto 18px;
+    display:flex;align-items:center;justify-content:center;
+    font-size:20px;font-weight:800;color:var(--bronze-l);
+    background:linear-gradient(150deg,#1A212B,#0E1218);
+    border:1px solid rgba(184,135,59,.34);
+    box-shadow:0 0 16px rgba(184,135,59,.16), inset 0 1px 0 rgba(255,255,255,.05);
+  }
+  h1{font-size:16px;font-weight:700;letter-spacing:.2px;margin-bottom:8px}
+  p{font-size:13px;color:var(--dim);line-height:1.65}
+  .spin{
+    display:inline-block;width:14px;height:14px;vertical-align:-2px;margin-right:9px;
+    border:2px solid rgba(184,135,59,.26);border-top-color:var(--bronze-l);
+    border-radius:50%;animation:sp .7s linear infinite;
+  }
+  @keyframes sp{to{transform:rotate(360deg)}}
+  .ok  h1{color:var(--go-l)}
+  .bad h1{color:#E9A9A2}
+  .det{
+    margin-top:16px;font-family:var(--mono);font-size:11px;color:#57606E;
+    background:#0A0D12;border:1px solid var(--line);border-radius:7px;
+    padding:9px 11px;text-align:left;word-break:break-word;max-height:140px;overflow:auto;
+  }
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;margin-top:20px;
+    font-family:inherit;font-size:12px;font-weight:800;letter-spacing:.7px;
+    padding:9px 17px 10px;border-radius:9px;cursor:pointer;text-decoration:none;
+    color:#E4CB9A;text-shadow:0 1px 0 rgba(0,0,0,.85);
+    background:linear-gradient(180deg,#2B333F 0%,#1B212A 42%,#11151B 100%);
+    border:1px solid #3D4855;border-bottom-color:#141920;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.10),inset 0 -1px 0 rgba(0,0,0,.55),
+               0 3px 0 #070A0E,0 4px 2px rgba(0,0,0,.5),0 8px 18px rgba(0,0,0,.6);
+    transition:transform .09s ease,box-shadow .09s ease,color .15s;
+  }
+  .btn:hover{color:#FFE9BE}
+  .btn:active{transform:translateY(3px);
+    box-shadow:inset 0 2px 5px rgba(0,0,0,.75),0 0 0 #070A0E,0 1px 2px rgba(0,0,0,.5)}
+</style>
 </head>
 <body>
 
-  <h1>Clio Connection</h1>
-  <p id="status">Connecting to Clio...</p>
+<div class="card" id="card">
+  <div class="badge">§</div>
+  <h1 id="head"><span class="spin"></span>Connecting to Clio</h1>
+  <p id="msg">Finishing the handshake — this window closes itself.</p>
+  <div class="det" id="det" style="display:none"></div>
+  <div id="acts"></div>
+</div>
 
-  <script>
-    const WORKER_URL = "https://gwm-clio-api.gmannion.workers.dev";
+<script>
+  /* Same Worker the app uses. Nothing secret lives on this page. */
+  const CLIO_API = "https://gwm-clio-api.gmannion.workers.dev";
+  const APP_URL  = "https://gmannion5149.github.io/GWMNotes/";
 
-    async function connectClio() {
-      const params = new URLSearchParams(window.location.search);
-      const code = params.get("code");
-      const error = params.get("error");
+  const card = document.getElementById("card");
+  const head = document.getElementById("head");
+  const msg  = document.getElementById("msg");
+  const det  = document.getElementById("det");
+  const acts = document.getElementById("acts");
 
-      const status = document.getElementById("status");
-
-      if (error) {
-        status.textContent =
-          "Clio authorization failed: " + error;
-        return;
+  function tellOpener(payload) {
+    try {
+      if (window.opener && !window.opener.closed) {
+        window.opener.postMessage(payload, "*");
+        return true;
       }
+    } catch (e) {}
+    return false;
+  }
 
-      if (!code) {
-        status.textContent =
-          "No Clio authorization code was received.";
-        return;
-      }
+  function showOk(name) {
+    card.className = "card ok";
+    head.textContent = "Clio Connected";
+    msg.textContent = name
+      ? ("Signed in as " + name + ". You can close this window.")
+      : "You can close this window.";
+  }
 
-      status.textContent =
-        "Authorization received. Connecting to Clio...";
+  function showBad(title, detail) {
+    card.className = "card bad";
+    head.textContent = title;
+    msg.textContent = "Nothing was changed. Close this window and try connecting again.";
+    if (detail) {
+      det.style.display = "block";
+      det.textContent = typeof detail === "string" ? detail : JSON.stringify(detail, null, 1);
+    }
+    acts.innerHTML =
+      '<a class="btn" href="' + APP_URL + '" target="_self">Back to GWMNotes</a>';
+  }
 
-      try {
-        const response = await fetch(
-          WORKER_URL + "/oauth/exchange",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-              code: code
-            })
-          }
-        );
+  (async function () {
+    const params = new URLSearchParams(window.location.search);
+    const code = params.get("code");
+    const err  = params.get("error");
 
-        const data = await response.json();
-
-        if (!response.ok || !data.success) {
-          console.error(data);
-
-          status.textContent =
-            "Clio connection failed. Check the browser console for details.";
-
-          return;
-        }
-
-        console.log("Clio response:", data);
-
-        let userName = "";
-
-        if (data.user) {
-          userName =
-            data.user.name ||
-            data.user.full_name ||
-            data.user.email ||
-            "";
-        }
-
-        if (userName) {
-          status.textContent =
-            "Clio connected successfully. Signed in as " + userName + ".";
-        } else {
-          status.textContent =
-            "Clio connected successfully.";
-        }
-
-      } catch (err) {
-        console.error(err);
-
-        status.textContent =
-          "Unable to contact the GWM Clio API.";
-      }
+    if (err) {
+      tellOpener({ type: "clio-auth-failed", error: params.get("error_description") || err });
+      showBad("Clio authorization declined", params.get("error_description") || err);
+      return;
+    }
+    if (!code) {
+      tellOpener({ type: "clio-auth-failed", error: "No authorization code was returned." });
+      showBad("No authorization code", "Clio did not return a code in the callback URL.");
+      return;
     }
 
-    connectClio();
-  </script>
+    try {
+      const res = await fetch(CLIO_API + "/oauth/exchange", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ code: code }),
+      });
+      const data = await res.json();
+
+      if (!res.ok || !data.success) {
+        tellOpener({ type: "clio-auth-failed", error: (data && data.error) || "Token exchange failed." });
+        showBad("Clio connection failed", data);
+        return;
+      }
+
+      const name = (data.user && data.user.name) || "";
+      const delivered = tellOpener({ type: "clio-connected", user: data.user || null });
+      showOk(name);
+
+      if (delivered) {
+        /* opened as a popup — hand control straight back to the app */
+        setTimeout(function () { try { window.close(); } catch (e) {} }, 700);
+      } else {
+        /* opened in the same tab (pop-ups blocked) — offer the way back */
+        msg.textContent = (name ? "Signed in as " + name + ". " : "") + "Head back to GWMNotes to keep working.";
+        acts.innerHTML = '<a class="btn" href="' + APP_URL + '" target="_self">Back to GWMNotes</a>';
+      }
+
+    } catch (e) {
+      tellOpener({ type: "clio-auth-failed", error: e.message });
+      showBad("Could not reach the Clio service", e.message);
+    }
+  })();
+</script>
 
 </body>
 </html>
