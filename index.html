@@ -7080,8 +7080,6 @@ function noteBodyText(){ return htmlToText(noteBodyHTML()); }
    note as structured text: a header block identifying the case, then real
    section headings taken from the note's own bold/underlined labels.
    Nothing is invented; every heading already exists in the note. */
-var NOTE_RULE = '==================================================';
-
 function noteAttorney(){
   try{
     if(curMode()==='court')  return (court  && court.attorney)  || '';
@@ -7119,6 +7117,9 @@ function noteBlocks(){
   return out;
 }
 
+/* both the wizard's wording and the dictated wording introduce a client note */
+var CLIENT_NOTE_CUE = /following note(?:\s+to\s+client)?\s*:\s*$/i;
+
 function buildClioNoteText(){
   var blocks=noteBlocks();
   if(!blocks.some(function(b){ return b.k!=='blank'; })) return '';
@@ -7126,20 +7127,6 @@ function buildClioNoteText(){
   var lines=[], pendingBlank=false;
   function blank(){ if(lines.length) pendingBlank=true; }
   function push(s){ if(pendingBlank){ lines.push(''); pendingBlank=false; } lines.push(s); }
-
-  /* ── header block ── */
-  var n=N(), m=n.matter||{};
-  push(String(n.title || MODE_NOTE_LABEL[curMode()] || 'Note').toUpperCase());
-  push(NOTE_RULE);
-  if(m.client_name)    push('Client: '      + m.client_name);
-  if(m.description)    push('Matter: '      + m.description);
-  if(m.display_number) push('Clio Matter: ' + m.display_number);
-  if(m.court_file)     push('Court File: '  + m.court_file);
-  var cty=effectiveCounty(); if(cty) push('County: ' + cty);
-  if(n.date)           push('Note Date: '   + isoToLong(n.date));
-  var atty=noteAttorney(); if(atty) push('Attorney: ' + atty);
-  push(NOTE_RULE);
-  blank();
 
   /* ── body ── */
   var expectClientNote=false, inClientNote=false;
@@ -7149,11 +7136,11 @@ function buildClioNoteText(){
     /* a blank line closes whatever section was open */
     if(b.k==='blank'){ blank(); underHeading=false; return; }
 
-    /* the generator ends the PMM directive with "the following note:" and then
-       emits the client-facing message — give that message its own heading */
+    /* a PMM directive that ends "...the following note to Client:" is followed
+       by the client-facing message — it sits directly under the PMM line */
     if(expectClientNote && (b.k==='para' || b.k==='bullet')){
-      blank(); push('CLIENT NOTE');
-      push(b.t);
+      blank();
+      push('"'+String(b.t).replace(/^["\u201c]+|["\u201d]+$/g,'').trim()+'"');
       expectClientNote=false; inClientNote=true; underHeading=true;
       return;
     }
@@ -7188,13 +7175,12 @@ function buildClioNoteText(){
     if(b.k==='bullet'){ push(b.t.length>180 ? b.t : ('  \u2022 ' + b.t)); return; }
 
     if(isPMM){
-      blank(); push('PMM');
-      push(b.t.replace(/^PMM\s*:\s*/i,''));
-      expectClientNote=/following note:?\s*$/i.test(b.t);
+      blank(); push(b.t);                    /* "PMM: ..." stays exactly as written */
+      expectClientNote=CLIENT_NOTE_CUE.test(b.t);
       underHeading=true;
       return;
     }
-    expectClientNote=/following note:?\s*$/i.test(b.t);
+    expectClientNote=CLIENT_NOTE_CUE.test(b.t);
     push(b.t);
   });
 
@@ -8566,9 +8552,11 @@ function systemPrompt(){
   var sections;
   if(D.mode==='court'){
     sections =
-      'Line 1 (always): one sentence beginning "'+atty+' appeared" naming how he appeared, the hearing type and the hearing date.\n'+
-      'Judge: <name>\nProsecutor: <name>\n'+
-      'Details:\n<ONE flowing paragraph of complete sentences>\n'+
+      'Line 1 (always): ONE sentence beginning "'+atty+' appeared", naming whether he appeared with Client or on Client\'s behalf, the hearing type, and the hearing date. Nothing else on this line.\n'+
+      'Prosecutor: <name>\n'+
+      'Judge: <name>\n'+
+      'Witness: <name, and who they are> — only if someone actually testified\n'+
+      'Details:\n<ONE flowing paragraph of complete sentences covering what happened, what was discussed and what was decided>\n'+
       'Offer:\n• <one term per line>\n';
   }else if(D.mode==='intake'){
     sections =
@@ -8600,11 +8588,13 @@ function systemPrompt(){
 
    'PART 1 — THE NOTE. A heading is a short phrase ending in a colon on its own line. In this order, including only what he supplied:\n'+
    sections+
-   'Do NOT write a next-court-date line anywhere in PART 1. It is added separately from PART 3.\n\n'+
+   'Do NOT write a next-court-date line, a PMM line, or any client message anywhere in PART 1. Those are added separately.\n\n'+
 
-   'PART 2 — THE CLIENT MESSAGE. Only if he said something to pass on to the client. Output the line ---PMM--- on its own, then that message rewritten as a short, warm, professional note addressed to the client in the second person. If he said nothing for the client, omit PART 2 entirely.\n\n'+
+   'PART 2 — THE PMM DIRECTIVE. Only if he said "PMM", "note for Paula", or otherwise gave an instruction for staff. Output the line ---PMM--- on its own, then that instruction as one clean sentence in the imperative, e.g. "Please send Client a copy of his court notice and verify accuracy in the calendar." Do NOT include the words "PMM:" — that prefix is added automatically. If he gave no staff instruction, omit PART 2 entirely.\n\n'+
 
-   'PART 3 — EXTRACTED DATA. Always output the line ---DATA--- on its own, then exactly these keys, one per line, using NONE when he did not say it. No other text.\n'+
+   'PART 3 — THE CLIENT MESSAGE. Only if he said something to pass on to the client. Output the line ---CLIENTNOTE--- on its own, then that message rewritten as a short, warm, professional note addressed to the client in the second person. Do not wrap it in quotation marks. If he said nothing for the client, omit PART 3 entirely.\n\n'+
+
+   'PART 4 — EXTRACTED DATA. Always output the line ---DATA--- on its own, then exactly these keys, one per line, using NONE when he did not say it. No other text.\n'+
    'NEXT_HEARING_DATE: YYYY-MM-DD (the FUTURE hearing he said was next; resolve the year from today\'s date)\n'+
    'NEXT_HEARING_TIME: HH:MM in 24-hour time (a spoken 1 through 7 o\'clock on a court calendar means afternoon)\n'+
    'NEXT_HEARING_TYPE: exactly one of the hearing types listed below\n'+
@@ -8615,7 +8605,7 @@ function systemPrompt(){
    'PROSECUTOR: the prosecutor\'s name only\n\n'+
    (types.length ? 'Hearing types: '+types.join('; ')+'\n' : '')+
    (judges.length ? 'Judges on file: '+judges.join('; ')+'\n' : '')+
-   '\nReturn PART 1, then PART 2 if any, then PART 3. Nothing else.'
+   '\nReturn PART 1, then PART 2 if any, then PART 3 if any, then PART 4. Nothing else.'
   );
 }
 function splitAI(txt){
@@ -8628,8 +8618,9 @@ function splitAI(txt){
       if(kv){ var v=kv[2].trim(); if(v && !/^(none|n\/a|unknown|-)$/i.test(v)) d[kv[1]]=v; }
     });
   }
-  var pp=body.split(/^\s*-{2,}\s*PMM\s*-{2,}\s*$/mi);
-  return { note:(pp[0]||'').trim(), client:(pp[1]||'').trim(), data:d };
+  var cp=body.split(/^\s*-{2,}\s*CLIENT\s*NOTE\s*-{2,}\s*$/mi);
+  var pp=(cp[0]||'').split(/^\s*-{2,}\s*PMM\s*-{2,}\s*$/mi);
+  return { note:(pp[0]||'').trim(), pmm:(pp[1]||'').trim(), client:(cp[1]||'').trim(), data:d };
 }
 window.dictOptimize = function(){ optimize(); };
 function optimize(){
@@ -8750,6 +8741,22 @@ window.dictExtractIn = function(){
   D.court.county=($('dictCourtCounty')||{}).value||'';
   paintTotal(); reassemble();
 };
+/* PMM: <what he told staff to do>  [Please include the following note to Client:]
+   followed by the client message in quotes. */
+function pmmBlock(){
+  var instr=((D.ai&&D.ai.pmm)||'').trim();
+  var note =((D.ai&&D.ai.client)||'').trim().replace(/^["\u201c]+|["\u201d]+$/g,'').trim();
+  if(!instr && !note) return [];
+  var line='PMM:';
+  if(instr){
+    line+=' '+instr;
+    if(!/[.!?]$/.test(line)) line+='.';
+  }
+  if(note) line+=' Please include the following note to Client:';
+  var out=[line];
+  if(note) out.push('"'+note+'"');
+  return out;
+}
 function hearingLine(){
   if(!D.court.date) return '';
   var s='Next Court Date: '+isoLong(D.court.date);
@@ -8762,10 +8769,7 @@ function reassemble(){
   if(!D.ai) return;
   var out=[D.ai.note];
   var hl=hearingLine(); if(hl) out.push(hl);
-  if(D.ai.client){
-    out.push('PMM: Please send Client new court date and verify accuracy in the calendar. Please send client the following note:');
-    out.push(D.ai.client);
-  }
+  pmmBlock().forEach(function(l){ out.push(l); });
   D.built=out.join('\n\n');
   try{ D.html=textToNoteHTML(D.built); }catch(e){ D.html=''; }
 
