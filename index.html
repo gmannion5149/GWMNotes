@@ -1656,7 +1656,217 @@ select{color-scheme:dark}
   .clio-drawer{width:100vw}
   .cnb-f.grow,.cnb-f.title{flex:1 1 100%}
 }
-@media print{ .clio-drawer,.clio-scrim,.clio-pop,.clio-popbackdrop,.clio-notebar{display:none!important} }
+
+/* ══════════════════════════════════════════════════════════════════════════
+   DICTATION  —  speak it once, optimize, send. Built mobile-first.
+   ══════════════════════════════════════════════════════════════════════════ */
+.dict-open{
+  display:inline-flex;align-items:center;gap:7px;font-family:inherit;
+  font-size:11.5px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;
+  padding:8px 14px;border-radius:8px;cursor:pointer;
+  color:#F0DDB6;border:1px solid rgba(184,135,59,.5);
+  background:linear-gradient(180deg,#2B2114,#16110A);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 0 16px rgba(184,135,59,.13);
+  transition:all .15s;
+}
+.dict-open:hover{border-color:var(--bronze-l);color:#FFF1D4;box-shadow:0 0 26px rgba(184,135,59,.28)}
+.dict-open svg{width:13px;height:13px}
+
+.dict{
+  position:fixed;inset:0;z-index:960;display:none;flex-direction:column;
+  background:linear-gradient(180deg,#0E1116 0%,#08090C 60%,#060709 100%);
+}
+.dict.open{display:flex}
+.dict-head{
+  display:flex;align-items:center;gap:11px;padding:14px 18px 12px;flex-shrink:0;
+  border-bottom:1px solid var(--line);background:rgba(11,14,19,.9)
+}
+.dict-head .tag{font-family:var(--mono);font-size:9px;letter-spacing:1.2px;text-transform:uppercase;
+  color:var(--bronze);border:1px solid rgba(184,135,59,.32);border-radius:3px;padding:2px 6px}
+.dict-head h3{font-size:14px;font-weight:700;color:var(--txt)}
+.dict-body{flex:1;overflow-y:auto;padding:16px 18px 22px;display:flex;flex-direction:column;gap:14px;
+  max-width:760px;width:100%;margin:0 auto}
+.dict-foot{flex-shrink:0;border-top:1px solid var(--line);padding:12px 18px calc(12px + env(safe-area-inset-bottom,0px));
+  background:rgba(8,10,13,.94)}
+.dict-foot .in{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:8px}
+
+.dict-types{display:flex;gap:6px;flex-wrap:wrap}
+.dict-types button{
+  flex:1;min-width:96px;font-family:inherit;font-size:12px;font-weight:700;padding:9px 10px;border-radius:8px;
+  cursor:pointer;border:1px solid var(--line2);background:#0F1318;color:#6C7686;transition:all .13s
+}
+.dict-types button.on{background:linear-gradient(180deg,#1E1810,#12100B);color:#E4CB9A;border-color:rgba(184,135,59,.45)}
+
+.dict-stage{display:flex;flex-direction:column;align-items:center;gap:11px;padding:6px 0 2px}
+.dict-mic{
+  width:104px;height:104px;border-radius:50%;cursor:pointer;position:relative;
+  display:flex;align-items:center;justify-content:center;
+  border:1px solid var(--line3);color:#8792A2;
+  background:radial-gradient(circle at 50% 34%,#232B36 0%,#141922 55%,#0C1016 100%);
+  box-shadow:inset 0 2px 0 rgba(255,255,255,.07),inset 0 -3px 8px rgba(0,0,0,.6),
+             0 6px 0 #06080B,0 10px 26px rgba(0,0,0,.66);
+  transition:transform .1s,box-shadow .15s,border-color .15s,color .15s;
+}
+.dict-mic svg{width:40px;height:40px}
+.dict-mic:hover{color:var(--bronze-l);border-color:rgba(184,135,59,.5)}
+.dict-mic:active{transform:translateY(4px);box-shadow:inset 0 3px 10px rgba(0,0,0,.8),0 1px 0 #06080B}
+.dict-mic.mic-live{
+  color:#FFE2E0;border-color:rgba(180,84,74,.75);
+  background:radial-gradient(circle at 50% 34%,#4A2320 0%,#2A1413 55%,#160B0A 100%);
+  animation:dictPulse 1.4s ease-in-out infinite;
+}
+@keyframes dictPulse{
+  0%,100%{box-shadow:inset 0 2px 0 rgba(255,255,255,.07),0 6px 0 #06080B,0 0 0 0 rgba(180,84,74,.42)}
+  50%    {box-shadow:inset 0 2px 0 rgba(255,255,255,.07),0 6px 0 #06080B,0 0 0 18px rgba(180,84,74,0)}
+}
+.dict-state{font-size:12.5px;font-weight:700;letter-spacing:.4px;color:var(--dim2);text-align:center;min-height:18px}
+.dict-state.live{color:#E9A9A2}
+.dict-timer{font-family:var(--mono);font-size:11px;color:#57606E;letter-spacing:1px}
+
+.dict-ta{
+  width:100%;min-height:180px;resize:vertical;font-family:inherit;font-size:15px;line-height:1.62;
+  color:var(--txt);background:#0A0D12;border:1px solid var(--line2);border-radius:10px;padding:13px 14px;outline:none;
+}
+.dict-ta:focus{border-color:rgba(76,141,246,.55);box-shadow:0 0 0 3px rgba(76,141,246,.10)}
+.dict-ta::placeholder{color:#4E5765}
+.dict-tips{font-size:11.5px;color:var(--dim);line-height:1.6}
+.dict-tips b{color:var(--dim2)}
+.dict-warn{padding:10px 12px;border-radius:8px;font-size:12px;line-height:1.55;font-weight:600;
+  background:rgba(201,144,47,.08);border:1px solid rgba(201,144,47,.42);color:#E7C989}
+.dict-acts{display:flex;gap:8px;flex-wrap:wrap}
+.dict-go{
+  flex:1;min-width:190px;font-family:inherit;font-size:13px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;
+  padding:14px 18px;border-radius:10px;cursor:pointer;color:#C7DBF5;
+  border:1px solid rgba(76,141,246,.45);background:linear-gradient(180deg,#1B2B44,#111925);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 0 18px rgba(76,141,246,.14);transition:all .15s;
+}
+.dict-go:hover:not(:disabled){border-color:var(--led);box-shadow:0 0 30px rgba(76,141,246,.3)}
+.dict-go:disabled{opacity:.45;cursor:not-allowed;box-shadow:none}
+.dict-send{
+  width:100%;font-family:inherit;font-size:13.5px;font-weight:800;letter-spacing:1.6px;text-transform:uppercase;
+  padding:15px 18px;border-radius:10px;cursor:pointer;color:#FFF1D4;
+  border:1px solid rgba(184,135,59,.55);background:linear-gradient(180deg,#33260F,#1B1509);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 0 22px rgba(184,135,59,.16);transition:all .15s;
+}
+.dict-send:hover:not(:disabled){box-shadow:0 0 34px rgba(184,135,59,.34);border-color:var(--bronze-l)}
+.dict-send:disabled{opacity:.4;cursor:not-allowed;box-shadow:none}
+.dict-note{font-size:11px;color:var(--dim);text-align:center;line-height:1.5}
+
+.dict-prev{border:1px solid rgba(63,158,99,.42);border-radius:10px;background:#0A0D12;padding:13px 14px;display:none}
+.dict-prev.on{display:block}
+.dict-prev .h{font-size:9.5px;font-weight:800;letter-spacing:1.6px;text-transform:uppercase;color:#9FE0B6;margin-bottom:9px}
+.dict-prev .t{white-space:pre-wrap;font-family:var(--mono);font-size:11.5px;line-height:1.65;color:var(--dim2);
+  max-height:300px;overflow-y:auto}
+
+/* staged flow */
+.dict-steps{display:flex;gap:4px;flex-shrink:0}
+.dict-steps .st{
+  flex:1;display:flex;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;
+  font-family:inherit;padding:0;text-align:left
+}
+.dict-steps .st .bar{height:3px;border-radius:2px;background:#1E242D;transition:background .18s}
+.dict-steps .st .lb{font-size:8.5px;font-weight:800;letter-spacing:.9px;text-transform:uppercase;color:#3E4653;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:color .18s}
+.dict-steps .st.done .bar{background:var(--go)}
+.dict-steps .st.done .lb{color:#6C8F79}
+.dict-steps .st.on .bar{background:var(--bronze);box-shadow:0 0 9px rgba(184,135,59,.5)}
+.dict-steps .st.on .lb{color:var(--bronze-l)}
+
+.dstage{display:none;flex-direction:column;gap:13px}
+.dstage.on{display:flex}
+.dstage-q{font-size:19px;font-weight:700;color:var(--txt);letter-spacing:.2px;line-height:1.35}
+.dstage-h{font-size:12px;color:var(--dim);line-height:1.6;margin-top:-6px}
+.dstage-h b{color:var(--dim2)}
+
+.dmic-row{display:flex;align-items:center;gap:14px}
+.dict-mic.sm{width:66px;height:66px;flex-shrink:0}
+.dict-mic.sm svg{width:26px;height:26px}
+.dmic-lab{font-size:12.5px;font-weight:700;color:var(--dim2);line-height:1.5}
+.dmic-lab.live{color:#E9A9A2}
+.dmic-lab .tm{display:block;font-family:var(--mono);font-size:10.5px;color:#57606E;letter-spacing:1px;margin-top:3px}
+
+.dict-in,.dict-sel{
+  width:100%;font-family:inherit;font-size:16px;color:var(--txt);
+  background:#0A0D12;border:1px solid var(--line2);border-radius:9px;padding:12px 13px;outline:none;
+}
+.dict-sel{cursor:pointer}
+.dict-in:focus,.dict-sel:focus{border-color:rgba(76,141,246,.55);box-shadow:0 0 0 3px rgba(76,141,246,.10)}
+.dict-in::placeholder{color:#4E5765}
+.dict-lab{font-size:9.5px;font-weight:800;letter-spacing:1.3px;text-transform:uppercase;color:#6C7686;margin-bottom:5px;display:block}
+.dict-2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.dict-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+
+.dict-results{display:flex;flex-direction:column;gap:6px;max-height:340px;overflow-y:auto}
+.dict-res{
+  display:flex;gap:11px;align-items:flex-start;padding:11px 12px;border-radius:9px;cursor:pointer;
+  background:#0F1318;border:1px solid var(--line);transition:all .12s;text-align:left;font-family:inherit;width:100%
+}
+.dict-res:hover,.dict-res:active{border-color:rgba(184,135,59,.45);background:#141A22}
+.dict-res .av{width:32px;height:32px;border-radius:7px;flex-shrink:0;display:flex;align-items:center;justify-content:center;
+  font-size:11px;font-weight:800;color:var(--bronze-l);background:linear-gradient(150deg,#1A212B,#0E1218);border:1px solid rgba(184,135,59,.28)}
+.dict-res .bd{flex:1;min-width:0}
+.dict-res .cn{font-size:14px;font-weight:700;color:var(--txt)}
+.dict-res .de{font-size:12px;color:var(--dim2);margin-top:2px;line-height:1.4}
+.dict-res .mn{font-family:var(--mono);font-size:10px;color:var(--bronze);letter-spacing:.4px;margin-top:3px;display:block}
+
+.dict-chosen{
+  display:flex;gap:11px;align-items:center;padding:12px 13px;border-radius:9px;
+  background:linear-gradient(180deg,#151B12,#0D1116);border:1px solid rgba(63,158,99,.45)
+}
+.dict-chosen .tick{color:var(--go-l);font-size:16px;flex-shrink:0}
+.dict-chosen .bd{flex:1;min-width:0}
+.dict-chosen .cn{font-size:14px;font-weight:700;color:var(--txt)}
+.dict-chosen .de{font-family:var(--mono);font-size:10.5px;color:var(--dim);letter-spacing:.4px;margin-top:2px}
+
+.dict-nav{display:flex;gap:9px;align-items:center}
+.dict-back{
+  flex:0 0 auto;font-family:inherit;font-size:12.5px;font-weight:700;padding:14px 18px;border-radius:10px;cursor:pointer;
+  border:1px solid var(--line2);background:#12161C;color:#8792A2;transition:all .14s
+}
+.dict-back:hover{color:var(--txt);border-color:var(--line3)}
+.dict-back:disabled{opacity:.35;cursor:default}
+.dict-next{
+  flex:1;font-family:inherit;font-size:13px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;
+  padding:15px 18px;border-radius:10px;cursor:pointer;color:#C7DBF5;
+  border:1px solid rgba(76,141,246,.45);background:linear-gradient(180deg,#1B2B44,#111925);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 0 18px rgba(76,141,246,.14);transition:all .15s
+}
+.dict-next:hover:not(:disabled){border-color:var(--led);box-shadow:0 0 28px rgba(76,141,246,.28)}
+.dict-next:disabled{opacity:.4;cursor:not-allowed;box-shadow:none}
+.dict-skip{font-family:inherit;font-size:11.5px;font-weight:700;color:#57606E;background:none;border:none;
+  cursor:pointer;padding:14px 10px;text-decoration:underline;text-underline-offset:3px}
+.dict-skip:hover{color:var(--dim2)}
+
+.dict-sum{border:1px solid var(--line2);border-radius:10px;background:#0A0D12;padding:13px}
+.dict-sumrow{display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-top:1px solid var(--line)}
+.dict-sumrow:first-child{border-top:none;padding-top:0}
+.dict-sumrow .mk{width:17px;flex-shrink:0;text-align:center;font-size:13px}
+.dict-sumrow.ok .mk{color:var(--go-l)}
+.dict-sumrow.off .mk{color:#3E4653}
+.dict-sumrow.bad .mk{color:#E9736A}
+.dict-sumrow .bd{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.dict-sumrow .t{font-size:12.5px;font-weight:700;color:var(--txt)}
+.dict-sumrow .s{font-size:11.5px;color:var(--dim2);line-height:1.5}
+.dict-sumrow.off .t,.dict-sumrow.off .s{color:#4E5765}
+.dict-sumrow.bad .s{color:#E9A9A2}
+
+/* ── PHONE LAYOUT ───────────────────────────────────────────────────────── */
+@media (max-width:760px){
+  body{overflow:auto}
+  .main{grid-template-columns:1fr;overflow:visible}
+  .stage{overflow:visible;border-right:0;border-bottom:1px solid var(--line)}
+  .output-panel{min-height:56vh}
+  .tb-keys{display:none}
+  .topbar{gap:8px;padding:9px 13px}
+  header{padding:10px 14px}
+  .clio-notebar{position:static;padding:11px 14px 12px}
+  .dict-body{padding:14px 14px 20px}
+  .dict-mic{width:128px;height:128px}
+  .dict-mic svg{width:48px;height:48px}
+  .dict-ta{min-height:210px;font-size:16px}   /* 16px stops iOS zooming on focus */
+}
+
+@media print{ .clio-drawer,.clio-scrim,.clio-pop,.clio-popbackdrop,.clio-notebar,.dict,.dict-open{display:none!important} }
 @media (prefers-reduced-motion:reduce){ .clio-drawer{transition:none} }
 </style>
 
@@ -1725,6 +1935,11 @@ select{color-scheme:dark}
   <button class="tb-btn" id="bankBtn" onclick="openBank()" title="Attorney contact bank">
     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
     Attorneys <span class="n" id="bankBtnCount">0</span>
+  </button>
+
+  <button class="dict-open" onclick="dictOpen()" title="Dictate the whole note out loud">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"></rect><path d="M5 10v2a7 7 0 0 0 14 0v-2"></path><line x1="12" y1="19" x2="12" y2="22"></line></svg>
+    Dictate
   </button>
 
   <div class="tb-spacer"></div>
@@ -6084,6 +6299,7 @@ startMicObserver();
       const response = await fetch(CLIO_API + "/status");
       const data = await response.json();
 
+      window.__clioConnected = !!data.connected;
       if (data.connected) {
         _clioSeenConnected = true;
         clioSetLight("#22c55e", "Clio Connected — " + (data.user?.name || "Clio"), false);
@@ -6096,6 +6312,7 @@ startMicObserver();
       return false;
 
     } catch (error) {
+      window.__clioConnected = false;
       if (!quiet) console.error("Clio status check failed:", error);
       clioSetLight("#f59e0b", "Unable to verify Clio", true, "Connect to Clio");
       if (typeof window.clioSetConnected === "function") window.clioSetConnected(false);
@@ -6210,6 +6427,134 @@ startMicObserver();
 
 
 
+
+<!-- ══ DICTATION — staged ══════════════════════════════════════════════════ -->
+<div class="dict" id="dictPanel" aria-hidden="true">
+  <div class="dict-head">
+    <span class="tag">Dictate</span>
+    <h3 id="dictTitle">Court Summary</h3>
+    <button class="modal-x" style="margin-left:auto" onclick="dictClose()" title="Close">&times;</button>
+  </div>
+
+  <div class="dict-body">
+    <div class="dict-steps" id="dictSteps"></div>
+
+    <!-- 1 · MATTER ------------------------------------------------------- -->
+    <section class="dstage on" data-s="matter">
+      <div class="dict-types" id="dictTypes">
+        <button data-m="court"  class="on" onclick="dictSetMode('court')">Court Summary</button>
+        <button data-m="intake" onclick="dictSetMode('intake')">Intake Call</button>
+        <button data-m="review" onclick="dictSetMode('review')">Client Meeting</button>
+      </div>
+      <div class="dstage-q">Which matter?</div>
+      <div id="dictConnBanner"></div>
+      <div class="dmic-row">
+        <button class="dict-mic sm" id="dictMic_matter" onclick="dictMic('matter')" aria-label="Say the client name">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"></rect><path d="M5 10v2a7 7 0 0 0 14 0v-2"></path><line x1="12" y1="19" x2="12" y2="22"></line><line x1="8" y1="22" x2="16" y2="22"></line></svg>
+        </button>
+        <div class="dmic-lab" id="dictLab_matter">Say the client&rsquo;s name &mdash; or type it below</div>
+      </div>
+      <input class="dict-in" id="dictMatterQ" autocomplete="off" placeholder="Client name, matter number or court file" oninput="dictMatterTyped(this.value)">
+      <div class="dict-results" id="dictMatterResults"></div>
+      <div id="dictMatterChosen"></div>
+    </section>
+
+    <!-- 2 · DETAILS ------------------------------------------------------ -->
+    <section class="dstage" data-s="details">
+      <div class="dstage-q">What happened?</div>
+      <div class="dstage-h" id="dictDetailsHint"></div>
+      <div class="dmic-row">
+        <button class="dict-mic sm" id="dictMic_details" onclick="dictMic('details')" aria-label="Dictate the details">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"></rect><path d="M5 10v2a7 7 0 0 0 14 0v-2"></path><line x1="12" y1="19" x2="12" y2="22"></line><line x1="8" y1="22" x2="16" y2="22"></line></svg>
+        </button>
+        <div class="dmic-lab" id="dictLab_details">Tap and talk it through</div>
+      </div>
+      <textarea class="dict-ta" id="dictDetails" placeholder="Talk normally. Who the judge and prosecutor were, what was said, any offer, what was decided." oninput="dictTouch()"></textarea>
+    </section>
+
+    <!-- 3 · TIME --------------------------------------------------------- -->
+    <section class="dstage" data-s="time">
+      <div class="dstage-q">How long did it take?</div>
+      <div class="dstage-h">Everything in one total &mdash; travel, waiting, the hearing, negotiations, the drive back.</div>
+      <div class="dmic-row">
+        <button class="dict-mic sm" id="dictMic_time" onclick="dictMic('time')" aria-label="Say the time spent">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"></rect><path d="M5 10v2a7 7 0 0 0 14 0v-2"></path><line x1="12" y1="19" x2="12" y2="22"></line><line x1="8" y1="22" x2="16" y2="22"></line></svg>
+        </button>
+        <div class="dmic-lab" id="dictLab_time">Say it &mdash; &ldquo;three hours and twenty five minutes&rdquo;</div>
+      </div>
+      <input class="dict-in" id="dictTimeSpoken" placeholder="e.g. two and a half hours" oninput="dictTimeSpokenIn(this.value)">
+      <div class="dict-3">
+        <div><span class="dict-lab">Hours</span><input class="dict-in" id="dictHours" type="number" min="0" max="99" inputmode="numeric" placeholder="0" oninput="dictTimeNum()"></div>
+        <div><span class="dict-lab">Minutes</span><input class="dict-in" id="dictMinutes" type="number" min="0" max="59" inputmode="numeric" placeholder="0" oninput="dictTimeNum()"></div>
+        <div><span class="dict-lab">Total</span><div class="dict-in" id="dictTotal" style="display:flex;align-items:center;font-family:var(--mono);font-size:14px;color:var(--bronze-l)">&mdash;</div></div>
+      </div>
+      <div id="dictTimeErr"></div>
+    </section>
+
+    <!-- 4 · COURT DATE --------------------------------------------------- -->
+    <section class="dstage" data-s="court">
+      <div class="dstage-q">Next court date?</div>
+      <div class="dstage-h">Say the date, the time and the kind of hearing. Skip it if there isn&rsquo;t one.</div>
+      <div class="dmic-row">
+        <button class="dict-mic sm" id="dictMic_court" onclick="dictMic('court')" aria-label="Say the next court date">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"></rect><path d="M5 10v2a7 7 0 0 0 14 0v-2"></path><line x1="12" y1="19" x2="12" y2="22"></line><line x1="8" y1="22" x2="16" y2="22"></line></svg>
+        </button>
+        <div class="dmic-lab" id="dictLab_court">&ldquo;Omnibus hearing November thirtieth at two thirty&rdquo;</div>
+      </div>
+      <input class="dict-in" id="dictCourtSpoken" placeholder="e.g. pretrial on September 21st at 1:30" oninput="dictCourtSpokenIn(this.value)">
+      <div class="dict-2">
+        <div><span class="dict-lab">Date</span><input class="dict-in" id="dictCourtDate" type="date" onchange="dictTouch()"></div>
+        <div><span class="dict-lab">Start time</span><input class="dict-in" id="dictCourtTime" type="time" onchange="dictTouch()"></div>
+      </div>
+      <div class="dict-2">
+        <div><span class="dict-lab">Hearing type</span><select class="dict-sel" id="dictCourtType" onchange="dictCourtTypeChange()"></select></div>
+        <div><span class="dict-lab">County</span><select class="dict-sel" id="dictCourtCounty" onchange="dictTouch()"></select></div>
+      </div>
+      <div id="dictCourtOtherWrap" style="display:none">
+        <span class="dict-lab">Describe the hearing</span>
+        <input class="dict-in" id="dictCourtOther" placeholder="e.g. Restitution Hearing" oninput="dictTouch()">
+      </div>
+    </section>
+
+    <!-- 5 · PMM ---------------------------------------------------------- -->
+    <section class="dstage" data-s="pmm">
+      <div class="dstage-q">Note for the client?</div>
+      <div class="dstage-h">Say it however you&rsquo;d say it to them &mdash; it gets written up under a <b>PMM</b> directive. Skip if there&rsquo;s nothing to send.</div>
+      <div class="dmic-row">
+        <button class="dict-mic sm" id="dictMic_pmm" onclick="dictMic('pmm')" aria-label="Dictate the client note">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"></rect><path d="M5 10v2a7 7 0 0 0 14 0v-2"></path><line x1="12" y1="19" x2="12" y2="22"></line><line x1="8" y1="22" x2="16" y2="22"></line></svg>
+        </button>
+        <div class="dmic-lab" id="dictLab_pmm">Tap and say what the client should be told</div>
+      </div>
+      <textarea class="dict-ta" id="dictPmm" style="min-height:150px" placeholder="Thank them for coming, tell them where things stand, tell them what happens next." oninput="dictTouch()"></textarea>
+    </section>
+
+    <!-- 6 · REVIEW ------------------------------------------------------- -->
+    <section class="dstage" data-s="review">
+      <div class="dstage-q">Ready to push</div>
+      <div class="dict-sum" id="dictSum"></div>
+      <div class="dict-acts">
+        <button class="clio-btn" onclick="dictBuild(true)" id="dictRebuild">Rebuild note</button>
+      </div>
+      <div class="dict-prev" id="dictPrev">
+        <div class="h">Exactly what Clio will store</div>
+        <div class="t" id="dictPrevText"></div>
+      </div>
+      <div id="dictResults"></div>
+    </section>
+  </div>
+
+  <div class="dict-foot">
+    <div class="in">
+      <div class="dict-nav">
+        <button class="dict-back" id="dictBackBtn" onclick="dictBack()">Back</button>
+        <button class="dict-next" id="dictNextBtn" onclick="dictNext()">Next</button>
+        <button class="dict-skip" id="dictSkipBtn" onclick="dictSkip()">Skip</button>
+      </div>
+      <div class="dict-note" id="dictFootNote"></div>
+    </div>
+  </div>
+</div>
 
 <!-- ══ MATTER PICKER POPOVER (body level so nothing can clip it) ═══════════ -->
 <div class="clio-popbackdrop" id="clioPopBack" onclick="clioClosePop()"></div>
@@ -6529,17 +6874,23 @@ function api(path,opts){
   opts=opts||{};
   var init={ method:opts.method||'GET', headers:{ 'Accept':'application/json' } };
   if(opts.body){ init.headers['Content-Type']='application/json'; init.body=JSON.stringify(opts.body); }
-  return fetch(apiBase()+path,init).then(function(r){
+  return fetch(apiBase()+path,init).catch(function(){
+    var e=new Error('Cannot reach the Clio service at '+apiBase()+'. Check that you are online and that the Worker is deployed.');
+    e.network=true; throw e;
+  }).then(function(r){
     return r.text().then(function(txt){
       var data=null;
       try{ data = txt ? JSON.parse(txt) : {}; }catch(e){ data={ raw:txt }; }
       if(!r.ok){
         var msg=(data && (data.error||data.message)) || ('Clio request failed ('+r.status+')');
-        if(r.status===401 || (data && data.reauthorize)){
-          msg='Clio authorization expired — click Connect to Clio and try again.';
+        var auth = (r.status===401) || !!(data && data.reauthorize);
+        if(auth){
+          msg='Clio authorization expired — tap Connect to Clio and try again.';
           if(typeof window.clioMarkDisconnected==='function') window.clioMarkDisconnected();
+        }else if(msg.indexOf('('+r.status+')')===-1){
+          msg=msg+' ('+r.status+')';
         }
-        var err=new Error(msg); err.status=r.status; throw err;
+        var err=new Error(msg); err.status=r.status; err.auth=auth; throw err;
       }
       return data;
     });
@@ -6719,6 +7070,13 @@ function autoTitle(m){
   try{
     if(m==='court'){
       var t=(court.hearingType==='Other'?court.hearingTypeOther:court.hearingType)||'';
+      /* dictated notes have no form behind them — read the opening sentence */
+      if(!t){
+        try{
+          var first=(noteBodyText()||'').split('\n')[0]||'';
+          t=findHearType(first.replace(/\[[^\]]*\]/g,' '))||'';
+        }catch(e){}
+      }
       return t || 'Court Summary';
     }
     if(m==='review') return 'Client Meeting';
@@ -6988,12 +7346,16 @@ function findLocation(win){
 }
 function findJudge(win){
   /* consume every title word, so "the Honorable Judge Marta Chou" yields the name only */
-  var m=/\b(?:(?:the\s+)?(?:Honorable|Hon\.?|Judge|Referee)\s+)+([A-Z][A-Za-z.'-]+(?:\s+[A-Z][A-Za-z.'-]*){0,3})/.exec(win);
+  var m=/\b(?:(?:the[ \t]+)?(?:Honorable|Hon\.?|Judge|Referee)[ \t]*:?[ \t]+)+([A-Z][A-Za-z.'-]+(?:[ \t]+[A-Z][A-Za-z.'-]*){0,3})/.exec(win);
   if(!m) return '';
   return m[1].trim()
     .replace(/^(?:(?:the\s+)?(?:Honorable|Hon\.?|Judge|Referee)\s+)+/i,'')
     .replace(/[.,;:]$/,'')
     .trim();
+}
+function findProsecutor(win){
+  var m=/\b(?:Prosecutor|Assistant[ \t]+County[ \t]+Attorney|County[ \t]+Attorney|City[ \t]+Attorney|Assistant[ \t]+Attorney[ \t]+General|A\.?A\.?G\.?)[ \t]*:?[ \t]+(?:was[ \t]+)?([A-Z][A-Za-z.'-]+(?:[ \t]+[A-Z][A-Za-z.'-]*){0,3})/.exec(win);
+  return m ? m[1].trim().replace(/[.,;:]$/,'') : '';
 }
 function findRoom(win){
   var m=/\b(?:courtroom|ctrm\.?|room)\s*#?\s*([A-Za-z]?-?\d{1,5}[A-Za-z]?)\b/i.exec(win);
@@ -7088,6 +7450,8 @@ function runDetection(userTriggered){
   n.detected=d;
   if(d){ applyDetection(d); if(userTriggered) say('Court date found — '+isoToLong(d.iso)); }
   else if(userTriggered) say('No future court date found in this note');
+  seedFromNoteText();
+  syncDrawerFields();
   renderDetect(); renderCalTitle(); renderReview();
 }
 function applyDetection(d){
@@ -7315,6 +7679,16 @@ window.clioPickJudge = function(){
     }
   }, { placeholder:'Search judges…' });
 };
+
+/* A dictated note has no form behind it — read the people out of the note text. */
+function seedFromNoteText(){
+  var h=N().hear, t=noteBodyText();
+  if(!t) return;
+  if(!h.judge){      var j=findJudge(t);      if(j) h.judge=j; }
+  if(!h.prosecutor){ var pr=findProsecutor(t); if(pr) h.prosecutor=pr; }
+  if(!h.county && !h.countyTouched){ var c=findCounty(t); if(c) h.county=c; }
+  if(!h.courtroom){  var rm=findRoom(t);      if(rm) h.courtroom=rm; }
+}
 
 /* Everything the court form already knows should arrive pre-filled. */
 function seedFromForm(){
@@ -7598,6 +7972,7 @@ function finish(mode,results){
   } else if(ok){ say('Partly sent — '+ok+' of '+parts.length+' created'); }
   else { say('Nothing reached Clio — see the errors'); }
   if(curMode()===mode){ renderResults(); renderReview(); }
+  if(_dictDone){ var cb=_dictDone; _dictDone=null; try{ cb(partList(rec)); }catch(e){} }
 }
 function partList(rec){
   var r=(rec||N()).results||{}, out=[];
@@ -7794,6 +8169,89 @@ window.clioDismissDetection = function(){
   syncDrawerFields(); renderDetect(); renderReview();
 };
 window.clioSetConnected = function(v){ C.connected=v; renderBar(); };
+/* ── hooks used by the staged dictation flow ─────────────────────────────── */
+var _dictDone=null;
+window.clioDictSearch = function(q){
+  var qs=['limit=40','scope=all','status=all'];
+  if(q) qs.push('q='+encodeURIComponent(q));
+  return api('/matters?'+qs.join('&')).then(function(d){ return (d&&d.matters)||[]; });
+};
+window.clioDictSetMatter = function(m){
+  if(!m) return;
+  C.matters = C.matters.concat([m]).filter(function(x,i,a){
+    return a.findIndex(function(y){ return String(y.id)===String(x.id); })===i;
+  });
+  setMatter(m); recentPush(m.id);
+  api('/matters/'+encodeURIComponent(m.id)).then(function(d){
+    if(d&&d.matter&&N().matter&&String(N().matter.id)===String(d.matter.id)){ N().matter=d.matter; renderAll(); }
+  }).catch(function(){});
+};
+window.clioDictGetMatter = function(){ return N().matter; };
+window.clioDictRecent = function(){
+  var ids=recentIds().map(function(x){ return x.id; });
+  if(!ids.length) return Promise.resolve([]);
+  return api('/matters?ids='+encodeURIComponent(ids.join(','))).then(function(d){ return (d&&d.matters)||[]; });
+};
+/* reuse the note-scanner on a single spoken sentence */
+window.clioParseHearing = function(text){
+  try{ return detectFromNote(String(text||''), todayISO()); }catch(e){ return null; }
+};
+window.clioAbbrevHearing = function(t){ try{ return abbrevHearing(t); }catch(e){ return t; } };
+/* push everything the stages collected, then send */
+window.clioDictApply = function(o){
+  var n=N();
+  o=o||{};
+  if(o.title!=null){ n.title=String(o.title); n.titleTouched=true; }
+  if(o.date) n.date=o.date;
+  if(o.hours!=null)   n.time.hours=String(o.hours);
+  if(o.minutes!=null) n.time.minutes=String(o.minutes);
+  if(o.timeDesc){ n.time.desc=o.timeDesc; n.time.descTouched=true; }
+  if(o.timeDate){ n.time.date=o.timeDate; n.time.dateTouched=true; }
+  else if(o.date && !n.time.dateTouched) n.time.date=o.date;
+  n.on.time = totalMinutes()>0;
+
+  if(o.hearing){
+    var h=n.hear, x=o.hearing;
+    if(x.type!=null){ h.type=x.type; h.typeOther=!!x.type && (function(){ try{ return HEARING_TYPES.indexOf(x.type)===-1; }catch(e){ return false; } })(); }
+    if(x.date!=null)  h.date=x.date;
+    if(x.start!=null) h.start=x.start;
+    if(x.end)         { h.end=x.end; h.endAuto=false; }
+    else if(h.start && !h.end){ h.end=addMinutes(h.start,CLIO_CFG.DEFAULT_HEARING_MINUTES); h.endAuto=true; }
+    if(x.county){ h.county=x.county; h.countyTouched=true; }
+    if(x.judge)      h.judge=x.judge;
+    if(x.prosecutor) h.prosecutor=x.prosecutor;
+    if(x.location)   h.location=x.location;
+    if(x.courtroom)  h.courtroom=x.courtroom;
+  }
+  seedFromNoteText();
+  n.on.cal = !!(n.hear.type && n.hear.date && n.hear.start);
+  n.locked=false; n.results=null;
+  renderAll();
+  return validate().map(function(e){ return e.m; });
+};
+window.clioDictSummary = function(){
+  var n=N();
+  return {
+    matter:n.matter, title:n.title, date:n.date,
+    total:totalLabel(), onTime:n.on.time, onCal:n.on.cal,
+    hearing:{ type:n.hear.type, date:n.hear.date, start:n.hear.start, end:n.hear.end,
+              county:effectiveCounty(), judge:n.hear.judge, prosecutor:n.hear.prosecutor },
+    calTitle:n.matter?calTitle():'', errors:validate().map(function(e){ return e.m; })
+  };
+};
+window.clioDictPush = function(cb){ _dictDone=cb||null; send(); };
+
+/* the dictation layer replaces the note wholesale — resync immediately */
+window.clioNoteReplaced = function(){
+  refreshAutoTitle();
+  renderNotePreview();
+  renderReview();
+};
+/* read-only context for the dictation layer */
+window.clioContext = function(){
+  var n=N();
+  return { matter:n.matter, county:effectiveCounty(), mode:curMode(), title:n.title };
+};
 
 /* keyboard: search box drives the list; Esc closes the top layer */
 document.addEventListener('keydown',function(e){
@@ -7867,6 +8325,658 @@ function boot(){
 }
 if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',boot);
 else boot();
+
+})();
+</script>
+
+
+<script>
+/* ══════════════════════════════════════════════════════════════════════════════
+   GWMNotes · STAGED DICTATION
+   Matter → Details → Time → Court date → Client note → Push to Clio.
+   Every stage takes voice or typing. Nothing leaves the phone until the last tap.
+   ══════════════════════════════════════════════════════════════════════════════ */
+(function(){
+'use strict';
+
+var STAGES  = ['matter','details','time','court','pmm','review'];
+var LABELS  = { matter:'Matter', details:'Details', time:'Time', court:'Court date', pmm:'Client note', review:'Push' };
+var OPTIONAL = { time:1, court:1, pmm:1 };
+
+var D = {
+  mode:'court', stage:0, matter:null,
+  details:'', pmm:'',
+  hours:'', minutes:'',
+  court:{ date:'', time:'', type:'', other:'', county:'' },
+  built:'', html:'', dirty:true, busy:false,
+  results:null, t0:0, watch:null, searchT:null
+};
+
+function $(id){ return document.getElementById(id); }
+function E(t){ return String(t==null?'':t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function say(m){ try{ toast(m); }catch(e){} }
+function pad2(n){ return String(n).padStart(2,'0'); }
+function todayISO(){ var d=new Date(); return d.getFullYear()+'-'+pad2(d.getMonth()+1)+'-'+pad2(d.getDate()); }
+function todayLong(){ try{ return new Date().toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'}); }catch(e){ return ''; } }
+function isoLong(iso){ if(!iso) return ''; try{ return new Date(iso+'T12:00:00').toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'}); }catch(e){ return iso; } }
+function t12(t){ if(!t) return ''; var p=String(t).split(':'); if(p.length<2) return t;
+  var h=parseInt(p[0],10), ap=h>=12?'PM':'AM', hh=h%12; if(hh===0) hh=12; return hh+':'+p[1]+' '+ap; }
+function initials(n){ var w=String(n||'').replace(/,/g,' ').trim().split(/\s+/).filter(Boolean);
+  return w.length?((w[0][0]+(w.length>1?w[w.length-1][0]:'')).toUpperCase()):'?'; }
+function attorneyNow(){
+  try{
+    if(D.mode==='court')  return court.attorney  || 'GWM';
+    if(D.mode==='review') return review.attorney || 'GWM';
+    return intake.assignedAtty || 'GWM';
+  }catch(e){ return 'GWM'; }
+}
+
+/* ── spoken numbers ──────────────────────────────────────────────────────── */
+var ONES={one:1,two:2,three:3,four:4,five:5,six:6,seven:7,eight:8,nine:9,
+          first:1,second:2,third:3,fourth:4,fifth:5,sixth:6,seventh:7,eighth:8,ninth:9};
+var MID ={zero:0,ten:10,eleven:11,twelve:12,thirteen:13,fourteen:14,fifteen:15,sixteen:16,seventeen:17,
+          eighteen:18,nineteen:19,tenth:10,eleventh:11,twelfth:12,thirteenth:13,fourteenth:14,fifteenth:15,
+          sixteenth:16,seventeenth:17,eighteenth:18,nineteenth:19};
+var TENS={twenty:20,thirty:30,forty:40,fourty:40,fifty:50,
+          twentieth:20,thirtieth:30,fortieth:40,fiftieth:50};
+function numFor(w){
+  w=w.replace(/[^a-z]/g,'');
+  if(TENS[w]!==undefined) return { v:TENS[w], tens:true };
+  if(MID[w]!==undefined)  return { v:MID[w] };
+  if(ONES[w]!==undefined) return { v:ONES[w], ones:true };
+  return null;
+}
+/* "twenty five" -> 25, but "two thirty" stays 2 30 so it can become a clock time */
+function wordsToNum(str){
+  var toks=String(str||'').replace(/[-]/g,' ').split(/\s+/), out=[];
+  for(var i=0;i<toks.length;i++){
+    var n=numFor(toks[i].toLowerCase());
+    if(!n){ out.push(toks[i]); continue; }
+    var nx=(i+1<toks.length)?numFor(toks[i+1].toLowerCase()):null;
+    if(n.tens && nx && nx.ones){ out.push(String(n.v+nx.v)); i++; }
+    else out.push(String(n.v));
+  }
+  return out.join(' ');
+}
+function parseDuration(text){
+  var t=' '+wordsToNum(String(text||'').toLowerCase())+' ';
+  /* spoken fractions, before anything else looks for digits */
+  t=t.replace(/\b(?:an?)\s+(hour|hr)\b/g,'1 $1');
+  t=t.replace(/(\d+(?:\.\d+)?)\s*(?:hours?|hrs?)\s+and\s+(?:a\s+)?half\b/g,'$1.5 hours');
+  t=t.replace(/(\d+(?:\.\d+)?)\s+and\s+(?:a\s+)?half\s*(?:hours?|hrs?)\b/g,'$1.5 hours');
+  t=t.replace(/\bhalf\s+(?:an?\s+|1\s+)?(?:hours?|hrs?)\b/g,'0.5 hours');
+  t=t.replace(/(\d+(?:\.\d+)?)\s*(?:hours?|hrs?)\s+and\s+(?:a\s+)?quarter\b/g,'$1.25 hours');
+  t=t.replace(/\b(?:three\s+quarters?|3\s+quarters?)\s+(?:of\s+)?(?:an?\s+|1\s+)?(?:hours?|hrs?)\b/g,'0.75 hours');
+  t=t.replace(/\bquarter\s+(?:of\s+)?(?:an?\s+|1\s+)?(?:hours?|hrs?)\b/g,'0.25 hours');
+
+  var h=0, m=0, ok=false;
+  var mh=/(\d+(?:\.\d+)?)\s*(?:hrs?\b|hours?\b|h\b)/.exec(t);
+  if(mh){ h=parseFloat(mh[1]); ok=true; }
+  var mm=/(\d+(?:\.\d+)?)\s*(?:mins?\b|minutes?\b|m\b)/.exec(t);
+  if(mm){ m=parseFloat(mm[1]); ok=true; }
+  if(!ok){ var bare=/^\s*(\d{1,3})\s*$/.exec(t); if(bare){ m=parseInt(bare[1],10); ok=true; } }
+  if(!ok) return null;
+
+  var frac=Math.round((h-Math.floor(h))*60);
+  h=Math.floor(h); m+=frac;
+  h+=Math.floor(m/60); m=Math.round(m%60);
+  if(h>99) h=99;
+  return { h:h, m:m };
+}
+/* turn a spoken court date into something the note scanner understands */
+function normalizeSpokenDate(text){
+  var t=wordsToNum(String(text||'').toLowerCase());
+  t=t.replace(/\b(\d{1,2})\s+o.?clock\b/g,'$1:00');
+  t=t.replace(/\b(\d{1,2})\s+(\d{2})\b/g,'$1:$2');
+  t=t.replace(/\ba\.?\s?m\.?\b/g,'AM').replace(/\bp\.?\s?m\.?\b/g,'PM');
+  t=t.replace(/\bin the morning\b/g,'AM').replace(/\bin the (?:afternoon|evening)\b/g,'PM');
+  return t;
+}
+
+/* ── stage plumbing ──────────────────────────────────────────────────────── */
+function stageName(){ return STAGES[D.stage]; }
+function paintSteps(){
+  var host=$('dictSteps'); if(!host) return;
+  host.innerHTML=STAGES.map(function(s,i){
+    var cls = i===D.stage ? 'on' : (i<D.stage ? 'done' : '');
+    return '<button class="st '+cls+'" onclick="dictGoto('+i+')"><span class="bar"></span><span class="lb">'+E(LABELS[s])+'</span></button>';
+  }).join('');
+}
+function paintStage(){
+  var wrap=document.querySelectorAll('#dictPanel .dstage');
+  Array.prototype.forEach.call(wrap,function(el){
+    el.classList.toggle('on', el.getAttribute('data-s')===stageName());
+  });
+  paintSteps();
+  paintNav();
+  if(stageName()==='review') ensureBuilt();
+  var body=document.querySelector('#dictPanel .dict-body'); if(body) body.scrollTop=0;
+}
+function paintNav(){
+  var st=stageName();
+  var back=$('dictBackBtn'), next=$('dictNextBtn'), skip=$('dictSkipBtn'), note=$('dictFootNote');
+  if(back) back.disabled = D.stage===0;
+  if(skip) skip.style.display = OPTIONAL[st] ? '' : 'none';
+  if(next){
+    if(st==='review'){
+      next.textContent = D.busy ? 'Pushing…' : 'Push to Clio';
+      next.disabled = D.busy || !D.html || !D.matter;
+      next.style.cssText='flex:1;color:#FFF1D4;border-color:rgba(184,135,59,.55);background:linear-gradient(180deg,#33260F,#1B1509)';
+    }else{
+      next.textContent='Next';
+      next.disabled = !canAdvance();
+      next.style.cssText='';
+    }
+  }
+  if(note) note.textContent = footHint();
+}
+function canAdvance(){
+  var st=stageName();
+  if(st==='matter')  return !!D.matter;
+  if(st==='details') return (($('dictDetails')||{}).value||'').trim().length>10;
+  return true;
+}
+function footHint(){
+  var st=stageName();
+  if(st==='matter')  return D.matter ? 'Matter locked in.' : 'Pick the matter this note belongs to.';
+  if(st==='details') return canAdvance() ? '' : 'Say what happened before moving on.';
+  if(st==='time')    return 'Optional — skip if you are not logging time.';
+  if(st==='court')   return 'Optional — skip if no date was set.';
+  if(st==='pmm')     return 'Optional — skip if there is nothing to send the client.';
+  if(st==='review')  return D.matter ? '' : 'Go back and pick a matter.';
+  return '';
+}
+function goto(i){
+  if(i<0||i>=STAGES.length) return;
+  if(i>D.stage){
+    for(var k=D.stage;k<i;k++){
+      var s=STAGES[k];
+      if(!OPTIONAL[s]){
+        if(s==='matter' && !D.matter){ say('Pick a matter first'); return; }
+        if(s==='details' && (($('dictDetails')||{}).value||'').trim().length<=10){ say('Say what happened first'); return; }
+      }
+    }
+  }
+  stopMicAll();
+  collect();
+  D.stage=i;
+  paintStage();
+}
+
+/* ── mics ────────────────────────────────────────────────────────────────── */
+var TARGETS={ matter:'dictMatterQ', details:'dictDetails', time:'dictTimeSpoken', court:'dictCourtSpoken', pmm:'dictPmm' };
+function micLive(k){ var b=$('dictMic_'+k); return !!(b&&b.classList.contains('mic-live')); }
+function stopMicAll(){
+  STAGES.forEach(function(k){
+    if(micLive(k)){ try{ dictateInto($('dictMic_'+k), $(TARGETS[k])); }catch(e){} }
+  });
+}
+window.dictMic = function(k){
+  var btn=$('dictMic_'+k), ta=$(TARGETS[k]);
+  if(!btn||!ta) return;
+  if(!(window.SpeechRecognition||window.webkitSpeechRecognition)){
+    ta.focus(); say('Use the microphone key on your keyboard'); return;
+  }
+  if(typeof dictateInto!=='function'){ say('Dictation is unavailable in this build'); return; }
+  var wasLive=micLive(k);
+  dictateInto(btn, ta);
+  setTimeout(function(){
+    paintMics();
+    if(wasLive){                       /* just stopped — parse what was said */
+      if(k==='matter') runSearch(ta.value);
+      if(k==='time')   window.dictTimeSpokenIn(ta.value);
+      if(k==='court')  window.dictCourtSpokenIn(ta.value);
+      dictTouch();
+    }
+  },120);
+};
+function paintMics(){
+  STAGES.forEach(function(k){
+    var lab=$('dictLab_'+k); if(!lab) return;
+    var live=micLive(k);
+    lab.classList.toggle('live',live);
+    if(live){
+      if(!D.t0) D.t0=Date.now();
+      var s=Math.floor((Date.now()-D.t0)/1000);
+      lab.innerHTML='Listening — tap again to stop<span class="tm">'+pad2(Math.floor(s/60))+':'+pad2(s%60)+'</span>';
+    }else if(lab.dataset.def){
+      lab.innerHTML=lab.dataset.def;
+    }
+  });
+  if(!STAGES.some(micLive)) D.t0=0;
+}
+function startWatch(){ stopWatch(); D.watch=setInterval(paintMics,400); }
+function stopWatch(){ if(D.watch){ clearInterval(D.watch); D.watch=null; } }
+
+/* ── stage 1 · matter ────────────────────────────────────────────────────── */
+function runSearch(q){
+  var host=$('dictMatterResults'); if(!host) return;
+  q=String(q||'').trim();
+  host.innerHTML='<div class="clio-msg" style="padding:16px"><span class="clio-spin"></span>Searching Clio</div>';
+  var fn = q ? window.clioDictSearch : window.clioDictRecent;
+  if(typeof fn!=='function'){ host.innerHTML=''; return; }
+  fn(q).then(function(rows){
+    if(!rows.length){
+      host.innerHTML='<div class="clio-msg" style="padding:20px">'+(q?'No matter matches that.':'Search for the client by name.')+'</div>';
+      return;
+    }
+    host.innerHTML=rows.slice(0,25).map(function(m,i){
+      window._dictRows=rows;
+      return '<button class="dict-res" onclick="dictPickMatter('+i+')">'+
+        '<span class="av">'+E(initials(m.client_name||m.description))+'</span>'+
+        '<span class="bd"><span class="cn">'+E(m.client_name||'(no client)')+'</span>'+
+        (m.description?'<span class="de">'+E(m.description)+'</span>':'')+
+        '<span class="mn">'+E([m.display_number,m.court_file,m.status].filter(Boolean).join('  ·  '))+'</span></span></button>';
+    }).join('');
+  }).catch(function(err){
+    /* the recents lookup on open is a convenience — never alarm over it */
+    if(!q){
+      host.innerHTML='<div class="clio-msg" style="padding:20px">Search for the client by name.</div>';
+      return;
+    }
+    var auth = !!err.auth || /authoriz|reconnect|connect to clio/i.test(err.message||'');
+    host.innerHTML=
+      '<div class="dict-warn"><b>Could not reach Clio.</b><br>'+E(err.message||'Unknown error')+'</div>'+
+      '<div class="dict-acts" style="margin-top:10px">'+
+        '<button class="clio-btn" onclick="dictRetrySearch()">Try again</button>'+
+        (auth?'<button class="clio-btn gold" onclick="dictReconnect()">Connect to Clio</button>':'')+
+      '</div>';
+  });
+}
+window.dictRetrySearch = function(){ runSearch((($('dictMatterQ')||{}).value||'').trim()); };
+window.dictReconnect = function(){
+  try{ if(typeof window.clioConnect==='function') window.clioConnect(); }catch(e){}
+  say('Finish in the Clio window, then tap Try again');
+};
+window.dictMatterTyped = function(v){
+  clearTimeout(D.searchT);
+  D.searchT=setTimeout(function(){ runSearch(v); },320);
+};
+window.dictPickMatter = function(i){
+  var m=(window._dictRows||[])[i]; if(!m) return;
+  D.matter=m; D.dirty=true;
+  try{ window.clioDictSetMatter(m); }catch(e){}
+  paintChosen(); paintNav();
+  say('Matter set — '+(m.client_name||m.display_number));
+};
+function paintConnBanner(){
+  var host=$('dictConnBanner'); if(!host) return;
+  if(window.__clioConnected===false){
+    host.innerHTML='<div class="dict-warn"><b>Clio is not connected.</b> Matter search and pushing will fail until you reconnect.'+
+      '<div class="dict-acts" style="margin-top:9px"><button class="clio-btn gold" onclick="dictReconnect()">Connect to Clio</button></div></div>';
+  }else host.innerHTML='';
+}
+function paintChosen(){
+  var host=$('dictMatterChosen'); if(!host) return;
+  if(!D.matter){ host.innerHTML=''; return; }
+  var m=D.matter;
+  host.innerHTML='<div class="dict-chosen"><span class="tick">&#10004;</span><span class="bd">'+
+    '<span class="cn">'+E(m.client_name||m.description||'Matter')+'</span>'+
+    '<span class="de">'+E([m.display_number,m.court_file,m.status].filter(Boolean).join('  ·  '))+'</span>'+
+    '</span></div>';
+  var res=$('dictMatterResults'); if(res) res.innerHTML='';
+}
+
+/* ── stage 3 · time ──────────────────────────────────────────────────────── */
+window.dictTimeSpokenIn = function(v){
+  var d=parseDuration(v);
+  if(d){
+    D.hours=String(d.h); D.minutes=String(d.m);
+    var h=$('dictHours'), m=$('dictMinutes');
+    if(h) h.value=d.h?String(d.h):'';
+    if(m) m.value=d.m?String(d.m):'';
+  }
+  paintTotal(); dictTouch();
+};
+window.dictTimeNum = function(){
+  D.hours   = ($('dictHours')||{}).value||'';
+  D.minutes = ($('dictMinutes')||{}).value||'';
+  paintTotal(); dictTouch();
+};
+function totalMins(){
+  var h=parseInt(D.hours,10); if(isNaN(h)||h<0) h=0;
+  var m=parseInt(D.minutes,10); if(isNaN(m)||m<0) m=0;
+  return h*60+m;
+}
+function totalLabel(){
+  var t=totalMins(); if(!t) return '';
+  var h=Math.floor(t/60), m=t%60, o=[];
+  if(h) o.push(h+' hour'+(h===1?'':'s'));
+  if(m) o.push(m+' minute'+(m===1?'':'s'));
+  return o.join(' ');
+}
+function paintTotal(){
+  var box=$('dictTotal'), err=$('dictTimeErr');
+  if(box) box.textContent = totalLabel()||'—';
+  var m=parseInt(D.minutes,10);
+  var bad = D.minutes!=='' && (isNaN(m)||m<0||m>59);
+  if(err) err.innerHTML = bad ? '<div class="clio-err">Minutes must be between 0 and 59.</div>' : '';
+  var mi=$('dictMinutes'); if(mi) mi.classList.toggle('bad',bad);
+}
+
+/* ── stage 4 · court date ────────────────────────────────────────────────── */
+window.dictCourtSpokenIn = function(v){
+  if(typeof window.clioParseHearing!=='function') return;
+  var raw=String(v||'');
+  var res=window.clioParseHearing(normalizeSpokenDate(raw));
+  if(!res) return;
+  if(res.iso){ D.court.date=res.iso; var d=$('dictCourtDate'); if(d) d.value=res.iso; }
+  if(res.time){
+    var tm=res.time;
+    /* nobody says "AM" out loud — 1 through 7 on a court calendar means afternoon */
+    if(!/\b(am|pm)\b/i.test(normalizeSpokenDate(raw))){
+      var hh=parseInt(tm.split(':')[0],10);
+      if(hh>=1 && hh<=7) tm=pad2(hh+12)+':'+tm.split(':')[1];
+    }
+    D.court.time=tm; var t=$('dictCourtTime'); if(t) t.value=tm;
+  }
+  if(res.type){ D.court.type=res.type; var sel=$('dictCourtType'); if(sel){ sel.value=res.type; window.dictCourtTypeChange(); } }
+  if(res.county){ D.court.county=res.county; var c=$('dictCourtCounty'); if(c) c.value=res.county; }
+  dictTouch();
+};
+window.dictCourtTypeChange = function(){
+  var sel=$('dictCourtType'), wrap=$('dictCourtOtherWrap');
+  var other = sel && sel.value==='__other__';
+  if(wrap) wrap.style.display = other ? '' : 'none';
+  if(other){ var o=$('dictCourtOther'); if(o) setTimeout(function(){ o.focus(); },40); }
+  dictTouch();
+};
+
+/* ── collect + build ─────────────────────────────────────────────────────── */
+function collect(){
+  D.details = (($('dictDetails')||{}).value||'').trim();
+  D.pmm     = (($('dictPmm')||{}).value||'').trim();
+  D.hours   = ($('dictHours')||{}).value||'';
+  D.minutes = ($('dictMinutes')||{}).value||'';
+  D.court.date   = ($('dictCourtDate')||{}).value||'';
+  D.court.time   = ($('dictCourtTime')||{}).value||'';
+  D.court.county = ($('dictCourtCounty')||{}).value||'';
+  var sel=$('dictCourtType');
+  var v=sel?sel.value:'';
+  D.court.type = v==='__other__' ? (($('dictCourtOther')||{}).value||'').trim() : v;
+}
+window.dictTouch = function(){ D.dirty=true; paintNav(); };
+
+function hearingLine(){
+  if(!D.court.date) return '';
+  var s='Next Court Date: '+isoLong(D.court.date);
+  if(D.court.time) s+=' at '+t12(D.court.time);
+  if(D.court.type) s+=' for '+D.court.type;
+  return s;
+}
+function systemPrompt(){
+  var atty=attorneyNow(), m=D.matter||{};
+  var judges=[];
+  try{ if(D.court.county) judges=judgesForCounty(D.court.county)||[]; }catch(e){}
+  var types=[];
+  try{ types=HEARING_TYPES.filter(function(t){ return t!=='Other'; }); }catch(e){}
+
+  var open =
+    'You are turning a Minnesota criminal-defense attorney\'s spoken account into an internal Clio matter note.\n\n' +
+    'TODAY IS '+todayLong()+'. The attorney speaking is '+atty+'.'+
+    (m.client_name?' The client is '+m.client_name+'.':'')+
+    (D.court.county?' The county is '+D.court.county+'.':'')+'\n\n'+
+    'ABSOLUTE RULES\n'+
+    '- Use ONLY what the attorney said. Never invent, infer or embellish any fact, name, date, amount, statute, charge, offer term or opinion.\n'+
+    '- Omit any section he did not speak to. Never write "N/A", "none" or a placeholder.\n'+
+    '- Fix grammar, punctuation and shorthand. Do not change meaning.\n'+
+    '- Correct a mangled proper name ONLY when it obviously matches one on the reference lists below.\n'+
+    '- Third person about the attorney; call the client "Client".\n'+
+    '- Plain text only. No markdown, no asterisks, no preamble.\n\n';
+
+  var body;
+  if(D.mode==='court'){
+    body =
+      'PART ONE — the note body, in this order, including only what he supplied:\n'+
+      'Line 1 (always): one sentence beginning "'+atty+' appeared" naming how he appeared, the hearing type and the hearing date.\n'+
+      'Judge: <name>\n'+
+      'Prosecutor: <name>\n'+
+      'Details:\n'+
+      '<ONE flowing paragraph of complete sentences>\n'+
+      'Offer:\n'+
+      '• <one term per line>\n'+
+      'Do NOT write a next court date line — it is added separately.\n';
+  }else if(D.mode==='intake'){
+    body =
+      'PART ONE — the note body, in this order, including only what he supplied:\n'+
+      'Line 1 (always): one sentence naming who called and the level and type of charge.\n'+
+      'Caller: <who called>\nCourt File / Citation Number: <number>\nOffense Date: <Month D, YYYY>\n'+
+      'Location: <city and county>\nCustody Status: <status>\n'+
+      'Details:\n<ONE flowing paragraph>\nFlat Fee: $<amount>\n'+
+      'Next Steps:\n• <one per line>\n'+
+      'Do NOT write a court date line — it is added separately.\n';
+  }else{
+    body =
+      'PART ONE — the note body, in this order, including only what he supplied:\n'+
+      'Line 1 (always): one sentence naming the meeting and how it took place.\n'+
+      'Evidence & Strategy Review:\n<ONE flowing paragraph>\n'+
+      'Offer Relayed:\n• <one term per line>\nClient Position: <position>\n'+
+      'Attorney\'s Advice:\n<ONE flowing paragraph>\nNext Steps:\n• <one per line>\n'+
+      'Do NOT write a court date line — it is added separately.\n';
+  }
+
+  var tail =
+    '\nPART TWO — only if a client message is supplied below. Output the line ---PMM--- on its own, then the message rewritten as a short, warm, professional note addressed to the client in the second person. If no client message is supplied, omit PART TWO and the ---PMM--- line entirely.\n\n'+
+    (types.length ? 'Hearing types, when one clearly matches: '+types.join('; ')+'\n' : '')+
+    (judges.length ? 'Judges on file for '+D.court.county+' County: '+judges.join('; ')+'\n' : '')+
+    '\nReturn ONLY the note text.';
+
+  return open + body + tail;
+}
+function userPayload(){
+  var p='WHAT THE ATTORNEY SAID HAPPENED:\n'+D.details;
+  if(D.pmm) p+='\n\nWHAT HE WANTS THE CLIENT TOLD:\n'+D.pmm;
+  return p;
+}
+function ensureBuilt(){
+  if(!D.dirty && D.html) { paintReview(); return; }
+  build(false);
+}
+function build(force){
+  collect();
+  if(D.busy) return;
+  if(!D.details){ paintReview(); return; }
+  if(typeof AI_PROXY_URL!=='string' || !AI_PROXY_URL || AI_PROXY_URL.indexOf('YOUR-WORKER-SUBDOMAIN')!==-1){
+    say('Optimize needs the AI proxy URL set at the top of the file'); return;
+  }
+  D.busy=true;
+  var rb=$('dictRebuild'); if(rb){ rb.disabled=true; rb.textContent='Building…'; }
+  paintNav();
+  var pv=$('dictPrevText'); if(pv) pv.textContent='Writing the note…';
+  var pw=$('dictPrev'); if(pw) pw.classList.add('on');
+
+  fetch(AI_PROXY_URL,{
+    method:'POST', headers:{ 'Content-Type':'application/json' },
+    body:JSON.stringify({ model:'claude-sonnet-4-6', max_tokens:1600,
+      system:systemPrompt(), messages:[{ role:'user', content:userPayload() }] })
+  })
+  .then(function(r){ return r.json(); })
+  .then(function(data){
+    var txt='';
+    if(data && Array.isArray(data.content)){
+      txt=data.content.filter(function(b){ return b.type==='text'; }).map(function(b){ return b.text; }).join('\n').trim();
+    }
+    if(!txt) throw new Error('empty');
+    assemble(txt);
+  })
+  .catch(function(){ say('Could not reach the AI proxy — check the Worker and try again'); })
+  .then(function(){
+    D.busy=false;
+    var rb2=$('dictRebuild'); if(rb2){ rb2.disabled=false; rb2.textContent='Rebuild note'; }
+    paintNav(); paintReview();
+  });
+}
+function assemble(aiText){
+  var parts=aiText.split(/^\s*-{2,}\s*PMM\s*-{2,}\s*$/mi);
+  var narrative=(parts[0]||'').trim();
+  var client=(parts[1]||'').trim();
+
+  var out=[narrative];
+  var hl=hearingLine();
+  if(hl) out.push(hl);
+  if(client){
+    out.push('PMM: Please send Client new court date and verify accuracy in the calendar. Please send client the following note:');
+    out.push(client);
+  }
+  D.built=out.join('\n\n');
+  try{ D.html = textToNoteHTML(D.built); }catch(e){ D.html=''; }
+  D.dirty=false;
+
+  try{
+    if(typeof pickMode==='function' && typeof wz!=='undefined' && wz.mode!==D.mode) pickMode(D.mode);
+    generatedHTML=D.html;
+    if(typeof showOutput==='function') showOutput();
+    if(typeof window.clioNoteReplaced==='function') window.clioNoteReplaced();
+  }catch(e){}
+  applyToClio();
+}
+function applyToClio(){
+  if(typeof window.clioDictApply!=='function') return;
+  try{
+    window.clioDictApply({
+      date: todayISO(),
+      hours: D.hours, minutes: D.minutes,
+      hearing: D.court.date ? {
+        type:D.court.type||'', date:D.court.date, start:D.court.time||'',
+        county:D.court.county||''
+      } : null
+    });
+  }catch(e){}
+}
+
+/* ── review ──────────────────────────────────────────────────────────────── */
+function row(state,title,sub){
+  return '<div class="dict-sumrow '+state+'"><span class="mk">'+
+    (state==='ok'?'&#10004;':state==='bad'?'&#10008;':'&#9744;')+'</span>'+
+    '<span class="bd"><span class="t">'+E(title)+'</span>'+(sub?'<span class="s">'+E(sub)+'</span>':'')+'</span></div>';
+}
+function paintReview(){
+  var host=$('dictSum'); if(!host) return;
+  var s=null;
+  try{ s=window.clioDictSummary(); }catch(e){}
+  var m=D.matter||{};
+  var html='';
+  html+=row(D.matter?'ok':'bad','Matter', D.matter?[m.client_name,m.court_file||m.display_number].filter(Boolean).join(' – '):'Not selected');
+  html+=row(D.html?'ok':'bad','Matter Note', D.html?((s&&s.title)||'Note'):'Nothing built yet');
+  html+=row(totalMins()>0?'ok':'off','Time Entry', totalLabel()||'Not logging time');
+  html+=row(D.court.date?'ok':'off','Calendar Entry',
+        D.court.date ? (D.court.type||'Hearing')+' · '+isoLong(D.court.date)+(D.court.time?' · '+t12(D.court.time):'') : 'No court date');
+  if(D.court.date && s && s.calTitle){
+    html+='<div class="dict-sumrow off"><span class="mk"></span><span class="bd">'+
+      '<span class="s" style="font-family:var(--mono);color:var(--bronze-l)">'+E(s.calTitle)+'</span></span></div>';
+  }
+  host.innerHTML=html;
+
+  var pv=$('dictPrevText'), pw=$('dictPrev');
+  if(pv){
+    var txt='';
+    try{ if(typeof window.clioNoteText==='function') txt=window.clioNoteText(); }catch(e){}
+    pv.textContent = txt || D.built || 'Nothing built yet.';
+  }
+  if(pw) pw.classList.toggle('on', !!(D.built||D.busy));
+  paintNav();
+}
+function paintResults(parts){
+  var host=$('dictResults'); if(!host) return;
+  if(!parts||!parts.length){ host.innerHTML=''; return; }
+  var allok=parts.every(function(p){ return p.r&&p.r.ok; });
+  host.innerHTML='<div class="clio-results '+(allok?'allok':'partial')+'" style="margin-top:12px">'+
+    '<div class="rh">'+(allok?'Pushed to Clio':'Pushed — partial')+'</div>'+
+    parts.map(function(p){
+      var ok=p.r&&p.r.ok;
+      return '<div class="clio-rrow '+(ok?'ok':'fail')+'"><span class="mk">'+(ok?'&#10004;':'&#10008;')+'</span>'+
+        '<span class="bd"><span class="bt">'+E(p.label)+' '+(ok?'Created':'Failed')+'</span>'+
+        '<span class="bs">'+E(ok?(p.r.summary||'created'):(p.r.error||'failed'))+'</span></span></div>';
+    }).join('')+'</div>';
+}
+function push(){
+  if(D.busy) return;
+  collect();
+  if(!D.matter){ say('Pick a matter first'); goto(0); return; }
+  if(!D.html){ say('Build the note first'); build(true); return; }
+  applyToClio();
+  var errs=[];
+  try{ errs=window.clioDictApply({ date:todayISO(), hours:D.hours, minutes:D.minutes,
+        hearing: D.court.date ? { type:D.court.type||'', date:D.court.date, start:D.court.time||'', county:D.court.county||'' } : null }) || []; }catch(e){}
+  if(errs.length){ say(errs[0]); paintReview(); return; }
+
+  D.busy=true; paintNav();
+  try{
+    window.clioDictPush(function(parts){
+      D.busy=false; D.results=parts;
+      paintNav(); paintResults(parts);
+      var allok=parts.length && parts.every(function(p){ return p.r&&p.r.ok; });
+      if(allok) say('Pushed to Clio');
+    });
+  }catch(e){ D.busy=false; paintNav(); say('Could not push — try the Send panel'); }
+}
+
+/* ── open / close ────────────────────────────────────────────────────────── */
+function fillSelects(){
+  var t=$('dictCourtType');
+  if(t && !t.options.length){
+    var opts='<option value="">Select hearing type…</option>';
+    try{ opts+=HEARING_TYPES.filter(function(x){ return x!=='Other'; })
+      .map(function(x){ return '<option value="'+E(x)+'">'+E(x)+'</option>'; }).join(''); }catch(e){}
+    opts+='<option value="__other__">Other — type my own…</option>';
+    t.innerHTML=opts;
+  }
+  var c=$('dictCourtCounty');
+  if(c && !c.options.length){
+    var co='<option value="">County…</option>';
+    try{ co+=MN_COUNTIES.map(function(x){ var k=countyKey(x); return '<option value="'+E(k)+'">'+E(k)+'</option>'; }).join(''); }catch(e){}
+    c.innerHTML=co;
+  }
+  ['matter','details','time','court','pmm'].forEach(function(k){
+    var lab=$('dictLab_'+k);
+    if(lab && !lab.dataset.def) lab.dataset.def=lab.innerHTML;
+  });
+  var dh=$('dictDetailsHint');
+  if(dh) dh.innerHTML = D.mode==='court'
+    ? 'Include <b>who the judge and prosecutor were</b>, what was said, and any <b>offer</b>.'
+    : (D.mode==='intake' ? 'Include the <b>charge</b>, the <b>file number</b>, <b>custody status</b> and the <b>fee</b>.'
+                         : 'Include what you <b>reviewed</b>, any <b>offer relayed</b>, and your <b>advice</b>.');
+}
+window.dictOpen = function(){
+  fillSelects();
+  try{ if(typeof pickMode==='function' && typeof wz!=='undefined' && wz.mode!==D.mode) pickMode(D.mode); }catch(e){}
+  var cur=null;
+  try{ cur=window.clioDictGetMatter(); }catch(e){}
+  if(cur && !D.matter) D.matter=cur;
+  paintChosen();
+  paintConnBanner();
+  try{ if(typeof window.checkClioStatus==='function') window.checkClioStatus(true).then(paintConnBanner); }catch(e){}
+  D.stage=0;
+  $('dictPanel').classList.add('open');
+  $('dictPanel').setAttribute('aria-hidden','false');
+  paintStage(); paintMics(); paintTotal();
+  startWatch();
+  runSearch('');
+};
+window.dictClose = function(){ stopMicAll(); stopWatch();
+  $('dictPanel').classList.remove('open');
+  $('dictPanel').setAttribute('aria-hidden','true'); };
+window.dictGoto = function(i){ goto(i); };
+window.dictBack = function(){ goto(D.stage-1); };
+window.dictNext = function(){ if(stageName()==='review'){ push(); return; } goto(D.stage+1); };
+window.dictSkip = function(){ goto(D.stage+1); };
+window.dictBuild = function(f){ build(f); };
+window.dictSetMode = function(m){
+  if(D.mode===m) return;
+  D.mode=m; D.dirty=true; D.html=''; D.built='';
+  try{ if(typeof pickMode==='function' && typeof wz!=='undefined' && wz.mode!==m) pickMode(m); }catch(e){}
+  Array.prototype.forEach.call(document.querySelectorAll('#dictTypes button'),function(b){
+    b.classList.toggle('on', b.getAttribute('data-m')===m);
+  });
+  var t=$('dictTitle');
+  if(t) t.textContent = m==='court'?'Court Summary':(m==='intake'?'Intake Call':'Client Meeting');
+  fillSelects();
+};
+document.addEventListener('keydown',function(e){
+  if(e.key==='Escape' && $('dictPanel') && $('dictPanel').classList.contains('open')){
+    e.stopPropagation(); window.dictClose();
+  }
+},true);
 
 })();
 </script>
