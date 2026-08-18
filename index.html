@@ -1837,6 +1837,9 @@ select{color-scheme:dark}
   cursor:pointer;padding:14px 10px;text-decoration:underline;text-underline-offset:3px}
 .dict-skip:hover{color:var(--dim2)}
 
+.dict-ex{border:1px solid rgba(184,135,59,.35);border-radius:10px;background:#0A0D12;padding:13px;
+  display:flex;flex-direction:column;gap:10px}
+.dict-exh{font-size:9.5px;font-weight:800;letter-spacing:1.4px;text-transform:uppercase;color:var(--bronze)}
 .dict-sum{border:1px solid var(--line2);border-radius:10px;background:#0A0D12;padding:13px}
 .dict-sumrow{display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-top:1px solid var(--line)}
 .dict-sumrow:first-child{border-top:none;padding-top:0}
@@ -1907,21 +1910,21 @@ select{color-scheme:dark}
   <div class="mode-wrap" id="modeWrap">
     <button class="mode-trig" id="modeTrig" onclick="toggleModeMenu(event)">
       <span class="mode-dot"></span>
-      <span class="cap" id="modeCap">Intake</span>
+      <span class="cap" id="modeCap">Intake Notes</span>
       <span class="car">▼</span>
     </button>
     <div class="mode-menu" id="modeMenu">
       <div class="mode-item sel" data-mode="intake" onclick="pickMode(&#39;intake&#39;)">
         <div class="mi-ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg></div>
-        <div><div class="mi-t">Intake</div><div class="mi-s">New call · charge, court, custody, fee</div></div>
+        <div><div class="mi-t">Intake Notes</div><div class="mi-s">New call · charge, court, custody, fee</div></div>
       </div>
       <div class="mode-item" data-mode="court" onclick="pickMode(&#39;court&#39;)">
         <div class="mi-ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18"></path><path d="M7.5 21h9"></path><path d="M5 6h14"></path><path d="M12 6l6.5-1.5M12 6L5.5 4.5"></path><path d="M5 6l-2.6 6a3 3 0 0 0 5.2 0L5 6z"></path><path d="M19 6l-2.6 6a3 3 0 0 0 5.2 0L19 6z"></path></svg></div>
-        <div><div class="mi-t">Summary</div><div class="mi-s">After court · judge, offer, next date</div></div>
+        <div><div class="mi-t">Court Summary</div><div class="mi-s">After court · judge, offer, next date</div></div>
       </div>
       <div class="mode-item" data-mode="review" onclick="pickMode(&#39;review&#39;)">
         <div class="mi-ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg></div>
-        <div><div class="mi-t">Meeting</div><div class="mi-s">Client meeting · advice, next steps</div></div>
+        <div><div class="mi-t">Case Review Notes</div><div class="mi-s">Client meeting · advice, next steps</div></div>
       </div>
     </div>
   </div>
@@ -4577,8 +4580,8 @@ function renderForm() {
    ══════════════════════════════════════════════════════════════════════════════ */
 
 var wz = { mode:'intake', engine:'guided', curId:null, fallbackIdx:0, done:false, back:false };
-var MODE_LABEL = { intake:'Intake Note', court:'Court Summary', review:'Meeting Note' };
-var MODE_CAP   = { intake:'Intake',      court:'Summary',       review:'Meeting'   };
+var MODE_LABEL = { intake:'Intake Notes', court:'Court Summary', review:'Case Review Notes' };
+var MODE_CAP   = { intake:'Intake Notes',  court:'Court Summary', review:'Case Review Notes' };
 
 function isoToday(){ var d=new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
 function toast(m){ var t=el('toast'); if(!t) return; t.textContent=m; t.classList.add('show'); clearTimeout(t._t); t._t=setTimeout(function(){t.classList.remove('show');},1900); }
@@ -6428,7 +6431,7 @@ startMicObserver();
 
 
 
-<!-- ══ DICTATION — staged ══════════════════════════════════════════════════ -->
+<!-- ══ DICTATION ═══════════════════════════════════════════════════════════ -->
 <div class="dict" id="dictPanel" aria-hidden="true">
   <div class="dict-head">
     <span class="tag">Dictate</span>
@@ -6443,8 +6446,8 @@ startMicObserver();
     <section class="dstage on" data-s="matter">
       <div class="dict-types" id="dictTypes">
         <button data-m="court"  class="on" onclick="dictSetMode('court')">Court Summary</button>
-        <button data-m="intake" onclick="dictSetMode('intake')">Intake Call</button>
-        <button data-m="review" onclick="dictSetMode('review')">Client Meeting</button>
+        <button data-m="intake" onclick="dictSetMode('intake')">Intake Notes</button>
+        <button data-m="review" onclick="dictSetMode('review')">Case Review Notes</button>
       </div>
       <div class="dstage-q">Which matter?</div>
       <div id="dictConnBanner"></div>
@@ -6461,86 +6464,48 @@ startMicObserver();
 
     <!-- 2 · DETAILS ------------------------------------------------------ -->
     <section class="dstage" data-s="details">
-      <div class="dstage-q">What happened?</div>
+      <div id="dictMatterMini"></div>
+      <div class="dstage-q">Say everything</div>
       <div class="dstage-h" id="dictDetailsHint"></div>
       <div class="dmic-row">
         <button class="dict-mic sm" id="dictMic_details" onclick="dictMic('details')" aria-label="Dictate the details">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"></rect><path d="M5 10v2a7 7 0 0 0 14 0v-2"></path><line x1="12" y1="19" x2="12" y2="22"></line><line x1="8" y1="22" x2="16" y2="22"></line></svg>
         </button>
-        <div class="dmic-lab" id="dictLab_details">Tap and talk it through</div>
+        <div class="dmic-lab" id="dictLab_details">Tap and talk it all through</div>
       </div>
-      <textarea class="dict-ta" id="dictDetails" placeholder="Talk normally. Who the judge and prosecutor were, what was said, any offer, what was decided." oninput="dictTouch()"></textarea>
-    </section>
+      <textarea class="dict-ta" id="dictDetails" style="min-height:230px" placeholder="Talk normally and cover it all — the judge, the prosecutor, what happened, any offer, how long it took, the next court date and time, and what you want the client told." oninput="dictTouch()"></textarea>
 
-    <!-- 3 · TIME --------------------------------------------------------- -->
-    <section class="dstage" data-s="time">
-      <div class="dstage-q">How long did it take?</div>
-      <div class="dstage-h">Everything in one total &mdash; travel, waiting, the hearing, negotiations, the drive back.</div>
-      <div class="dmic-row">
-        <button class="dict-mic sm" id="dictMic_time" onclick="dictMic('time')" aria-label="Say the time spent">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"></rect><path d="M5 10v2a7 7 0 0 0 14 0v-2"></path><line x1="12" y1="19" x2="12" y2="22"></line><line x1="8" y1="22" x2="16" y2="22"></line></svg>
-        </button>
-        <div class="dmic-lab" id="dictLab_time">Say it &mdash; &ldquo;three hours and twenty five minutes&rdquo;</div>
-      </div>
-      <input class="dict-in" id="dictTimeSpoken" placeholder="e.g. two and a half hours" oninput="dictTimeSpokenIn(this.value)">
-      <div class="dict-3">
-        <div><span class="dict-lab">Hours</span><input class="dict-in" id="dictHours" type="number" min="0" max="99" inputmode="numeric" placeholder="0" oninput="dictTimeNum()"></div>
-        <div><span class="dict-lab">Minutes</span><input class="dict-in" id="dictMinutes" type="number" min="0" max="59" inputmode="numeric" placeholder="0" oninput="dictTimeNum()"></div>
-        <div><span class="dict-lab">Total</span><div class="dict-in" id="dictTotal" style="display:flex;align-items:center;font-family:var(--mono);font-size:14px;color:var(--bronze-l)">&mdash;</div></div>
-      </div>
-      <div id="dictTimeErr"></div>
-    </section>
+      <!-- revealed by Optimize -->
+      <div id="dictOut" style="display:none;flex-direction:column;gap:13px">
+        <div class="dict-ex" id="dictExtract">
+          <div class="dict-exh">Picked out of what you said &mdash; correct anything before pushing</div>
+          <div class="dict-3">
+            <div><span class="dict-lab">Hours</span><input class="dict-in" id="dictHours" type="number" min="0" max="99" inputmode="numeric" placeholder="0" oninput="dictExtractIn()"></div>
+            <div><span class="dict-lab">Minutes</span><input class="dict-in" id="dictMinutes" type="number" min="0" max="59" inputmode="numeric" placeholder="0" oninput="dictExtractIn()"></div>
+            <div><span class="dict-lab">Total</span><div class="dict-in" id="dictTotal" style="display:flex;align-items:center;font-family:var(--mono);font-size:14px;color:var(--bronze-l)">&mdash;</div></div>
+          </div>
+          <div class="dict-2">
+            <div><span class="dict-lab">Next court date</span><input class="dict-in" id="dictCourtDate" type="date" onchange="dictExtractIn()"></div>
+            <div><span class="dict-lab">Start time</span><input class="dict-in" id="dictCourtTime" type="time" onchange="dictExtractIn()"></div>
+          </div>
+          <div class="dict-2">
+            <div><span class="dict-lab">Hearing type</span><select class="dict-sel" id="dictCourtType" onchange="dictExtractIn()"></select></div>
+            <div><span class="dict-lab">County</span><select class="dict-sel" id="dictCourtCounty" onchange="dictExtractIn()"></select></div>
+          </div>
+          <div id="dictTimeErr"></div>
+          <div class="dict-acts" style="margin-top:11px">
+            <button class="clio-btn" id="dictRebuild" onclick="dictOptimize()">Optimize again</button>
+          </div>
+        </div>
 
-    <!-- 4 · COURT DATE --------------------------------------------------- -->
-    <section class="dstage" data-s="court">
-      <div class="dstage-q">Next court date?</div>
-      <div class="dstage-h">Say the date, the time and the kind of hearing. Skip it if there isn&rsquo;t one.</div>
-      <div class="dmic-row">
-        <button class="dict-mic sm" id="dictMic_court" onclick="dictMic('court')" aria-label="Say the next court date">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"></rect><path d="M5 10v2a7 7 0 0 0 14 0v-2"></path><line x1="12" y1="19" x2="12" y2="22"></line><line x1="8" y1="22" x2="16" y2="22"></line></svg>
-        </button>
-        <div class="dmic-lab" id="dictLab_court">&ldquo;Omnibus hearing November thirtieth at two thirty&rdquo;</div>
-      </div>
-      <input class="dict-in" id="dictCourtSpoken" placeholder="e.g. pretrial on September 21st at 1:30" oninput="dictCourtSpokenIn(this.value)">
-      <div class="dict-2">
-        <div><span class="dict-lab">Date</span><input class="dict-in" id="dictCourtDate" type="date" onchange="dictTouch()"></div>
-        <div><span class="dict-lab">Start time</span><input class="dict-in" id="dictCourtTime" type="time" onchange="dictTouch()"></div>
-      </div>
-      <div class="dict-2">
-        <div><span class="dict-lab">Hearing type</span><select class="dict-sel" id="dictCourtType" onchange="dictCourtTypeChange()"></select></div>
-        <div><span class="dict-lab">County</span><select class="dict-sel" id="dictCourtCounty" onchange="dictTouch()"></select></div>
-      </div>
-      <div id="dictCourtOtherWrap" style="display:none">
-        <span class="dict-lab">Describe the hearing</span>
-        <input class="dict-in" id="dictCourtOther" placeholder="e.g. Restitution Hearing" oninput="dictTouch()">
-      </div>
-    </section>
+        <div class="dict-prev on" id="dictPrev">
+          <div class="h">Exactly what Clio will store</div>
+          <div class="t" id="dictPrevText"></div>
+        </div>
 
-    <!-- 5 · PMM ---------------------------------------------------------- -->
-    <section class="dstage" data-s="pmm">
-      <div class="dstage-q">Note for the client?</div>
-      <div class="dstage-h">Say it however you&rsquo;d say it to them &mdash; it gets written up under a <b>PMM</b> directive. Skip if there&rsquo;s nothing to send.</div>
-      <div class="dmic-row">
-        <button class="dict-mic sm" id="dictMic_pmm" onclick="dictMic('pmm')" aria-label="Dictate the client note">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"></rect><path d="M5 10v2a7 7 0 0 0 14 0v-2"></path><line x1="12" y1="19" x2="12" y2="22"></line><line x1="8" y1="22" x2="16" y2="22"></line></svg>
-        </button>
-        <div class="dmic-lab" id="dictLab_pmm">Tap and say what the client should be told</div>
+        <div class="dict-sum" id="dictSum"></div>
+        <div id="dictResults"></div>
       </div>
-      <textarea class="dict-ta" id="dictPmm" style="min-height:150px" placeholder="Thank them for coming, tell them where things stand, tell them what happens next." oninput="dictTouch()"></textarea>
-    </section>
-
-    <!-- 6 · REVIEW ------------------------------------------------------- -->
-    <section class="dstage" data-s="review">
-      <div class="dstage-q">Ready to push</div>
-      <div class="dict-sum" id="dictSum"></div>
-      <div class="dict-acts">
-        <button class="clio-btn" onclick="dictBuild(true)" id="dictRebuild">Rebuild note</button>
-      </div>
-      <div class="dict-prev" id="dictPrev">
-        <div class="h">Exactly what Clio will store</div>
-        <div class="t" id="dictPrevText"></div>
-      </div>
-      <div id="dictResults"></div>
     </section>
   </div>
 
@@ -6549,7 +6514,6 @@ startMicObserver();
       <div class="dict-nav">
         <button class="dict-back" id="dictBackBtn" onclick="dictBack()">Back</button>
         <button class="dict-next" id="dictNextBtn" onclick="dictNext()">Next</button>
-        <button class="dict-skip" id="dictSkipBtn" onclick="dictSkip()">Skip</button>
       </div>
       <div class="dict-note" id="dictFootNote"></div>
     </div>
@@ -6783,7 +6747,7 @@ var CLIO_CFG = {
   PAGE_LIMIT: 200
 };
 
-var MODE_NOTE_LABEL = { intake:'Intake Note', court:'Court Summary', review:'Meeting Note' };
+var MODE_NOTE_LABEL = { intake:'Intake Notes', court:'Court Summary', review:'Case Review Notes' };
 
 function apiBase(){
   try { if (typeof CLIO_API === 'string' && CLIO_API) return CLIO_API; } catch(e){}
@@ -7079,11 +7043,11 @@ function autoTitle(m){
       }
       return t || 'Court Summary';
     }
-    if(m==='review') return 'Client Meeting';
+    if(m==='review') return 'Case Review Notes';
     var lvl=(intake && intake.severity)?intake.severity:'';
     var typ=(intake && intake.chargeType==='Other'?intake.otherType:(intake&&intake.chargeType))||'';
     var tail=[lvl,typ].filter(Boolean).join(' ');
-    return tail ? ('Intake Call – '+tail) : 'Intake Call';
+    return tail ? ('Intake Notes – '+tail) : 'Intake Notes';
   }catch(e){}
   return 'Note';
 }
@@ -8332,24 +8296,25 @@ else boot();
 
 <script>
 /* ══════════════════════════════════════════════════════════════════════════════
-   GWMNotes · STAGED DICTATION
-   Matter → Details → Time → Court date → Client note → Push to Clio.
-   Every stage takes voice or typing. Nothing leaves the phone until the last tap.
+   GWMNotes · DICTATION
+   Pick the matter (voice or text), say everything, Optimize, Push to Clio.
+   Optimize writes the note AND pulls the court date and the time spent out of
+   what was said, so both land in Clio in the right shape.
    ══════════════════════════════════════════════════════════════════════════════ */
 (function(){
 'use strict';
 
-var STAGES  = ['matter','details','time','court','pmm','review'];
-var LABELS  = { matter:'Matter', details:'Details', time:'Time', court:'Court date', pmm:'Client note', review:'Push' };
-var OPTIONAL = { time:1, court:1, pmm:1 };
+var STAGES = ['matter','details'];
+var LABELS = { matter:'Matter', details:'Details' };
+var MODE_NAME = { court:'Court Summary', intake:'Intake Notes', review:'Case Review Notes' };
 
 var D = {
   mode:'court', stage:0, matter:null,
-  details:'', pmm:'',
+  ai:null,                       /* { note, client, data } straight from Optimize */
+  built:'', html:'',
   hours:'', minutes:'',
-  court:{ date:'', time:'', type:'', other:'', county:'' },
-  built:'', html:'', dirty:true, busy:false,
-  results:null, t0:0, watch:null, searchT:null
+  court:{ date:'', time:'', type:'', county:'' },
+  busy:false, dirty:true, t0:0, watch:null, searchT:null
 };
 
 function $(id){ return document.getElementById(id); }
@@ -8371,14 +8336,13 @@ function attorneyNow(){
   }catch(e){ return 'GWM'; }
 }
 
-/* ── spoken numbers ──────────────────────────────────────────────────────── */
+/* ── spoken-number fallbacks, used only if the model misses something ────── */
 var ONES={one:1,two:2,three:3,four:4,five:5,six:6,seven:7,eight:8,nine:9,
           first:1,second:2,third:3,fourth:4,fifth:5,sixth:6,seventh:7,eighth:8,ninth:9};
 var MID ={zero:0,ten:10,eleven:11,twelve:12,thirteen:13,fourteen:14,fifteen:15,sixteen:16,seventeen:17,
           eighteen:18,nineteen:19,tenth:10,eleventh:11,twelfth:12,thirteenth:13,fourteenth:14,fifteenth:15,
           sixteenth:16,seventeenth:17,eighteenth:18,nineteenth:19};
-var TENS={twenty:20,thirty:30,forty:40,fourty:40,fifty:50,
-          twentieth:20,thirtieth:30,fortieth:40,fiftieth:50};
+var TENS={twenty:20,thirty:30,forty:40,fourty:40,fifty:50,twentieth:20,thirtieth:30,fortieth:40,fiftieth:50};
 function numFor(w){
   w=w.replace(/[^a-z]/g,'');
   if(TENS[w]!==undefined) return { v:TENS[w], tens:true };
@@ -8386,7 +8350,6 @@ function numFor(w){
   if(ONES[w]!==undefined) return { v:ONES[w], ones:true };
   return null;
 }
-/* "twenty five" -> 25, but "two thirty" stays 2 30 so it can become a clock time */
 function wordsToNum(str){
   var toks=String(str||'').replace(/[-]/g,' ').split(/\s+/), out=[];
   for(var i=0;i<toks.length;i++){
@@ -8400,30 +8363,20 @@ function wordsToNum(str){
 }
 function parseDuration(text){
   var t=' '+wordsToNum(String(text||'').toLowerCase())+' ';
-  /* spoken fractions, before anything else looks for digits */
   t=t.replace(/\b(?:an?)\s+(hour|hr)\b/g,'1 $1');
   t=t.replace(/(\d+(?:\.\d+)?)\s*(?:hours?|hrs?)\s+and\s+(?:a\s+)?half\b/g,'$1.5 hours');
   t=t.replace(/(\d+(?:\.\d+)?)\s+and\s+(?:a\s+)?half\s*(?:hours?|hrs?)\b/g,'$1.5 hours');
   t=t.replace(/\bhalf\s+(?:an?\s+|1\s+)?(?:hours?|hrs?)\b/g,'0.5 hours');
   t=t.replace(/(\d+(?:\.\d+)?)\s*(?:hours?|hrs?)\s+and\s+(?:a\s+)?quarter\b/g,'$1.25 hours');
-  t=t.replace(/\b(?:three\s+quarters?|3\s+quarters?)\s+(?:of\s+)?(?:an?\s+|1\s+)?(?:hours?|hrs?)\b/g,'0.75 hours');
   t=t.replace(/\bquarter\s+(?:of\s+)?(?:an?\s+|1\s+)?(?:hours?|hrs?)\b/g,'0.25 hours');
-
-  var h=0, m=0, ok=false;
-  var mh=/(\d+(?:\.\d+)?)\s*(?:hrs?\b|hours?\b|h\b)/.exec(t);
-  if(mh){ h=parseFloat(mh[1]); ok=true; }
-  var mm=/(\d+(?:\.\d+)?)\s*(?:mins?\b|minutes?\b|m\b)/.exec(t);
-  if(mm){ m=parseFloat(mm[1]); ok=true; }
-  if(!ok){ var bare=/^\s*(\d{1,3})\s*$/.exec(t); if(bare){ m=parseInt(bare[1],10); ok=true; } }
+  var h=0,m=0,ok=false;
+  var mh=/(\d+(?:\.\d+)?)\s*(?:hrs?\b|hours?\b)/.exec(t);  if(mh){ h=parseFloat(mh[1]); ok=true; }
+  var mm=/(\d+(?:\.\d+)?)\s*(?:mins?\b|minutes?\b)/.exec(t); if(mm){ m=parseFloat(mm[1]); ok=true; }
   if(!ok) return null;
-
-  var frac=Math.round((h-Math.floor(h))*60);
-  h=Math.floor(h); m+=frac;
+  var frac=Math.round((h-Math.floor(h))*60); h=Math.floor(h); m+=frac;
   h+=Math.floor(m/60); m=Math.round(m%60);
-  if(h>99) h=99;
-  return { h:h, m:m };
+  return { h:Math.min(h,99), m:m };
 }
-/* turn a spoken court date into something the note scanner understands */
 function normalizeSpokenDate(text){
   var t=wordsToNum(String(text||'').toLowerCase());
   t=t.replace(/\b(\d{1,2})\s+o.?clock\b/g,'$1:00');
@@ -8433,105 +8386,85 @@ function normalizeSpokenDate(text){
   return t;
 }
 
-/* ── stage plumbing ──────────────────────────────────────────────────────── */
+/* ── stages ──────────────────────────────────────────────────────────────── */
 function stageName(){ return STAGES[D.stage]; }
 function paintSteps(){
   var host=$('dictSteps'); if(!host) return;
   host.innerHTML=STAGES.map(function(s,i){
-    var cls = i===D.stage ? 'on' : (i<D.stage ? 'done' : '');
+    var cls=i===D.stage?'on':(i<D.stage?'done':'');
     return '<button class="st '+cls+'" onclick="dictGoto('+i+')"><span class="bar"></span><span class="lb">'+E(LABELS[s])+'</span></button>';
   }).join('');
 }
 function paintStage(){
-  var wrap=document.querySelectorAll('#dictPanel .dstage');
-  Array.prototype.forEach.call(wrap,function(el){
+  Array.prototype.forEach.call(document.querySelectorAll('#dictPanel .dstage'),function(el){
     el.classList.toggle('on', el.getAttribute('data-s')===stageName());
   });
-  paintSteps();
-  paintNav();
-  if(stageName()==='review') ensureBuilt();
+  paintSteps(); paintMini(); paintNav();
   var body=document.querySelector('#dictPanel .dict-body'); if(body) body.scrollTop=0;
 }
+function paintMini(){
+  var host=$('dictMatterMini'); if(!host) return;
+  var m=D.matter;
+  host.innerHTML = m ? ('<div class="dict-chosen"><span class="tick">&#10004;</span><span class="bd">'+
+    '<span class="cn">'+E(m.client_name||m.description||'Matter')+'</span>'+
+    '<span class="de">'+E([m.display_number,m.court_file].filter(Boolean).join('  ·  '))+'</span></span></div>') : '';
+}
+function detailsText(){ return (($('dictDetails')||{}).value||'').trim(); }
 function paintNav(){
-  var st=stageName();
-  var back=$('dictBackBtn'), next=$('dictNextBtn'), skip=$('dictSkipBtn'), note=$('dictFootNote');
+  var st=stageName(), back=$('dictBackBtn'), next=$('dictNextBtn'), note=$('dictFootNote');
   if(back) back.disabled = D.stage===0;
-  if(skip) skip.style.display = OPTIONAL[st] ? '' : 'none';
-  if(next){
-    if(st==='review'){
-      next.textContent = D.busy ? 'Pushing…' : 'Push to Clio';
-      next.disabled = D.busy || !D.html || !D.matter;
-      next.style.cssText='flex:1;color:#FFF1D4;border-color:rgba(184,135,59,.55);background:linear-gradient(180deg,#33260F,#1B1509)';
-    }else{
-      next.textContent='Next';
-      next.disabled = !canAdvance();
-      next.style.cssText='';
-    }
+  if(!next) return;
+  if(st==='matter'){
+    next.textContent='Next';
+    next.disabled=!D.matter;
+    next.style.cssText='';
+    if(note) note.textContent = D.matter ? 'Matter locked in.' : 'Pick the matter this note belongs to.';
+    return;
   }
-  if(note) note.textContent = footHint();
-}
-function canAdvance(){
-  var st=stageName();
-  if(st==='matter')  return !!D.matter;
-  if(st==='details') return (($('dictDetails')||{}).value||'').trim().length>10;
-  return true;
-}
-function footHint(){
-  var st=stageName();
-  if(st==='matter')  return D.matter ? 'Matter locked in.' : 'Pick the matter this note belongs to.';
-  if(st==='details') return canAdvance() ? '' : 'Say what happened before moving on.';
-  if(st==='time')    return 'Optional — skip if you are not logging time.';
-  if(st==='court')   return 'Optional — skip if no date was set.';
-  if(st==='pmm')     return 'Optional — skip if there is nothing to send the client.';
-  if(st==='review')  return D.matter ? '' : 'Go back and pick a matter.';
-  return '';
+  if(!D.html){
+    next.textContent = D.busy ? 'Optimizing…' : 'Optimize';
+    next.disabled = D.busy || detailsText().length<12;
+    next.style.cssText='';
+    if(note) note.textContent = D.busy ? 'Writing the note and pulling out the dates…'
+      : (detailsText().length<12 ? 'Say what happened, then Optimize.' : 'Optimize turns this into a Clio note.');
+  }else{
+    next.textContent = D.busy ? 'Pushing…' : 'Push to Clio';
+    next.disabled = D.busy;
+    next.style.cssText='flex:1;color:#FFF1D4;border-color:rgba(184,135,59,.55);background:linear-gradient(180deg,#33260F,#1B1509)';
+    if(note) note.textContent = D.matter ? ('Pushing to '+((D.matter.client_name)||'the matter')) : '';
+  }
 }
 function goto(i){
   if(i<0||i>=STAGES.length) return;
-  if(i>D.stage){
-    for(var k=D.stage;k<i;k++){
-      var s=STAGES[k];
-      if(!OPTIONAL[s]){
-        if(s==='matter' && !D.matter){ say('Pick a matter first'); return; }
-        if(s==='details' && (($('dictDetails')||{}).value||'').trim().length<=10){ say('Say what happened first'); return; }
-      }
-    }
-  }
-  stopMicAll();
-  collect();
-  D.stage=i;
-  paintStage();
+  if(i>0 && !D.matter){ say('Pick a matter first'); return; }
+  stopMicAll(); D.stage=i; paintStage();
 }
 
 /* ── mics ────────────────────────────────────────────────────────────────── */
-var TARGETS={ matter:'dictMatterQ', details:'dictDetails', time:'dictTimeSpoken', court:'dictCourtSpoken', pmm:'dictPmm' };
+var TARGETS={ matter:'dictMatterQ', details:'dictDetails' };
 function micLive(k){ var b=$('dictMic_'+k); return !!(b&&b.classList.contains('mic-live')); }
 function stopMicAll(){
-  STAGES.forEach(function(k){
+  Object.keys(TARGETS).forEach(function(k){
     if(micLive(k)){ try{ dictateInto($('dictMic_'+k), $(TARGETS[k])); }catch(e){} }
   });
 }
 window.dictMic = function(k){
   var btn=$('dictMic_'+k), ta=$(TARGETS[k]);
   if(!btn||!ta) return;
-  if(!(window.SpeechRecognition||window.webkitSpeechRecognition)){
-    ta.focus(); say('Use the microphone key on your keyboard'); return;
-  }
+  if(!(window.SpeechRecognition||window.webkitSpeechRecognition)){ ta.focus(); say('Use the microphone key on your keyboard'); return; }
   if(typeof dictateInto!=='function'){ say('Dictation is unavailable in this build'); return; }
   var wasLive=micLive(k);
   dictateInto(btn, ta);
   setTimeout(function(){
     paintMics();
-    if(wasLive){                       /* just stopped — parse what was said */
+    if(wasLive){
       if(k==='matter') runSearch(ta.value);
-      if(k==='time')   window.dictTimeSpokenIn(ta.value);
-      if(k==='court')  window.dictCourtSpokenIn(ta.value);
-      dictTouch();
+      if(k==='details') dictTouch();
     }
   },120);
 };
 function paintMics(){
-  STAGES.forEach(function(k){
+  Object.keys(TARGETS).forEach(function(k){
     var lab=$('dictLab_'+k); if(!lab) return;
     var live=micLive(k);
     lab.classList.toggle('live',live);
@@ -8539,16 +8472,25 @@ function paintMics(){
       if(!D.t0) D.t0=Date.now();
       var s=Math.floor((Date.now()-D.t0)/1000);
       lab.innerHTML='Listening — tap again to stop<span class="tm">'+pad2(Math.floor(s/60))+':'+pad2(s%60)+'</span>';
-    }else if(lab.dataset.def){
-      lab.innerHTML=lab.dataset.def;
-    }
+    }else if(lab.dataset.def) lab.innerHTML=lab.dataset.def;
   });
-  if(!STAGES.some(micLive)) D.t0=0;
+  if(!Object.keys(TARGETS).some(micLive)) D.t0=0;
 }
-function startWatch(){ stopWatch(); D.watch=setInterval(paintMics,400); }
+var _lastConn=null;
+function connTick(){
+  var c = (typeof window.__clioConnected==='undefined') ? null : window.__clioConnected;
+  if(c===_lastConn) return;
+  var was=_lastConn; _lastConn=c;
+  paintConnBanner();
+  if(c===true && was===false){
+    say('Clio reconnected');
+    if(stageName()==='matter') runSearch((($('dictMatterQ')||{}).value||'').trim());
+  }
+}
+function startWatch(){ stopWatch(); D.watch=setInterval(function(){ paintMics(); connTick(); },400); }
 function stopWatch(){ if(D.watch){ clearInterval(D.watch); D.watch=null; } }
 
-/* ── stage 1 · matter ────────────────────────────────────────────────────── */
+/* ── matter search ───────────────────────────────────────────────────────── */
 function runSearch(q){
   var host=$('dictMatterResults'); if(!host) return;
   q=String(q||'').trim();
@@ -8560,8 +8502,8 @@ function runSearch(q){
       host.innerHTML='<div class="clio-msg" style="padding:20px">'+(q?'No matter matches that.':'Search for the client by name.')+'</div>';
       return;
     }
+    window._dictRows=rows;
     host.innerHTML=rows.slice(0,25).map(function(m,i){
-      window._dictRows=rows;
       return '<button class="dict-res" onclick="dictPickMatter('+i+')">'+
         '<span class="av">'+E(initials(m.client_name||m.description))+'</span>'+
         '<span class="bd"><span class="cn">'+E(m.client_name||'(no client)')+'</span>'+
@@ -8569,14 +8511,9 @@ function runSearch(q){
         '<span class="mn">'+E([m.display_number,m.court_file,m.status].filter(Boolean).join('  ·  '))+'</span></span></button>';
     }).join('');
   }).catch(function(err){
-    /* the recents lookup on open is a convenience — never alarm over it */
-    if(!q){
-      host.innerHTML='<div class="clio-msg" style="padding:20px">Search for the client by name.</div>';
-      return;
-    }
-    var auth = !!err.auth || /authoriz|reconnect|connect to clio/i.test(err.message||'');
-    host.innerHTML=
-      '<div class="dict-warn"><b>Could not reach Clio.</b><br>'+E(err.message||'Unknown error')+'</div>'+
+    if(!q){ host.innerHTML='<div class="clio-msg" style="padding:20px">Search for the client by name.</div>'; return; }
+    var auth=!!err.auth || /authoriz|reconnect|connect to clio/i.test(err.message||'');
+    host.innerHTML='<div class="dict-warn"><b>Could not reach Clio.</b><br>'+E(err.message||'Unknown error')+'</div>'+
       '<div class="dict-acts" style="margin-top:10px">'+
         '<button class="clio-btn" onclick="dictRetrySearch()">Try again</button>'+
         (auth?'<button class="clio-btn gold" onclick="dictReconnect()">Connect to Clio</button>':'')+
@@ -8585,26 +8522,25 @@ function runSearch(q){
 }
 window.dictRetrySearch = function(){ runSearch((($('dictMatterQ')||{}).value||'').trim()); };
 window.dictReconnect = function(){
-  try{ if(typeof window.clioConnect==='function') window.clioConnect(); }catch(e){}
-  say('Finish in the Clio window, then tap Try again');
+  if(typeof window.clioConnect!=='function'){ say('Reconnect from the top of the main screen'); return; }
+  try{ window.clioConnect(); }catch(e){}
+  say('Approve in the Clio window — this picks up automatically');
 };
-window.dictMatterTyped = function(v){
-  clearTimeout(D.searchT);
-  D.searchT=setTimeout(function(){ runSearch(v); },320);
-};
+window.dictMatterTyped = function(v){ clearTimeout(D.searchT); D.searchT=setTimeout(function(){ runSearch(v); },320); };
 window.dictPickMatter = function(i){
   var m=(window._dictRows||[])[i]; if(!m) return;
   D.matter=m; D.dirty=true;
   try{ window.clioDictSetMatter(m); }catch(e){}
-  paintChosen(); paintNav();
+  paintChosen(); paintMini(); paintNav();
   say('Matter set — '+(m.client_name||m.display_number));
+  setTimeout(function(){ goto(1); },380);
 };
 function paintConnBanner(){
   var host=$('dictConnBanner'); if(!host) return;
-  if(window.__clioConnected===false){
-    host.innerHTML='<div class="dict-warn"><b>Clio is not connected.</b> Matter search and pushing will fail until you reconnect.'+
-      '<div class="dict-acts" style="margin-top:9px"><button class="clio-btn gold" onclick="dictReconnect()">Connect to Clio</button></div></div>';
-  }else host.innerHTML='';
+  host.innerHTML = (window.__clioConnected===false)
+    ? '<div class="dict-warn"><b>Clio is not connected.</b> Tap below, approve in the window that opens, and this page picks it straight back up &mdash; you will not lose anything you have typed.'+
+      '<div class="dict-acts" style="margin-top:9px"><button class="clio-btn gold" onclick="dictReconnect()">Connect to Clio</button></div></div>'
+    : '';
 }
 function paintChosen(){
   var host=$('dictMatterChosen'); if(!host) return;
@@ -8612,27 +8548,179 @@ function paintChosen(){
   var m=D.matter;
   host.innerHTML='<div class="dict-chosen"><span class="tick">&#10004;</span><span class="bd">'+
     '<span class="cn">'+E(m.client_name||m.description||'Matter')+'</span>'+
-    '<span class="de">'+E([m.display_number,m.court_file,m.status].filter(Boolean).join('  ·  '))+'</span>'+
-    '</span></div>';
+    '<span class="de">'+E([m.display_number,m.court_file,m.status].filter(Boolean).join('  ·  '))+'</span></span></div>';
   var res=$('dictMatterResults'); if(res) res.innerHTML='';
 }
 
-/* ── stage 3 · time ──────────────────────────────────────────────────────── */
-window.dictTimeSpokenIn = function(v){
-  var d=parseDuration(v);
-  if(d){
-    D.hours=String(d.h); D.minutes=String(d.m);
-    var h=$('dictHours'), m=$('dictMinutes');
-    if(h) h.value=d.h?String(d.h):'';
-    if(m) m.value=d.m?String(d.m):'';
+/* ── optimize ────────────────────────────────────────────────────────────── */
+function systemPrompt(){
+  var atty=attorneyNow(), m=D.matter||{};
+  var types=[]; try{ types=HEARING_TYPES.filter(function(t){ return t!=='Other'; }); }catch(e){}
+  var judges=[];
+  try{
+    var cty=m.county||'';
+    if(!cty && typeof court!=='undefined' && court.county) cty=countyKey(court.county);
+    if(cty) judges=judgesForCounty(cty)||[];
+  }catch(e){}
+
+  var sections;
+  if(D.mode==='court'){
+    sections =
+      'Line 1 (always): one sentence beginning "'+atty+' appeared" naming how he appeared, the hearing type and the hearing date.\n'+
+      'Judge: <name>\nProsecutor: <name>\n'+
+      'Details:\n<ONE flowing paragraph of complete sentences>\n'+
+      'Offer:\n• <one term per line>\n';
+  }else if(D.mode==='intake'){
+    sections =
+      'Line 1 (always): one sentence naming who called and the level and type of charge.\n'+
+      'Caller: <who called>\nCourt File / Citation Number: <number>\nOffense Date: <Month D, YYYY>\n'+
+      'Location: <city and county>\nCustody Status: <status>\n'+
+      'Details:\n<ONE flowing paragraph>\nFlat Fee: $<amount>\nNext Steps:\n• <one per line>\n';
+  }else{
+    sections =
+      'Line 1 (always): one sentence naming the meeting and how it took place.\n'+
+      'Evidence & Strategy Review:\n<ONE flowing paragraph>\n'+
+      'Offer Relayed:\n• <one term per line>\nClient Position: <position>\n'+
+      "Attorney's Advice:\n<ONE flowing paragraph>\nNext Steps:\n• <one per line>\n";
   }
-  paintTotal(); dictTouch();
-};
-window.dictTimeNum = function(){
-  D.hours   = ($('dictHours')||{}).value||'';
-  D.minutes = ($('dictMinutes')||{}).value||'';
-  paintTotal(); dictTouch();
-};
+
+  return (
+   'You are turning a Minnesota criminal-defense attorney\'s spoken account into an internal Clio matter note.\n\n'+
+   'TODAY IS '+todayLong()+'. The attorney speaking is '+atty+'.'+
+   (m.client_name?' The client is '+m.client_name+'.':'')+
+   (m.description?' The matter is "'+m.description+'".':'')+
+   (m.court_file?' The court file number is '+m.court_file+'.':'')+'\n\n'+
+   'ABSOLUTE RULES\n'+
+   '- Use ONLY what the attorney said. Never invent, infer or embellish any fact, name, date, amount, statute, charge, offer term or opinion.\n'+
+   '- Omit any section he did not speak to. Never write "N/A", "none" or a placeholder.\n'+
+   '- Refer to the client as "Client", never by name. Third person about the attorney.\n'+
+   '- Fix grammar, punctuation and spoken shorthand. Do not change meaning.\n'+
+   '- Correct a mangled proper name ONLY when it obviously matches one on the reference lists below.\n'+
+   '- Plain text. No markdown, no asterisks, no preamble.\n\n'+
+
+   'PART 1 — THE NOTE. A heading is a short phrase ending in a colon on its own line. In this order, including only what he supplied:\n'+
+   sections+
+   'Do NOT write a next-court-date line anywhere in PART 1. It is added separately from PART 3.\n\n'+
+
+   'PART 2 — THE CLIENT MESSAGE. Only if he said something to pass on to the client. Output the line ---PMM--- on its own, then that message rewritten as a short, warm, professional note addressed to the client in the second person. If he said nothing for the client, omit PART 2 entirely.\n\n'+
+
+   'PART 3 — EXTRACTED DATA. Always output the line ---DATA--- on its own, then exactly these keys, one per line, using NONE when he did not say it. No other text.\n'+
+   'NEXT_HEARING_DATE: YYYY-MM-DD (the FUTURE hearing he said was next; resolve the year from today\'s date)\n'+
+   'NEXT_HEARING_TIME: HH:MM in 24-hour time (a spoken 1 through 7 o\'clock on a court calendar means afternoon)\n'+
+   'NEXT_HEARING_TYPE: exactly one of the hearing types listed below\n'+
+   'COUNTY: the Minnesota county name only, no "County" suffix\n'+
+   'TIME_HOURS: whole hours he spent on this matter today\n'+
+   'TIME_MINUTES: 0-59 remaining minutes\n'+
+   'JUDGE: the judge\'s name only\n'+
+   'PROSECUTOR: the prosecutor\'s name only\n\n'+
+   (types.length ? 'Hearing types: '+types.join('; ')+'\n' : '')+
+   (judges.length ? 'Judges on file: '+judges.join('; ')+'\n' : '')+
+   '\nReturn PART 1, then PART 2 if any, then PART 3. Nothing else.'
+  );
+}
+function splitAI(txt){
+  var d={}, s=String(txt||'');
+  var dp=s.split(/^\s*-{2,}\s*DATA\s*-{2,}\s*$/mi);
+  var body=dp[0]||'';
+  if(dp[1]){
+    dp[1].split('\n').forEach(function(line){
+      var kv=/^\s*([A-Z_]+)\s*:\s*(.*)$/.exec(line);
+      if(kv){ var v=kv[2].trim(); if(v && !/^(none|n\/a|unknown|-)$/i.test(v)) d[kv[1]]=v; }
+    });
+  }
+  var pp=body.split(/^\s*-{2,}\s*PMM\s*-{2,}\s*$/mi);
+  return { note:(pp[0]||'').trim(), client:(pp[1]||'').trim(), data:d };
+}
+window.dictOptimize = function(){ optimize(); };
+function optimize(){
+  if(D.busy) return;
+  var raw=detailsText();
+  if(raw.length<12){ say('Say a bit more first'); return; }
+  if(typeof AI_PROXY_URL!=='string' || !AI_PROXY_URL || AI_PROXY_URL.indexOf('YOUR-WORKER-SUBDOMAIN')!==-1){
+    say('Optimize needs the AI proxy URL set at the top of the file'); return;
+  }
+  stopMicAll();
+  D.busy=true; paintNav();
+  var rb=$('dictRebuild'); if(rb){ rb.disabled=true; rb.textContent='Optimizing…'; }
+
+  fetch(AI_PROXY_URL,{
+    method:'POST', headers:{ 'Content-Type':'application/json' },
+    body:JSON.stringify({ model:'claude-sonnet-4-6', max_tokens:1800,
+      system:systemPrompt(), messages:[{ role:'user', content:raw }] })
+  })
+  .then(function(r){ return r.json(); })
+  .then(function(data){
+    var txt='';
+    if(data && Array.isArray(data.content)){
+      txt=data.content.filter(function(b){ return b.type==='text'; }).map(function(b){ return b.text; }).join('\n').trim();
+    }
+    if(!txt) throw new Error('empty');
+    D.ai=splitAI(txt);
+    adoptExtraction(raw);
+    reassemble();
+    var out=$('dictOut'); if(out) out.style.display='flex';
+    say('Note written — check the dates, then push');
+  })
+  .catch(function(){ say('Optimize could not reach the AI proxy — check the Worker and try again'); })
+  .then(function(){
+    D.busy=false; paintNav();
+    var rb2=$('dictRebuild'); if(rb2){ rb2.disabled=false; rb2.textContent='Optimize again'; }
+  });
+}
+/* take the model's extraction, and fall back to reading it ourselves */
+function adoptExtraction(raw){
+  var d=(D.ai&&D.ai.data)||{};
+
+  var hrs=parseInt(d.TIME_HOURS,10), mins=parseInt(d.TIME_MINUTES,10);
+  if(!isNaN(hrs)||!isNaN(mins)){
+    D.hours=String(isNaN(hrs)?0:hrs); D.minutes=String(isNaN(mins)?0:mins);
+  }else{
+    var pd=parseDuration(raw);
+    if(pd){ D.hours=String(pd.h); D.minutes=String(pd.m); }
+  }
+
+  if(/^\d{4}-\d{2}-\d{2}$/.test(d.NEXT_HEARING_DATE||'')) D.court.date=d.NEXT_HEARING_DATE;
+  var tm=/^(\d{1,2}):(\d{2})$/.exec(d.NEXT_HEARING_TIME||'');
+  if(tm) D.court.time=pad2(+tm[1])+':'+tm[2];
+  if(d.NEXT_HEARING_TYPE) D.court.type=d.NEXT_HEARING_TYPE;
+  if(d.COUNTY) D.court.county=String(d.COUNTY).replace(/\s+county$/i,'').trim();
+
+  if(!D.court.date && typeof window.clioParseHearing==='function'){
+    var res=window.clioParseHearing(normalizeSpokenDate(raw));
+    if(res){
+      D.court.date=res.iso||'';
+      if(res.time && !D.court.time){
+        var t=res.time;
+        if(!/\b(am|pm)\b/i.test(normalizeSpokenDate(raw))){
+          var hh=parseInt(t.split(':')[0],10);
+          if(hh>=1&&hh<=7) t=pad2(hh+12)+':'+t.split(':')[1];
+        }
+        D.court.time=t;
+      }
+      if(res.type && !D.court.type)     D.court.type=res.type;
+      if(res.county && !D.court.county) D.court.county=res.county;
+    }
+  }
+  if(!D.court.county){
+    try{ if(typeof court!=='undefined' && court.county) D.court.county=countyKey(court.county); }catch(e){}
+  }
+  paintExtract();
+}
+function paintExtract(){
+  var set=function(id,v){ var f=$(id); if(f && f.value!==(v==null?'':v)) f.value=(v==null?'':v); };
+  set('dictHours', D.hours && D.hours!=='0' ? D.hours : (D.hours==='0'?'0':''));
+  set('dictMinutes', D.minutes!=='' ? D.minutes : '');
+  set('dictCourtDate', D.court.date);
+  set('dictCourtTime', D.court.time);
+  var ty=$('dictCourtType');
+  if(ty){
+    var known=false;
+    try{ known=HEARING_TYPES.indexOf(D.court.type)!==-1; }catch(e){}
+    ty.value = known ? D.court.type : '';
+  }
+  var co=$('dictCourtCounty'); if(co) co.value=D.court.county||'';
+  paintTotal();
+}
 function totalMins(){
   var h=parseInt(D.hours,10); if(isNaN(h)||h<0) h=0;
   var m=parseInt(D.minutes,10); if(isNaN(m)||m<0) m=0;
@@ -8647,56 +8735,21 @@ function totalLabel(){
 }
 function paintTotal(){
   var box=$('dictTotal'), err=$('dictTimeErr');
-  if(box) box.textContent = totalLabel()||'—';
+  if(box) box.textContent=totalLabel()||'—';
   var m=parseInt(D.minutes,10);
   var bad = D.minutes!=='' && (isNaN(m)||m<0||m>59);
   if(err) err.innerHTML = bad ? '<div class="clio-err">Minutes must be between 0 and 59.</div>' : '';
   var mi=$('dictMinutes'); if(mi) mi.classList.toggle('bad',bad);
 }
-
-/* ── stage 4 · court date ────────────────────────────────────────────────── */
-window.dictCourtSpokenIn = function(v){
-  if(typeof window.clioParseHearing!=='function') return;
-  var raw=String(v||'');
-  var res=window.clioParseHearing(normalizeSpokenDate(raw));
-  if(!res) return;
-  if(res.iso){ D.court.date=res.iso; var d=$('dictCourtDate'); if(d) d.value=res.iso; }
-  if(res.time){
-    var tm=res.time;
-    /* nobody says "AM" out loud — 1 through 7 on a court calendar means afternoon */
-    if(!/\b(am|pm)\b/i.test(normalizeSpokenDate(raw))){
-      var hh=parseInt(tm.split(':')[0],10);
-      if(hh>=1 && hh<=7) tm=pad2(hh+12)+':'+tm.split(':')[1];
-    }
-    D.court.time=tm; var t=$('dictCourtTime'); if(t) t.value=tm;
-  }
-  if(res.type){ D.court.type=res.type; var sel=$('dictCourtType'); if(sel){ sel.value=res.type; window.dictCourtTypeChange(); } }
-  if(res.county){ D.court.county=res.county; var c=$('dictCourtCounty'); if(c) c.value=res.county; }
-  dictTouch();
+window.dictExtractIn = function(){
+  D.hours=($('dictHours')||{}).value||'';
+  D.minutes=($('dictMinutes')||{}).value||'';
+  D.court.date=($('dictCourtDate')||{}).value||'';
+  D.court.time=($('dictCourtTime')||{}).value||'';
+  D.court.type=($('dictCourtType')||{}).value||'';
+  D.court.county=($('dictCourtCounty')||{}).value||'';
+  paintTotal(); reassemble();
 };
-window.dictCourtTypeChange = function(){
-  var sel=$('dictCourtType'), wrap=$('dictCourtOtherWrap');
-  var other = sel && sel.value==='__other__';
-  if(wrap) wrap.style.display = other ? '' : 'none';
-  if(other){ var o=$('dictCourtOther'); if(o) setTimeout(function(){ o.focus(); },40); }
-  dictTouch();
-};
-
-/* ── collect + build ─────────────────────────────────────────────────────── */
-function collect(){
-  D.details = (($('dictDetails')||{}).value||'').trim();
-  D.pmm     = (($('dictPmm')||{}).value||'').trim();
-  D.hours   = ($('dictHours')||{}).value||'';
-  D.minutes = ($('dictMinutes')||{}).value||'';
-  D.court.date   = ($('dictCourtDate')||{}).value||'';
-  D.court.time   = ($('dictCourtTime')||{}).value||'';
-  D.court.county = ($('dictCourtCounty')||{}).value||'';
-  var sel=$('dictCourtType');
-  var v=sel?sel.value:'';
-  D.court.type = v==='__other__' ? (($('dictCourtOther')||{}).value||'').trim() : v;
-}
-window.dictTouch = function(){ D.dirty=true; paintNav(); };
-
 function hearingLine(){
   if(!D.court.date) return '';
   var s='Next Court Date: '+isoLong(D.court.date);
@@ -8704,123 +8757,17 @@ function hearingLine(){
   if(D.court.type) s+=' for '+D.court.type;
   return s;
 }
-function systemPrompt(){
-  var atty=attorneyNow(), m=D.matter||{};
-  var judges=[];
-  try{ if(D.court.county) judges=judgesForCounty(D.court.county)||[]; }catch(e){}
-  var types=[];
-  try{ types=HEARING_TYPES.filter(function(t){ return t!=='Other'; }); }catch(e){}
-
-  var open =
-    'You are turning a Minnesota criminal-defense attorney\'s spoken account into an internal Clio matter note.\n\n' +
-    'TODAY IS '+todayLong()+'. The attorney speaking is '+atty+'.'+
-    (m.client_name?' The client is '+m.client_name+'.':'')+
-    (D.court.county?' The county is '+D.court.county+'.':'')+'\n\n'+
-    'ABSOLUTE RULES\n'+
-    '- Use ONLY what the attorney said. Never invent, infer or embellish any fact, name, date, amount, statute, charge, offer term or opinion.\n'+
-    '- Omit any section he did not speak to. Never write "N/A", "none" or a placeholder.\n'+
-    '- Fix grammar, punctuation and shorthand. Do not change meaning.\n'+
-    '- Correct a mangled proper name ONLY when it obviously matches one on the reference lists below.\n'+
-    '- Third person about the attorney; call the client "Client".\n'+
-    '- Plain text only. No markdown, no asterisks, no preamble.\n\n';
-
-  var body;
-  if(D.mode==='court'){
-    body =
-      'PART ONE — the note body, in this order, including only what he supplied:\n'+
-      'Line 1 (always): one sentence beginning "'+atty+' appeared" naming how he appeared, the hearing type and the hearing date.\n'+
-      'Judge: <name>\n'+
-      'Prosecutor: <name>\n'+
-      'Details:\n'+
-      '<ONE flowing paragraph of complete sentences>\n'+
-      'Offer:\n'+
-      '• <one term per line>\n'+
-      'Do NOT write a next court date line — it is added separately.\n';
-  }else if(D.mode==='intake'){
-    body =
-      'PART ONE — the note body, in this order, including only what he supplied:\n'+
-      'Line 1 (always): one sentence naming who called and the level and type of charge.\n'+
-      'Caller: <who called>\nCourt File / Citation Number: <number>\nOffense Date: <Month D, YYYY>\n'+
-      'Location: <city and county>\nCustody Status: <status>\n'+
-      'Details:\n<ONE flowing paragraph>\nFlat Fee: $<amount>\n'+
-      'Next Steps:\n• <one per line>\n'+
-      'Do NOT write a court date line — it is added separately.\n';
-  }else{
-    body =
-      'PART ONE — the note body, in this order, including only what he supplied:\n'+
-      'Line 1 (always): one sentence naming the meeting and how it took place.\n'+
-      'Evidence & Strategy Review:\n<ONE flowing paragraph>\n'+
-      'Offer Relayed:\n• <one term per line>\nClient Position: <position>\n'+
-      'Attorney\'s Advice:\n<ONE flowing paragraph>\nNext Steps:\n• <one per line>\n'+
-      'Do NOT write a court date line — it is added separately.\n';
-  }
-
-  var tail =
-    '\nPART TWO — only if a client message is supplied below. Output the line ---PMM--- on its own, then the message rewritten as a short, warm, professional note addressed to the client in the second person. If no client message is supplied, omit PART TWO and the ---PMM--- line entirely.\n\n'+
-    (types.length ? 'Hearing types, when one clearly matches: '+types.join('; ')+'\n' : '')+
-    (judges.length ? 'Judges on file for '+D.court.county+' County: '+judges.join('; ')+'\n' : '')+
-    '\nReturn ONLY the note text.';
-
-  return open + body + tail;
-}
-function userPayload(){
-  var p='WHAT THE ATTORNEY SAID HAPPENED:\n'+D.details;
-  if(D.pmm) p+='\n\nWHAT HE WANTS THE CLIENT TOLD:\n'+D.pmm;
-  return p;
-}
-function ensureBuilt(){
-  if(!D.dirty && D.html) { paintReview(); return; }
-  build(false);
-}
-function build(force){
-  collect();
-  if(D.busy) return;
-  if(!D.details){ paintReview(); return; }
-  if(typeof AI_PROXY_URL!=='string' || !AI_PROXY_URL || AI_PROXY_URL.indexOf('YOUR-WORKER-SUBDOMAIN')!==-1){
-    say('Optimize needs the AI proxy URL set at the top of the file'); return;
-  }
-  D.busy=true;
-  var rb=$('dictRebuild'); if(rb){ rb.disabled=true; rb.textContent='Building…'; }
-  paintNav();
-  var pv=$('dictPrevText'); if(pv) pv.textContent='Writing the note…';
-  var pw=$('dictPrev'); if(pw) pw.classList.add('on');
-
-  fetch(AI_PROXY_URL,{
-    method:'POST', headers:{ 'Content-Type':'application/json' },
-    body:JSON.stringify({ model:'claude-sonnet-4-6', max_tokens:1600,
-      system:systemPrompt(), messages:[{ role:'user', content:userPayload() }] })
-  })
-  .then(function(r){ return r.json(); })
-  .then(function(data){
-    var txt='';
-    if(data && Array.isArray(data.content)){
-      txt=data.content.filter(function(b){ return b.type==='text'; }).map(function(b){ return b.text; }).join('\n').trim();
-    }
-    if(!txt) throw new Error('empty');
-    assemble(txt);
-  })
-  .catch(function(){ say('Could not reach the AI proxy — check the Worker and try again'); })
-  .then(function(){
-    D.busy=false;
-    var rb2=$('dictRebuild'); if(rb2){ rb2.disabled=false; rb2.textContent='Rebuild note'; }
-    paintNav(); paintReview();
-  });
-}
-function assemble(aiText){
-  var parts=aiText.split(/^\s*-{2,}\s*PMM\s*-{2,}\s*$/mi);
-  var narrative=(parts[0]||'').trim();
-  var client=(parts[1]||'').trim();
-
-  var out=[narrative];
-  var hl=hearingLine();
-  if(hl) out.push(hl);
-  if(client){
+/* rebuild the note from the model's prose plus whatever the fields now say */
+function reassemble(){
+  if(!D.ai) return;
+  var out=[D.ai.note];
+  var hl=hearingLine(); if(hl) out.push(hl);
+  if(D.ai.client){
     out.push('PMM: Please send Client new court date and verify accuracy in the calendar. Please send client the following note:');
-    out.push(client);
+    out.push(D.ai.client);
   }
   D.built=out.join('\n\n');
-  try{ D.html = textToNoteHTML(D.built); }catch(e){ D.html=''; }
-  D.dirty=false;
+  try{ D.html=textToNoteHTML(D.built); }catch(e){ D.html=''; }
 
   try{
     if(typeof pickMode==='function' && typeof wz!=='undefined' && wz.mode!==D.mode) pickMode(D.mode);
@@ -8829,6 +8776,9 @@ function assemble(aiText){
     if(typeof window.clioNoteReplaced==='function') window.clioNoteReplaced();
   }catch(e){}
   applyToClio();
+  paintPreview();
+  paintSummary();
+  paintNav();
 }
 function applyToClio(){
   if(typeof window.clioDictApply!=='function') return;
@@ -8836,29 +8786,29 @@ function applyToClio(){
     window.clioDictApply({
       date: todayISO(),
       hours: D.hours, minutes: D.minutes,
-      hearing: D.court.date ? {
-        type:D.court.type||'', date:D.court.date, start:D.court.time||'',
-        county:D.court.county||''
-      } : null
+      hearing: D.court.date ? { type:D.court.type||'', date:D.court.date,
+                                start:D.court.time||'', county:D.court.county||'' } : null
     });
   }catch(e){}
 }
-
-/* ── review ──────────────────────────────────────────────────────────────── */
+function paintPreview(){
+  var pv=$('dictPrevText'); if(!pv) return;
+  var txt='';
+  try{ if(typeof window.clioNoteText==='function') txt=window.clioNoteText(); }catch(e){}
+  pv.textContent = txt || D.built || 'Nothing built yet.';
+}
 function row(state,title,sub){
   return '<div class="dict-sumrow '+state+'"><span class="mk">'+
     (state==='ok'?'&#10004;':state==='bad'?'&#10008;':'&#9744;')+'</span>'+
     '<span class="bd"><span class="t">'+E(title)+'</span>'+(sub?'<span class="s">'+E(sub)+'</span>':'')+'</span></div>';
 }
-function paintReview(){
+function paintSummary(){
   var host=$('dictSum'); if(!host) return;
-  var s=null;
-  try{ s=window.clioDictSummary(); }catch(e){}
-  var m=D.matter||{};
-  var html='';
+  var s=null; try{ s=window.clioDictSummary(); }catch(e){}
+  var m=D.matter||{}, html='';
   html+=row(D.matter?'ok':'bad','Matter', D.matter?[m.client_name,m.court_file||m.display_number].filter(Boolean).join(' – '):'Not selected');
-  html+=row(D.html?'ok':'bad','Matter Note', D.html?((s&&s.title)||'Note'):'Nothing built yet');
-  html+=row(totalMins()>0?'ok':'off','Time Entry', totalLabel()||'Not logging time');
+  html+=row(D.html?'ok':'bad','Matter Note', (s&&s.title)||MODE_NAME[D.mode]);
+  html+=row(totalMins()>0?'ok':'off','Time Entry', totalLabel()||'No time logged');
   html+=row(D.court.date?'ok':'off','Calendar Entry',
         D.court.date ? (D.court.type||'Hearing')+' · '+isoLong(D.court.date)+(D.court.time?' · '+t12(D.court.time):'') : 'No court date');
   if(D.court.date && s && s.calTitle){
@@ -8866,60 +8816,59 @@ function paintReview(){
       '<span class="s" style="font-family:var(--mono);color:var(--bronze-l)">'+E(s.calTitle)+'</span></span></div>';
   }
   host.innerHTML=html;
-
-  var pv=$('dictPrevText'), pw=$('dictPrev');
-  if(pv){
-    var txt='';
-    try{ if(typeof window.clioNoteText==='function') txt=window.clioNoteText(); }catch(e){}
-    pv.textContent = txt || D.built || 'Nothing built yet.';
-  }
-  if(pw) pw.classList.toggle('on', !!(D.built||D.busy));
-  paintNav();
 }
+
+/* ── push ────────────────────────────────────────────────────────────────── */
 function paintResults(parts){
   var host=$('dictResults'); if(!host) return;
   if(!parts||!parts.length){ host.innerHTML=''; return; }
   var allok=parts.every(function(p){ return p.r&&p.r.ok; });
-  host.innerHTML='<div class="clio-results '+(allok?'allok':'partial')+'" style="margin-top:12px">'+
+  host.innerHTML='<div class="clio-results '+(allok?'allok':'partial')+'">'+
     '<div class="rh">'+(allok?'Pushed to Clio':'Pushed — partial')+'</div>'+
     parts.map(function(p){
       var ok=p.r&&p.r.ok;
       return '<div class="clio-rrow '+(ok?'ok':'fail')+'"><span class="mk">'+(ok?'&#10004;':'&#10008;')+'</span>'+
         '<span class="bd"><span class="bt">'+E(p.label)+' '+(ok?'Created':'Failed')+'</span>'+
         '<span class="bs">'+E(ok?(p.r.summary||'created'):(p.r.error||'failed'))+'</span></span></div>';
-    }).join('')+'</div>';
+    }).join('')+
+    (parts.some(function(p){ return p.r && p.r.reauthorize; })
+      ? '<div class="dict-acts" style="margin-top:11px">'+
+        '<button class="clio-btn gold" onclick="dictReconnect()">Connect to Clio</button>'+
+        '<button class="clio-btn" onclick="dictNext()">Try the push again</button></div>'
+      : '')+
+  '</div>';
 }
 function push(){
   if(D.busy) return;
-  collect();
   if(!D.matter){ say('Pick a matter first'); goto(0); return; }
-  if(!D.html){ say('Build the note first'); build(true); return; }
-  applyToClio();
+  if(!D.html){ optimize(); return; }
   var errs=[];
-  try{ errs=window.clioDictApply({ date:todayISO(), hours:D.hours, minutes:D.minutes,
-        hearing: D.court.date ? { type:D.court.type||'', date:D.court.date, start:D.court.time||'', county:D.court.county||'' } : null }) || []; }catch(e){}
-  if(errs.length){ say(errs[0]); paintReview(); return; }
-
+  try{ errs=applyAndValidate(); }catch(e){}
+  if(errs.length){ say(errs[0]); return; }
   D.busy=true; paintNav();
   try{
     window.clioDictPush(function(parts){
-      D.busy=false; D.results=parts;
-      paintNav(); paintResults(parts);
-      var allok=parts.length && parts.every(function(p){ return p.r&&p.r.ok; });
-      if(allok) say('Pushed to Clio');
+      D.busy=false; paintNav(); paintResults(parts);
+      if(parts.length && parts.every(function(p){ return p.r&&p.r.ok; })) say('Pushed to Clio');
     });
   }catch(e){ D.busy=false; paintNav(); say('Could not push — try the Send panel'); }
+}
+function applyAndValidate(){
+  return window.clioDictApply({
+    date: todayISO(), hours:D.hours, minutes:D.minutes,
+    hearing: D.court.date ? { type:D.court.type||'', date:D.court.date,
+                              start:D.court.time||'', county:D.court.county||'' } : null
+  }) || [];
 }
 
 /* ── open / close ────────────────────────────────────────────────────────── */
 function fillSelects(){
   var t=$('dictCourtType');
   if(t && !t.options.length){
-    var opts='<option value="">Select hearing type…</option>';
-    try{ opts+=HEARING_TYPES.filter(function(x){ return x!=='Other'; })
+    var o='<option value="">No hearing type</option>';
+    try{ o+=HEARING_TYPES.filter(function(x){ return x!=='Other'; })
       .map(function(x){ return '<option value="'+E(x)+'">'+E(x)+'</option>'; }).join(''); }catch(e){}
-    opts+='<option value="__other__">Other — type my own…</option>';
-    t.innerHTML=opts;
+    t.innerHTML=o;
   }
   var c=$('dictCourtCounty');
   if(c && !c.options.length){
@@ -8927,50 +8876,52 @@ function fillSelects(){
     try{ co+=MN_COUNTIES.map(function(x){ var k=countyKey(x); return '<option value="'+E(k)+'">'+E(k)+'</option>'; }).join(''); }catch(e){}
     c.innerHTML=co;
   }
-  ['matter','details','time','court','pmm'].forEach(function(k){
-    var lab=$('dictLab_'+k);
-    if(lab && !lab.dataset.def) lab.dataset.def=lab.innerHTML;
+  Object.keys(TARGETS).forEach(function(k){
+    var lab=$('dictLab_'+k); if(lab && !lab.dataset.def) lab.dataset.def=lab.innerHTML;
   });
   var dh=$('dictDetailsHint');
   if(dh) dh.innerHTML = D.mode==='court'
-    ? 'Include <b>who the judge and prosecutor were</b>, what was said, and any <b>offer</b>.'
-    : (D.mode==='intake' ? 'Include the <b>charge</b>, the <b>file number</b>, <b>custody status</b> and the <b>fee</b>.'
-                         : 'Include what you <b>reviewed</b>, any <b>offer relayed</b>, and your <b>advice</b>.');
+    ? 'Cover the <b>judge</b>, the <b>prosecutor</b>, what happened, any <b>offer</b>, <b>how long it took</b>, the <b>next court date and time</b>, and <b>what to tell the client</b>.'
+    : (D.mode==='intake'
+      ? 'Cover the <b>caller</b>, the <b>charge</b>, the <b>file number</b>, any <b>court date</b>, <b>custody</b>, the <b>fee</b>, <b>how long it took</b> and the <b>next steps</b>.'
+      : 'Cover what you <b>reviewed</b>, any <b>offer relayed</b>, the <b>client&rsquo;s position</b>, your <b>advice</b>, <b>how long it took</b> and the <b>next steps</b>.');
 }
+window.dictTouch = function(){ D.dirty=true; paintNav(); };
 window.dictOpen = function(){
   fillSelects();
   try{ if(typeof pickMode==='function' && typeof wz!=='undefined' && wz.mode!==D.mode) pickMode(D.mode); }catch(e){}
-  var cur=null;
-  try{ cur=window.clioDictGetMatter(); }catch(e){}
+  var cur=null; try{ cur=window.clioDictGetMatter(); }catch(e){}
   if(cur && !D.matter) D.matter=cur;
-  paintChosen();
-  paintConnBanner();
+  paintChosen(); paintConnBanner();
   try{ if(typeof window.checkClioStatus==='function') window.checkClioStatus(true).then(paintConnBanner); }catch(e){}
   D.stage=0;
   $('dictPanel').classList.add('open');
   $('dictPanel').setAttribute('aria-hidden','false');
   paintStage(); paintMics(); paintTotal();
-  startWatch();
-  runSearch('');
+  startWatch(); runSearch('');
 };
-window.dictClose = function(){ stopMicAll(); stopWatch();
+window.dictClose = function(){
+  stopMicAll(); stopWatch();
   $('dictPanel').classList.remove('open');
-  $('dictPanel').setAttribute('aria-hidden','true'); };
+  $('dictPanel').setAttribute('aria-hidden','true');
+};
 window.dictGoto = function(i){ goto(i); };
 window.dictBack = function(){ goto(D.stage-1); };
-window.dictNext = function(){ if(stageName()==='review'){ push(); return; } goto(D.stage+1); };
-window.dictSkip = function(){ goto(D.stage+1); };
-window.dictBuild = function(f){ build(f); };
+window.dictNext = function(){
+  if(stageName()==='matter'){ goto(1); return; }
+  if(!D.html) optimize(); else push();
+};
 window.dictSetMode = function(m){
   if(D.mode===m) return;
-  D.mode=m; D.dirty=true; D.html=''; D.built='';
+  D.mode=m; D.ai=null; D.html=''; D.built=''; D.dirty=true;
+  var out=$('dictOut'); if(out) out.style.display='none';
+  var rs=$('dictResults'); if(rs) rs.innerHTML='';
   try{ if(typeof pickMode==='function' && typeof wz!=='undefined' && wz.mode!==m) pickMode(m); }catch(e){}
   Array.prototype.forEach.call(document.querySelectorAll('#dictTypes button'),function(b){
     b.classList.toggle('on', b.getAttribute('data-m')===m);
   });
-  var t=$('dictTitle');
-  if(t) t.textContent = m==='court'?'Court Summary':(m==='intake'?'Intake Call':'Client Meeting');
-  fillSelects();
+  var t=$('dictTitle'); if(t) t.textContent=MODE_NAME[m]||'Note';
+  fillSelects(); paintNav();
 };
 document.addEventListener('keydown',function(e){
   if(e.key==='Escape' && $('dictPanel') && $('dictPanel').classList.contains('open')){
