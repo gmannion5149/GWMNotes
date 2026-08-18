@@ -704,8 +704,11 @@ header .badge { animation:badgePulse 2.6s ease-in-out infinite; }
 .ai-btn:not(.ai-btn-revert):not(:disabled) { animation:aiBreath 3s ease-in-out infinite; }
 .ai-btn:hover { animation:none; }
 @keyframes aiBreath {
-  0%,100% { box-shadow:0 0 0 rgba(184,135,59,0); }
-  50%     { box-shadow:0 0 13px rgba(184,135,59,0.4); }
+  /* keeps the machined insets while the outer glow breathes */
+  0%,100% { box-shadow:inset 0 1px 0 rgba(255,255,255,.125),inset 0 -1px 0 rgba(0,0,0,.55),
+                       0 2px 0 #05070A,0 4px 9px rgba(0,0,0,.48),0 0 0 rgba(76,141,246,0); }
+  50%     { box-shadow:inset 0 1px 0 rgba(255,255,255,.125),inset 0 -1px 0 rgba(0,0,0,.55),
+                       0 2px 0 #05070A,0 4px 9px rgba(0,0,0,.48),0 0 16px rgba(76,141,246,.32); }
 }
 
 /* ── DICTATION MIC ── */
@@ -1873,6 +1876,104 @@ select{color-scheme:dark}
 @media (prefers-reduced-motion:reduce){ .clio-drawer{transition:none} }
 </style>
 
+<style>
+/* ══════════════════════════════════════════════════════════════════════════
+   MACHINED METAL  —  one 3D treatment, every control.
+   Layered with insets + a hard bottom edge, so each button keeps its own
+   accent colour and simply gains depth. Loaded last so it always wins.
+   ══════════════════════════════════════════════════════════════════════════ */
+html{ -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; text-rendering:optimizeLegibility; }
+
+.tb-btn, .mode-trig, .seg button, .wz-btn, .wz-opt, .wz-rep-add, .wz-rep-x,
+.out-btn, .ai-btn, .copy-btn-below, .clio-btn, .clio-send-btm, .clio-save,
+.dict-open, .dict-next, .dict-back, .dict-types button, .clio-seg button,
+.clio-fseg button, .modal-tabs button, .modal-x, .mic-btn, .clio-ddtrig,
+.clio-cbtrig, .factor-pill, .dict-res, .srch-val, .cnb-l .auto, .dict-sel,
+.modal-tools button{
+  position:relative;
+  isolation:isolate;
+  box-shadow:
+    inset 0  1px 0 rgba(255,255,255,.125),
+    inset 0 -1px 0 rgba(0,0,0,.55),
+    inset 0  0 0 1px rgba(255,255,255,.022),
+    0 2px 0 #05070A,
+    0 4px 9px rgba(0,0,0,.48);
+  transition:transform .08s cubic-bezier(.2,.9,.25,1), box-shadow .13s ease,
+             color .14s, border-color .14s, background-color .14s;
+}
+/* brushed sheen across the top half */
+.tb-btn::before, .mode-trig::before, .seg button::before, .wz-btn::before,
+.wz-opt::before, .wz-rep-add::before, .out-btn::before, .ai-btn::before,
+.clio-btn::before, .clio-send-btm::before, .clio-save::before, .dict-open::before,
+.dict-next::before, .dict-back::before, .dict-types button::before,
+.clio-seg button::before, .modal-tabs button::before, .modal-x::before,
+.mic-btn::before, .clio-ddtrig::before, .clio-cbtrig::before, .factor-pill::before,
+.dict-res::before, .srch-val::before{
+  content:'';position:absolute;left:1px;right:1px;top:1px;height:46%;
+  border-radius:inherit;pointer-events:none;z-index:-1;
+  background:linear-gradient(180deg,rgba(255,255,255,.085),rgba(255,255,255,0));
+}
+/* lift on hover */
+.tb-btn:hover, .mode-trig:hover, .seg button:hover, .wz-btn:hover, .wz-opt:hover,
+.wz-rep-add:hover, .out-btn:hover, .ai-btn:hover:not(:disabled),
+.copy-btn-below:hover, .clio-btn:hover:not(:disabled), .clio-send-btm:hover,
+.clio-save:hover:not(:disabled), .dict-open:hover, .dict-next:hover:not(:disabled),
+.dict-back:hover:not(:disabled), .dict-types button:hover, .clio-seg button:hover,
+.clio-fseg button:hover, .modal-tabs button:hover, .modal-x:hover, .mic-btn:hover,
+.clio-ddtrig:hover, .clio-cbtrig:hover, .factor-pill:hover, .dict-res:hover,
+.srch-val:hover, .cnb-l .auto:hover{
+  box-shadow:
+    inset 0  1px 0 rgba(255,255,255,.19),
+    inset 0 -1px 0 rgba(0,0,0,.5),
+    inset 0  0 0 1px rgba(255,255,255,.03),
+    0 3px 0 #05070A,
+    0 7px 16px rgba(0,0,0,.55);
+  transform:translateY(-1px);
+}
+/* press it into the panel */
+.tb-btn:active, .mode-trig:active, .seg button:active, .wz-btn:active, .wz-opt:active,
+.wz-rep-add:active, .wz-rep-x:active, .out-btn:active, .ai-btn:active:not(:disabled),
+.copy-btn-below:active, .clio-btn:active:not(:disabled), .clio-send-btm:active,
+.clio-save:active:not(:disabled), .dict-open:active, .dict-next:active:not(:disabled),
+.dict-back:active:not(:disabled), .dict-types button:active, .clio-seg button:active,
+.clio-fseg button:active, .modal-tabs button:active, .modal-x:active, .mic-btn:active,
+.clio-ddtrig:active, .clio-cbtrig:active, .factor-pill:active, .dict-res:active,
+.srch-val:active, .cnb-l .auto:active{
+  transform:translateY(2px);
+  box-shadow:
+    inset 0 2px 6px rgba(0,0,0,.72),
+    inset 0 1px 0 rgba(255,255,255,.04),
+    0 0 0 #05070A,
+    0 1px 2px rgba(0,0,0,.5);
+}
+/* list rows stay flat — they are content, not controls */
+.wz-pop-item:active, .clio-selopt:active, .clio-opt:active, .dict-res:active{
+  transform:translateY(1px);
+}
+/* pressed-in look for anything currently selected */
+.seg button.on, .clio-seg button.on, .clio-fseg button.on, .dict-types button.on,
+.modal-tabs button.on, .wz-opt.sel, .factor-pill-on{
+  box-shadow:
+    inset 0 2px 5px rgba(0,0,0,.6),
+    inset 0 1px 0 rgba(255,255,255,.05),
+    0 1px 0 #05070A;
+  transform:translateY(1px);
+}
+/* disabled metal reads as dead, not merely faded */
+.ai-btn:disabled, .clio-btn:disabled, .clio-save:disabled, .dict-next:disabled,
+.dict-back:disabled, .clio-send-btm:disabled, .out-btn:disabled{
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.04), inset 0 -1px 0 rgba(0,0,0,.4);
+  transform:none;
+}
+/* the mic keeps its own dome, just sharpened */
+.dict-mic{ isolation:isolate }
+@media (prefers-reduced-motion:reduce){
+  .tb-btn,.mode-trig,.seg button,.wz-btn,.wz-opt,.out-btn,.ai-btn,.clio-btn,
+  .clio-send-btm,.clio-save,.dict-open,.dict-next,.dict-back{ transition:none }
+}
+@media print{ *{ box-shadow:none !important; text-shadow:none !important } }
+</style>
+
 </head>
 <body class="clickup-chrome-ext_installed">
 <div id="clioStatusBar" style="
@@ -1970,7 +2071,6 @@ select{color-scheme:dark}
       <div class="out-actions">
         <button class="out-btn" id="headerPrintBtn" onclick="printNote()" style="">Print</button>
         <button class="out-btn go" id="headerCopyBtn" onclick="copyNote()" style="">Copy</button>
-        <button class="out-btn clio-out" id="headerClioBtn" onclick="clioOpenDrawer()" title="Send this note to Clio">Send to Clio</button>
       </div>
     </div>
     <div class="output-body" id="outputBody"><div class="note-output" id="noteRendered"><p class="note-intro">Potential Client called regarding their [LEVEL] [TYPE] case.</p><div class="note-spacer"></div><div class="note-spacer"></div><p><strong><u>Caller:</u></strong> [ENTER]</p><div class="note-spacer"></div></div><div class="ai-btn-row"><button class="ai-btn" id="aiCleanBtn" onclick="aiCleanup()">Optimize</button><button class="copy-btn-below" id="copyBtnBelow" onclick="copyNote()">Copy Note</button><button class="clio-send-btm" onclick="clioOpenDrawer()">Send to Clio</button><button class="ai-btn ai-btn-revert" id="aiRevertBtn" onclick="revertNote()" style="display:none">↩ Revert</button></div></div>
@@ -5781,12 +5881,19 @@ function wzComboOpen(id){
   wzComboList(id, '');
   var p=el(id+'_p'); if(p){ p.classList.add('open'); wzPopPosition(id); }
 }
-/* keep an open list glued to its field while the stage scrolls */
-['scroll','resize'].forEach(function(ev){
-  window.addEventListener(ev,function(){
+/* keep an open list glued to its field while the stage scrolls.
+   Passive + one reposition per animation frame — scrolling stays smooth. */
+var _wzPopRaf=0;
+function wzPopReflow(){
+  if(_wzPopRaf) return;
+  _wzPopRaf=requestAnimationFrame(function(){
+    _wzPopRaf=0;
     var open=document.querySelectorAll('.wz-pop.open');
     for(var i=0;i<open.length;i++) wzPopPosition(open[i].id.replace(/_p$/,''));
-  },true);
+  });
+}
+['scroll','resize'].forEach(function(ev){
+  window.addEventListener(ev, wzPopReflow, { capture:true, passive:true });
 });
 function wzComboClose(id){ var p=el(id+'_p'); if(p) p.classList.remove('open'); }
 function wzComboFilter(id,q){
@@ -7029,6 +7136,7 @@ function setMatter(m){
 function clearMatter(){ var n=N(); n.matter=null; n.locked=false; n.results=null; renderAll(); }
 
 /* ── 9 · TITLE / DATE ────────────────────────────────────────────────────── */
+function upTitle(t){ return String(t==null?'':t).toUpperCase(); }
 function autoTitle(m){
   m=m||curMode();
   try{
@@ -7041,15 +7149,15 @@ function autoTitle(m){
           t=findHearType(first.replace(/\[[^\]]*\]/g,' '))||'';
         }catch(e){}
       }
-      return t || 'Court Summary';
+      return upTitle(t || 'Court Summary');
     }
-    if(m==='review') return 'Case Review Notes';
+    if(m==='review') return upTitle('Case Review Notes');
     var lvl=(intake && intake.severity)?intake.severity:'';
     var typ=(intake && intake.chargeType==='Other'?intake.otherType:(intake&&intake.chargeType))||'';
     var tail=[lvl,typ].filter(Boolean).join(' ');
-    return tail ? ('Intake Notes – '+tail) : 'Intake Notes';
+    return upTitle(tail ? ('Intake Notes – '+tail) : 'Intake Notes');
   }catch(e){}
-  return 'Note';
+  return 'NOTE';
 }
 function refreshAutoTitle(){
   var n=N();
@@ -7767,7 +7875,6 @@ function renderBar(){
       '<span class="sp"></span>'+
       (closed?'<span class="warnpill">Matter closed</span>':'')+
       (C.connected===false?'<span class="warnpill">Clio not connected</span>':'')+
-      '<button class="clio-send" onclick="clioOpenDrawer()">Send to Clio</button>'+
     '</div>'+
     '<div class="cnb-row">'+
       '<div class="cnb-f grow">'+
@@ -7869,7 +7976,7 @@ function renderReview(){
 /* ── 17 · SEND ───────────────────────────────────────────────────────────── */
 function payloadNote(){
   var n=N();
-  return { matter_id:n.matter.id, subject:String(n.title||'').trim(), date:n.date,
+  return { matter_id:n.matter.id, subject:upTitle(n.title).trim(), date:n.date,
            body_html:noteBodyHTML(), body_text:buildClioNoteText() };
 }
 function payloadTime(){
@@ -8060,7 +8167,9 @@ window.clioToggle = function(key,val){
   syncDrawerFields(); renderReview();
 };
 window.clioNoteTitleInput = function(v,fromBar){
-  var n=N(); n.title=v; n.titleTouched=true;
+  var n=N(); v=upTitle(v); n.title=v; n.titleTouched=true;
+  var src=fromBar?$('clioBarTitle'):$('clioNoteTitle');
+  if(src && src.value!==v){ var c=src.selectionStart; src.value=v; try{ src.setSelectionRange(c,c); }catch(e){} }
   var other=fromBar?$('clioNoteTitle'):$('clioBarTitle');
   if(other && other.value!==v) other.value=v;
   if(!n.time.descTouched){ n.time.desc=v; var d=$('clioTimeDesc'); if(d) d.value=v; }
@@ -8151,7 +8260,7 @@ window.clioAbbrevHearing = function(t){ try{ return abbrevHearing(t); }catch(e){
 window.clioDictApply = function(o){
   var n=N();
   o=o||{};
-  if(o.title!=null){ n.title=String(o.title); n.titleTouched=true; }
+  if(o.title!=null){ n.title=upTitle(o.title); n.titleTouched=true; }
   if(o.date) n.date=o.date;
   if(o.hours!=null)   n.time.hours=String(o.hours);
   if(o.minutes!=null) n.time.minutes=String(o.minutes);
@@ -8449,10 +8558,14 @@ window.dictMic = function(k){
     }
   },120);
 };
+var _micPaint={};
 function paintMics(){
   Object.keys(TARGETS).forEach(function(k){
     var lab=$('dictLab_'+k); if(!lab) return;
     var live=micLive(k);
+    var sig = live ? ('L'+Math.floor((Date.now()-(D.t0||Date.now()))/1000)) : 'idle';
+    if(_micPaint[k]===sig) return;          /* nothing to redraw this tick */
+    _micPaint[k]=sig;
     lab.classList.toggle('live',live);
     if(live){
       if(!D.t0) D.t0=Date.now();
