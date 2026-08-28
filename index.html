@@ -2011,11 +2011,11 @@ html{ -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; tex
   <div class="mode-wrap" id="modeWrap">
     <button class="mode-trig" id="modeTrig" onclick="toggleModeMenu(event)">
       <span class="mode-dot"></span>
-      <span class="cap" id="modeCap">Intake Notes</span>
+      <span class="cap" id="modeCap">Case Review Notes</span>
       <span class="car">▼</span>
     </button>
     <div class="mode-menu" id="modeMenu">
-      <div class="mode-item sel" data-mode="intake" onclick="pickMode(&#39;intake&#39;)">
+      <div class="mode-item" data-mode="intake" onclick="pickMode(&#39;intake&#39;)">
         <div class="mi-ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg></div>
         <div><div class="mi-t">Intake Notes</div><div class="mi-s">New call · charge, court, custody, fee</div></div>
       </div>
@@ -2023,7 +2023,7 @@ html{ -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; tex
         <div class="mi-ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18"></path><path d="M7.5 21h9"></path><path d="M5 6h14"></path><path d="M12 6l6.5-1.5M12 6L5.5 4.5"></path><path d="M5 6l-2.6 6a3 3 0 0 0 5.2 0L5 6z"></path><path d="M19 6l-2.6 6a3 3 0 0 0 5.2 0L19 6z"></path></svg></div>
         <div><div class="mi-t">Court Summary</div><div class="mi-s">After court · judge, offer, next date</div></div>
       </div>
-      <div class="mode-item" data-mode="review" onclick="pickMode(&#39;review&#39;)">
+      <div class="mode-item sel" data-mode="review" onclick="pickMode(&#39;review&#39;)">
         <div class="mi-ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg></div>
         <div><div class="mi-t">Case Review Notes</div><div class="mi-s">Client meeting · advice, next steps</div></div>
       </div>
@@ -2038,7 +2038,7 @@ html{ -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; tex
 
   <button class="tb-btn" id="bankBtn" onclick="openBank()" title="Attorney contact bank">
     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-    Attorneys <span class="n" id="bankBtnCount">0</span>
+    Attorneys <span class="n" id="bankBtnCount">2</span>
   </button>
 
   <button class="dict-open" onclick="dictOpen()" title="Dictate the whole note out loud">
@@ -2058,22 +2058,25 @@ html{ -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; tex
 
 <div class="main">
   <div class="stage" id="stage">
-    <div class="clio-notebar" id="clioNoteBar"></div>
-    <div class="wz" id="wizard"><div class="wz-scan"><div class="wz-scan-drop" id="docUploadZone" onclick="document.getElementById(&#39;docFileInput&#39;).click()" ondragover="event.preventDefault();this.classList.add(&#39;drag&#39;)" ondragleave="this.classList.remove(&#39;drag&#39;)" ondrop="docDrop(event)"><input type="file" id="docFileInput" accept="application/pdf,image/*" style="display:none" onchange="docPicked(this.files[0])"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><path d="M14 2v6h6"></path><path d="M12 18v-6"></path><path d="M9 15l3-3 3 3"></path></svg><b>Drop the citation or complaint</b><span>PDF or photo · AI fills the answers for you</span></div><div id="docScanRow" style="display:none"><span class="doc-chip" id="docChip"></span><button class="ai-btn" id="docScanBtn" onclick="scanDocument()">AI Scan &amp; Autofill</button></div><div id="docScanMsg"></div></div><div class="wz-bar"><i style="width:8%"></i></div><div class="wz-meta"><span class="wz-sec">Origin</span><span class="wz-step">Step <b>1</b> / 13</span></div><div class="wz-card" id="wzCard"><div class="wz-q">Who took the call?</div><div class="wz-hint">Optional — press Enter to skip.</div><div class="wz-body"><div class="wz-opts"><div class="wz-opt" data-v="GAM" onclick="wzSetMain(this.dataset.v,true)"><span class="k">1</span>GAM</div><div class="wz-opt" data-v="KJD" onclick="wzSetMain(this.dataset.v,true)"><span class="k">2</span>KJD</div><div class="wz-opt" data-v="BDH" onclick="wzSetMain(this.dataset.v,true)"><span class="k">3</span>BDH</div><div class="wz-opt" data-v="ANB" onclick="wzSetMain(this.dataset.v,true)"><span class="k">4</span>ANB</div><div class="wz-opt" data-v="GWM" onclick="wzSetMain(this.dataset.v,true)"><span class="k">5</span>GWM</div></div></div><div class="wz-nav"><button class="wz-btn pri" onclick="wzGo(1)"><kbd>↵</kbd> Next</button><button class="wz-btn ghost" onclick="wzGo(1)">Skip</button><span class="sp"></span><button class="wz-btn ghost" onclick="wzFinish()"><kbd>⌘↵</kbd> Finish now</button></div></div><div class="wz-rail"><div class="wz-tick cur" title="Who took the call?" onclick="wzJump(&#39;i_orig&#39;)"></div><div class="wz-tick " title="Who is calling?" onclick="wzJump(&#39;i_caller&#39;)"></div><div class="wz-tick " title="What is the potential client&#39;s name?" onclick="wzJump(&#39;i_pcname&#39;)"></div><div class="wz-tick " title="What level is the charge?" onclick="wzJump(&#39;i_sev&#39;)"></div><div class="wz-tick " title="What kind of case is it?" onclick="wzJump(&#39;i_cat&#39;)"></div><div class="wz-tick " title="Court file or citation number?" onclick="wzJump(&#39;i_file&#39;)"></div><div class="wz-tick " title="What is the offense date?" onclick="wzJump(&#39;i_odate&#39;)"></div><div class="wz-tick " title="Where did it happen?" onclick="wzJump(&#39;i_loc&#39;)"></div><div class="wz-tick " title="Is a court date already set?" onclick="wzJump(&#39;i_cdq&#39;)"></div><div class="wz-tick " title="What is the custody status?" onclick="wzJump(&#39;x_cust&#39;)"></div><div class="wz-tick " title="What else came out of the call?" onclick="wzJump(&#39;w_det&#39;)"></div><div class="wz-tick " title="What is the flat fee?" onclick="wzJump(&#39;w_fee&#39;)"></div><div class="wz-tick " title="Next Steps" onclick="wzJump(&#39;w_next&#39;)"></div></div></div>
+    <div class="clio-notebar" id="clioNoteBar"><div class="cnb-head"><span class="k">Send to Clio</span><span class="m">Case Review Notes</span><span class="sp"></span></div><div class="cnb-row"><div class="cnb-f grow"><span class="cnb-l">Clio Matter for this note</span><button class="clio-cbtrig has" id="clioComboBar" onclick="clioOpenPop(&#39;clioComboBar&#39;)"><span class="av">BA</span><span class="id"><span class="t">Blake Anthony Andrews</span><span class="s">02403-Andrews  ·  Open</span></span><span class="car">▾</span></button></div><div class="cnb-f title"><span class="cnb-l">Note Title <button class="auto" onclick="clioAutoTitle()" title="Fill the title from this note">auto</button></span><input id="clioBarTitle" placeholder="Pretrial Hearing" oninput="clioNoteTitleInput(this.value,true)"></div><div class="cnb-f date"><span class="cnb-l">Note Date</span><input id="clioBarDate" type="date" onchange="clioNoteDateInput(this.value)"></div></div></div>
+    <div class="wz" id="wizard"><div class="wz-bar"><i style="width:100%"></i></div><div class="wz-meta"><span class="wz-sec">Next Steps</span><span class="wz-step">Step <b>5</b> / 5</span></div><div class="wz-card" id="wzCard"><div class="wz-q">Next Steps</div><div class="wz-hint">One per line. This closes out the note.</div><div class="wz-body"><textarea class="wz-ta" id="wzIn" rows="6" placeholder="Draft and file suppression motion
+Send client the case summary and offer in writing
+Calendar the omnibus hearing
+Follow up with client in two weeks" oninput="wzMainInput(this.value)"></textarea></div><div class="wz-nav"><button class="wz-btn" onclick="wzGo(-1)"><kbd>⇧↵</kbd> Back</button><button class="wz-btn fin" onclick="wzFinish()"><kbd>⌘↵</kbd> Finish note</button><span class="sp"></span><span class="wz-tahint"><kbd>↵</kbd> new line · <kbd>⌘↵</kbd> finish</span></div></div><div class="wz-rail"><div class="wz-tick done" title="How did you meet?" onclick="wzJump(&#39;r_type&#39;)"></div><div class="wz-tick done" title="What did you go over?" onclick="wzJump(&#39;r_disc&#39;)"></div><div class="wz-tick done" title="Was an offer relayed?" onclick="wzJump(&#39;r_offerq&#39;)"></div><div class="wz-tick done" title="What did you advise?" onclick="wzJump(&#39;r_advice&#39;)"></div><div class="wz-tick cur" title="Next Steps" onclick="wzJump(&#39;r_next&#39;)"></div></div></div>
     <div class="form-panel" id="formPanel" style="display:none"></div>
   </div>
 
   <div class="output-panel">
     <div class="output-header">
       <span class="out-dot"></span>
-      <span id="outputLabel" class="output-label-text">Intake Note</span>
+      <span id="outputLabel" class="output-label-text">Case Review Notes</span>
       <span class="out-live" id="outLive">Live</span>
       <div class="out-actions">
         <button class="out-btn" id="headerPrintBtn" onclick="printNote()" style="">Print</button>
         <button class="out-btn go" id="headerCopyBtn" onclick="copyNote()" style="">Copy</button>
       </div>
     </div>
-    <div class="output-body" id="outputBody"><div class="note-output" id="noteRendered"><p class="note-intro">Potential Client called regarding their [LEVEL] [TYPE] case.</p><div class="note-spacer"></div><div class="note-spacer"></div><p><strong><u>Caller:</u></strong> [ENTER]</p><div class="note-spacer"></div></div><div class="ai-btn-row"><button class="ai-btn" id="aiCleanBtn" onclick="aiCleanup()">Optimize</button><button class="copy-btn-below" id="copyBtnBelow" onclick="copyNote()">Copy Note</button><button class="clio-send-btm" onclick="clioOpenDrawer()">Send to Clio</button><button class="ai-btn ai-btn-revert" id="aiRevertBtn" onclick="revertNote()" style="display:none">↩ Revert</button></div></div>
+    <div class="output-body" id="outputBody"><div class="note-output" id="noteRendered"><p class="note-intro">Client meeting — Phone.</p><div class="note-spacer"></div><p><strong><u>Evidence &amp; Strategy Review:</u></strong></p><p>GWM called the client to check in regarding his case. The client has been sober since the incident and has changed careers, and he is doing very well — he is much happier and appears to be in a good place. We currently have an offer to reduce the refusal charge to a fourth-degree offense, and the client wishes to accept it. GWM will follow up with the prosecutor to obtain the final details so that we can proceed with a plea by mail.</p></div><div class="ai-btn-row"><button class="ai-btn" id="aiCleanBtn" onclick="aiCleanup()">Optimize</button><button class="copy-btn-below" id="copyBtnBelow" onclick="copyNote()">Copy Note</button><button class="clio-send-btm" onclick="clioOpenDrawer()" title="Send this note to Clio">Send to Clio</button><button class="ai-btn ai-btn-revert" id="aiRevertBtn" onclick="revertNote()" style="display: inline-flex;">↩ Revert</button></div></div>
   </div>
 </div>
 
@@ -2096,7 +2099,7 @@ html{ -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; tex
   </div>
 </div>
 
-<div class="toast" id="toast"></div>
+<div class="toast" id="toast">Sent to Clio — 1 of 1 created</div>
 
 
 <script>
@@ -6543,7 +6546,7 @@ startMicObserver();
   <div class="dict-head">
     <span class="tag">Dictate</span>
     <h3 id="dictTitle">Court Summary</h3>
-    <button class="modal-x" style="margin-left:auto" onclick="dictClose()" title="Close">&times;</button>
+    <button class="modal-x" style="margin-left:auto" onclick="dictClose()" title="Close">×</button>
   </div>
 
   <div class="dict-body">
@@ -6552,17 +6555,17 @@ startMicObserver();
     <!-- 1 · MATTER ------------------------------------------------------- -->
     <section class="dstage on" data-s="matter">
       <div class="dict-types" id="dictTypes">
-        <button data-m="court"  class="on" onclick="dictSetMode('court')">Court Summary</button>
-        <button data-m="intake" onclick="dictSetMode('intake')">Intake Notes</button>
-        <button data-m="review" onclick="dictSetMode('review')">Case Review Notes</button>
+        <button data-m="court" class="on" onclick="dictSetMode(&#39;court&#39;)">Court Summary</button>
+        <button data-m="intake" onclick="dictSetMode(&#39;intake&#39;)">Intake Notes</button>
+        <button data-m="review" onclick="dictSetMode(&#39;review&#39;)">Case Review Notes</button>
       </div>
       <div class="dstage-q">Which matter?</div>
       <div id="dictConnBanner"></div>
       <div class="dmic-row">
-        <button class="dict-mic sm" id="dictMic_matter" onclick="dictMic('matter')" aria-label="Say the client name">
+        <button class="dict-mic sm" id="dictMic_matter" onclick="dictMic(&#39;matter&#39;)" aria-label="Say the client name">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"></rect><path d="M5 10v2a7 7 0 0 0 14 0v-2"></path><line x1="12" y1="19" x2="12" y2="22"></line><line x1="8" y1="22" x2="16" y2="22"></line></svg>
         </button>
-        <div class="dmic-lab" id="dictLab_matter">Say the client&rsquo;s name &mdash; or type it below</div>
+        <div class="dmic-lab" id="dictLab_matter">Say the client’s name — or type it below</div>
       </div>
       <input class="dict-in" id="dictMatterQ" autocomplete="off" placeholder="Client name, matter number or court file" oninput="dictMatterTyped(this.value)">
       <div class="dict-results" id="dictMatterResults"></div>
@@ -6575,7 +6578,7 @@ startMicObserver();
       <div class="dstage-q">Say everything</div>
       <div class="dstage-h" id="dictDetailsHint"></div>
       <div class="dmic-row">
-        <button class="dict-mic sm" id="dictMic_details" onclick="dictMic('details')" aria-label="Dictate the details">
+        <button class="dict-mic sm" id="dictMic_details" onclick="dictMic(&#39;details&#39;)" aria-label="Dictate the details">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"></rect><path d="M5 10v2a7 7 0 0 0 14 0v-2"></path><line x1="12" y1="19" x2="12" y2="22"></line><line x1="8" y1="22" x2="16" y2="22"></line></svg>
         </button>
         <div class="dmic-lab" id="dictLab_details">Tap and talk it all through</div>
@@ -6585,11 +6588,11 @@ startMicObserver();
       <!-- revealed by Optimize -->
       <div id="dictOut" style="display:none;flex-direction:column;gap:13px">
         <div class="dict-ex" id="dictExtract">
-          <div class="dict-exh">Picked out of what you said &mdash; correct anything before pushing</div>
+          <div class="dict-exh">Picked out of what you said — correct anything before pushing</div>
           <div class="dict-3">
             <div><span class="dict-lab">Hours</span><input class="dict-in" id="dictHours" type="number" min="0" max="99" inputmode="numeric" placeholder="0" oninput="dictExtractIn()"></div>
             <div><span class="dict-lab">Minutes</span><input class="dict-in" id="dictMinutes" type="number" min="0" max="59" inputmode="numeric" placeholder="0" oninput="dictExtractIn()"></div>
-            <div><span class="dict-lab">Total</span><div class="dict-in" id="dictTotal" style="display:flex;align-items:center;font-family:var(--mono);font-size:14px;color:var(--bronze-l)">&mdash;</div></div>
+            <div><span class="dict-lab">Total</span><div class="dict-in" id="dictTotal" style="display:flex;align-items:center;font-family:var(--mono);font-size:14px;color:var(--bronze-l)">—</div></div>
           </div>
           <div class="dict-2">
             <div><span class="dict-lab">Next court date</span><input class="dict-in" id="dictCourtDate" type="date" onchange="dictExtractIn()"></div>
@@ -6631,31 +6634,30 @@ startMicObserver();
 <div class="clio-popbackdrop" id="clioPopBack" onclick="clioClosePop()"></div>
 <div class="clio-selback" id="clioSelBack" onclick="clioCloseSelect()"></div>
 <div class="clio-selpop" id="clioSelPop" role="listbox"></div>
-<div class="clio-pop" id="clioPop" role="listbox" aria-label="Select Clio matter">
+<div class="clio-pop" id="clioPop" role="listbox" aria-label="Select Clio matter" style="transform: none; left: 26px; width: 620px; top: 270.779px;">
   <div class="ptools">
-    <input id="clioPopSearch" autocomplete="off" spellcheck="false"
-           placeholder="Search every matter — client name, matter number, court file, description, attorney&hellip;">
+    <input id="clioPopSearch" autocomplete="off" spellcheck="false" placeholder="Search every matter — client name, matter number, court file, description, attorney…">
     <div class="pfilters">
       <div class="clio-seg" id="clioPopStatus">
-        <button data-v="all"    class="on" onclick="clioPopFilter('status','all')">All</button>
-        <button data-v="open"   onclick="clioPopFilter('status','open')">Open</button>
-        <button data-v="closed" onclick="clioPopFilter('status','closed')">Closed</button>
+        <button data-v="all" class="on" onclick="clioPopFilter(&#39;status&#39;,&#39;all&#39;)">All</button>
+        <button data-v="open" onclick="clioPopFilter(&#39;status&#39;,&#39;open&#39;)">Open</button>
+        <button data-v="closed" onclick="clioPopFilter(&#39;status&#39;,&#39;closed&#39;)">Closed</button>
       </div>
       <div class="clio-seg" id="clioPopScope">
-        <button data-v="all" class="on" onclick="clioPopFilter('scope','all')">Everyone</button>
-        <button data-v="my"  onclick="clioPopFilter('scope','my')">Mine</button>
+        <button data-v="all" class="on" onclick="clioPopFilter(&#39;scope&#39;,&#39;all&#39;)">Everyone</button>
+        <button data-v="my" onclick="clioPopFilter(&#39;scope&#39;,&#39;my&#39;)">Mine</button>
       </div>
       <div class="clio-seg" id="clioPopRecent">
-        <button data-v="0" class="on" onclick="clioPopFilter('recent',0)">All</button>
-        <button data-v="1" onclick="clioPopFilter('recent',1)">Recent</button>
+        <button data-v="0" class="on" onclick="clioPopFilter(&#39;recent&#39;,0)">All</button>
+        <button data-v="1" onclick="clioPopFilter(&#39;recent&#39;,1)">Recent</button>
       </div>
-      <span class="pcount" id="clioPopCount"></span>
+      <span class="pcount" id="clioPopCount">4 matters</span>
     </div>
   </div>
-  <div class="plist" id="clioPopList"></div>
+  <div class="plist" id="clioPopList"><div class="clio-opt" data-i="0" onclick="clioPickMatter(&#39;1915248522&#39;)" onmousemove="clioPopCursor(0)"><div class="av">CS</div><div class="bd"><div class="l1"><span class="cn">Casey Blake Stromgren</span><span class="mn">02559-Stromgren</span></div><div class="de">2nd Degree DWI</div><div class="l3"><span class="clio-pill open">Open</span><span class="clio-pill">Kyle Dreger</span></div></div></div><div class="clio-opt cur" data-i="1" onclick="clioPickMatter(&#39;1889242360&#39;)" onmousemove="clioPopCursor(1)"><div class="av">BA</div><div class="bd"><div class="l1"><span class="cn">Blake Anthony Andrews</span><span class="mn">02403-Andrews</span></div><div class="de">3° DWI - Refusal</div><div class="l3"><span class="clio-pill open">Open</span><span class="clio-pill">Gerald Miller</span></div></div></div><div class="clio-opt" data-i="2" onclick="clioPickMatter(&#39;1819406877&#39;)" onmousemove="clioPopCursor(2)"><div class="av">BR</div><div class="bd"><div class="l1"><span class="cn">Blake Roisen</span><span class="mn">01958-Roisen</span></div><div class="de">4th Degree DWI</div><div class="l3"><span class="clio-pill closed">Closed</span><span class="clio-pill">Annaliese Barnes</span><span class="clio-pill">DWI (Crim/IC)</span></div></div></div><div class="clio-opt" data-i="3" onclick="clioPickMatter(&#39;1447986906&#39;)" onmousemove="clioPopCursor(3)"><div class="av">CS</div><div class="bd"><div class="l1"><span class="cn">Casey Blake Stromgren</span><span class="mn">00722-Stromgren</span></div><div class="de">3rd Degree DWI</div><div class="l3"><span class="clio-pill closed">Closed</span><span class="clio-pill">Kyle Dreger</span></div></div></div></div>
   <div class="pfoot">
-    <span><kbd>&uarr;</kbd><kbd>&darr;</kbd> move</span>
-    <span><kbd>&crarr;</kbd> select</span>
+    <span><kbd>↑</kbd><kbd>↓</kbd> move</span>
+    <span><kbd>↵</kbd> select</span>
     <span><kbd>esc</kbd> close</span>
     <span style="margin-left:auto" id="clioPopHint"></span>
   </div>
@@ -6666,8 +6668,8 @@ startMicObserver();
 <aside class="clio-drawer" id="clioDrawer" aria-hidden="true">
   <div class="clio-dhead">
     <span class="tag">Clio</span>
-    <h3 id="clioDrawerTitle">Send Note to Clio</h3>
-    <button class="modal-x" style="margin-left:auto" onclick="clioCloseDrawer()" title="Close">&times;</button>
+    <h3 id="clioDrawerTitle">Send Case Review Notes to Clio</h3>
+    <button class="modal-x" style="margin-left:auto" onclick="clioCloseDrawer()" title="Close">×</button>
   </div>
 
   <div class="clio-dbody">
@@ -6678,12 +6680,12 @@ startMicObserver();
       <div class="clio-row">
         <div class="clio-f">
           <span class="clio-fl">Clio Matter</span>
-          <button class="clio-cbtrig empty" id="clioComboDrawer" onclick="clioOpenPop('clioComboDrawer')"></button>
+          <button class="clio-cbtrig has" id="clioComboDrawer" onclick="clioOpenPop(&#39;clioComboDrawer&#39;)"><span class="av">BA</span><span class="id"><span class="t">Blake Anthony Andrews</span><span class="s">02403-Andrews  ·  Open</span></span><span class="car">▾</span></button>
         </div>
-        <div id="clioMatterSlot"></div>
+        <div id="clioMatterSlot"><div class="clio-hint" style="padding:2px 2px 0"><div style="color:var(--dim2);font-size:11.5px;line-height:1.45">3° DWI - Refusal</div><div style="font-family:var(--mono);font-size:10px;color:var(--dim);letter-spacing:.4px;margin-top:3px">02403-Andrews  ·  Gerald Miller  ·  Open</div></div></div>
         <div class="clio-grid">
           <div class="clio-f">
-            <span class="clio-fl">Note Title <em style="text-transform:none;letter-spacing:0;font-weight:600;color:#4E5765">&rarr; Clio title</em></span>
+            <span class="clio-fl">Note Title <em style="text-transform:none;letter-spacing:0;font-weight:600;color:#4E5765">→ Clio title</em></span>
             <input id="clioNoteTitle" list="clioNoteTitles" placeholder="Pretrial Hearing" oninput="clioNoteTitleInput(this.value)">
           </div>
           <div class="clio-f">
@@ -6692,8 +6694,11 @@ startMicObserver();
           </div>
         </div>
         <div class="clio-f">
-          <span class="clio-fl">Note Body <em style="text-transform:none;letter-spacing:0;font-weight:600;color:#4E5765">&mdash; exactly what Clio will store</em></span>
-          <div id="clioNotePreview" class="clio-hint" style="max-height:120px;overflow:auto;padding:9px 11px;background:#0A0D12;border:1px solid var(--line2);border-radius:6px;color:var(--dim2);line-height:1.6"></div>
+          <span class="clio-fl">Note Body <em style="text-transform:none;letter-spacing:0;font-weight:600;color:#4E5765">— exactly what Clio will store</em></span>
+          <div id="clioNotePreview" class="clio-hint" style="max-height: 120px; overflow: auto; padding: 9px 11px; background: rgb(10, 13, 18); border: 1px solid var(--line2); border-radius: 6px; color: var(--dim2); line-height: 1.6; white-space: pre-wrap; font-family: var(--mono); font-size: 10.5px;">Client meeting — Phone.
+
+EVIDENCE &amp; STRATEGY REVIEW
+GWM called the client to check in regarding his case. The client has been sober since the incident and has changed careers, and he is doing very well — he is much happier and appears to be in a good place. We currently have an offer to reduce the refusal charge to a fourth-degree offense, and the client wishes to accept it. GWM will follow up with the prosecutor to obtain the final details so that we can proceed with a plea by mail.</div>
         </div>
       </div>
       <datalist id="clioNoteTitles">
@@ -6710,7 +6715,7 @@ startMicObserver();
     <div class="clio-sec">
       <div class="clio-sh"><span class="t">Time Entry</span><span class="sp"></span>
         <label class="clio-tog" id="clioTimeTogWrap">
-          <input type="checkbox" id="clioTimeOn" onchange="clioToggle('time',this.checked)">Include
+          <input type="checkbox" id="clioTimeOn" onchange="clioToggle(&#39;time&#39;,this.checked)">Include
         </label>
       </div>
       <div class="clio-row">
@@ -6720,7 +6725,7 @@ startMicObserver();
           <div class="clio-f"><span class="clio-fl">Minutes</span>
             <input id="clioMinutes" type="number" min="0" max="59" step="1" placeholder="0" oninput="clioTimeInput()"></div>
           <div class="clio-total zero" id="clioTotalBox">
-            <span class="k">Total Time</span><span class="v" id="clioTotalTxt">&mdash;</span>
+            <span class="k">Total Time</span><span class="v" id="clioTotalTxt">—</span>
           </div>
         </div>
         <div id="clioTimeErr"></div>
@@ -6730,7 +6735,7 @@ startMicObserver();
           <div class="clio-f"><span class="clio-fl">Description</span>
             <input id="clioTimeDesc" placeholder="Defaults to the note title" oninput="clioTimeDescInput(this.value)"></div>
         </div>
-        <div class="clio-hint">One consolidated entry &mdash; travel, waiting, the hearing and negotiations all roll into this single total.
+        <div class="clio-hint">One consolidated entry — travel, waiting, the hearing and negotiations all roll into this single total.
           <button class="clio-btn tiny" style="margin-left:6px" onclick="clioSuggestTimeDesc()">Use hearing wording</button>
         </div>
       </div>
@@ -6742,62 +6747,62 @@ startMicObserver();
         <span class="badge" id="clioHearBadge" style="display:none"></span><span class="sp"></span>
         <button class="clio-btn tiny" onclick="clioRescanNote()" title="Re-read the note for a court date">Re-scan</button>
         <label class="clio-tog" id="clioCalTogWrap">
-          <input type="checkbox" id="clioCalOn" onchange="clioToggle('cal',this.checked)">Add to Clio Calendar
+          <input type="checkbox" id="clioCalOn" onchange="clioToggle(&#39;cal&#39;,this.checked)">Add to Clio Calendar
         </label>
       </div>
       <div id="clioDetectSlot"></div>
       <div class="clio-row">
         <div class="clio-grid">
           <div class="clio-f"><span class="clio-fl">Hearing Type</span>
-            <button type="button" class="clio-ddtrig empty" id="clioHearTypeTrig" onclick="clioPickHearType()"></button>
-            <input id="clioHearType" class="clio-otherin" placeholder="Describe the hearing type" style="display:none" oninput="clioHearInput('type',this.value)"></div>
+            <button type="button" class="clio-ddtrig empty" id="clioHearTypeTrig" onclick="clioPickHearType()"><span class="v">Select hearing type…</span><span class="car"></span></button>
+            <input id="clioHearType" class="clio-otherin" placeholder="Describe the hearing type" style="display:none" oninput="clioHearInput(&#39;type&#39;,this.value)"></div>
           <div class="clio-f"><span class="clio-fl">County</span>
-            <input id="clioHearCounty" list="clioCounties" placeholder="Hennepin" oninput="clioHearInput('county',this.value)"></div>
+            <input id="clioHearCounty" list="clioCounties" placeholder="Hennepin" oninput="clioHearInput(&#39;county&#39;,this.value)"></div>
         </div>
         <div class="clio-grid">
           <div class="clio-f"><span class="clio-fl">Date</span>
-            <input id="clioHearDate" type="date" onchange="clioHearInput('date',this.value)"></div>
+            <input id="clioHearDate" type="date" onchange="clioHearInput(&#39;date&#39;,this.value)"></div>
           <div class="clio-f"><span class="clio-fl">Start Time</span>
-            <input id="clioHearStart" type="time" onchange="clioHearInput('start',this.value)"></div>
+            <input id="clioHearStart" type="time" onchange="clioHearInput(&#39;start&#39;,this.value)"></div>
         </div>
         <div class="clio-grid">
-          <div class="clio-f"><span class="clio-fl">End Time <em id="clioEndAutoTag" style="display:none;text-transform:none;letter-spacing:0;font-weight:700;color:#8FB6EE">&mdash; auto</em></span>
-            <input id="clioHearEnd" type="time" onchange="clioHearInput('end',this.value)"></div>
+          <div class="clio-f"><span class="clio-fl">End Time <em id="clioEndAutoTag" style="display:none;text-transform:none;letter-spacing:0;font-weight:700;color:#8FB6EE">— auto</em></span>
+            <input id="clioHearEnd" type="time" onchange="clioHearInput(&#39;end&#39;,this.value)"></div>
           <div class="clio-f"><span class="clio-fl">Courtroom</span>
-            <input id="clioHearRoom" placeholder="C-1857" oninput="clioHearInput('courtroom',this.value)"></div>
+            <input id="clioHearRoom" placeholder="C-1857" oninput="clioHearInput(&#39;courtroom&#39;,this.value)"></div>
         </div>
         <div class="clio-grid">
-          <div class="clio-f"><span class="clio-fl">Judge <em style="text-transform:none;letter-spacing:0;font-weight:600;color:#4E5765">&mdash; by county</em></span>
-            <button type="button" class="clio-ddtrig empty" id="clioHearJudgeTrig" onclick="clioPickJudge()"></button>
-            <input id="clioHearJudge" class="clio-otherin" placeholder="Type the judge's name" style="display:none" oninput="clioHearInput('judge',this.value)"></div>
+          <div class="clio-f"><span class="clio-fl">Judge <em style="text-transform:none;letter-spacing:0;font-weight:600;color:#4E5765">— by county</em></span>
+            <button type="button" class="clio-ddtrig empty" id="clioHearJudgeTrig" onclick="clioPickJudge()"><span class="v">Set the county first, or use Other</span><span class="car"></span></button>
+            <input id="clioHearJudge" class="clio-otherin" placeholder="Type the judge&#39;s name" style="display:none" oninput="clioHearInput(&#39;judge&#39;,this.value)"></div>
           <div class="clio-f"><span class="clio-fl">Prosecutor</span>
-            <input id="clioHearPros" placeholder="Assistant County Attorney" oninput="clioHearInput('prosecutor',this.value)"></div>
+            <input id="clioHearPros" placeholder="Assistant County Attorney" oninput="clioHearInput(&#39;prosecutor&#39;,this.value)"></div>
         </div>
         <div class="clio-f"><span class="clio-fl">Location</span>
-          <input id="clioHearLoc" placeholder="Hennepin County Government Center" oninput="clioHearInput('location',this.value)"></div>
+          <input id="clioHearLoc" placeholder="Hennepin County Government Center" oninput="clioHearInput(&#39;location&#39;,this.value)"></div>
         <div class="clio-f"><span class="clio-fl">Additional Hearing Information</span>
-          <textarea id="clioHearDesc" rows="2" placeholder="Anything else that belongs on the calendar entry" oninput="clioHearInput('desc',this.value)"></textarea></div>
+          <textarea id="clioHearDesc" rows="2" placeholder="Anything else that belongs on the calendar entry" oninput="clioHearInput(&#39;desc&#39;,this.value)"></textarea></div>
         <div class="clio-f">
-          <span class="clio-fl">Calendar Title <em style="text-transform:none;letter-spacing:0;font-weight:600;color:#4E5765">&mdash; built automatically</em></span>
-          <div id="clioCalTitle" class="clio-caltitle"></div>
+          <span class="clio-fl">Calendar Title <em style="text-transform:none;letter-spacing:0;font-weight:600;color:#4E5765">— built automatically</em></span>
+          <div id="clioCalTitle" class="clio-caltitle">GWM: Andrews</div>
         </div>
       </div>
-      <datalist id="clioHearTypes"></datalist>
-      <datalist id="clioCounties"></datalist>
+      <datalist id="clioHearTypes"><option value="Arraignment Hearing"></option><option value="Bail Hearing"></option><option value="Contested Omnibus Hearing"></option><option value="Contested Pretrial Hearing"></option><option value="First Appearance Hearing"></option><option value="Implied Consent Evidentiary Hearing"></option><option value="Implied Consent Scheduling Conference"></option><option value="Jury Trial"></option><option value="Omnibus Hearing"></option><option value="Plea Hearing"></option><option value="Pretrial Hearing"></option><option value="Probation Violation"></option><option value="Rule 20 Review Hearing"></option><option value="Sentencing Hearing"></option><option value="Settlement Conference"></option><option value="Trial"></option><option value="Trial Management Conference"></option></datalist>
+      <datalist id="clioCounties"><option value="Aitkin"></option><option value="Anoka"></option><option value="Becker"></option><option value="Beltrami"></option><option value="Benton"></option><option value="Big Stone"></option><option value="Blue Earth"></option><option value="Brown"></option><option value="Carlton"></option><option value="Carver"></option><option value="Cass"></option><option value="Chippewa"></option><option value="Chisago"></option><option value="Clay"></option><option value="Clearwater"></option><option value="Cook"></option><option value="Cottonwood"></option><option value="Crow Wing"></option><option value="Dakota"></option><option value="Dodge"></option><option value="Douglas"></option><option value="Faribault"></option><option value="Fillmore"></option><option value="Freeborn"></option><option value="Goodhue"></option><option value="Grant"></option><option value="Hennepin"></option><option value="Houston"></option><option value="Hubbard"></option><option value="Isanti"></option><option value="Itasca"></option><option value="Jackson"></option><option value="Kanabec"></option><option value="Kandiyohi"></option><option value="Kittson"></option><option value="Koochiching"></option><option value="Lac qui Parle"></option><option value="Lake"></option><option value="Lake of the Woods"></option><option value="Le Sueur"></option><option value="Lincoln"></option><option value="Lyon"></option><option value="McLeod"></option><option value="Mahnomen"></option><option value="Marshall"></option><option value="Martin"></option><option value="Meeker"></option><option value="Mille Lacs"></option><option value="Morrison"></option><option value="Mower"></option><option value="Murray"></option><option value="Nicollet"></option><option value="Nobles"></option><option value="Norman"></option><option value="Olmsted"></option><option value="Otter Tail"></option><option value="Pennington"></option><option value="Pine"></option><option value="Pipestone"></option><option value="Polk"></option><option value="Pope"></option><option value="Ramsey"></option><option value="Red Lake"></option><option value="Redwood"></option><option value="Renville"></option><option value="Rice"></option><option value="Rock"></option><option value="Roseau"></option><option value="St. Louis"></option><option value="Scott"></option><option value="Sherburne"></option><option value="Sibley"></option><option value="Stearns"></option><option value="Steele"></option><option value="Stevens"></option><option value="Swift"></option><option value="Todd"></option><option value="Traverse"></option><option value="Wabasha"></option><option value="Wadena"></option><option value="Waseca"></option><option value="Washington"></option><option value="Watonwan"></option><option value="Wilkin"></option><option value="Winona"></option><option value="Wright"></option><option value="Yellow Medicine"></option></datalist>
     </div>
 
     <!-- REVIEW -->
     <div class="clio-sec">
       <div class="clio-sh"><span class="t">Ready to Send</span></div>
-      <div id="clioReviewSlot"></div>
-      <div id="clioResultSlot"></div>
+      <div id="clioReviewSlot"><div class="clio-review"><div class="clio-rrow"><span class="mk" style="color:var(--bronze-l)">§</span><span class="bd"><span class="bt">Blake Anthony Andrews – 02403-Andrews</span><span class="bs">3° DWI - Refusal</span></span></div><div class="clio-rrow"><span class="mk">☑</span><span class="bd"><span class="bt">Matter Note</span><span class="bs">CASE REVIEW NOTES  ·  08/28/2026</span></span></div><div class="clio-rrow off"><span class="mk">☐</span><span class="bd"><span class="bt">Time Entry</span><span class="bs">no time entered  ·  08/28/2026</span></span></div><div class="clio-rrow off"><span class="mk">☐</span><span class="bd"><span class="bt">Calendar Entry</span><span class="bs">Not being added</span></span></div></div></div>
+      <div id="clioResultSlot"><div class="clio-results allok"><div class="rh">Clio update complete</div><div class="clio-rrow ok"><span class="mk">✔</span><span class="bd"><span class="bt">Matter Note Created</span><span class="bs">Note “CASE REVIEW NOTES” created</span></span></div></div></div>
     </div>
 
   </div>
 
   <div class="clio-dfoot">
-    <button class="clio-save" id="clioSaveBtn" onclick="clioSaveToClio()">Send to Clio</button>
-    <div class="clio-savenote" id="clioSaveNote">Select a matter to continue.</div>
+    <button class="clio-save" id="clioSaveBtn" onclick="clioSaveToClio()" disabled="">✔ Sent to Clio</button>
+    <div class="clio-savenote" id="clioSaveNote">This note is in Clio. <button class="clio-btn tiny" style="margin-left:4px" onclick="clioUnlock()">Send again</button></div>
   </div>
 </aside>
 
@@ -9048,5 +9053,6 @@ document.addEventListener('keydown',function(e){
 
 })();
 </script>
+
 
 </body></html>
