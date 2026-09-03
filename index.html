@@ -1990,7 +1990,7 @@ html{ -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; tex
     font-weight:700;
   ">Clio Connected — Gerard Mannion</span>
 
-  <button id="connectClioBtn" class="clio-3d" style="display:none">
+  <button id="connectClioBtn" class="clio-3d" style="display: none;" fdprocessedid="kuy45">
     <span class="c3-ico"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></span>
     <span class="c3-txt">Connect to Clio</span>
   </button>
@@ -2009,9 +2009,9 @@ html{ -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; tex
 <div class="topbar">
   <span class="tb-lab">Note</span>
   <div class="mode-wrap" id="modeWrap">
-    <button class="mode-trig" id="modeTrig" onclick="toggleModeMenu(event)">
+    <button class="mode-trig" id="modeTrig" onclick="toggleModeMenu(event)" fdprocessedid="0dzzfs">
       <span class="mode-dot"></span>
-      <span class="cap" id="modeCap">Case Review Notes</span>
+      <span class="cap" id="modeCap">Court Summary</span>
       <span class="car">▼</span>
     </button>
     <div class="mode-menu" id="modeMenu">
@@ -2019,11 +2019,11 @@ html{ -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; tex
         <div class="mi-ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg></div>
         <div><div class="mi-t">Intake Notes</div><div class="mi-s">New call · charge, court, custody, fee</div></div>
       </div>
-      <div class="mode-item" data-mode="court" onclick="pickMode(&#39;court&#39;)">
+      <div class="mode-item sel" data-mode="court" onclick="pickMode(&#39;court&#39;)">
         <div class="mi-ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18"></path><path d="M7.5 21h9"></path><path d="M5 6h14"></path><path d="M12 6l6.5-1.5M12 6L5.5 4.5"></path><path d="M5 6l-2.6 6a3 3 0 0 0 5.2 0L5 6z"></path><path d="M19 6l-2.6 6a3 3 0 0 0 5.2 0L19 6z"></path></svg></div>
         <div><div class="mi-t">Court Summary</div><div class="mi-s">After court · judge, offer, next date</div></div>
       </div>
-      <div class="mode-item sel" data-mode="review" onclick="pickMode(&#39;review&#39;)">
+      <div class="mode-item" data-mode="review" onclick="pickMode(&#39;review&#39;)">
         <div class="mi-ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg></div>
         <div><div class="mi-t">Case Review Notes</div><div class="mi-s">Client meeting · advice, next steps</div></div>
       </div>
@@ -2032,16 +2032,16 @@ html{ -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; tex
 
   <span class="tb-lab">Mode</span>
   <div class="seg" id="engineSeg">
-    <button id="segGuided" class="on" onclick="setEngine(&#39;guided&#39;)">Guided</button>
-    <button id="segManual" onclick="setEngine(&#39;manual&#39;)">Manual</button>
+    <button id="segGuided" class="on" onclick="setEngine(&#39;guided&#39;)" fdprocessedid="rmhosi">Guided</button>
+    <button id="segManual" onclick="setEngine(&#39;manual&#39;)" fdprocessedid="y2i4c">Manual</button>
   </div>
 
-  <button class="tb-btn" id="bankBtn" onclick="openBank()" title="Attorney contact bank">
+  <button class="tb-btn" id="bankBtn" onclick="openBank()" title="Attorney contact bank" fdprocessedid="n9ycu">
     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-    Attorneys <span class="n" id="bankBtnCount">2</span>
+    Attorneys <span class="n" id="bankBtnCount">0</span>
   </button>
 
-  <button class="dict-open" onclick="dictOpen()" title="Dictate the whole note out loud">
+  <button class="dict-open" onclick="dictOpen()" title="Dictate the whole note out loud" fdprocessedid="g6max">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"></rect><path d="M5 10v2a7 7 0 0 0 14 0v-2"></path><line x1="12" y1="19" x2="12" y2="22"></line></svg>
     Dictate
   </button>
@@ -2058,25 +2058,29 @@ html{ -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; tex
 
 <div class="main">
   <div class="stage" id="stage">
-    <div class="clio-notebar" id="clioNoteBar"><div class="cnb-head"><span class="k">Send to Clio</span><span class="m">Case Review Notes</span><span class="sp"></span></div><div class="cnb-row"><div class="cnb-f grow"><span class="cnb-l">Clio Matter for this note</span><button class="clio-cbtrig has" id="clioComboBar" onclick="clioOpenPop(&#39;clioComboBar&#39;)"><span class="av">BA</span><span class="id"><span class="t">Blake Anthony Andrews</span><span class="s">02403-Andrews  ·  Open</span></span><span class="car">▾</span></button></div><div class="cnb-f title"><span class="cnb-l">Note Title <button class="auto" onclick="clioAutoTitle()" title="Fill the title from this note">auto</button></span><input id="clioBarTitle" placeholder="Pretrial Hearing" oninput="clioNoteTitleInput(this.value,true)"></div><div class="cnb-f date"><span class="cnb-l">Note Date</span><input id="clioBarDate" type="date" onchange="clioNoteDateInput(this.value)"></div></div></div>
-    <div class="wz" id="wizard"><div class="wz-bar"><i style="width:100%"></i></div><div class="wz-meta"><span class="wz-sec">Next Steps</span><span class="wz-step">Step <b>5</b> / 5</span></div><div class="wz-card" id="wzCard"><div class="wz-q">Next Steps</div><div class="wz-hint">One per line. This closes out the note.</div><div class="wz-body"><textarea class="wz-ta" id="wzIn" rows="6" placeholder="Draft and file suppression motion
-Send client the case summary and offer in writing
-Calendar the omnibus hearing
-Follow up with client in two weeks" oninput="wzMainInput(this.value)"></textarea></div><div class="wz-nav"><button class="wz-btn" onclick="wzGo(-1)"><kbd>⇧↵</kbd> Back</button><button class="wz-btn fin" onclick="wzFinish()"><kbd>⌘↵</kbd> Finish note</button><span class="sp"></span><span class="wz-tahint"><kbd>↵</kbd> new line · <kbd>⌘↵</kbd> finish</span></div></div><div class="wz-rail"><div class="wz-tick done" title="How did you meet?" onclick="wzJump(&#39;r_type&#39;)"></div><div class="wz-tick done" title="What did you go over?" onclick="wzJump(&#39;r_disc&#39;)"></div><div class="wz-tick done" title="Was an offer relayed?" onclick="wzJump(&#39;r_offerq&#39;)"></div><div class="wz-tick done" title="What did you advise?" onclick="wzJump(&#39;r_advice&#39;)"></div><div class="wz-tick cur" title="Next Steps" onclick="wzJump(&#39;r_next&#39;)"></div></div></div>
+    <div class="clio-notebar" id="clioNoteBar"><div class="cnb-head"><span class="k">Send to Clio</span><span class="m">Court Summary</span><span class="sp"></span></div><div class="cnb-row"><div class="cnb-f grow"><span class="cnb-l">Clio Matter for this note</span><button class="clio-cbtrig has" id="clioComboBar" onclick="clioOpenPop(&#39;clioComboBar&#39;)" fdprocessedid="nyq8h"><span class="av">HK</span><span class="id"><span class="t">Hunter Josephj Kroll</span><span class="s">02587-Kroll  ·  Open</span></span><span class="car">▾</span></button></div><div class="cnb-f title"><span class="cnb-l">Note Title <button class="auto" onclick="clioAutoTitle()" title="Fill the title from this note" fdprocessedid="9kw1s">auto</button></span><input id="clioBarTitle" placeholder="Pretrial Hearing" oninput="clioNoteTitleInput(this.value,true)" fdprocessedid="62u87"></div><div class="cnb-f date"><span class="cnb-l">Note Date</span><input id="clioBarDate" type="date" onchange="clioNoteDateInput(this.value)"></div></div></div>
+    <div class="wz" id="wizard"><div class="wz-bar"><i style="width:100%"></i></div><div class="wz-meta"><span class="wz-sec">Review</span><span class="wz-step">Step <b>15</b> / 15</span></div><div class="wz-done"><h3>Note ready</h3><p class="sub">Everything you answered is below. Click any line to jump back and change it — the note on the right updates instantly.</p><div class="wz-ans"><div class="wz-ans-row" onclick="wzJump(&#39;c_county&#39;)"><span class="k">Which county</span><span class="v">(69) St. Louis</span><span class="e">edit</span></div><div class="wz-ans-row" onclick="wzJump(&#39;c_judge&#39;)"><span class="k">Who was the judge</span><span class="v">Nicole L. Hopps</span><span class="e">edit</span></div><div class="wz-ans-row" onclick="wzJump(&#39;c_pros&#39;)"><span class="k">Who was the prosecutor</span><span class="v empty">not recorded</span><span class="e">edit</span></div><div class="wz-ans-row" onclick="wzJump(&#39;c_htype&#39;)"><span class="k">What kind of hearing was it</span><span class="v">Pretrial Hearing</span><span class="e">edit</span></div><div class="wz-ans-row" onclick="wzJump(&#39;c_date&#39;)"><span class="k">What day was the hearing</span><span class="v">September 1, 2026</span><span class="e">edit</span></div><div class="wz-ans-row" onclick="wzJump(&#39;c_appear&#39;)"><span class="k">Who appeared, and how</span><span class="v">Attorney: GWM
+Appearance: in person
+With client?: With Client</span><span class="e">edit</span></div><div class="wz-ans-row" onclick="wzJump(&#39;c_wit&#39;)"><span class="k">Was there witness testimony</span><span class="v">No</span><span class="e">edit</span></div><div class="wz-ans-row" onclick="wzJump(&#39;c_details&#39;)"><span class="k">What happened at the hearing</span><span class="v">GWM met with Prosecutor to discuss the case. Prosecutor gave an offer but also said she will get discovery to us soon. GWM got a new date. </span><span class="e">edit</span></div><div class="wz-ans-row" onclick="wzJump(&#39;c_offerq&#39;)"><span class="k">Was an offer made</span><span class="v">Yes</span><span class="e">edit</span></div><div class="wz-ans-row" onclick="wzJump(&#39;c_offer&#39;)"><span class="k">What is the offer</span><span class="v">Plead to 4th Degree DWI
+Stayed time
+1 year unsupervised probation
+$100 fine</span><span class="e">edit</span></div><div class="wz-ans-row" onclick="wzJump(&#39;c_nextq&#39;)"><span class="k">Is there a next court date</span><span class="v">Yes</span><span class="e">edit</span></div><div class="wz-ans-row" onclick="wzJump(&#39;c_next&#39;)"><span class="k">When, and for what</span><span class="v">Date: October 19, 2026
+Time: 13:30
+Hearing type: Pretrial Hearing</span><span class="e">edit</span></div><div class="wz-ans-row" onclick="wzJump(&#39;c_briefq&#39;)"><span class="k">Is a brief or motion due</span><span class="v">No</span><span class="e">edit</span></div><div class="wz-ans-row" onclick="wzJump(&#39;c_pmmq&#39;)"><span class="k">Add a PMM directive for staff</span><span class="v">Yes</span><span class="e">edit</span></div><div class="wz-ans-row" onclick="wzJump(&#39;c_pmm&#39;)"><span class="k">What should go to the client</span><span class="v">Thank you for taking the time to appear with me in Court. As we discussed, the Prosecutor is working on sending us the rest of the evidence so that we can cover it together. I will keep working with the Prosecutor to get the best offer possible and keep you in the loop. Please let me know if you have any questions. Thanks!</span><span class="e">edit</span></div></div><div class="wz-nav" style="margin-top:0"><button class="wz-btn fin" onclick="copyNote()" fdprocessedid="kr2e5">Copy note</button><button class="wz-btn" onclick="wzGo(-1)" fdprocessedid="ufucfb">Back to last question</button><span class="sp"></span><button class="wz-btn ghost" onclick="wzResetMode()" fdprocessedid="e1bze">Clear and start over</button></div></div></div>
     <div class="form-panel" id="formPanel" style="display:none"></div>
   </div>
 
   <div class="output-panel">
     <div class="output-header">
       <span class="out-dot"></span>
-      <span id="outputLabel" class="output-label-text">Case Review Notes</span>
+      <span id="outputLabel" class="output-label-text">Court Summary</span>
       <span class="out-live" id="outLive">Live</span>
       <div class="out-actions">
-        <button class="out-btn" id="headerPrintBtn" onclick="printNote()" style="">Print</button>
-        <button class="out-btn go" id="headerCopyBtn" onclick="copyNote()" style="">Copy</button>
+        <button class="out-btn" id="headerPrintBtn" onclick="printNote()" style="" fdprocessedid="fyejt">Print</button>
+        <button class="out-btn go" id="headerCopyBtn" onclick="copyNote()" style="" fdprocessedid="jklg1">Copy</button>
       </div>
     </div>
-    <div class="output-body" id="outputBody"><div class="note-output" id="noteRendered"><p class="note-intro">Client meeting — Phone.</p><div class="note-spacer"></div><p><strong><u>Evidence &amp; Strategy Review:</u></strong></p><p>GWM called the client to check in regarding his case. The client has been sober since the incident and has changed careers, and he is doing very well — he is much happier and appears to be in a good place. We currently have an offer to reduce the refusal charge to a fourth-degree offense, and the client wishes to accept it. GWM will follow up with the prosecutor to obtain the final details so that we can proceed with a plea by mail.</p></div><div class="ai-btn-row"><button class="ai-btn" id="aiCleanBtn" onclick="aiCleanup()">Optimize</button><button class="copy-btn-below" id="copyBtnBelow" onclick="copyNote()">Copy Note</button><button class="clio-send-btm" onclick="clioOpenDrawer()" title="Send this note to Clio">Send to Clio</button><button class="ai-btn ai-btn-revert" id="aiRevertBtn" onclick="revertNote()" style="display: inline-flex;">↩ Revert</button></div></div>
+    <div class="output-body" id="outputBody"><div class="note-output" id="noteRendered"><p class="note-intro">GWM appeared with Client in person for Client's Pretrial Hearing on September 1, 2026. The Honorable Judge Nicole L. Hopps presided.</p><div class="note-spacer"></div><p><strong><u>Offer:</u></strong></p><p style="margin:0 0 4px 0;padding-left:6px;">• Plead to 4th Degree DWI</p><p style="margin:0 0 4px 0;padding-left:6px;">• Stayed time</p><p style="margin:0 0 4px 0;padding-left:6px;">• 1 year unsupervised probation</p><p style="margin:0 0 4px 0;padding-left:6px;">• $100 fine</p><div class="note-spacer"></div><p style="margin:0 0 4px 0;padding-left:6px;">• GWM met with Prosecutor to discuss the case. Prosecutor gave an offer but also said she will get discovery to us soon. GWM got a new date.</p><div class="note-spacer"></div><p><strong><u>Next Court Date:</u></strong> October 19, 2026 at 1:30 PM for Pretrial Hearing</p><div class="note-spacer"></div><p>PMM: Please send Client new court date and verify accuracy in the calendar. Please send client the following note:</p><div class="note-spacer"></div><p style="margin:0 0 4px 0;padding-left:6px;">• Thank you for taking the time to appear with me in Court. As we discussed, the Prosecutor is working on sending us the rest of the evidence so that we can cover it together. I will keep working with the Prosecutor to get the best offer possible and keep you in the loop. Please let me know if you have any questions. Thanks!</p></div><div class="ai-btn-row"><button class="ai-btn" id="aiCleanBtn" onclick="aiCleanup()" fdprocessedid="hqx3mn">Optimize</button><button class="copy-btn-below" id="copyBtnBelow" onclick="copyNote()" fdprocessedid="p156yr">Copy Note</button><button class="clio-send-btm" onclick="clioOpenDrawer()" title="Send this note to Clio" fdprocessedid="25ck4q">Send to Clio</button><button class="ai-btn ai-btn-revert" id="aiRevertBtn" onclick="revertNote()" style="display:none">↩ Revert</button></div></div>
   </div>
 </div>
 
@@ -2099,7 +2103,7 @@ Follow up with client in two weeks" oninput="wzMainInput(this.value)"></textarea
   </div>
 </div>
 
-<div class="toast" id="toast">Sent to Clio — 1 of 1 created</div>
+<div class="toast" id="toast">Sent to Clio — 3 of 3 created</div>
 
 
 <script>
@@ -6634,27 +6638,27 @@ startMicObserver();
 <div class="clio-popbackdrop" id="clioPopBack" onclick="clioClosePop()"></div>
 <div class="clio-selback" id="clioSelBack" onclick="clioCloseSelect()"></div>
 <div class="clio-selpop" id="clioSelPop" role="listbox"></div>
-<div class="clio-pop" id="clioPop" role="listbox" aria-label="Select Clio matter" style="transform: none; left: 26px; width: 620px; top: 270.779px;">
+<div class="clio-pop" id="clioPop" role="listbox" aria-label="Select Clio matter" style="transform: none; left: 26px; width: 620px; top: 270.778px;">
   <div class="ptools">
-    <input id="clioPopSearch" autocomplete="off" spellcheck="false" placeholder="Search every matter — client name, matter number, court file, description, attorney…">
+    <input id="clioPopSearch" autocomplete="off" spellcheck="false" placeholder="Search every matter — client name, matter number, court file, description, attorney…" fdprocessedid="qqnh3n">
     <div class="pfilters">
       <div class="clio-seg" id="clioPopStatus">
-        <button data-v="all" class="on" onclick="clioPopFilter(&#39;status&#39;,&#39;all&#39;)">All</button>
-        <button data-v="open" onclick="clioPopFilter(&#39;status&#39;,&#39;open&#39;)">Open</button>
-        <button data-v="closed" onclick="clioPopFilter(&#39;status&#39;,&#39;closed&#39;)">Closed</button>
+        <button data-v="all" class="on" onclick="clioPopFilter(&#39;status&#39;,&#39;all&#39;)" fdprocessedid="cvdokf">All</button>
+        <button data-v="open" onclick="clioPopFilter(&#39;status&#39;,&#39;open&#39;)" fdprocessedid="dogu66">Open</button>
+        <button data-v="closed" onclick="clioPopFilter(&#39;status&#39;,&#39;closed&#39;)" fdprocessedid="w5xtn">Closed</button>
       </div>
       <div class="clio-seg" id="clioPopScope">
-        <button data-v="all" class="on" onclick="clioPopFilter(&#39;scope&#39;,&#39;all&#39;)">Everyone</button>
-        <button data-v="my" onclick="clioPopFilter(&#39;scope&#39;,&#39;my&#39;)">Mine</button>
+        <button data-v="all" class="on" onclick="clioPopFilter(&#39;scope&#39;,&#39;all&#39;)" fdprocessedid="7vwvin">Everyone</button>
+        <button data-v="my" onclick="clioPopFilter(&#39;scope&#39;,&#39;my&#39;)" fdprocessedid="2hb8oj">Mine</button>
       </div>
       <div class="clio-seg" id="clioPopRecent">
-        <button data-v="0" class="on" onclick="clioPopFilter(&#39;recent&#39;,0)">All</button>
-        <button data-v="1" onclick="clioPopFilter(&#39;recent&#39;,1)">Recent</button>
+        <button data-v="0" class="on" onclick="clioPopFilter(&#39;recent&#39;,0)" fdprocessedid="7ih3cb">All</button>
+        <button data-v="1" onclick="clioPopFilter(&#39;recent&#39;,1)" fdprocessedid="07ndmn">Recent</button>
       </div>
-      <span class="pcount" id="clioPopCount">4 matters</span>
+      <span class="pcount" id="clioPopCount">1 matter</span>
     </div>
   </div>
-  <div class="plist" id="clioPopList"><div class="clio-opt" data-i="0" onclick="clioPickMatter(&#39;1915248522&#39;)" onmousemove="clioPopCursor(0)"><div class="av">CS</div><div class="bd"><div class="l1"><span class="cn">Casey Blake Stromgren</span><span class="mn">02559-Stromgren</span></div><div class="de">2nd Degree DWI</div><div class="l3"><span class="clio-pill open">Open</span><span class="clio-pill">Kyle Dreger</span></div></div></div><div class="clio-opt cur" data-i="1" onclick="clioPickMatter(&#39;1889242360&#39;)" onmousemove="clioPopCursor(1)"><div class="av">BA</div><div class="bd"><div class="l1"><span class="cn">Blake Anthony Andrews</span><span class="mn">02403-Andrews</span></div><div class="de">3° DWI - Refusal</div><div class="l3"><span class="clio-pill open">Open</span><span class="clio-pill">Gerald Miller</span></div></div></div><div class="clio-opt" data-i="2" onclick="clioPickMatter(&#39;1819406877&#39;)" onmousemove="clioPopCursor(2)"><div class="av">BR</div><div class="bd"><div class="l1"><span class="cn">Blake Roisen</span><span class="mn">01958-Roisen</span></div><div class="de">4th Degree DWI</div><div class="l3"><span class="clio-pill closed">Closed</span><span class="clio-pill">Annaliese Barnes</span><span class="clio-pill">DWI (Crim/IC)</span></div></div></div><div class="clio-opt" data-i="3" onclick="clioPickMatter(&#39;1447986906&#39;)" onmousemove="clioPopCursor(3)"><div class="av">CS</div><div class="bd"><div class="l1"><span class="cn">Casey Blake Stromgren</span><span class="mn">00722-Stromgren</span></div><div class="de">3rd Degree DWI</div><div class="l3"><span class="clio-pill closed">Closed</span><span class="clio-pill">Kyle Dreger</span></div></div></div></div>
+  <div class="plist" id="clioPopList"><div class="clio-opt cur" data-i="0" onclick="clioPickMatter(&#39;1880844850&#39;)" onmousemove="clioPopCursor(0)"><div class="av">CM</div><div class="bd"><div class="l1"><span class="cn">Christopher Moen</span><span class="mn">02334-Moen</span></div><div class="de">3° DWI</div><div class="l3"><span class="clio-pill open">Open</span><span class="clio-pill">Gerard Mannion</span></div></div></div></div>
   <div class="pfoot">
     <span><kbd>↑</kbd><kbd>↓</kbd> move</span>
     <span><kbd>↵</kbd> select</span>
@@ -6668,8 +6672,8 @@ startMicObserver();
 <aside class="clio-drawer" id="clioDrawer" aria-hidden="true">
   <div class="clio-dhead">
     <span class="tag">Clio</span>
-    <h3 id="clioDrawerTitle">Send Case Review Notes to Clio</h3>
-    <button class="modal-x" style="margin-left:auto" onclick="clioCloseDrawer()" title="Close">×</button>
+    <h3 id="clioDrawerTitle">Send Court Summary to Clio</h3>
+    <button class="modal-x" style="margin-left:auto" onclick="clioCloseDrawer()" title="Close" fdprocessedid="x2w3a">×</button>
   </div>
 
   <div class="clio-dbody">
@@ -6680,13 +6684,13 @@ startMicObserver();
       <div class="clio-row">
         <div class="clio-f">
           <span class="clio-fl">Clio Matter</span>
-          <button class="clio-cbtrig has" id="clioComboDrawer" onclick="clioOpenPop(&#39;clioComboDrawer&#39;)"><span class="av">BA</span><span class="id"><span class="t">Blake Anthony Andrews</span><span class="s">02403-Andrews  ·  Open</span></span><span class="car">▾</span></button>
+          <button class="clio-cbtrig has" id="clioComboDrawer" onclick="clioOpenPop(&#39;clioComboDrawer&#39;)" fdprocessedid="svs7bb"><span class="av">HK</span><span class="id"><span class="t">Hunter Josephj Kroll</span><span class="s">02587-Kroll  ·  Open</span></span><span class="car">▾</span></button>
         </div>
-        <div id="clioMatterSlot"><div class="clio-hint" style="padding:2px 2px 0"><div style="color:var(--dim2);font-size:11.5px;line-height:1.45">3° DWI - Refusal</div><div style="font-family:var(--mono);font-size:10px;color:var(--dim);letter-spacing:.4px;margin-top:3px">02403-Andrews  ·  Gerald Miller  ·  Open</div></div></div>
+        <div id="clioMatterSlot"><div class="clio-hint" style="padding:2px 2px 0"><div style="color:var(--dim2);font-size:11.5px;line-height:1.45">4th Degree DWI and Underage Drink and Drive - St. Louis County</div><div style="font-family:var(--mono);font-size:10px;color:var(--dim);letter-spacing:.4px;margin-top:3px">02587-Kroll  ·  Gerard Mannion  ·  Open</div></div></div>
         <div class="clio-grid">
           <div class="clio-f">
             <span class="clio-fl">Note Title <em style="text-transform:none;letter-spacing:0;font-weight:600;color:#4E5765">→ Clio title</em></span>
-            <input id="clioNoteTitle" list="clioNoteTitles" placeholder="Pretrial Hearing" oninput="clioNoteTitleInput(this.value)">
+            <input id="clioNoteTitle" list="clioNoteTitles" placeholder="Pretrial Hearing" oninput="clioNoteTitleInput(this.value)" fdprocessedid="2yamr3">
           </div>
           <div class="clio-f">
             <span class="clio-fl">Note Date</span>
@@ -6695,10 +6699,22 @@ startMicObserver();
         </div>
         <div class="clio-f">
           <span class="clio-fl">Note Body <em style="text-transform:none;letter-spacing:0;font-weight:600;color:#4E5765">— exactly what Clio will store</em></span>
-          <div id="clioNotePreview" class="clio-hint" style="max-height: 120px; overflow: auto; padding: 9px 11px; background: rgb(10, 13, 18); border: 1px solid var(--line2); border-radius: 6px; color: var(--dim2); line-height: 1.6; white-space: pre-wrap; font-family: var(--mono); font-size: 10.5px;">Client meeting — Phone.
+          <div id="clioNotePreview" class="clio-hint" style="max-height: 120px; overflow: auto; padding: 9px 11px; background: rgb(10, 13, 18); border: 1px solid var(--line2); border-radius: 6px; color: var(--dim2); line-height: 1.6; white-space: pre-wrap; font-family: var(--mono); font-size: 10.5px;">GWM appeared with Client in person for Client's Pretrial Hearing on September 1, 2026. The Honorable Judge Nicole L. Hopps presided.
 
-EVIDENCE &amp; STRATEGY REVIEW
-GWM called the client to check in regarding his case. The client has been sober since the incident and has changed careers, and he is doing very well — he is much happier and appears to be in a good place. We currently have an offer to reduce the refusal charge to a fourth-degree offense, and the client wishes to accept it. GWM will follow up with the prosecutor to obtain the final details so that we can proceed with a plea by mail.</div>
+OFFER
+  • Plead to 4th Degree DWI
+  • Stayed time
+  • 1 year unsupervised probation
+  • $100 fine
+
+DETAILS
+  • GWM met with Prosecutor to discuss the case. Prosecutor gave an offer but also said she will get discovery to us soon. GWM got a new date.
+
+Next Court Date: October 19, 2026 at 1:30 PM for Pretrial Hearing
+
+PMM: Please send Client new court date and verify accuracy in the calendar. Please send client the following note:
+
+"Thank you for taking the time to appear with me in Court. As we discussed, the Prosecutor is working on sending us the rest of the evidence so that we can cover it together. I will keep working with the Prosecutor to get the best offer possible and keep you in the loop. Please let me know if you have any questions. Thanks!"</div>
         </div>
       </div>
       <datalist id="clioNoteTitles">
@@ -6714,18 +6730,18 @@ GWM called the client to check in regarding his case. The client has been sober 
     <!-- TIME ENTRY -->
     <div class="clio-sec">
       <div class="clio-sh"><span class="t">Time Entry</span><span class="sp"></span>
-        <label class="clio-tog" id="clioTimeTogWrap">
+        <label class="clio-tog on" id="clioTimeTogWrap">
           <input type="checkbox" id="clioTimeOn" onchange="clioToggle(&#39;time&#39;,this.checked)">Include
         </label>
       </div>
       <div class="clio-row">
         <div class="clio-timebar">
           <div class="clio-f"><span class="clio-fl">Hours</span>
-            <input id="clioHours" type="number" min="0" max="99" step="1" placeholder="0" oninput="clioTimeInput()"></div>
+            <input id="clioHours" type="number" min="0" max="99" step="1" placeholder="0" oninput="clioTimeInput()" fdprocessedid="z6mvcf"></div>
           <div class="clio-f"><span class="clio-fl">Minutes</span>
-            <input id="clioMinutes" type="number" min="0" max="59" step="1" placeholder="0" oninput="clioTimeInput()"></div>
-          <div class="clio-total zero" id="clioTotalBox">
-            <span class="k">Total Time</span><span class="v" id="clioTotalTxt">—</span>
+            <input id="clioMinutes" type="number" min="0" max="59" step="1" placeholder="0" oninput="clioTimeInput()" fdprocessedid="vm6mzf"></div>
+          <div class="clio-total" id="clioTotalBox">
+            <span class="k">Total Time</span><span class="v" id="clioTotalTxt">5 hours</span>
           </div>
         </div>
         <div id="clioTimeErr"></div>
@@ -6733,10 +6749,10 @@ GWM called the client to check in regarding his case. The client has been sober 
           <div class="clio-f"><span class="clio-fl">Time Entry Date</span>
             <input id="clioTimeDate" type="date" onchange="clioTimeDateInput(this.value)"></div>
           <div class="clio-f"><span class="clio-fl">Description</span>
-            <input id="clioTimeDesc" placeholder="Defaults to the note title" oninput="clioTimeDescInput(this.value)"></div>
+            <input id="clioTimeDesc" placeholder="Defaults to the note title" oninput="clioTimeDescInput(this.value)" fdprocessedid="xgzno"></div>
         </div>
         <div class="clio-hint">One consolidated entry — travel, waiting, the hearing and negotiations all roll into this single total.
-          <button class="clio-btn tiny" style="margin-left:6px" onclick="clioSuggestTimeDesc()">Use hearing wording</button>
+          <button class="clio-btn tiny" style="margin-left:6px" onclick="clioSuggestTimeDesc()" fdprocessedid="vkvu8">Use hearing wording</button>
         </div>
       </div>
     </div>
@@ -6744,20 +6760,20 @@ GWM called the client to check in regarding his case. The client has been sober 
     <!-- NEXT HEARING -->
     <div class="clio-sec">
       <div class="clio-sh"><span class="t">Court Date</span>
-        <span class="badge" id="clioHearBadge" style="display:none"></span><span class="sp"></span>
-        <button class="clio-btn tiny" onclick="clioRescanNote()" title="Re-read the note for a court date">Re-scan</button>
-        <label class="clio-tog" id="clioCalTogWrap">
+        <span class="badge det" id="clioHearBadge" style="">from form</span><span class="sp"></span>
+        <button class="clio-btn tiny" onclick="clioRescanNote()" title="Re-read the note for a court date" fdprocessedid="kc796">Re-scan</button>
+        <label class="clio-tog on" id="clioCalTogWrap">
           <input type="checkbox" id="clioCalOn" onchange="clioToggle(&#39;cal&#39;,this.checked)">Add to Clio Calendar
         </label>
       </div>
-      <div id="clioDetectSlot"></div>
+      <div id="clioDetectSlot"><div class="clio-detect"><div class="dt"><b>Court Date Detected</b></div><div class="dl"><span>Hearing</span><b>Pretrial Hearing</b></div><div class="dl"><span>Date</span><b>10/19/2026  ·  October 19, 2026</b></div><div class="dl"><span>Time</span><b>1:30 PM</b></div><div class="dl"><span>County</span><b>St. Louis</b></div><div class="clio-quote">“$100 fine • GWM met with Prosecutor to discuss the case. Prosecutor gave an offer but also said she will get discovery to us soon. GWM got a new date. Next Court Date: October 19, 2026 at 1:30 PM for Pretrial Hearing PMM: Please send Client new court date and verify accuracy in the calendar. Please sen”</div><div class="dacts"><button class="clio-btn blue tiny" onclick="clioAcceptDetection()" fdprocessedid="oupnos">Use these values</button><button class="clio-btn tiny" onclick="clioDismissDetection()" fdprocessedid="a6ldn">Dismiss</button></div></div></div>
       <div class="clio-row">
         <div class="clio-grid">
           <div class="clio-f"><span class="clio-fl">Hearing Type</span>
-            <button type="button" class="clio-ddtrig empty" id="clioHearTypeTrig" onclick="clioPickHearType()"><span class="v">Select hearing type…</span><span class="car"></span></button>
+            <button type="button" class="clio-ddtrig" id="clioHearTypeTrig" onclick="clioPickHearType()" fdprocessedid="gyiqhw"><span class="v">Pretrial Hearing</span><span class="car"></span></button>
             <input id="clioHearType" class="clio-otherin" placeholder="Describe the hearing type" style="display:none" oninput="clioHearInput(&#39;type&#39;,this.value)"></div>
           <div class="clio-f"><span class="clio-fl">County</span>
-            <input id="clioHearCounty" list="clioCounties" placeholder="Hennepin" oninput="clioHearInput(&#39;county&#39;,this.value)"></div>
+            <input id="clioHearCounty" list="clioCounties" placeholder="Hennepin" oninput="clioHearInput(&#39;county&#39;,this.value)" fdprocessedid="knn9we"></div>
         </div>
         <div class="clio-grid">
           <div class="clio-f"><span class="clio-fl">Date</span>
@@ -6766,25 +6782,25 @@ GWM called the client to check in regarding his case. The client has been sober 
             <input id="clioHearStart" type="time" onchange="clioHearInput(&#39;start&#39;,this.value)"></div>
         </div>
         <div class="clio-grid">
-          <div class="clio-f"><span class="clio-fl">End Time <em id="clioEndAutoTag" style="display:none;text-transform:none;letter-spacing:0;font-weight:700;color:#8FB6EE">— auto</em></span>
+          <div class="clio-f"><span class="clio-fl">End Time <em id="clioEndAutoTag" style="text-transform: none; letter-spacing: 0px; font-weight: 700; color: rgb(143, 182, 238);">— auto</em></span>
             <input id="clioHearEnd" type="time" onchange="clioHearInput(&#39;end&#39;,this.value)"></div>
           <div class="clio-f"><span class="clio-fl">Courtroom</span>
-            <input id="clioHearRoom" placeholder="C-1857" oninput="clioHearInput(&#39;courtroom&#39;,this.value)"></div>
+            <input id="clioHearRoom" placeholder="C-1857" oninput="clioHearInput(&#39;courtroom&#39;,this.value)" fdprocessedid="tnpep"></div>
         </div>
         <div class="clio-grid">
           <div class="clio-f"><span class="clio-fl">Judge <em style="text-transform:none;letter-spacing:0;font-weight:600;color:#4E5765">— by county</em></span>
-            <button type="button" class="clio-ddtrig empty" id="clioHearJudgeTrig" onclick="clioPickJudge()"><span class="v">Set the county first, or use Other</span><span class="car"></span></button>
+            <button type="button" class="clio-ddtrig" id="clioHearJudgeTrig" onclick="clioPickJudge()" fdprocessedid="ksw06k"><span class="v">Nicole L. Hopps</span><span class="car"></span></button>
             <input id="clioHearJudge" class="clio-otherin" placeholder="Type the judge&#39;s name" style="display:none" oninput="clioHearInput(&#39;judge&#39;,this.value)"></div>
           <div class="clio-f"><span class="clio-fl">Prosecutor</span>
-            <input id="clioHearPros" placeholder="Assistant County Attorney" oninput="clioHearInput(&#39;prosecutor&#39;,this.value)"></div>
+            <input id="clioHearPros" placeholder="Assistant County Attorney" oninput="clioHearInput(&#39;prosecutor&#39;,this.value)" fdprocessedid="txu06g"></div>
         </div>
         <div class="clio-f"><span class="clio-fl">Location</span>
-          <input id="clioHearLoc" placeholder="Hennepin County Government Center" oninput="clioHearInput(&#39;location&#39;,this.value)"></div>
+          <input id="clioHearLoc" placeholder="Hennepin County Government Center" oninput="clioHearInput(&#39;location&#39;,this.value)" fdprocessedid="g1bhj4"></div>
         <div class="clio-f"><span class="clio-fl">Additional Hearing Information</span>
           <textarea id="clioHearDesc" rows="2" placeholder="Anything else that belongs on the calendar entry" oninput="clioHearInput(&#39;desc&#39;,this.value)"></textarea></div>
         <div class="clio-f">
           <span class="clio-fl">Calendar Title <em style="text-transform:none;letter-spacing:0;font-weight:600;color:#4E5765">— built automatically</em></span>
-          <div id="clioCalTitle" class="clio-caltitle">GWM: Andrews</div>
+          <div id="clioCalTitle" class="clio-caltitle">GWM: Kroll | PT | St. Louis</div>
         </div>
       </div>
       <datalist id="clioHearTypes"><option value="Arraignment Hearing"></option><option value="Bail Hearing"></option><option value="Contested Omnibus Hearing"></option><option value="Contested Pretrial Hearing"></option><option value="First Appearance Hearing"></option><option value="Implied Consent Evidentiary Hearing"></option><option value="Implied Consent Scheduling Conference"></option><option value="Jury Trial"></option><option value="Omnibus Hearing"></option><option value="Plea Hearing"></option><option value="Pretrial Hearing"></option><option value="Probation Violation"></option><option value="Rule 20 Review Hearing"></option><option value="Sentencing Hearing"></option><option value="Settlement Conference"></option><option value="Trial"></option><option value="Trial Management Conference"></option></datalist>
@@ -6794,15 +6810,15 @@ GWM called the client to check in regarding his case. The client has been sober 
     <!-- REVIEW -->
     <div class="clio-sec">
       <div class="clio-sh"><span class="t">Ready to Send</span></div>
-      <div id="clioReviewSlot"><div class="clio-review"><div class="clio-rrow"><span class="mk" style="color:var(--bronze-l)">§</span><span class="bd"><span class="bt">Blake Anthony Andrews – 02403-Andrews</span><span class="bs">3° DWI - Refusal</span></span></div><div class="clio-rrow"><span class="mk">☑</span><span class="bd"><span class="bt">Matter Note</span><span class="bs">CASE REVIEW NOTES  ·  08/28/2026</span></span></div><div class="clio-rrow off"><span class="mk">☐</span><span class="bd"><span class="bt">Time Entry</span><span class="bs">no time entered  ·  08/28/2026</span></span></div><div class="clio-rrow off"><span class="mk">☐</span><span class="bd"><span class="bt">Calendar Entry</span><span class="bs">Not being added</span></span></div></div></div>
-      <div id="clioResultSlot"><div class="clio-results allok"><div class="rh">Clio update complete</div><div class="clio-rrow ok"><span class="mk">✔</span><span class="bd"><span class="bt">Matter Note Created</span><span class="bs">Note “CASE REVIEW NOTES” created</span></span></div></div></div>
+      <div id="clioReviewSlot"><div class="clio-review"><div class="clio-rrow"><span class="mk" style="color:var(--bronze-l)">§</span><span class="bd"><span class="bt">Hunter Josephj Kroll – 02587-Kroll</span><span class="bs">4th Degree DWI and Underage Drink and Drive - St. Louis County</span></span></div><div class="clio-rrow"><span class="mk">☑</span><span class="bd"><span class="bt">Matter Note</span><span class="bs">COURT SUMMARY  ·  09/02/2026</span></span></div><div class="clio-rrow"><span class="mk">☑</span><span class="bd"><span class="bt">Time Entry</span><span class="bs">5 hours  ·  09/02/2026</span></span></div><div class="clio-rrow"><span class="mk">☑</span><span class="bd"><span class="bt">Calendar Entry</span><span class="bs">Pretrial Hearing · October 19, 2026 · 1:30 PM to 2:30 PM (auto)</span></span></div><div class="clio-rrow"><span class="mk"></span><span class="bd"><span class="bs" style="font-family:var(--mono);color:var(--bronze-l)">GWM: Kroll | PT | St. Louis</span></span></div><div class="clio-rrow"><span class="mk"></span><span class="bd"><span class="bs"><b style="color:#6C7686;font-weight:800">Judge:</b> Nicole L. Hopps</span><span class="bs"><b style="color:#6C7686;font-weight:800">County:</b> St. Louis</span><span class="bs"><b style="color:#6C7686;font-weight:800">Location:</b> St. Louis County</span></span></div></div></div>
+      <div id="clioResultSlot"><div class="clio-results allok"><div class="rh">Clio update complete</div><div class="clio-rrow ok"><span class="mk">✔</span><span class="bd"><span class="bt">Matter Note Created</span><span class="bs">Note “COURT SUMMARY” created</span></span></div><div class="clio-rrow ok"><span class="mk">✔</span><span class="bd"><span class="bt">Time Entry Created</span><span class="bs">5 hours logged</span></span></div><div class="clio-rrow ok"><span class="mk">✔</span><span class="bd"><span class="bt">Calendar Entry Created</span><span class="bs">“GWM: Kroll | PT | St. Louis” added to the calendar</span></span></div></div></div>
     </div>
 
   </div>
 
   <div class="clio-dfoot">
-    <button class="clio-save" id="clioSaveBtn" onclick="clioSaveToClio()" disabled="">✔ Sent to Clio</button>
-    <div class="clio-savenote" id="clioSaveNote">This note is in Clio. <button class="clio-btn tiny" style="margin-left:4px" onclick="clioUnlock()">Send again</button></div>
+    <button class="clio-save" id="clioSaveBtn" onclick="clioSaveToClio()" fdprocessedid="ntatqs" disabled="">✔ Sent to Clio</button>
+    <div class="clio-savenote" id="clioSaveNote">This note is in Clio. <button class="clio-btn tiny" style="margin-left:4px" onclick="clioUnlock()" fdprocessedid="zms903">Send again</button></div>
   </div>
 </aside>
 
@@ -9054,5 +9070,911 @@ document.addEventListener('keydown',function(e){
 })();
 </script>
 
+
+
+<span id="PING_IFRAME_FORM_DETECTION" style="display: none;"></span>
+<!-- ══════════════════════════════════════════════════════════════════════════
+     GOOGLE CALENDAR → NOTE REMINDERS → CLIO TASKS            ·  GWM v1.0
+     Self-contained. Adds its own controls to the Clio status bar on load and
+     touches no existing markup.
+     ══════════════════════════════════════════════════════════════════════════ -->
+<style>
+/* ── shared shell ─────────────────────────────────────────────────────────── */
+.gwm-btn{
+  display:inline-flex;align-items:center;gap:7px;position:relative;
+  font-family:inherit;font-size:11.5px;font-weight:800;letter-spacing:.5px;
+  padding:7px 13px 8px;border-radius:8px;cursor:pointer;white-space:nowrap;
+  color:#E4CB9A;text-shadow:0 1px 0 rgba(0,0,0,.85);
+  background:linear-gradient(180deg,#2B333F 0%,#1B212A 42%,#11151B 100%);
+  border:1px solid #3D4855;border-bottom-color:#141920;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.10),inset 0 -1px 0 rgba(0,0,0,.55),
+             0 2px 0 #070A0E,0 3px 2px rgba(0,0,0,.45);
+  transition:transform .09s ease,box-shadow .09s ease,color .15s;
+}
+.gwm-btn:hover{color:#FFE9BE}
+.gwm-btn:active{transform:translateY(2px);box-shadow:inset 0 2px 5px rgba(0,0,0,.75),0 0 0 #070A0E}
+.gwm-btn.tiny{font-size:10.5px;padding:5px 10px 6px;letter-spacing:.4px}
+.gwm-btn.go{color:#BFE6CD;border-color:#2F5F44}
+.gwm-btn.warn{color:#E9C7A2;border-color:#6B4B2A}
+.gwm-btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
+.gwm-badge{
+  position:absolute;top:-6px;right:-6px;min-width:17px;height:17px;padding:0 4px;
+  border-radius:9px;background:linear-gradient(180deg,#C7594E,#8E3A31);color:#fff;
+  font-size:10px;font-weight:800;line-height:17px;text-align:center;
+  border:1px solid #5A241E;box-shadow:0 0 9px rgba(199,89,78,.55);
+}
+.gwm-badge.hide{display:none}
+.gwm-dot{width:10px;height:10px;border-radius:50%;display:inline-block;flex-shrink:0}
+#gwmGoogleWrap{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:700;color:#9AA4B4}
+
+/* ── drawers ──────────────────────────────────────────────────────────────── */
+.gwm-scrim{position:fixed;inset:0;background:rgba(3,5,8,.72);backdrop-filter:blur(3px);
+  opacity:0;pointer-events:none;transition:opacity .18s;z-index:9000}
+.gwm-scrim.open{opacity:1;pointer-events:auto}
+.gwm-drawer{
+  position:fixed;top:0;right:0;height:100%;width:min(560px,100vw);z-index:9001;
+  background:linear-gradient(180deg,#12161C 0%,#0B0E13 100%);
+  border-left:1px solid #2A323D;box-shadow:-24px 0 70px rgba(0,0,0,.8);
+  transform:translateX(102%);transition:transform .22s cubic-bezier(.32,.72,.3,1);
+  display:flex;flex-direction:column;
+}
+.gwm-drawer.open{transform:none}
+.gwm-dh{display:flex;align-items:center;gap:11px;padding:16px 18px;border-bottom:1px solid #1E242D;flex-shrink:0}
+.gwm-dh .tag{font-size:10px;font-weight:800;letter-spacing:1.3px;color:#0B0D10;
+  background:linear-gradient(165deg,#DCB878,#B8873B);padding:3px 8px;border-radius:4px}
+.gwm-dh h3{font-size:15px;font-weight:700;color:#E4E9F0}
+.gwm-dh .sp{flex:1}
+.gwm-x{background:none;border:none;color:#6C7686;font-size:22px;line-height:1;cursor:pointer;padding:0 4px}
+.gwm-x:hover{color:#E4E9F0}
+.gwm-db{flex:1;overflow:auto;padding:16px 18px 26px}
+.gwm-df{padding:12px 18px;border-top:1px solid #1E242D;display:flex;gap:9px;align-items:center;flex-shrink:0;
+  background:#0A0D12}
+.gwm-df .sp{flex:1}
+
+/* ── cards ────────────────────────────────────────────────────────────────── */
+.gwm-card{background:#0F1318;border:1px solid #232A34;border-radius:10px;padding:13px 14px;margin-bottom:11px;
+  transition:border-color .15s}
+.gwm-card:hover{border-color:#3A4552}
+.gwm-card .t{font-size:13.5px;font-weight:700;color:#E4E9F0;line-height:1.35;margin-bottom:5px;word-break:break-word}
+.gwm-card .meta{font-size:11.5px;color:#7A8494;line-height:1.7}
+.gwm-card .meta b{color:#A9B3C2;font-weight:600}
+.gwm-chip{display:inline-block;font-size:10px;font-weight:800;letter-spacing:.5px;padding:2px 7px;border-radius:4px;
+  margin-right:5px;vertical-align:1px}
+.gwm-chip.ok{background:rgba(63,158,99,.16);color:#7FC095;border:1px solid rgba(63,158,99,.35)}
+.gwm-chip.guess{background:rgba(184,135,59,.14);color:#DCB878;border:1px solid rgba(184,135,59,.35)}
+.gwm-chip.none{background:rgba(180,84,74,.14);color:#E9A9A2;border:1px solid rgba(180,84,74,.35)}
+.gwm-acts{display:flex;gap:7px;margin-top:11px;flex-wrap:wrap}
+.gwm-empty{text-align:center;color:#5B6472;font-size:13px;padding:46px 14px;line-height:1.7}
+.gwm-empty b{display:block;color:#8A94A4;font-size:14px;margin-bottom:6px}
+
+/* ── settings ─────────────────────────────────────────────────────────────── */
+.gwm-sec{margin-bottom:22px}
+.gwm-sec > h4{font-size:10.5px;font-weight:800;letter-spacing:1.2px;color:#B8873B;text-transform:uppercase;
+  margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid #1E242D}
+.gwm-row{display:flex;align-items:center;gap:10px;margin-bottom:10px;flex-wrap:wrap}
+.gwm-row > label{font-size:12px;color:#9AA4B4;min-width:132px;flex-shrink:0}
+.gwm-in,.gwm-sel{
+  flex:1;min-width:120px;background:#0A0D12;border:1px solid #262E39;border-radius:7px;
+  color:#E4E9F0;font-family:inherit;font-size:12.5px;padding:7px 9px;outline:none;
+}
+.gwm-in:focus,.gwm-sel:focus{border-color:#B8873B;box-shadow:0 0 0 2px rgba(184,135,59,.14)}
+.gwm-hint{font-size:11px;color:#5B6472;line-height:1.6;margin:-4px 0 12px 0}
+.gwm-prev{font-family:'SF Mono',ui-monospace,Menlo,Consolas,monospace;font-size:11.5px;color:#DCB878;
+  background:#0A0D12;border:1px solid #1E242D;border-radius:7px;padding:9px 11px;line-height:1.6;word-break:break-word}
+.gwm-cal{display:flex;align-items:center;gap:9px;padding:8px 10px;border:1px solid #232A34;border-radius:8px;
+  margin-bottom:7px;cursor:pointer;background:#0C1015}
+.gwm-cal:hover{border-color:#3A4552}
+.gwm-cal input{width:15px;height:15px;accent-color:#B8873B;cursor:pointer}
+.gwm-cal .sw{width:9px;height:9px;border-radius:2px;flex-shrink:0}
+.gwm-cal .nm{font-size:12.5px;color:#E4E9F0;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.gwm-cal .pri{font-size:9.5px;font-weight:800;letter-spacing:.6px;color:#B8873B}
+.gwm-tog{display:flex;align-items:center;gap:9px;font-size:12.5px;color:#C4CCD8;cursor:pointer;margin-bottom:9px}
+.gwm-tog input{width:15px;height:15px;accent-color:#B8873B;cursor:pointer}
+.gwm-note{font-size:11.5px;line-height:1.7;color:#7A8494;background:#0A0D12;border:1px solid #1E242D;
+  border-left:2px solid #B8873B;border-radius:0 7px 7px 0;padding:10px 12px;margin-bottom:14px}
+.gwm-note b{color:#DCB878}
+
+/* ── in-app banner ────────────────────────────────────────────────────────── */
+#gwmBanner{
+  position:fixed;right:18px;bottom:18px;z-index:9100;width:min(370px,calc(100vw - 36px));
+  background:linear-gradient(180deg,#151A21 0%,#0C1015 100%);border:1px solid #3A4552;
+  border-left:3px solid #B8873B;border-radius:10px;padding:14px 15px;
+  box-shadow:0 22px 60px rgba(0,0,0,.8);
+  transform:translateY(140%);opacity:0;transition:transform .26s cubic-bezier(.32,.72,.3,1),opacity .2s;
+}
+#gwmBanner.show{transform:none;opacity:1}
+#gwmBanner .bt{font-size:10px;font-weight:800;letter-spacing:1.2px;color:#B8873B;margin-bottom:6px}
+#gwmBanner .bh{font-size:13.5px;font-weight:700;color:#E4E9F0;line-height:1.4;margin-bottom:4px}
+#gwmBanner .bs{font-size:11.5px;color:#7A8494;line-height:1.6}
+#gwmBanner .ba{display:flex;gap:7px;margin-top:11px}
+@media (max-width:640px){ .gwm-drawer{width:100vw} .gwm-row > label{min-width:100%} }
+</style>
+
+<div class="gwm-scrim" id="gwmScrim" onclick="gwmCloseAll()"></div>
+
+<!-- pending notes tray -->
+<div class="gwm-drawer" id="gwmTray" aria-hidden="true">
+  <div class="gwm-dh">
+    <span class="tag">Notes Due</span>
+    <h3 id="gwmTrayTitle">Pending Notes</h3>
+    <span class="sp"></span>
+    <button class="gwm-x" onclick="gwmCloseAll()" title="Close">&times;</button>
+  </div>
+  <div class="gwm-db" id="gwmTrayBody"></div>
+  <div class="gwm-df">
+    <button class="gwm-btn tiny" onclick="gwmScanNow()" id="gwmScanBtn">Scan calendar now</button>
+    <span class="sp"></span>
+    <span id="gwmLastRun" style="font-size:10.5px;color:#5B6472"></span>
+  </div>
+</div>
+
+<!-- settings -->
+<div class="gwm-drawer" id="gwmSet" aria-hidden="true">
+  <div class="gwm-dh">
+    <span class="tag">Automation</span>
+    <h3>Calendar &amp; Note Reminders</h3>
+    <span class="sp"></span>
+    <button class="gwm-x" onclick="gwmCloseAll()" title="Close">&times;</button>
+  </div>
+  <div class="gwm-db" id="gwmSetBody"></div>
+  <div class="gwm-df">
+    <button class="gwm-btn go" onclick="gwmSaveSettings()" id="gwmSaveBtn">Save settings</button>
+    <button class="gwm-btn tiny" onclick="gwmScanNow()">Scan now</button>
+    <span class="sp"></span>
+    <button class="gwm-btn tiny warn" onclick="gwmTestNotify()">Test pop-up</button>
+  </div>
+</div>
+
+<!-- in-app fallback banner -->
+<div id="gwmBanner">
+  <div class="bt">NOTE DUE</div>
+  <div class="bh" id="gwmBannerTitle"></div>
+  <div class="bs" id="gwmBannerSub"></div>
+  <div class="ba">
+    <button class="gwm-btn tiny go" onclick="gwmBannerOpen()">Write this note</button>
+    <button class="gwm-btn tiny" onclick="gwmBannerHide()">Later</button>
+  </div>
+</div>
+
+<script>
+/* ══════════════════════════════════════════════════════════════════════════════
+   GWM · CALENDAR AUTOMATION CLIENT
+   Talks to the /google/* and /gwm/* routes on the same Worker that already
+   holds the Clio token. Polls for notes that have come due, raises a real
+   browser notification, and hands the event straight into the note wizard.
+   ══════════════════════════════════════════════════════════════════════════════ */
+(function () {
+  'use strict';
+
+  var API = (typeof CLIO_API === 'string' && CLIO_API) || 'https://gwm-clio-api.gmannion.workers.dev';
+
+  var GWM = {
+    google:    { connected: false, email: '' },
+    settings:  null,
+    defaults:  null,
+    calendars: [],
+    pending:   [],
+    lastRun:   null,
+    activeUid: null,          /* the item currently being written up          */
+    poll:      null,
+    seenKey:   'gwm_notified_uids',
+    open:      ''             /* '', 'tray', 'set'                            */
+  };
+  window.GWM = GWM;
+
+  /* ── transport ─────────────────────────────────────────────────────────── */
+  function gapi(path, opts) {
+    opts = opts || {};
+    var init = { method: opts.method || 'GET', headers: { Accept: 'application/json' } };
+    if (opts.body) { init.headers['Content-Type'] = 'application/json'; init.body = JSON.stringify(opts.body); }
+    return fetch(API + path, init).then(function (r) {
+      return r.text().then(function (t) {
+        var d = {};
+        try { d = t ? JSON.parse(t) : {}; } catch (e) { d = { raw: t }; }
+        if (!r.ok) {
+          var e2 = new Error(d.error || d.message || ('Request failed (' + r.status + ')'));
+          e2.status = r.status; e2.reauthorize = d.reauthorize;
+          throw e2;
+        }
+        return d;
+      });
+    });
+  }
+  function say(m) { try { toast(m); } catch (e) { console.log(m); } }
+  function E(s) {
+    return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+  }
+  function q(id) { return document.getElementById(id); }
+
+  /* ── status bar controls ───────────────────────────────────────────────── */
+  function mountControls() {
+    var bar = q('clioStatusBar');
+    if (!bar || q('gwmBellBtn')) return;
+
+    var spacer = document.createElement('span');
+    spacer.style.cssText = 'flex:1';
+
+    var gw = document.createElement('span');
+    gw.id = 'gwmGoogleWrap';
+    gw.innerHTML = '<span class="gwm-dot" id="gwmGoogleDot" style="background:#6C7686"></span>' +
+                   '<span id="gwmGoogleText">Calendar…</span>';
+
+    var bell = document.createElement('button');
+    bell.id = 'gwmBellBtn';
+    bell.className = 'gwm-btn';
+    bell.title = 'Notes waiting to be written';
+    bell.onclick = openTray;
+    bell.innerHTML =
+      '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" ' +
+      'stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>' +
+      '<path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>' +
+      '<span>Notes Due</span><span class="gwm-badge hide" id="gwmBadge">0</span>';
+
+    var gear = document.createElement('button');
+    gear.id = 'gwmGearBtn';
+    gear.className = 'gwm-btn';
+    gear.title = 'Calendar and reminder settings';
+    gear.onclick = openSettings;
+    gear.innerHTML =
+      '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" ' +
+      'stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"></rect>' +
+      '<path d="M16 2v4M8 2v4M3 10h18"></path></svg><span>Calendar</span>';
+
+    bar.appendChild(spacer);
+    bar.appendChild(gw);
+    bar.appendChild(bell);
+    bar.appendChild(gear);
+  }
+
+  function paintGoogle() {
+    var dot = q('gwmGoogleDot'), txt = q('gwmGoogleText');
+    if (!dot) return;
+    if (GWM.google.connected) {
+      dot.style.background = '#22c55e';
+      txt.textContent = 'Calendar — ' + (GWM.google.email || 'connected');
+    } else {
+      dot.style.background = '#ef4444';
+      txt.textContent = 'Calendar Not Connected';
+    }
+  }
+
+  function paintBadge() {
+    var b = q('gwmBadge');
+    if (!b) return;
+    var n = GWM.pending.length;
+    b.textContent = n > 99 ? '99+' : String(n);
+    b.classList.toggle('hide', n === 0);
+    var bell = q('gwmBellBtn');
+    if (bell) bell.style.borderColor = n ? '#8E3A31' : '#3D4855';
+  }
+
+  /* ── drawers ───────────────────────────────────────────────────────────── */
+  function openDrawer(which) {
+    GWM.open = which;
+    q('gwmScrim').classList.add('open');
+    q('gwmTray').classList.toggle('open', which === 'tray');
+    q('gwmSet').classList.toggle('open', which === 'set');
+  }
+  function closeAll() {
+    GWM.open = '';
+    q('gwmScrim').classList.remove('open');
+    q('gwmTray').classList.remove('open');
+    q('gwmSet').classList.remove('open');
+  }
+  function openTray() { openDrawer('tray'); refreshPending(true).then(renderTray); renderTray(); }
+  function openSettings() {
+    openDrawer('set');
+    renderSettings();
+    Promise.all([loadGoogleStatus(), loadSettings()]).then(function () {
+      return GWM.google.connected ? loadCalendars() : null;
+    }).then(renderSettings).catch(function (e) { say(e.message); renderSettings(); });
+  }
+
+  /* ── pending list ──────────────────────────────────────────────────────── */
+  function refreshPending(quiet) {
+    return gapi('/gwm/pending').then(function (d) {
+      GWM.pending = d.pending || [];
+      GWM.lastRun = d.lastRun || null;
+      if (d.settings) {
+        GWM.settings = Object.assign({}, GWM.settings || {}, d.settings);
+      }
+      paintBadge();
+      if (GWM.open === 'tray') renderTray();
+      maybeNotify();
+      return GWM.pending;
+    }).catch(function (e) {
+      if (!quiet) say(e.message);
+      return [];
+    });
+  }
+
+  function renderTray() {
+    var host = q('gwmTrayBody');
+    if (!host) return;
+    var lr = q('gwmLastRun');
+    if (lr) {
+      lr.textContent = GWM.lastRun
+        ? ('last swept ' + new Date(GWM.lastRun.ranAt).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }) +
+           ' · ' + (GWM.lastRun.created || 0) + ' raised')
+        : '';
+    }
+    q('gwmTrayTitle').textContent = GWM.pending.length
+      ? 'Pending Notes · ' + GWM.pending.length : 'Pending Notes';
+
+    if (!GWM.google.connected) {
+      host.innerHTML = '<div class="gwm-empty"><b>Google Calendar is not connected</b>' +
+        'Connect it once and every finished event turns into a Clio task and a reminder here.' +
+        '<div style="margin-top:16px"><button class="gwm-btn go" onclick="gwmConnectGoogle()">Connect Google Calendar</button></div></div>';
+      return;
+    }
+    if (!GWM.pending.length) {
+      host.innerHTML = '<div class="gwm-empty"><b>Nothing waiting</b>' +
+        'Every event that has finished already has a note. New ones land here within five minutes of the hearing ending.</div>';
+      return;
+    }
+
+    host.innerHTML = GWM.pending.map(function (p) {
+      var chip = p.matterId
+        ? (p.matterConfidence === 'low'
+            ? '<span class="gwm-chip guess">BEST GUESS</span>'
+            : '<span class="gwm-chip ok">MATTER LINKED</span>')
+        : '<span class="gwm-chip none">NO MATTER</span>';
+      var taskLine = p.taskId
+        ? '<b>Clio task:</b> #' + E(p.taskId)
+        : (p.taskError ? '<span style="color:#E9A9A2"><b>Clio task failed:</b> ' + E(p.taskError) + '</span>' : '<b>Clio task:</b> none');
+      return '<div class="gwm-card">' +
+        '<div class="t">' + E(p.title) + '</div>' +
+        '<div class="meta">' +
+          chip + (p.matterLabel ? E(p.matterLabel) : '') + '<br>' +
+          '<b>' + E(p.dateLabel) + '</b> · ' + E(p.timeLabel) + '<br>' +
+          (p.location ? '<b>Where:</b> ' + E(p.location) + '<br>' : '') +
+          '<b>Calendar:</b> ' + E(p.calendarName) + '<br>' + taskLine +
+        '</div>' +
+        '<div class="gwm-acts">' +
+          '<button class="gwm-btn tiny go" onclick="gwmWrite(\'' + E(p.uid) + '\')">Write this note</button>' +
+          (p.htmlLink ? '<a class="gwm-btn tiny" href="' + E(p.htmlLink) + '" target="_blank" rel="noopener">Open in Google</a>' : '') +
+          '<button class="gwm-btn tiny" onclick="gwmResolve(\'' + E(p.uid) + '\',\'done\')">Already noted</button>' +
+          '<button class="gwm-btn tiny" onclick="gwmResolve(\'' + E(p.uid) + '\',\'dismiss\')">Dismiss</button>' +
+        '</div></div>';
+    }).join('');
+  }
+
+  /* ── writing the note ──────────────────────────────────────────────────── */
+  var HEARING_GUESS = [
+    [/contested\s+omnibus/i,        'Contested Omnibus Hearing'],
+    [/omnibus/i,                    'Omnibus Hearing'],
+    [/contested\s+pre[- ]?trial/i,  'Contested Pretrial Hearing'],
+    [/pre[- ]?trial|\bPT\b/i,       'Pretrial Hearing'],
+    [/jury\s*trial|\bJT\b/i,        'Jury Trial'],
+    [/court\s*trial|bench\s*trial/i,'Court Trial'],
+    [/sentenc/i,                    'Sentencing Hearing'],
+    [/\bplea\b/i,                   'Plea Hearing'],
+    [/settlement/i,                 'Settlement Conference'],
+    [/first\s*appear|\bFA\b|arraign/i, 'First Appearance Hearing'],
+    [/probation\s*violation|\bPV\b/i,  'Probation Violation'],
+    [/implied\s*consent|\bIC\b/i,   'Implied Consent Evidentiary Hearing'],
+    [/review|status/i,              'Review Hearing'],
+    [/motion/i,                     'Motion Hearing']
+  ];
+  function guessHearing(t) {
+    t = String(t || '');
+    for (var i = 0; i < HEARING_GUESS.length; i++) if (HEARING_GUESS[i][0].test(t)) return HEARING_GUESS[i][1];
+    return '';
+  }
+  function countyList() {
+    var dl = q('clioCounties');
+    if (!dl) return [];
+    return Array.prototype.map.call(dl.options, function (o) { return o.value; });
+  }
+  function guessCounty(text) {
+    var hay = String(text || '').toLowerCase();
+    var best = '';
+    countyList().forEach(function (c) {
+      var needle = c.toLowerCase();
+      if (hay.indexOf(needle) !== -1 && needle.length > best.length) best = c;
+    });
+    return best;
+  }
+  function looksLikeCourt(p) {
+    return /hearing|court|trial|omnibus|pretrial|plea|sentenc|arraign|probation|motion|judge|\bPT\b|\bJT\b|\bOH\b|\bFA\b|\bPV\b/i
+      .test(p.title + ' ' + (p.location || ''));
+  }
+
+  function write(uid) {
+    var p = GWM.pending.filter(function (x) { return x.uid === uid; })[0];
+    if (!p) return;
+    GWM.activeUid = uid;
+    closeAll();
+    hideBanner();
+
+    var isCourt = looksLikeCourt(p);
+    var mode = isCourt ? 'court' : 'review';
+    try {
+      if (typeof wz !== 'undefined' && wz.mode !== mode && typeof pickMode === 'function') pickMode(mode);
+    } catch (e) {}
+
+    /* the note header — title and date */
+    try {
+      if (typeof window.clioNoteTitleInput === 'function')
+        window.clioNoteTitleInput(guessHearing(p.title) || p.title, true);
+      if (typeof window.clioNoteDateInput === 'function' && p.dayISO)
+        window.clioNoteDateInput(p.dayISO);
+    } catch (e) {}
+
+    /* the wizard body */
+    try {
+      if (isCourt && typeof court !== 'undefined') {
+        if (p.dayISO) court.hearingDate = p.dayISO;
+        var ht = guessHearing(p.title);
+        if (ht) court.hearingType = ht;
+        var cty = guessCounty(p.location + ' ' + p.title);
+        if (cty) court.county = cty;
+      }
+      if (typeof wzRender === 'function') wzRender();
+      if (typeof generate === 'function') generate();
+    } catch (e) {}
+
+    /* the Clio matter */
+    if (p.matterId) {
+      gapi('/matters?ids=' + encodeURIComponent(p.matterId)).then(function (d) {
+        var m = (d && d.matters && d.matters[0]) || null;
+        if (m && typeof window.clioDictSetMatter === 'function') window.clioDictSetMatter(m);
+      }).catch(function () {});
+    }
+
+    say(p.matterId
+      ? 'Loaded ' + p.title + ' — matter attached'
+      : 'Loaded ' + p.title + ' — pick the matter and write it up');
+
+    try { if (typeof window.clioOpenPop === 'function' && !p.matterId) setTimeout(function () {
+      var trig = q('clioComboBar'); if (trig) trig.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 250); } catch (e) {}
+  }
+
+  function resolve(uid, action, quiet) {
+    return gapi('/gwm/pending/resolve', { method: 'POST', body: { uid: uid, action: action, completeTask: action !== 'dismiss' } })
+      .then(function (d) {
+        GWM.pending = GWM.pending.filter(function (x) { return x.uid !== uid; });
+        if (GWM.activeUid === uid) GWM.activeUid = null;
+        paintBadge(); renderTray();
+        if (!quiet) {
+          if (action === 'dismiss') say('Dismissed — the Clio task was left open');
+          else say(d.task && d.task.ok ? 'Note logged — Clio task marked complete' : 'Note logged');
+        }
+        return d;
+      }).catch(function (e) { if (!quiet) say(e.message); });
+  }
+
+  /* ── notifications ─────────────────────────────────────────────────────── */
+  function seenSet() {
+    try { return new Set(JSON.parse(localStorage.getItem(GWM.seenKey) || '[]')); }
+    catch (e) { return new Set(); }
+  }
+  function markSeen(uids) {
+    try {
+      var s = seenSet();
+      uids.forEach(function (u) { s.add(u); });
+      localStorage.setItem(GWM.seenKey, JSON.stringify(Array.from(s).slice(-400)));
+    } catch (e) {}
+    gapi('/gwm/pending/seen', { method: 'POST', body: { uids: uids } }).catch(function () {});
+  }
+  function inQuietHours() {
+    var s = GWM.settings || {};
+    if (s.quietStart == null || s.quietEnd == null) return false;
+    var h = new Date().getHours(), a = Number(s.quietStart), b = Number(s.quietEnd);
+    if (a === b) return false;
+    return a < b ? (h >= a && h < b) : (h >= a || h < b);
+  }
+
+  function maybeNotify() {
+    var s = seenSet();
+    var fresh = GWM.pending.filter(function (p) { return !s.has(p.uid); });
+    if (!fresh.length) return;
+
+    markSeen(fresh.map(function (p) { return p.uid; }));
+
+    var allowed = !(GWM.settings && GWM.settings.browserNotifications === false) && !inQuietHours();
+    if (!allowed) return;
+
+    if (typeof Notification !== 'undefined' && Notification.permission === 'granted') {
+      fresh.slice(0, 4).forEach(function (p) { fire(p); });
+      if (fresh.length > 4) fire({ uid: 'more', title: fresh.length + ' notes are waiting', dateLabel: '', timeLabel: '' });
+    }
+    showBanner(fresh[0], fresh.length);
+  }
+
+  function fire(p) {
+    try {
+      var n = new Notification('Complete a note for ' + p.title, {
+        body: (p.dateLabel ? p.dateLabel + (p.timeLabel ? ' · ' + p.timeLabel : '') + '\n' : '') +
+              (p.matterLabel ? 'Matter ' + p.matterLabel + ' — ' : '') + 'A Clio task is waiting.',
+        tag: 'gwm-' + p.uid,
+        requireInteraction: true,
+        icon: 'data:image/svg+xml,' + encodeURIComponent(
+          '<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128"><rect width="128" height="128" rx="24" fill="#B8873B"/>' +
+          '<text x="64" y="92" font-size="76" font-family="Georgia,serif" font-weight="bold" fill="#0B0D10" text-anchor="middle">§</text></svg>')
+      });
+      n.onclick = function () {
+        try { window.focus(); } catch (e) {}
+        if (p.uid && p.uid !== 'more') write(p.uid); else openTray();
+        n.close();
+      };
+    } catch (e) {}
+  }
+
+  function showBanner(p, count) {
+    if (!p) return;
+    q('gwmBannerTitle').textContent = 'Complete a note for ' + p.title;
+    q('gwmBannerSub').textContent =
+      (p.dateLabel ? p.dateLabel + (p.timeLabel ? ' · ' + p.timeLabel : '') : '') +
+      (count > 1 ? '  ·  +' + (count - 1) + ' more waiting' : '');
+    q('gwmBanner').dataset.uid = p.uid;
+    q('gwmBanner').classList.add('show');
+    clearTimeout(showBanner._t);
+    showBanner._t = setTimeout(hideBanner, 30000);
+  }
+  function hideBanner() { var b = q('gwmBanner'); if (b) b.classList.remove('show'); }
+  function bannerOpen() {
+    var uid = q('gwmBanner').dataset.uid;
+    hideBanner();
+    if (uid && uid !== 'more') write(uid); else openTray();
+  }
+
+  function askPermission() {
+    if (typeof Notification === 'undefined') { say('This browser has no notification support'); return Promise.resolve('unsupported'); }
+    if (Notification.permission === 'granted') return Promise.resolve('granted');
+    if (Notification.permission === 'denied') {
+      say('Notifications are blocked for this site — allow them in the padlock menu');
+      return Promise.resolve('denied');
+    }
+    return Notification.requestPermission().then(function (r) {
+      if (r === 'granted') say('Note reminders are on');
+      return r;
+    });
+  }
+
+  /* ── settings ──────────────────────────────────────────────────────────── */
+  function loadGoogleStatus() {
+    return gapi('/google/status').then(function (d) {
+      GWM.google = { connected: !!d.connected, email: d.email || '' };
+      paintGoogle();
+      return GWM.google;
+    }).catch(function () {
+      GWM.google = { connected: false, email: '' };
+      paintGoogle();
+      return GWM.google;
+    });
+  }
+  function loadSettings() {
+    return gapi('/gwm/settings').then(function (d) {
+      GWM.settings = d.settings; GWM.defaults = d.defaults;
+      return d.settings;
+    });
+  }
+  function loadCalendars() {
+    return gapi('/google/calendars').then(function (d) {
+      GWM.calendars = d.calendars || [];
+      if (GWM.settings && !(GWM.settings.calendarIds || []).length) {
+        var p = GWM.calendars.filter(function (c) { return c.primary; })[0];
+        GWM.settings.calendarIds = p ? [p.id] : [];
+      }
+      return GWM.calendars;
+    }).catch(function (e) { GWM.calendars = []; say(e.message); });
+  }
+
+  var SAMPLE = { summary: 'GWM: Kroll | PT | St. Louis', date: 'Wed, Sep 2, 2026', start: '1:30 PM', end: '2:30 PM' };
+  function previewName() {
+    var pat = (q('gwmTaskPattern') && q('gwmTaskPattern').value) ||
+              (GWM.settings && GWM.settings.taskNamePattern) || '';
+    return pat.split('{EVENT}').join(SAMPLE.summary)
+              .split('{DATE}').join(SAMPLE.date)
+              .split('{SHORTDATE}').join('9/2/2026')
+              .split('{START}').join(SAMPLE.start)
+              .split('{END}').join(SAMPLE.end)
+              .split('{LOCATION}').join('St. Louis County Courthouse')
+              .split('{CALENDAR}').join('Court');
+  }
+  function paintPreview() { var el2 = q('gwmPreview'); if (el2) el2.textContent = previewName(); }
+
+  function renderSettings() {
+    var host = q('gwmSetBody');
+    if (!host) return;
+    var s = GWM.settings || {};
+    var perm = (typeof Notification !== 'undefined') ? Notification.permission : 'unsupported';
+
+    var googleBlock = GWM.google.connected
+      ? '<div class="gwm-row"><span class="gwm-dot" style="background:#22c55e"></span>' +
+        '<span style="font-size:12.5px;color:#C4CCD8;flex:1">Connected as <b>' + E(GWM.google.email || 'Google') + '</b></span>' +
+        '<button class="gwm-btn tiny" onclick="gwmDisconnectGoogle()">Disconnect</button></div>'
+      : '<div class="gwm-row"><span class="gwm-dot" style="background:#ef4444"></span>' +
+        '<span style="font-size:12.5px;color:#C4CCD8;flex:1">Not connected</span>' +
+        '<button class="gwm-btn go tiny" onclick="gwmConnectGoogle()">Connect Google Calendar</button></div>';
+
+    var calBlock = !GWM.google.connected
+      ? '<div class="gwm-hint">Connect Google first and your calendars appear here.</div>'
+      : (GWM.calendars.length
+          ? GWM.calendars.map(function (c) {
+              var on = (s.calendarIds || []).indexOf(c.id) !== -1;
+              return '<label class="gwm-cal"><input type="checkbox" data-cal="' + E(c.id) + '"' + (on ? ' checked' : '') + '>' +
+                '<span class="sw" style="background:' + E(c.color) + '"></span>' +
+                '<span class="nm">' + E(c.name) + '</span>' +
+                (c.primary ? '<span class="pri">PRIMARY</span>' : '') + '</label>';
+            }).join('')
+          : '<div class="gwm-hint">No calendars came back. Try Reconnect.</div>');
+
+    host.innerHTML =
+      '<div class="gwm-note">Every five minutes the Worker looks at the calendars you tick below. ' +
+      'When an event has finished it creates a <b>Clio task</b> — "Complete a note for &lt;event&gt;" with the date and time — ' +
+      'and raises a reminder here. Writing the note ticks the Clio task off for you. ' +
+      'This runs on the server, so it keeps working when this tab is closed.</div>' +
+
+      '<div class="gwm-sec"><h4>Google Calendar</h4>' + googleBlock + '</div>' +
+
+      '<div class="gwm-sec"><h4>Which calendars count</h4>' + calBlock +
+        '<div class="gwm-hint">Untick anything personal. Only ticked calendars ever create a task.</div></div>' +
+
+      '<div class="gwm-sec"><h4>When a note comes due</h4>' +
+        '<div class="gwm-row"><label>Raise it</label><select class="gwm-sel" id="gwmOffset">' +
+          [[0, 'the moment the event ends'], [15, '15 minutes after it ends'], [30, '30 minutes after it ends'],
+           [60, 'an hour after it ends'], [180, 'three hours after it ends']]
+          .map(function (o) { return '<option value="' + o[0] + '"' + (Number(s.fireOffsetMinutes) === o[0] ? ' selected' : '') + '>' + o[1] + '</option>'; }).join('') +
+        '</select></div>' +
+        '<div class="gwm-row"><label>Task due date</label><select class="gwm-sel" id="gwmDue">' +
+          [['end_of_day', '5:00 PM the day of the event'], ['event_end', 'the moment the event ends'],
+           ['next_day', '5:00 PM the next day']]
+          .map(function (o) { return '<option value="' + o[0] + '"' + (s.dueMode === o[0] ? ' selected' : '') + '>' + o[1] + '</option>'; }).join('') +
+        '</select></div>' +
+        '<div class="gwm-row"><label>Look back</label><input class="gwm-in" id="gwmLookback" type="number" min="1" max="336" value="' + E(s.lookbackHours || 36) + '"><span style="font-size:11.5px;color:#5B6472">hours per sweep</span></div>' +
+      '</div>' +
+
+      '<div class="gwm-sec"><h4>The Clio task</h4>' +
+        '<div class="gwm-row"><label>Task title</label><input class="gwm-in" id="gwmTaskPattern" value="' + E(s.taskNamePattern || '') + '" oninput="GWM.paintPreview()"></div>' +
+        '<div class="gwm-hint">Slots: <b>{EVENT} {DATE} {SHORTDATE} {START} {END} {LOCATION} {CALENDAR}</b></div>' +
+        '<div class="gwm-prev" id="gwmPreview"></div>' +
+        '<div style="height:12px"></div>' +
+        '<div class="gwm-row"><label>Priority</label><select class="gwm-sel" id="gwmPriority">' +
+          ['High', 'Normal', 'Low'].map(function (o) { return '<option' + (s.taskPriority === o ? ' selected' : '') + '>' + o + '</option>'; }).join('') +
+        '</select></div>' +
+        '<div class="gwm-row"><label>Visibility</label><select class="gwm-sel" id="gwmPermission">' +
+          [['public', 'Public — the firm can see it'], ['private', 'Private — only me']]
+          .map(function (o) { return '<option value="' + o[0] + '"' + (s.taskPermission === o[0] ? ' selected' : '') + '>' + o[1] + '</option>'; }).join('') +
+        '</select></div>' +
+        '<label class="gwm-tog"><input type="checkbox" id="gwmAutoLink"' + (s.autoLinkMatter !== false ? ' checked' : '') + '>Try to attach the Clio matter automatically</label>' +
+        '<label class="gwm-tog"><input type="checkbox" id="gwmNotifyAssignee"' + (s.notifyAssignee !== false ? ' checked' : '') + '>Let Clio email me when a task is created</label>' +
+        '<div class="gwm-hint">Matter matching reads the client surname out of the event title, or an explicit <b>[matter:12345]</b> tag anywhere in the event. A guess it is not sure about is left unattached and flagged for you.</div>' +
+      '</div>' +
+
+      '<div class="gwm-sec"><h4>What to ignore</h4>' +
+        '<div class="gwm-row"><label>Skip words</label><input class="gwm-in" id="gwmSkip" value="' + E((s.skipKeywords || []).join(', ')) + '"></div>' +
+        '<div class="gwm-hint">Comma separated. An event whose title contains any of these never becomes a task.</div>' +
+        '<div class="gwm-row"><label>Only these words</label><input class="gwm-in" id="gwmOnly" value="' + E((s.onlyKeywords || []).join(', ')) + '" placeholder="leave empty for everything"></div>' +
+        '<div class="gwm-row"><label>Shortest event</label><input class="gwm-in" id="gwmMinDur" type="number" min="0" max="600" value="' + E(s.minDurationMinutes || 0) + '"><span style="font-size:11.5px;color:#5B6472">minutes</span></div>' +
+        '<label class="gwm-tog"><input type="checkbox" id="gwmSkipAllDay"' + (s.skipAllDay !== false ? ' checked' : '') + '>Ignore all-day events</label>' +
+        '<label class="gwm-tog"><input type="checkbox" id="gwmSkipDeclined"' + (s.skipDeclined !== false ? ' checked' : '') + '>Ignore invitations I declined</label>' +
+      '</div>' +
+
+      '<div class="gwm-sec"><h4>Reminders in the browser</h4>' +
+        '<label class="gwm-tog"><input type="checkbox" id="gwmBrowserNotif"' + (s.browserNotifications !== false ? ' checked' : '') + '>Pop up a notification when a note comes due</label>' +
+        '<div class="gwm-row"><label>Quiet hours</label>' +
+          '<input class="gwm-in" id="gwmQuietStart" type="number" min="0" max="23" style="max-width:74px" value="' + E(s.quietStart) + '">' +
+          '<span style="font-size:11.5px;color:#5B6472">to</span>' +
+          '<input class="gwm-in" id="gwmQuietEnd" type="number" min="0" max="23" style="max-width:74px" value="' + E(s.quietEnd) + '">' +
+          '<span style="font-size:11.5px;color:#5B6472">24-hour clock</span></div>' +
+        '<div class="gwm-row" style="margin-top:4px">' +
+          '<span style="font-size:12px;color:' + (perm === 'granted' ? '#7FC095' : perm === 'denied' ? '#E9A9A2' : '#DCB878') + ';flex:1">' +
+            'Browser permission: <b>' + E(perm) + '</b></span>' +
+          (perm === 'granted' ? '' : '<button class="gwm-btn tiny go" onclick="gwmAskPermission()">Allow notifications</button>') +
+        '</div>' +
+        '<div class="gwm-hint">Clio tasks are created on the server whatever this says — the pop-up is the extra nudge, and it needs this tab open somewhere.</div>' +
+      '</div>' +
+
+      '<div class="gwm-sec"><h4>Master switch</h4>' +
+        '<label class="gwm-tog"><input type="checkbox" id="gwmEnabled"' + (s.enabled !== false ? ' checked' : '') + '>Automation is running</label>' +
+        '<div class="gwm-row"><label>Time zone</label><input class="gwm-in" id="gwmTZ" value="' + E(s.timeZone || 'America/Chicago') + '"></div>' +
+      '</div>';
+
+    paintPreview();
+  }
+
+  function collectSettings() {
+    var s = Object.assign({}, GWM.settings || {});
+    var ids = [];
+    document.querySelectorAll('#gwmSetBody input[data-cal]').forEach(function (c) { if (c.checked) ids.push(c.dataset.cal); });
+    s.calendarIds        = ids;
+    s.fireOffsetMinutes  = Number(q('gwmOffset').value);
+    s.dueMode            = q('gwmDue').value;
+    s.lookbackHours      = Number(q('gwmLookback').value) || 36;
+    s.taskNamePattern    = q('gwmTaskPattern').value.trim() || 'Complete a note for {EVENT} — {DATE} at {START}';
+    s.taskPriority       = q('gwmPriority').value;
+    s.taskPermission     = q('gwmPermission').value;
+    s.autoLinkMatter     = q('gwmAutoLink').checked;
+    s.notifyAssignee     = q('gwmNotifyAssignee').checked;
+    s.skipKeywords       = q('gwmSkip').value.split(',').map(function (x) { return x.trim().toLowerCase(); }).filter(Boolean);
+    s.onlyKeywords       = q('gwmOnly').value.split(',').map(function (x) { return x.trim().toLowerCase(); }).filter(Boolean);
+    s.minDurationMinutes = Number(q('gwmMinDur').value) || 0;
+    s.skipAllDay         = q('gwmSkipAllDay').checked;
+    s.skipDeclined       = q('gwmSkipDeclined').checked;
+    s.browserNotifications = q('gwmBrowserNotif').checked;
+    s.quietStart         = Number(q('gwmQuietStart').value);
+    s.quietEnd           = Number(q('gwmQuietEnd').value);
+    s.enabled            = q('gwmEnabled').checked;
+    s.timeZone           = q('gwmTZ').value.trim() || 'America/Chicago';
+    return s;
+  }
+
+  function saveSettings() {
+    var btn = q('gwmSaveBtn');
+    if (btn) { btn.disabled = true; btn.textContent = 'Saving…'; }
+    var s;
+    try { s = collectSettings(); }
+    catch (e) { if (btn) { btn.disabled = false; btn.textContent = 'Save settings'; } say('Could not read the form'); return; }
+    gapi('/gwm/settings', { method: 'POST', body: { settings: s } })
+      .then(function (d) {
+        GWM.settings = d.settings;
+        say('Calendar settings saved');
+        if (s.browserNotifications) askPermission();
+      })
+      .catch(function (e) { say(e.message); })
+      .then(function () { if (btn) { btn.disabled = false; btn.textContent = 'Save settings'; } });
+  }
+
+  /* ── google connect ────────────────────────────────────────────────────── */
+  var _gPopup = null, _gPoll = null;
+  function connectGoogle() {
+    if (_gPoll) { clearInterval(_gPoll); _gPoll = null; }
+    var w = 520, h = 680;
+    var left = Math.max(0, (window.screen.width - w) / 2), top = Math.max(0, (window.screen.height - h) / 2);
+    try {
+      _gPopup = window.open(API + '/google/authorize', 'gwmGoogleAuth',
+        'width=' + w + ',height=' + h + ',left=' + left + ',top=' + top + ',resizable=yes,scrollbars=yes');
+    } catch (e) { _gPopup = null; }
+    if (!_gPopup) { say('Allow pop-ups for this site, then try again'); return; }
+    try { _gPopup.focus(); } catch (e) {}
+
+    var ticks = 0;
+    _gPoll = setInterval(function () {
+      ticks++;
+      loadGoogleStatus().then(function (g) {
+        if (g.connected) {
+          clearInterval(_gPoll); _gPoll = null;
+          try { if (_gPopup && !_gPopup.closed) _gPopup.close(); } catch (e) {}
+          say('Google Calendar connected');
+          loadCalendars().then(renderSettings);
+          askPermission();
+        } else if (ticks > 90 || (_gPopup && _gPopup.closed && ticks > 2)) {
+          clearInterval(_gPoll); _gPoll = null;
+          renderSettings();
+        }
+      });
+    }, 2000);
+  }
+  function disconnectGoogle() {
+    gapi('/google/disconnect', { method: 'POST' }).then(function () {
+      GWM.google = { connected: false, email: '' };
+      GWM.calendars = [];
+      paintGoogle(); renderSettings();
+      say('Google Calendar disconnected');
+    }).catch(function (e) { say(e.message); });
+  }
+
+  window.addEventListener('message', function (ev) {
+    var d = ev.data;
+    if (!d || typeof d !== 'object') return;
+    if (d.type === 'gwm-google-connected') {
+      loadGoogleStatus().then(function () { return loadCalendars(); }).then(renderSettings);
+      say('Google Calendar connected');
+      askPermission();
+    } else if (d.type === 'gwm-google-failed') {
+      say(d.error || 'Google authorization failed');
+    }
+  });
+
+  /* ── manual scan ───────────────────────────────────────────────────────── */
+  function scanNow() {
+    var btn = q('gwmScanBtn');
+    if (btn) { btn.disabled = true; btn.textContent = 'Scanning…'; }
+    say('Sweeping the calendar…');
+    gapi('/gwm/scan', { method: 'POST', body: {} })
+      .then(function (d) {
+        GWM.lastRun = d;
+        say(d.created
+          ? d.created + ' Clio task' + (d.created === 1 ? '' : 's') + ' created from ' + d.scanned + ' events'
+          : 'Nothing new — ' + d.scanned + ' events checked');
+        if (d.errors && d.errors.length) console.warn('[GWM] scan errors', d.errors);
+        return refreshPending(true);
+      })
+      .then(renderTray)
+      .catch(function (e) { say(e.message); })
+      .then(function () { if (btn) { btn.disabled = false; btn.textContent = 'Scan calendar now'; } });
+  }
+
+  function testNotify() {
+    askPermission().then(function (p) {
+      if (p !== 'granted') return;
+      fire({ uid: 'more', title: 'Kroll · Pretrial Hearing', dateLabel: 'Today', timeLabel: '1:30 PM – 2:30 PM', matterLabel: '02587-Kroll' });
+      showBanner({ uid: 'more', title: 'Kroll · Pretrial Hearing', dateLabel: 'Today', timeLabel: '1:30 PM – 2:30 PM' }, 1);
+      say('Sent a test reminder');
+    });
+  }
+
+  /* ── close the loop: a note that reaches Clio ticks the task off ───────── */
+  /*  The send pipeline lives inside a closure, so the seam is clioDictPush —
+      the app's own "send, then tell me how it went" entry point. Wrapping it
+      catches the drawer button and the dictation flow with one hook.          */
+  function hookSend() {
+    if (typeof window.clioDictPush !== 'function' || window.clioDictPush.__gwm) return false;
+
+    var origPush = window.clioDictPush;
+    var wrappedPush = function (cb) {
+      var uid = GWM.activeUid;
+      return origPush.call(this, function (parts) {
+        try { if (typeof cb === 'function') cb(parts); } catch (e) {}
+        try {
+          var ok = parts && parts.length && parts.every(function (p) { return p.r && p.r.ok; });
+          if (uid && ok) resolve(uid, 'done');
+        } catch (e) {}
+      });
+    };
+    wrappedPush.__gwm = true;
+    window.clioDictPush = wrappedPush;
+
+    if (typeof window.clioSaveToClio === 'function' && !window.clioSaveToClio.__gwm) {
+      var origSave = window.clioSaveToClio;
+      var wrappedSave = function () {
+        if (GWM.activeUid) return window.clioDictPush(null);
+        return origSave.apply(this, arguments);
+      };
+      wrappedSave.__gwm = true;
+      window.clioSaveToClio = wrappedSave;
+    }
+    return true;
+  }
+
+  /* ── boot ──────────────────────────────────────────────────────────────── */
+  function boot() {
+    mountControls();
+    paintBadge();
+    hookSend();
+    if (!window.clioDictPush || !window.clioDictPush.__gwm) setTimeout(hookSend, 1500);
+
+    loadGoogleStatus()
+      .then(function () { return loadSettings().catch(function () { return null; }); })
+      .then(function () { return refreshPending(true); })
+      .then(function () { if (GWM.pending.length) renderTray(); })
+      .catch(function () {});
+
+    if (GWM.poll) clearInterval(GWM.poll);
+    GWM.poll = setInterval(function () { refreshPending(true); }, 60000);
+
+    document.addEventListener('visibilitychange', function () {
+      if (!document.hidden) refreshPending(true);
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && GWM.open) { closeAll(); }
+    });
+  }
+
+  /* public surface */
+  GWM.paintPreview     = paintPreview;
+  window.gwmCloseAll        = closeAll;
+  window.gwmOpenTray        = openTray;
+  window.gwmOpenSettings    = openSettings;
+  window.gwmWrite           = write;
+  window.gwmResolve         = resolve;
+  window.gwmScanNow         = scanNow;
+  window.gwmSaveSettings    = saveSettings;
+  window.gwmTestNotify      = testNotify;
+  window.gwmAskPermission   = function () { askPermission().then(renderSettings); };
+  window.gwmConnectGoogle   = connectGoogle;
+  window.gwmDisconnectGoogle= disconnectGoogle;
+  window.gwmBannerOpen      = bannerOpen;
+  window.gwmBannerHide      = hideBanner;
+  window.gwmRefresh         = function () { return refreshPending(false); };
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
+  else boot();
+})();
+</script>
 
 </body></html>
