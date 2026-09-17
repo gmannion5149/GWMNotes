@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0063)file:///C:/Users/gerar/Downloads/Clio%20Note%20Generator_3.html -->
+<!-- saved from url=(0063)file:///C:/Users/gerar/Downloads/Clio%20Note%20Generator_4.html -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9285,7 +9285,7 @@ document.addEventListener('keydown',function(e){
   <div class="gwm-df">
     <button class="gwm-btn tiny" onclick="gwmScanNow()" id="gwmScanBtn" fdprocessedid="93jrtj">Scan calendar now</button>
     <span class="sp"></span>
-    <span id="gwmLastRun" style="font-size:10.5px;color:#5B6472">last swept 10:35 PM · 0 raised</span>
+    <span id="gwmLastRun" style="font-size:10.5px;color:#5B6472">last swept 10:40 PM · 0 raised</span>
   </div>
 </div>
 
@@ -9371,7 +9371,24 @@ document.addEventListener('keydown',function(e){
   /* ── status bar controls ───────────────────────────────────────────────── */
   function mountControls() {
     var bar = q('clioStatusBar');
-    if (!bar || q('gwmBellBtn')) return;
+    if (!bar) return;
+
+    /* This page was once saved with the status-bar controls already in the
+       markup. Those buttons have no click handlers behind them, so the old
+       "already mounted, nothing to do" check left Notes Due and Calendar dead.
+       Adopt whatever is already there instead: bind the handlers and clear the
+       stale badge, then let the live data repaint it. */
+    var haveBell = q('gwmBellBtn'), haveGear = q('gwmGearBtn');
+    if (haveBell || haveGear) {
+      if (haveBell) { haveBell.onclick = openTray;     haveBell.style.borderColor = '#3D4855'; }
+      if (haveGear) { haveGear.onclick = openSettings; }
+      var oldBadge = q('gwmBadge');
+      if (oldBadge) { oldBadge.textContent = '0'; oldBadge.classList.add('hide'); }
+      var oldTitle = q('gwmTrayTitle');  if (oldTitle) oldTitle.textContent = 'Pending Notes';
+      var oldBody  = q('gwmTrayBody');   if (oldBody)  oldBody.innerHTML = '';
+      var oldRun   = q('gwmLastRun');    if (oldRun)   oldRun.textContent = '';
+      return;
+    }
 
     var spacer = document.createElement('span');
     spacer.style.cssText = 'flex:1';
