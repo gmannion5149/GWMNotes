@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0040)https://gmannion5149.github.io/GWMNotes/ -->
+<!-- saved from url=(0063)file:///C:/Users/gerar/Downloads/Clio%20Note%20Generator_3.html -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -1123,6 +1123,11 @@ header p{font-size:11px;color:var(--dim);margin-top:1px;letter-spacing:.35px}
 .ai-btn-edit.on{background:linear-gradient(180deg,#2C2214,#1A140C);color:#F2D9A6;border-color:var(--bronze-l)}
 .note-edit-hint{font-size:11px;font-weight:600;letter-spacing:.3px;color:#7E8798}
 
+/* Clio preview — shows the note exactly as Clio will store it */
+.clio-rich-preview p{margin:0 0 3px}
+.clio-rich-preview strong{font-weight:800;color:var(--bronze-l)}
+.clio-rich-preview u{text-underline-offset:2px}
+
 .placeholder{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:60px 30px;color:#454E5C;height:100%}
 .placeholder .icon{font-size:32px;margin-bottom:16px;width:62px;height:62px;border-radius:12px;display:flex;align-items:center;justify-content:center;color:var(--bronze-l);background:linear-gradient(150deg,#161C24,#0E1217);border:1px solid rgba(184,135,59,.2);box-shadow:0 0 20px rgba(184,135,59,.10);animation:badgepulse 4.5s ease-in-out infinite}
 .placeholder h3{font-size:14.5px;font-weight:700;color:#8792A2;margin-bottom:7px}
@@ -1995,14 +2000,14 @@ html{ -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; tex
   gap:10px;
 ">
 
-  <span id="clioStatusLight" style="width: 12px; height: 12px; border-radius: 50%; background: rgb(34, 197, 94); display: inline-block;"></span>
+  <span id="clioStatusLight" style="width: 12px; height: 12px; border-radius: 50%; background: rgb(245, 158, 11); display: inline-block;"></span>
 
   <span id="clioStatusText" style="
     font-size:14px;
     font-weight:700;
-  ">Clio Connected — Gerard Mannion</span>
+  ">Unable to verify Clio</span>
 
-  <button id="connectClioBtn" class="clio-3d" style="display: none;" fdprocessedid="kuy45">
+  <button id="connectClioBtn" class="clio-3d" style="display: inline-flex;" fdprocessedid="kuy45">
     <span class="c3-ico"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></span>
     <span class="c3-txt">Connect to Clio</span>
   </button>
@@ -2027,11 +2032,11 @@ html{ -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; tex
       <span class="car">▼</span>
     </button>
     <div class="mode-menu" id="modeMenu">
-      <div class="mode-item" data-mode="intake" onclick="pickMode('intake')">
+      <div class="mode-item sel" data-mode="intake" onclick="pickMode('intake')">
         <div class="mi-ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg></div>
         <div><div class="mi-t">Intake Notes</div><div class="mi-s">New call · charge, court, custody, fee</div></div>
       </div>
-      <div class="mode-item sel" data-mode="court" onclick="pickMode('court')">
+      <div class="mode-item" data-mode="court" onclick="pickMode('court')">
         <div class="mi-ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18"></path><path d="M7.5 21h9"></path><path d="M5 6h14"></path><path d="M12 6l6.5-1.5M12 6L5.5 4.5"></path><path d="M5 6l-2.6 6a3 3 0 0 0 5.2 0L5 6z"></path><path d="M19 6l-2.6 6a3 3 0 0 0 5.2 0L19 6z"></path></svg></div>
         <div><div class="mi-t">Court Summary</div><div class="mi-s">After court · judge, offer, next date</div></div>
       </div>
@@ -2070,24 +2075,22 @@ html{ -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; tex
 
 <div class="main">
   <div class="stage" id="stage">
-    <div class="clio-notebar" id="clioNoteBar"><div class="cnb-head"><span class="k">Send to Clio</span><span class="m">Court Summary</span><span class="sp"></span></div><div class="cnb-row"><div class="cnb-f grow"><span class="cnb-l">Clio Matter for this note</span><button class="clio-cbtrig has" id="clioComboBar" onclick="clioOpenPop('clioComboBar')"><span class="av">SC</span><span class="id"><span class="t">Steven Allen Chesnut</span><span class="s">02492-Chesnut  ·  Open</span></span><span class="car">▾</span></button></div><div class="cnb-f title"><span class="cnb-l">Note Title <button class="auto" onclick="clioAutoTitle()" title="Fill the title from this note">auto</button></span><input id="clioBarTitle" placeholder="Pretrial Hearing" oninput="clioNoteTitleInput(this.value,true)"></div><div class="cnb-f date"><span class="cnb-l">Note Date</span><input id="clioBarDate" type="date" onchange="clioNoteDateInput(this.value)"></div></div></div>
-    <div class="wz" id="wizard"><div class="wz-bar"><i style="width:100%"></i></div><div class="wz-meta"><span class="wz-sec">Review</span><span class="wz-step">Step <b>13</b> / 13</span></div><div class="wz-done"><h3>Note ready</h3><p class="sub">Everything you answered is below. Click any line to jump back and change it — the note on the right updates instantly.</p><div class="wz-ans"><div class="wz-ans-row" onclick="wzJump('c_county')"><span class="k">Which county</span><span class="v">Ramsey</span><span class="e">edit</span></div><div class="wz-ans-row" onclick="wzJump('c_judge')"><span class="k">Who was the judge</span><span class="v">No Judge</span><span class="e">edit</span></div><div class="wz-ans-row" onclick="wzJump('c_pros')"><span class="k">Who was the prosecutor</span><span class="v">Elizabeth Duel</span><span class="e">edit</span></div><div class="wz-ans-row" onclick="wzJump('c_office')"><span class="k">Which office is Elizabeth Duel with</span><span class="v">Office: Chestnut Cambronne</span><span class="e">edit</span></div><div class="wz-ans-row" onclick="wzJump('c_htype')"><span class="k">What kind of hearing was it</span><span class="v">Pretrial Hearing</span><span class="e">edit</span></div><div class="wz-ans-row" onclick="wzJump('c_date')"><span class="k">What day was the hearing</span><span class="v">September 15, 2026</span><span class="e">edit</span></div><div class="wz-ans-row" onclick="wzJump('c_appear')"><span class="k">Who appeared, and how</span><span class="v">Attorney: GWM
-Appearance: by Zoom
-With client?: On Client's behalf</span><span class="e">edit</span></div><div class="wz-ans-row" onclick="wzJump('c_wit')"><span class="k">Was there witness testimony</span><span class="v">No</span><span class="e">edit</span></div><div class="wz-ans-row" onclick="wzJump('c_details')"><span class="k">What happened at the hearing</span><span class="v">GWM met with Prosecutor to receive an updated offer. Initial offer was CFD on the first 2 counts and plead to the speed. Prosecutor today agreed to CFD on all 3 with a $475 fine. Client accepted and case resolved. </span><span class="e">edit</span></div><div class="wz-ans-row" onclick="wzJump('c_offerq')"><span class="k">Was an offer made</span><span class="v">No</span><span class="e">edit</span></div><div class="wz-ans-row" onclick="wzJump('c_nextq')"><span class="k">Is there a next court date</span><span class="v">No</span><span class="e">edit</span></div><div class="wz-ans-row" onclick="wzJump('c_briefq')"><span class="k">Is a brief or motion due</span><span class="v">No</span><span class="e">edit</span></div><div class="wz-ans-row" onclick="wzJump('c_pmmq')"><span class="k">Add a PMM directive for staff</span><span class="v">No</span><span class="e">edit</span></div></div><div class="wz-nav" style="margin-top:0"><button class="wz-btn fin" onclick="copyNote()">Copy note</button><button class="wz-btn" onclick="wzGo(-1)">Back to last question</button><span class="sp"></span><button class="wz-btn ghost" onclick="wzResetMode()">Clear and start over</button></div></div></div>
+    <div class="clio-notebar" id="clioNoteBar"><div class="cnb-head"><span class="k">Send to Clio</span><span class="m">Intake Notes</span><span class="sp"></span><span class="warnpill">Clio not connected</span></div><div class="cnb-row"><div class="cnb-f grow"><span class="cnb-l">Clio Matter for this note</span><button class="clio-cbtrig empty" id="clioComboBar" onclick="clioOpenPop('clioComboBar')"><span class="av">?</span><span class="id"><span class="t">Select a Clio matter…</span><span class="s">this note will not send until one is picked</span></span><span class="car">▾</span></button></div><div class="cnb-f title"><span class="cnb-l">Note Title <button class="auto" onclick="clioAutoTitle()" title="Fill the title from this note">auto</button></span><input id="clioBarTitle" placeholder="Pretrial Hearing" oninput="clioNoteTitleInput(this.value,true)"></div><div class="cnb-f date"><span class="cnb-l">Note Date</span><input id="clioBarDate" type="date" onchange="clioNoteDateInput(this.value)"></div></div></div>
+    <div class="wz" id="wizard"><div class="wz-scan"><div class="wz-scan-drop" id="docUploadZone" onclick="document.getElementById('docFileInput').click()" ondragover="event.preventDefault();this.classList.add('drag')" ondragleave="this.classList.remove('drag')" ondrop="docDrop(event)"><input type="file" id="docFileInput" accept="application/pdf,image/*" style="display:none" onchange="docPicked(this.files[0])"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><path d="M14 2v6h6"></path><path d="M12 18v-6"></path><path d="M9 15l3-3 3 3"></path></svg><b>Drop the citation or complaint</b><span>PDF or photo · AI fills the answers for you</span></div><div id="docScanRow" style="display:none"><span class="doc-chip" id="docChip"></span><button class="ai-btn" id="docScanBtn" onclick="scanDocument()">AI Scan &amp; Autofill</button></div><div id="docScanMsg"></div></div><div class="wz-bar"><i style="width:8%"></i></div><div class="wz-meta"><span class="wz-sec">Origin</span><span class="wz-step">Step <b>1</b> / 13</span></div><div class="wz-card" id="wzCard"><div class="wz-q">Who took the call?</div><div class="wz-hint">Optional — press Enter to skip.</div><div class="wz-body"><div class="wz-opts"><div class="wz-opt" data-v="GAM" onclick="wzSetMain(this.dataset.v,true)"><span class="k">1</span>GAM</div><div class="wz-opt" data-v="KJD" onclick="wzSetMain(this.dataset.v,true)"><span class="k">2</span>KJD</div><div class="wz-opt" data-v="BDH" onclick="wzSetMain(this.dataset.v,true)"><span class="k">3</span>BDH</div><div class="wz-opt" data-v="ANB" onclick="wzSetMain(this.dataset.v,true)"><span class="k">4</span>ANB</div><div class="wz-opt" data-v="GWM" onclick="wzSetMain(this.dataset.v,true)"><span class="k">5</span>GWM</div></div></div><div class="wz-nav"><button class="wz-btn pri" onclick="wzGo(1)"><kbd>↵</kbd> Next</button><button class="wz-btn ghost" onclick="wzGo(1)">Skip</button><span class="sp"></span><button class="wz-btn ghost" onclick="wzFinish()"><kbd>⌘↵</kbd> Finish now</button></div></div><div class="wz-rail"><div class="wz-tick cur" title="Who took the call?" onclick="wzJump('i_orig')"></div><div class="wz-tick " title="Who is calling?" onclick="wzJump('i_caller')"></div><div class="wz-tick " title="What is the potential client's name?" onclick="wzJump('i_pcname')"></div><div class="wz-tick " title="What level is the charge?" onclick="wzJump('i_sev')"></div><div class="wz-tick " title="What kind of case is it?" onclick="wzJump('i_cat')"></div><div class="wz-tick " title="Court file or citation number?" onclick="wzJump('i_file')"></div><div class="wz-tick " title="What is the offense date?" onclick="wzJump('i_odate')"></div><div class="wz-tick " title="Where did it happen?" onclick="wzJump('i_loc')"></div><div class="wz-tick " title="Is a court date already set?" onclick="wzJump('i_cdq')"></div><div class="wz-tick " title="What is the custody status?" onclick="wzJump('x_cust')"></div><div class="wz-tick " title="What else came out of the call?" onclick="wzJump('w_det')"></div><div class="wz-tick " title="What is the flat fee?" onclick="wzJump('w_fee')"></div><div class="wz-tick " title="Next Steps" onclick="wzJump('w_next')"></div></div></div>
     <div class="form-panel" id="formPanel" style="display:none"></div>
   </div>
 
   <div class="output-panel">
     <div class="output-header">
       <span class="out-dot"></span>
-      <span id="outputLabel" class="output-label-text">Court Summary</span>
+      <span id="outputLabel" class="output-label-text">Intake Notes</span>
       <span class="out-live" id="outLive">Live</span>
       <div class="out-actions">
         <button class="out-btn" id="headerPrintBtn" onclick="printNote()" style="" fdprocessedid="fyejt">Print</button>
         <button class="out-btn go" id="headerCopyBtn" onclick="copyNote()" style="" fdprocessedid="jklg1">Copy</button>
       </div>
     </div>
-    <div class="output-body" id="outputBody"><div class="note-output" id="noteRendered"><p class="note-intro">GWM appeared on Client's behalf by Zoom for Client's Pretrial Hearing on September 15, 2026. The Prosecutor was Elizabeth Duel and the Honorable Judge No Judge presided.</p><div class="note-spacer"></div><p style="margin:0 0 4px 0;padding-left:6px;">• GWM met with Prosecutor to receive an updated offer. Initial offer was CFD on the first 2 counts and plead to the speed. Prosecutor today agreed to CFD on all 3 with a $475 fine. Client accepted and case resolved.</p></div><div class="ai-btn-row"><button class="ai-btn" id="aiCleanBtn" onclick="aiCleanup()">Optimize</button><button class="ai-btn ai-btn-edit" id="noteEditBtn" onclick="toggleNoteEdit()" title="Edit the note by hand">Edit Note</button><button class="copy-btn-below" id="copyBtnBelow" onclick="copyNote()">Copy Note</button><button class="clio-send-btm" onclick="clioOpenDrawer()" title="Send this note to Clio">Send to Clio</button><button class="ai-btn ai-btn-revert" id="aiRevertBtn" onclick="revertNote()" style="display:none">↩ Revert</button><span class="note-edit-hint" id="noteEditHint" style="display:none">Editing on — your changes are kept for Copy, Print and Send to Clio.</span></div></div>
+    <div class="output-body" id="outputBody"><div class="note-output" id="noteRendered" contenteditable="false" spellcheck="true"><p class="note-intro">Potential Client called regarding their [LEVEL] [TYPE] case.</p><div class="note-spacer"></div><div class="note-spacer"></div><p><strong><u>Caller:</u></strong> [ENTER]</p><div class="note-spacer"></div></div><div class="ai-btn-row"><button class="ai-btn" id="aiCleanBtn" onclick="aiCleanup()">Optimize</button><button class="ai-btn ai-btn-edit" id="noteEditBtn" onclick="toggleNoteEdit()" title="Edit the note by hand">Edit Note</button><button class="copy-btn-below" id="copyBtnBelow" onclick="copyNote()">Copy Note</button><button class="clio-send-btm" onclick="clioOpenDrawer()" title="Send this note to Clio">Send to Clio</button><button class="ai-btn ai-btn-revert" id="aiRevertBtn" onclick="revertNote()" style="display:none">↩ Revert</button><span class="note-edit-hint" id="noteEditHint" style="display:none">Editing on — your changes are kept for Copy, Print and Send to Clio.</span></div></div>
   </div>
 </div>
 
@@ -2847,6 +2850,7 @@ function buildCourtHTML() {
   // ── Details (flowing prose) ──
   if (f.details?.trim()) {
     html += `<div class="note-spacer"></div>`;
+    html += `<p>${lbl('Details:')}</p>`;
     html += bulletHTML(f.details);
   }
 
@@ -6715,7 +6719,7 @@ startMicObserver();
 <aside class="clio-drawer" id="clioDrawer" aria-hidden="true">
   <div class="clio-dhead">
     <span class="tag">Clio</span>
-    <h3 id="clioDrawerTitle">Send Court Summary to Clio</h3>
+    <h3 id="clioDrawerTitle">Send Intake Notes to Clio</h3>
     <button class="modal-x" style="margin-left:auto" onclick="clioCloseDrawer()" title="Close" fdprocessedid="x2w3a">×</button>
   </div>
 
@@ -6727,9 +6731,9 @@ startMicObserver();
       <div class="clio-row">
         <div class="clio-f">
           <span class="clio-fl">Clio Matter</span>
-          <button class="clio-cbtrig has" id="clioComboDrawer" onclick="clioOpenPop('clioComboDrawer')" fdprocessedid="svs7bb"><span class="av">SC</span><span class="id"><span class="t">Steven Allen Chesnut</span><span class="s">02492-Chesnut  ·  Open</span></span><span class="car">▾</span></button>
+          <button class="clio-cbtrig empty" id="clioComboDrawer" onclick="clioOpenPop('clioComboDrawer')" fdprocessedid="svs7bb"><span class="av">?</span><span class="id"><span class="t">Select a Clio matter…</span><span class="s">this note will not send until one is picked</span></span><span class="car">▾</span></button>
         </div>
-        <div id="clioMatterSlot"><div class="clio-hint" style="padding:2px 2px 0"><div style="color:var(--dim2);font-size:11.5px;line-height:1.45">Gross Misdemeanor Theft</div><div style="font-family:var(--mono);font-size:10px;color:var(--dim);letter-spacing:.4px;margin-top:3px">02492-Chesnut  ·  Gerard Mannion  ·  Open</div></div></div>
+        <div id="clioMatterSlot"></div>
         <div class="clio-grid">
           <div class="clio-f">
             <span class="clio-fl">Note Title <em style="text-transform:none;letter-spacing:0;font-weight:600;color:#4E5765">→ Clio title</em></span>
@@ -6742,10 +6746,7 @@ startMicObserver();
         </div>
         <div class="clio-f">
           <span class="clio-fl">Note Body <em style="text-transform:none;letter-spacing:0;font-weight:600;color:#4E5765">— exactly what Clio will store</em></span>
-          <div id="clioNotePreview" class="clio-hint" style="max-height: 120px; overflow: auto; padding: 9px 11px; background: rgb(10, 13, 18); border: 1px solid var(--line2); border-radius: 6px; color: var(--dim2); line-height: 1.6; white-space: pre-wrap; font-family: var(--mono); font-size: 10.5px;">GWM appeared on Client's behalf by Zoom for Client's Pretrial Hearing on September 15, 2026. The Prosecutor was Elizabeth Duel and the Honorable Judge No Judge presided.
-
-DETAILS
-GWM met with Prosecutor to receive an updated offer. Initial offer was CFD on the first 2 counts and plead to the speed. Prosecutor today agreed to CFD on all 3 with a $475 fine. Client accepted and case resolved.</div>
+          <div id="clioNotePreview" class="clio-hint clio-rich-preview" style="max-height: 120px; overflow: auto; padding: 9px 11px; background: rgb(10, 13, 18); border: 1px solid var(--line2); border-radius: 6px; color: var(--dim2); line-height: 1.6; white-space: normal; font-family: var(--mono); font-size: 10.5px;"><p>Potential Client called regarding their [LEVEL] [TYPE] case.</p><p><br></p><p><strong><u>Caller:</u></strong> [ENTER]</p></div>
         </div>
       </div>
       <datalist id="clioNoteTitles">
@@ -6801,7 +6802,7 @@ GWM met with Prosecutor to receive an updated offer. Initial offer was CFD on th
       <div class="clio-row">
         <div class="clio-grid">
           <div class="clio-f"><span class="clio-fl">Hearing Type</span>
-            <button type="button" class="clio-ddtrig" id="clioHearTypeTrig" onclick="clioPickHearType()" fdprocessedid="gyiqhw"><span class="v">Trial</span><span class="car"></span></button>
+            <button type="button" class="clio-ddtrig empty" id="clioHearTypeTrig" onclick="clioPickHearType()" fdprocessedid="gyiqhw"><span class="v">Select hearing type…</span><span class="car"></span></button>
             <input id="clioHearType" class="clio-otherin" placeholder="Describe the hearing type" style="display:none" oninput="clioHearInput('type',this.value)"></div>
           <div class="clio-f"><span class="clio-fl">County</span>
             <input id="clioHearCounty" list="clioCounties" placeholder="Hennepin" oninput="clioHearInput('county',this.value)" fdprocessedid="knn9we"></div>
@@ -6820,7 +6821,7 @@ GWM met with Prosecutor to receive an updated offer. Initial offer was CFD on th
         </div>
         <div class="clio-grid">
           <div class="clio-f"><span class="clio-fl">Judge <em style="text-transform:none;letter-spacing:0;font-weight:600;color:#4E5765">— by county</em></span>
-            <button type="button" class="clio-ddtrig" id="clioHearJudgeTrig" onclick="clioPickJudge()" fdprocessedid="ksw06k"><span class="v">Shawn L. Pearson</span><span class="car"></span></button>
+            <button type="button" class="clio-ddtrig empty" id="clioHearJudgeTrig" onclick="clioPickJudge()" fdprocessedid="ksw06k"><span class="v">Set the county first, or use Other</span><span class="car"></span></button>
             <input id="clioHearJudge" class="clio-otherin" placeholder="Type the judge's name" style="display:none" oninput="clioHearInput('judge',this.value)"></div>
           <div class="clio-f"><span class="clio-fl">Prosecutor</span>
             <input id="clioHearPros" placeholder="Assistant County Attorney" oninput="clioHearInput('prosecutor',this.value)" fdprocessedid="txu06g"></div>
@@ -6831,7 +6832,7 @@ GWM met with Prosecutor to receive an updated offer. Initial offer was CFD on th
           <textarea id="clioHearDesc" rows="2" placeholder="Anything else that belongs on the calendar entry" oninput="clioHearInput('desc',this.value)"></textarea></div>
         <div class="clio-f">
           <span class="clio-fl">Calendar Title <em style="text-transform:none;letter-spacing:0;font-weight:600;color:#4E5765">— built automatically</em></span>
-          <div id="clioCalTitle" class="clio-caltitle">GWM: Chesnut | Trial | St. Louis</div>
+          <div id="clioCalTitle" class="clio-caltitle">Select a matter to build the calendar title</div>
         </div>
       </div>
       <datalist id="clioHearTypes"><option value="Arraignment Hearing"></option><option value="Bail Hearing"></option><option value="Contested Omnibus Hearing"></option><option value="Contested Pretrial Hearing"></option><option value="First Appearance Hearing"></option><option value="Implied Consent Evidentiary Hearing"></option><option value="Implied Consent Scheduling Conference"></option><option value="Jury Trial"></option><option value="Omnibus Hearing"></option><option value="Plea Hearing"></option><option value="Pretrial Hearing"></option><option value="Probation Violation"></option><option value="Rule 20 Review Hearing"></option><option value="Sentencing Hearing"></option><option value="Settlement Conference"></option><option value="Trial"></option><option value="Trial Management Conference"></option></datalist>
@@ -6841,15 +6842,15 @@ GWM met with Prosecutor to receive an updated offer. Initial offer was CFD on th
     <!-- REVIEW -->
     <div class="clio-sec">
       <div class="clio-sh"><span class="t">Ready to Send</span></div>
-      <div id="clioReviewSlot"><div class="clio-review"><div class="clio-rrow"><span class="mk" style="color:var(--bronze-l)">§</span><span class="bd"><span class="bt">Steven Allen Chesnut – 02492-Chesnut</span><span class="bs">Gross Misdemeanor Theft</span></span></div><div class="clio-rrow"><span class="mk">☑</span><span class="bd"><span class="bt">Matter Note</span><span class="bs">PRETRIAL HEARING  ·  09/15/2026</span></span></div><div class="clio-rrow off"><span class="mk">☐</span><span class="bd"><span class="bt">Time Entry</span><span class="bs">no time entered  ·  09/15/2026</span></span></div><div class="clio-rrow off"><span class="mk">☐</span><span class="bd"><span class="bt">Calendar Entry</span><span class="bs">Not being added</span></span></div></div></div>
+      <div id="clioReviewSlot"><div class="clio-review"><div class="clio-rrow"><span class="mk" style="color:var(--bronze-l)">§</span><span class="bd"><span class="bt">No matter selected</span></span></div><div class="clio-rrow"><span class="mk">☑</span><span class="bd"><span class="bt">Matter Note</span><span class="bs">INTAKE NOTES  ·  09/16/2026</span></span></div><div class="clio-rrow off"><span class="mk">☐</span><span class="bd"><span class="bt">Time Entry</span><span class="bs">no time entered  ·  09/16/2026</span></span></div><div class="clio-rrow off"><span class="mk">☐</span><span class="bd"><span class="bt">Calendar Entry</span><span class="bs">Not being added</span></span></div></div></div>
       <div id="clioResultSlot"></div>
     </div>
 
   </div>
 
   <div class="clio-dfoot">
-    <button class="clio-save" id="clioSaveBtn" onclick="clioSaveToClio()" fdprocessedid="ntatqs">Send to Clio</button>
-    <div class="clio-savenote" id="clioSaveNote">Sending <b>PRETRIAL HEARING</b> to <b>Steven Allen Chesnut</b> &nbsp;·&nbsp; 02492-Chesnut</div>
+    <button class="clio-save" id="clioSaveBtn" onclick="clioSaveToClio()" fdprocessedid="ntatqs" disabled="">Send to Clio</button>
+    <div class="clio-savenote" id="clioSaveNote"><span style="color:#E9A9A2">Pick the Clio matter this note belongs to.</span></div>
   </div>
 </aside>
 
@@ -7252,11 +7253,13 @@ function noteBlocks(){
       out.push({ k:'bullet', t:txt.replace(/^[•·]\s*/,'') });
       return;
     }
-    var strong=node.querySelector('strong');
+    /* 'strong' is what the generator writes; 'b' is what the browser writes when
+       a heading is bolded by hand in the note with Ctrl+B */
+    var strong=node.querySelector('strong, b');
     if(strong){
       var label=(strong.textContent||'').replace(/\s+/g,' ').trim().replace(/:\s*$/,'');
       var clone=node.cloneNode(true);
-      var s2=clone.querySelector('strong');
+      var s2=clone.querySelector('strong, b');
       if(s2 && s2.parentNode) s2.parentNode.removeChild(s2);
       var rest=(clone.textContent||'').replace(/ /g,' ').replace(/\s+/g,' ').trim();
       if(label){ out.push(rest ? { k:'kv', label:label, v:rest } : { k:'head', t:label }); return; }
@@ -7269,13 +7272,19 @@ function noteBlocks(){
 /* both the wizard's wording and the dictated wording introduce a client note */
 var CLIENT_NOTE_CUE = /following note(?:\s+to\s+client)?\s*:\s*$/i;
 
-function buildClioNoteText(){
+/* One pass over the note produces typed lines. Those lines are rendered twice:
+   as plain text (fallback) and as Clio rich text, where every heading keeps the
+   bold + underline it has on screen. Same content either way. */
+function clioNoteLines(){
   var blocks=noteBlocks();
-  if(!blocks.some(function(b){ return b.k!=='blank'; })) return '';
+  if(!blocks.some(function(b){ return b.k!=='blank'; })) return [];
 
   var lines=[], pendingBlank=false;
   function blank(){ if(lines.length) pendingBlank=true; }
-  function push(s){ if(pendingBlank){ lines.push(''); pendingBlank=false; } lines.push(s); }
+  function push(kind,s,label){
+    if(pendingBlank){ lines.push({k:'blank'}); pendingBlank=false; }
+    lines.push({ k:kind, t:s, label:label||'' });
+  }
 
   /* ── body ── */
   var expectClientNote=false, inClientNote=false;
@@ -7289,60 +7298,108 @@ function buildClioNoteText(){
        by the client-facing message — it sits directly under the PMM line */
     if(expectClientNote && (b.k==='para' || b.k==='bullet')){
       blank();
-      push('"'+String(b.t).replace(/^["\u201c]+|["\u201d]+$/g,'').trim()+'"');
+      push('text','"'+String(b.t).replace(/^["\u201c]+|["\u201d]+$/g,'').trim()+'"');
       expectClientNote=false; inClientNote=true; underHeading=true;
       return;
     }
-    if(inClientNote && b.k==='bullet'){ push(b.t); return; }
+    if(inClientNote && b.k==='bullet'){ push('text',b.t); return; }
     if(b.k!=='bullet') inClientNote=false;
 
-    if(b.k==='head'){ blank(); push(b.t.toUpperCase()); underHeading=true; return; }
+    if(b.k==='head'){ blank(); push('head',b.t); underHeading=true; return; }
 
     if(b.k==='kv'){
       /* a long value reads better under its own heading than trailing a label */
-      if(b.v.length>90){ blank(); push(b.label.toUpperCase()); push(b.v); underHeading=true; }
-      else { push(b.label + ': ' + b.v); underHeading=false; }
+      if(b.v.length>90){ blank(); push('head',b.label); push('text',b.v); underHeading=true; }
+      else { push('kv',b.v,b.label); underHeading=false; }
       return;
     }
 
     /* the opening narrative stands on its own, with no heading above it */
     if(b.k==='para' && b.intro && !introDone){
-      push(b.t); introDone=true; underHeading=false; return;
+      push('text',b.t); introDone=true; underHeading=false; return;
     }
 
     var isPMM = (b.k==='para' && /^PMM\s*:/i.test(b.t));
 
-    /* the court summary emits its free-text Details field with no label of its
-       own — everything else in every mode is already labelled, so this is the
-       one place a heading has to be supplied */
+    /* free-text that arrives with no label of its own still gets a heading —
+       every other field in every mode is already labelled */
     if(!underHeading && introDone && !detailsAdded && !isPMM){
-      blank(); push('DETAILS'); detailsAdded=true; underHeading=true;
+      blank(); push('head','Details'); detailsAdded=true; underHeading=true;
     }
 
     /* the generator bullets any multi-line free-text field, so a long block of
        flowing prose can arrive as a single bullet — render that as a paragraph */
-    if(b.k==='bullet'){ push(b.t.length>180 ? b.t : ('  \u2022 ' + b.t)); return; }
+    if(b.k==='bullet'){
+      if(b.t.length>180) push('text',b.t); else push('bullet',b.t);
+      return;
+    }
 
     if(isPMM){
-      blank(); push(b.t);                    /* "PMM: ..." stays exactly as written */
+      blank(); push('text',b.t);              /* "PMM: ..." stays exactly as written */
       expectClientNote=CLIENT_NOTE_CUE.test(b.t);
       underHeading=true;
       return;
     }
     expectClientNote=CLIENT_NOTE_CUE.test(b.t);
-    push(b.t);
+    push('text',b.t);
   });
 
-  return lines.join('\n').replace(/\n{3,}/g,'\n\n').replace(/[ \t]+$/gm,'').trim();
+  /* never open or close on a blank */
+  while(lines.length && lines[0].k==='blank') lines.shift();
+  while(lines.length && lines[lines.length-1].k==='blank') lines.pop();
+  return lines;
+}
+
+/* headings read as "Details:" — one colon, never two */
+function headText(t){ return String(t||'').replace(/:\s*$/,'') + ':'; }
+
+/* PLAIN TEXT — the fallback Clio stores when rich text is off */
+function buildClioNoteText(){
+  var L=clioNoteLines();
+  if(!L.length) return '';
+  var out=L.map(function(l){
+    if(l.k==='blank')  return '';
+    if(l.k==='head')   return headText(l.t).toUpperCase();
+    if(l.k==='kv')     return l.label + ': ' + l.t;
+    if(l.k==='bullet') return '  \u2022 ' + l.t;
+    return l.t;
+  });
+  return out.join('\n').replace(/\n{3,}/g,'\n\n').replace(/[ \t]+$/gm,'').trim();
+}
+
+/* RICH TEXT — what Clio stores when detail_text_type is "rich_text".
+   Clio's note editor accepts only these tags: a b br div em i li ol p s strong u ul
+   (attributes href, rel, type, target). No class, no style, no headings tags.
+   Every section heading goes over as <strong><u>Heading:</u></strong>, which is
+   exactly how it reads on screen. */
+function clioEsc(t){
+  return String(t==null?'':t)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+function clioHeading(t){
+  return '<strong><u>'+clioEsc(headText(t))+'</u></strong>';
+}
+function buildClioNoteRich(){
+  var L=clioNoteLines();
+  if(!L.length) return '';
+  return L.map(function(l){
+    if(l.k==='blank')  return '<p><br></p>';
+    if(l.k==='head')   return '<p>'+clioHeading(l.t)+'</p>';
+    if(l.k==='kv')     return '<p>'+clioHeading(l.label)+' '+clioEsc(l.t)+'</p>';
+    if(l.k==='bullet') return '<p>&bull; '+clioEsc(l.t)+'</p>';
+    return '<p>'+clioEsc(l.t)+'</p>';
+  }).join('');
 }
 
 function renderNotePreview(){
   var host=$('clioNotePreview'); if(!host) return;
-  var t=buildClioNoteText();
-  host.style.whiteSpace='pre-wrap';
+  var h=buildClioNoteRich();
+  host.style.whiteSpace='normal';
   host.style.fontFamily='var(--mono)';
   host.style.fontSize='10.5px';
-  host.textContent = t || 'The note is still empty — build it on the left first.';
+  host.classList.add('clio-rich-preview');
+  if(h) host.innerHTML=h;
+  else host.textContent='The note is still empty — build it on the left first.';
 }
 
 /* ── 11 · TIME ───────────────────────────────────────────────────────────── */
@@ -8018,7 +8075,10 @@ function renderReview(){
 function payloadNote(){
   var n=N();
   return { matter_id:n.matter.id, subject:upTitle(n.title).trim(), date:n.date,
-           body_html:noteBodyHTML(), body_text:buildClioNoteText() };
+           body_html:noteBodyHTML(),
+           body_rich:buildClioNoteRich(),          /* headings bold + underlined */
+           body_text:buildClioNoteText(),          /* fallback if rich text is off */
+           detail_text_type:'rich_text' };
 }
 function payloadTime(){
   var n=N();
@@ -8187,7 +8247,8 @@ window.clioReloadMatters= loadMatters;
 window.clioSaveToClio   = send;
 window.clioRetry        = retry;
 window.clioRescanNote   = function(){ runDetection(true); syncDrawerFields(); };
-window.clioNoteText     = buildClioNoteText;   /* exactly what Clio will store */
+window.clioNoteText     = buildClioNoteText;   /* plain-text fallback */
+window.clioNoteRich     = buildClioNoteRich;   /* exactly what Clio will store */
 window.clioUnlock       = function(){ var n=N(); n.locked=false; n.results=null; renderResults(); renderReview(); };
 window.clioPopCursor    = function(i){ if(C.pop.cursor!==i){ C.pop.cursor=i; renderPopList(); } };
 window.clioAutoTitle    = function(){
@@ -9224,7 +9285,7 @@ document.addEventListener('keydown',function(e){
   <div class="gwm-df">
     <button class="gwm-btn tiny" onclick="gwmScanNow()" id="gwmScanBtn" fdprocessedid="93jrtj">Scan calendar now</button>
     <span class="sp"></span>
-    <span id="gwmLastRun" style="font-size:10.5px;color:#5B6472">last swept 3:45 PM · 0 raised</span>
+    <span id="gwmLastRun" style="font-size:10.5px;color:#5B6472">last swept 10:35 PM · 0 raised</span>
   </div>
 </div>
 
