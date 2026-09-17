@@ -701,7 +701,7 @@ header .badge { animation:badgePulse 2.6s ease-in-out infinite; }
 @keyframes shineSweep { 0%{left:-65%} 55%{left:155%} 100%{left:155%} }
 
 /* AI chips: breathing glow (pause on hover so hover state reads) */
-.ai-btn:not(.ai-btn-revert):not(:disabled) { animation:aiBreath 3s ease-in-out infinite; }
+.ai-btn:not(.ai-btn-revert):not(.ai-btn-edit):not(:disabled) { animation:aiBreath 3s ease-in-out infinite; }
 .ai-btn:hover { animation:none; }
 @keyframes aiBreath {
   /* keeps the machined insets while the outer glow breathes */
@@ -1110,6 +1110,18 @@ header p{font-size:11px;color:var(--dim);margin-top:1px;letter-spacing:.35px}
 .note-output .note-bullet{padding-left:10px;margin-bottom:3px;color:#CDD5E1}
 .note-output b,.note-output strong{color:var(--bronze-l);font-weight:700;letter-spacing:.2px}
 .note-output u{text-decoration-color:rgba(184,135,59,.45);text-underline-offset:3px}
+
+/* ── EDITABLE NOTE ─────────────────────────────────────── */
+.note-output[contenteditable="true"]{
+  outline:none;cursor:text;
+  border-color:rgba(184,135,59,.55);
+  box-shadow:0 20px 50px rgba(0,0,0,.6),inset 0 1px 0 rgba(255,255,255,.03),0 0 0 2px rgba(184,135,59,.28);
+}
+.note-output[contenteditable="true"]:focus{border-color:var(--bronze-l)}
+.ai-btn-edit{border-color:rgba(184,135,59,.42);color:#E2C285;background:linear-gradient(180deg,#1E1810,#13100B);box-shadow:0 0 14px rgba(184,135,59,.10);text-shadow:none}
+.ai-btn-edit:hover{border-color:var(--bronze-l);box-shadow:0 0 24px rgba(184,135,59,.22)}
+.ai-btn-edit.on{background:linear-gradient(180deg,#2C2214,#1A140C);color:#F2D9A6;border-color:var(--bronze-l)}
+.note-edit-hint{font-size:11px;font-weight:600;letter-spacing:.3px;color:#7E8798}
 
 .placeholder{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:60px 30px;color:#454E5C;height:100%}
 .placeholder .icon{font-size:32px;margin-bottom:16px;width:62px;height:62px;border-radius:12px;display:flex;align-items:center;justify-content:center;color:var(--bronze-l);background:linear-gradient(150deg,#161C24,#0E1217);border:1px solid rgba(184,135,59,.2);box-shadow:0 0 20px rgba(184,135,59,.10);animation:badgepulse 4.5s ease-in-out infinite}
@@ -1995,7 +2007,7 @@ html{ -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; tex
     <span class="c3-txt">Connect to Clio</span>
   </button>
 
-</div>
+<span style="flex: 1 1 0%;"></span><span id="gwmGoogleWrap"><span class="gwm-dot" id="gwmGoogleDot" style="background: rgb(34, 197, 94);"></span><span id="gwmGoogleText">Calendar — gmannion@geraldmiller.com</span></span><button id="gwmBellBtn" class="gwm-btn" title="Notes waiting to be written" style="border-color: rgb(142, 58, 49);" fdprocessedid="pnx2ta"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg><span>Notes Due</span><span class="gwm-badge" id="gwmBadge">19</span></button><button id="gwmGearBtn" class="gwm-btn" title="Calendar and reminder settings" fdprocessedid="fkyi4m"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"></rect><path d="M16 2v4M8 2v4M3 10h18"></path></svg><span>Calendar</span></button></div>
 <div class="led-strip"></div>
 
 <header>
@@ -2015,15 +2027,15 @@ html{ -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; tex
       <span class="car">▼</span>
     </button>
     <div class="mode-menu" id="modeMenu">
-      <div class="mode-item" data-mode="intake" onclick="pickMode(&#39;intake&#39;)">
+      <div class="mode-item" data-mode="intake" onclick="pickMode('intake')">
         <div class="mi-ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg></div>
         <div><div class="mi-t">Intake Notes</div><div class="mi-s">New call · charge, court, custody, fee</div></div>
       </div>
-      <div class="mode-item sel" data-mode="court" onclick="pickMode(&#39;court&#39;)">
+      <div class="mode-item sel" data-mode="court" onclick="pickMode('court')">
         <div class="mi-ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18"></path><path d="M7.5 21h9"></path><path d="M5 6h14"></path><path d="M12 6l6.5-1.5M12 6L5.5 4.5"></path><path d="M5 6l-2.6 6a3 3 0 0 0 5.2 0L5 6z"></path><path d="M19 6l-2.6 6a3 3 0 0 0 5.2 0L19 6z"></path></svg></div>
         <div><div class="mi-t">Court Summary</div><div class="mi-s">After court · judge, offer, next date</div></div>
       </div>
-      <div class="mode-item" data-mode="review" onclick="pickMode(&#39;review&#39;)">
+      <div class="mode-item" data-mode="review" onclick="pickMode('review')">
         <div class="mi-ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg></div>
         <div><div class="mi-t">Case Review Notes</div><div class="mi-s">Client meeting · advice, next steps</div></div>
       </div>
@@ -2032,8 +2044,8 @@ html{ -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; tex
 
   <span class="tb-lab">Mode</span>
   <div class="seg" id="engineSeg">
-    <button id="segGuided" class="on" onclick="setEngine(&#39;guided&#39;)" fdprocessedid="rmhosi">Guided</button>
-    <button id="segManual" onclick="setEngine(&#39;manual&#39;)" fdprocessedid="y2i4c">Manual</button>
+    <button id="segGuided" class="on" onclick="setEngine('guided')" fdprocessedid="rmhosi">Guided</button>
+    <button id="segManual" onclick="setEngine('manual')" fdprocessedid="y2i4c">Manual</button>
   </div>
 
   <button class="tb-btn" id="bankBtn" onclick="openBank()" title="Attorney contact bank" fdprocessedid="n9ycu">
@@ -2058,15 +2070,10 @@ html{ -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; tex
 
 <div class="main">
   <div class="stage" id="stage">
-    <div class="clio-notebar" id="clioNoteBar"><div class="cnb-head"><span class="k">Send to Clio</span><span class="m">Court Summary</span><span class="sp"></span></div><div class="cnb-row"><div class="cnb-f grow"><span class="cnb-l">Clio Matter for this note</span><button class="clio-cbtrig has" id="clioComboBar" onclick="clioOpenPop(&#39;clioComboBar&#39;)" fdprocessedid="nyq8h"><span class="av">HK</span><span class="id"><span class="t">Hunter Josephj Kroll</span><span class="s">02587-Kroll  ·  Open</span></span><span class="car">▾</span></button></div><div class="cnb-f title"><span class="cnb-l">Note Title <button class="auto" onclick="clioAutoTitle()" title="Fill the title from this note" fdprocessedid="9kw1s">auto</button></span><input id="clioBarTitle" placeholder="Pretrial Hearing" oninput="clioNoteTitleInput(this.value,true)" fdprocessedid="62u87"></div><div class="cnb-f date"><span class="cnb-l">Note Date</span><input id="clioBarDate" type="date" onchange="clioNoteDateInput(this.value)"></div></div></div>
-    <div class="wz" id="wizard"><div class="wz-bar"><i style="width:100%"></i></div><div class="wz-meta"><span class="wz-sec">Review</span><span class="wz-step">Step <b>15</b> / 15</span></div><div class="wz-done"><h3>Note ready</h3><p class="sub">Everything you answered is below. Click any line to jump back and change it — the note on the right updates instantly.</p><div class="wz-ans"><div class="wz-ans-row" onclick="wzJump(&#39;c_county&#39;)"><span class="k">Which county</span><span class="v">(69) St. Louis</span><span class="e">edit</span></div><div class="wz-ans-row" onclick="wzJump(&#39;c_judge&#39;)"><span class="k">Who was the judge</span><span class="v">Nicole L. Hopps</span><span class="e">edit</span></div><div class="wz-ans-row" onclick="wzJump(&#39;c_pros&#39;)"><span class="k">Who was the prosecutor</span><span class="v empty">not recorded</span><span class="e">edit</span></div><div class="wz-ans-row" onclick="wzJump(&#39;c_htype&#39;)"><span class="k">What kind of hearing was it</span><span class="v">Pretrial Hearing</span><span class="e">edit</span></div><div class="wz-ans-row" onclick="wzJump(&#39;c_date&#39;)"><span class="k">What day was the hearing</span><span class="v">September 1, 2026</span><span class="e">edit</span></div><div class="wz-ans-row" onclick="wzJump(&#39;c_appear&#39;)"><span class="k">Who appeared, and how</span><span class="v">Attorney: GWM
-Appearance: in person
-With client?: With Client</span><span class="e">edit</span></div><div class="wz-ans-row" onclick="wzJump(&#39;c_wit&#39;)"><span class="k">Was there witness testimony</span><span class="v">No</span><span class="e">edit</span></div><div class="wz-ans-row" onclick="wzJump(&#39;c_details&#39;)"><span class="k">What happened at the hearing</span><span class="v">GWM met with Prosecutor to discuss the case. Prosecutor gave an offer but also said she will get discovery to us soon. GWM got a new date. </span><span class="e">edit</span></div><div class="wz-ans-row" onclick="wzJump(&#39;c_offerq&#39;)"><span class="k">Was an offer made</span><span class="v">Yes</span><span class="e">edit</span></div><div class="wz-ans-row" onclick="wzJump(&#39;c_offer&#39;)"><span class="k">What is the offer</span><span class="v">Plead to 4th Degree DWI
-Stayed time
-1 year unsupervised probation
-$100 fine</span><span class="e">edit</span></div><div class="wz-ans-row" onclick="wzJump(&#39;c_nextq&#39;)"><span class="k">Is there a next court date</span><span class="v">Yes</span><span class="e">edit</span></div><div class="wz-ans-row" onclick="wzJump(&#39;c_next&#39;)"><span class="k">When, and for what</span><span class="v">Date: October 19, 2026
-Time: 13:30
-Hearing type: Pretrial Hearing</span><span class="e">edit</span></div><div class="wz-ans-row" onclick="wzJump(&#39;c_briefq&#39;)"><span class="k">Is a brief or motion due</span><span class="v">No</span><span class="e">edit</span></div><div class="wz-ans-row" onclick="wzJump(&#39;c_pmmq&#39;)"><span class="k">Add a PMM directive for staff</span><span class="v">Yes</span><span class="e">edit</span></div><div class="wz-ans-row" onclick="wzJump(&#39;c_pmm&#39;)"><span class="k">What should go to the client</span><span class="v">Thank you for taking the time to appear with me in Court. As we discussed, the Prosecutor is working on sending us the rest of the evidence so that we can cover it together. I will keep working with the Prosecutor to get the best offer possible and keep you in the loop. Please let me know if you have any questions. Thanks!</span><span class="e">edit</span></div></div><div class="wz-nav" style="margin-top:0"><button class="wz-btn fin" onclick="copyNote()" fdprocessedid="kr2e5">Copy note</button><button class="wz-btn" onclick="wzGo(-1)" fdprocessedid="ufucfb">Back to last question</button><span class="sp"></span><button class="wz-btn ghost" onclick="wzResetMode()" fdprocessedid="e1bze">Clear and start over</button></div></div></div>
+    <div class="clio-notebar" id="clioNoteBar"><div class="cnb-head"><span class="k">Send to Clio</span><span class="m">Court Summary</span><span class="sp"></span></div><div class="cnb-row"><div class="cnb-f grow"><span class="cnb-l">Clio Matter for this note</span><button class="clio-cbtrig has" id="clioComboBar" onclick="clioOpenPop('clioComboBar')"><span class="av">SC</span><span class="id"><span class="t">Steven Allen Chesnut</span><span class="s">02492-Chesnut  ·  Open</span></span><span class="car">▾</span></button></div><div class="cnb-f title"><span class="cnb-l">Note Title <button class="auto" onclick="clioAutoTitle()" title="Fill the title from this note">auto</button></span><input id="clioBarTitle" placeholder="Pretrial Hearing" oninput="clioNoteTitleInput(this.value,true)"></div><div class="cnb-f date"><span class="cnb-l">Note Date</span><input id="clioBarDate" type="date" onchange="clioNoteDateInput(this.value)"></div></div></div>
+    <div class="wz" id="wizard"><div class="wz-bar"><i style="width:100%"></i></div><div class="wz-meta"><span class="wz-sec">Review</span><span class="wz-step">Step <b>13</b> / 13</span></div><div class="wz-done"><h3>Note ready</h3><p class="sub">Everything you answered is below. Click any line to jump back and change it — the note on the right updates instantly.</p><div class="wz-ans"><div class="wz-ans-row" onclick="wzJump('c_county')"><span class="k">Which county</span><span class="v">Ramsey</span><span class="e">edit</span></div><div class="wz-ans-row" onclick="wzJump('c_judge')"><span class="k">Who was the judge</span><span class="v">No Judge</span><span class="e">edit</span></div><div class="wz-ans-row" onclick="wzJump('c_pros')"><span class="k">Who was the prosecutor</span><span class="v">Elizabeth Duel</span><span class="e">edit</span></div><div class="wz-ans-row" onclick="wzJump('c_office')"><span class="k">Which office is Elizabeth Duel with</span><span class="v">Office: Chestnut Cambronne</span><span class="e">edit</span></div><div class="wz-ans-row" onclick="wzJump('c_htype')"><span class="k">What kind of hearing was it</span><span class="v">Pretrial Hearing</span><span class="e">edit</span></div><div class="wz-ans-row" onclick="wzJump('c_date')"><span class="k">What day was the hearing</span><span class="v">September 15, 2026</span><span class="e">edit</span></div><div class="wz-ans-row" onclick="wzJump('c_appear')"><span class="k">Who appeared, and how</span><span class="v">Attorney: GWM
+Appearance: by Zoom
+With client?: On Client's behalf</span><span class="e">edit</span></div><div class="wz-ans-row" onclick="wzJump('c_wit')"><span class="k">Was there witness testimony</span><span class="v">No</span><span class="e">edit</span></div><div class="wz-ans-row" onclick="wzJump('c_details')"><span class="k">What happened at the hearing</span><span class="v">GWM met with Prosecutor to receive an updated offer. Initial offer was CFD on the first 2 counts and plead to the speed. Prosecutor today agreed to CFD on all 3 with a $475 fine. Client accepted and case resolved. </span><span class="e">edit</span></div><div class="wz-ans-row" onclick="wzJump('c_offerq')"><span class="k">Was an offer made</span><span class="v">No</span><span class="e">edit</span></div><div class="wz-ans-row" onclick="wzJump('c_nextq')"><span class="k">Is there a next court date</span><span class="v">No</span><span class="e">edit</span></div><div class="wz-ans-row" onclick="wzJump('c_briefq')"><span class="k">Is a brief or motion due</span><span class="v">No</span><span class="e">edit</span></div><div class="wz-ans-row" onclick="wzJump('c_pmmq')"><span class="k">Add a PMM directive for staff</span><span class="v">No</span><span class="e">edit</span></div></div><div class="wz-nav" style="margin-top:0"><button class="wz-btn fin" onclick="copyNote()">Copy note</button><button class="wz-btn" onclick="wzGo(-1)">Back to last question</button><span class="sp"></span><button class="wz-btn ghost" onclick="wzResetMode()">Clear and start over</button></div></div></div>
     <div class="form-panel" id="formPanel" style="display:none"></div>
   </div>
 
@@ -2080,7 +2087,7 @@ Hearing type: Pretrial Hearing</span><span class="e">edit</span></div><div class
         <button class="out-btn go" id="headerCopyBtn" onclick="copyNote()" style="" fdprocessedid="jklg1">Copy</button>
       </div>
     </div>
-    <div class="output-body" id="outputBody"><div class="note-output" id="noteRendered"><p class="note-intro">GWM appeared with Client in person for Client's Pretrial Hearing on September 1, 2026. The Honorable Judge Nicole L. Hopps presided.</p><div class="note-spacer"></div><p><strong><u>Offer:</u></strong></p><p style="margin:0 0 4px 0;padding-left:6px;">• Plead to 4th Degree DWI</p><p style="margin:0 0 4px 0;padding-left:6px;">• Stayed time</p><p style="margin:0 0 4px 0;padding-left:6px;">• 1 year unsupervised probation</p><p style="margin:0 0 4px 0;padding-left:6px;">• $100 fine</p><div class="note-spacer"></div><p style="margin:0 0 4px 0;padding-left:6px;">• GWM met with Prosecutor to discuss the case. Prosecutor gave an offer but also said she will get discovery to us soon. GWM got a new date.</p><div class="note-spacer"></div><p><strong><u>Next Court Date:</u></strong> October 19, 2026 at 1:30 PM for Pretrial Hearing</p><div class="note-spacer"></div><p>PMM: Please send Client new court date and verify accuracy in the calendar. Please send client the following note:</p><div class="note-spacer"></div><p style="margin:0 0 4px 0;padding-left:6px;">• Thank you for taking the time to appear with me in Court. As we discussed, the Prosecutor is working on sending us the rest of the evidence so that we can cover it together. I will keep working with the Prosecutor to get the best offer possible and keep you in the loop. Please let me know if you have any questions. Thanks!</p></div><div class="ai-btn-row"><button class="ai-btn" id="aiCleanBtn" onclick="aiCleanup()" fdprocessedid="hqx3mn">Optimize</button><button class="copy-btn-below" id="copyBtnBelow" onclick="copyNote()" fdprocessedid="p156yr">Copy Note</button><button class="clio-send-btm" onclick="clioOpenDrawer()" title="Send this note to Clio" fdprocessedid="25ck4q">Send to Clio</button><button class="ai-btn ai-btn-revert" id="aiRevertBtn" onclick="revertNote()" style="display:none">↩ Revert</button></div></div>
+    <div class="output-body" id="outputBody"><div class="note-output" id="noteRendered"><p class="note-intro">GWM appeared on Client's behalf by Zoom for Client's Pretrial Hearing on September 15, 2026. The Prosecutor was Elizabeth Duel and the Honorable Judge No Judge presided.</p><div class="note-spacer"></div><p style="margin:0 0 4px 0;padding-left:6px;">• GWM met with Prosecutor to receive an updated offer. Initial offer was CFD on the first 2 counts and plead to the speed. Prosecutor today agreed to CFD on all 3 with a $475 fine. Client accepted and case resolved.</p></div><div class="ai-btn-row"><button class="ai-btn" id="aiCleanBtn" onclick="aiCleanup()">Optimize</button><button class="ai-btn ai-btn-edit" id="noteEditBtn" onclick="toggleNoteEdit()" title="Edit the note by hand">Edit Note</button><button class="copy-btn-below" id="copyBtnBelow" onclick="copyNote()">Copy Note</button><button class="clio-send-btm" onclick="clioOpenDrawer()" title="Send this note to Clio">Send to Clio</button><button class="ai-btn ai-btn-revert" id="aiRevertBtn" onclick="revertNote()" style="display:none">↩ Revert</button><span class="note-edit-hint" id="noteEditHint" style="display:none">Editing on — your changes are kept for Copy, Print and Send to Clio.</span></div></div>
   </div>
 </div>
 
@@ -2092,8 +2099,8 @@ Hearing type: Pretrial Hearing</span><span class="e">edit</span></div><div class
       <button class="modal-x" onclick="closeBank()" title="Close">×</button>
     </div>
     <div class="modal-tabs">
-      <button id="bankTabPeople" class="on" onclick="bankTab(&#39;people&#39;)">Attorneys <span>0</span></button>
-      <button id="bankTabOffices" onclick="bankTab(&#39;offices&#39;)">Offices <span>0</span></button>
+      <button id="bankTabPeople" class="on" onclick="bankTab('people')">Attorneys <span>0</span></button>
+      <button id="bankTabOffices" onclick="bankTab('offices')">Offices <span>0</span></button>
     </div>
     <div class="modal-tools">
       <input id="bankSearch" placeholder="Search name, office, position, email, phone or jurisdiction…" oninput="bankSearch(this.value)">
@@ -2103,7 +2110,7 @@ Hearing type: Pretrial Hearing</span><span class="e">edit</span></div><div class
   </div>
 </div>
 
-<div class="toast" id="toast">Sent to Clio — 3 of 3 created</div>
+<div class="toast" id="toast">Loaded GWM: Chesnut | PT | Ramsey (SU) (02492-Chesnut) — matter attached</div>
 
 
 <script>
@@ -2375,7 +2382,7 @@ function switchTab(tab) {
   document.querySelectorAll('.tab-btn').forEach((b,i) => {
     b.classList.toggle('active', ['intake','court','review'][i] === tab);
   });
-  const labels = {intake:'INTAKE NOTE', court:'COURT SUMMARY', review:'CASE REVIEW'};
+  const labels = {intake:'INTAKE NOTES', court:'COURT SUMMARY', review:'CASE REVIEW NOTES'};
   el('outputLabel').textContent = labels[tab] || 'NOTE';
   renderForm();
   clearOutput();
@@ -6232,6 +6239,7 @@ function setEngine(mode){
   applyEngine();
 }
 function applyEngine(){
+  noteEditing=false;   /* new mode / engine — start from the generated note */
   var wzHost=el('wizard'), fp=el('formPanel');
   if(wz.engine==='guided'){
     fp.style.display='none'; fp.innerHTML='';   /* avoid duplicate element ids */
@@ -6281,6 +6289,7 @@ function noteIsEmpty(html){
 }
 function clearOutput(){
   generatedHTML='';
+  noteEditing=false;
   var c=el('headerCopyBtn'), p=el('headerPrintBtn');
   if(c) c.style.display='none'; if(p) p.style.display='none';
   el('outputBody').innerHTML =
@@ -6288,6 +6297,30 @@ function clearOutput(){
     '<h3>Your Clio note builds here</h3>'+
     '<p>Answer the questions on the left.<br>The note writes itself as you go.</p></div>';
 }
+
+/* ── MANUAL EDITING OF THE FINISHED NOTE ───────────────────────────────────── */
+var noteEditing=false;
+function syncEditedNote(){
+  var box=el('noteRendered'); if(!box) return;
+  generatedHTML=box.innerHTML;
+}
+function setNoteEdit(on){
+  noteEditing=!!on;
+  var box=el('noteRendered'), btn=el('noteEditBtn'), hint=el('noteEditHint');
+  if(box){
+    box.setAttribute('contenteditable', noteEditing?'true':'false');
+    box.spellcheck=true;
+    if(noteEditing){ try{ box.focus(); }catch(e){} }
+    else { syncEditedNote(); }
+  }
+  if(btn){ btn.textContent = noteEditing?'Done Editing':'Edit Note'; btn.classList.toggle('on',noteEditing); }
+  if(hint) hint.style.display = noteEditing?'':'none';
+}
+function toggleNoteEdit(){
+  setNoteEdit(!noteEditing);
+  toast(noteEditing ? 'Edit the note directly — click Done Editing when finished' : 'Edits saved');
+}
+
 function showOutput(){
   var c=el('headerCopyBtn'), p=el('headerPrintBtn');
   if(c) c.style.display=''; if(p) p.style.display='';
@@ -6295,12 +6328,22 @@ function showOutput(){
     '<div class="note-output" id="noteRendered">'+generatedHTML+'</div>'+
     '<div class="ai-btn-row">'+
       '<button class="ai-btn" id="aiCleanBtn" onclick="aiCleanup()">Optimize</button>'+
+      '<button class="ai-btn ai-btn-edit" id="noteEditBtn" onclick="toggleNoteEdit()" title="Edit the note by hand">Edit Note</button>'+
       '<button class="copy-btn-below" id="copyBtnBelow" onclick="copyNote()">Copy Note</button>'+
       '<button class="clio-send-btm" onclick="clioOpenDrawer()" title="Send this note to Clio">Send to Clio</button>'+
       '<button class="ai-btn ai-btn-revert" id="aiRevertBtn" onclick="revertNote()" style="display:none">&#8617; Revert</button>'+
+      '<span class="note-edit-hint" id="noteEditHint" style="display:none">Editing on — your changes are kept for Copy, Print and Send to Clio.</span>'+
     '</div>';
+  var nb=el('noteRendered');
+  if(nb){
+    nb.addEventListener('input', syncEditedNote);
+    nb.addEventListener('blur', syncEditedNote);
+  }
+  setNoteEdit(noteEditing);
 }
 function generate(){
+  /* hand edits in progress — never overwrite what he just typed */
+  if(noteEditing) return;
   if(wz.mode==='intake') generatedHTML=buildIntakeHTML();
   else if(wz.mode==='court') generatedHTML=buildCourtHTML();
   else generatedHTML=buildReviewHTML();
@@ -6554,38 +6597,38 @@ startMicObserver();
   </div>
 
   <div class="dict-body">
-    <div class="dict-steps" id="dictSteps"></div>
+    <div class="dict-steps" id="dictSteps"><button class="st on" onclick="dictGoto(0)"><span class="bar"></span><span class="lb">Matter</span></button><button class="st " onclick="dictGoto(1)"><span class="bar"></span><span class="lb">Details</span></button></div>
 
     <!-- 1 · MATTER ------------------------------------------------------- -->
     <section class="dstage on" data-s="matter">
       <div class="dict-types" id="dictTypes">
-        <button data-m="court" class="on" onclick="dictSetMode(&#39;court&#39;)">Court Summary</button>
-        <button data-m="intake" onclick="dictSetMode(&#39;intake&#39;)">Intake Notes</button>
-        <button data-m="review" onclick="dictSetMode(&#39;review&#39;)">Case Review Notes</button>
+        <button data-m="court" class="on" onclick="dictSetMode('court')">Court Summary</button>
+        <button data-m="intake" onclick="dictSetMode('intake')">Intake Notes</button>
+        <button data-m="review" onclick="dictSetMode('review')">Case Review Notes</button>
       </div>
       <div class="dstage-q">Which matter?</div>
       <div id="dictConnBanner"></div>
       <div class="dmic-row">
-        <button class="dict-mic sm" id="dictMic_matter" onclick="dictMic(&#39;matter&#39;)" aria-label="Say the client name">
+        <button class="dict-mic sm" id="dictMic_matter" onclick="dictMic('matter')" aria-label="Say the client name">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"></rect><path d="M5 10v2a7 7 0 0 0 14 0v-2"></path><line x1="12" y1="19" x2="12" y2="22"></line><line x1="8" y1="22" x2="16" y2="22"></line></svg>
         </button>
-        <div class="dmic-lab" id="dictLab_matter">Say the client’s name — or type it below</div>
+        <div class="dmic-lab" id="dictLab_matter" data-def="Say the client’s name — or type it below">Say the client’s name — or type it below</div>
       </div>
       <input class="dict-in" id="dictMatterQ" autocomplete="off" placeholder="Client name, matter number or court file" oninput="dictMatterTyped(this.value)">
-      <div class="dict-results" id="dictMatterResults"></div>
-      <div id="dictMatterChosen"></div>
+      <div class="dict-results" id="dictMatterResults"><button class="dict-res" onclick="dictPickMatter(0)"><span class="av">TZ</span><span class="bd"><span class="cn">Tyler Robert Zobel</span><span class="de">2° DWI</span><span class="mn">02314-Zobel  ·  Open</span></span></button><button class="dict-res" onclick="dictPickMatter(1)"><span class="av">AH</span><span class="bd"><span class="cn">Adam Hassan</span><span class="de">Failure to Drive with Due Care</span><span class="mn">02310-Hassan  ·  Open</span></span></button><button class="dict-res" onclick="dictPickMatter(2)"><span class="av">RS</span><span class="bd"><span class="cn">Rachel Kallie Shirk</span><span class="de">4° DWI </span><span class="mn">02470-Shirk  ·  Open</span></span></button><button class="dict-res" onclick="dictPickMatter(3)"><span class="av">MZ</span><span class="bd"><span class="cn">Maxwell John Zlevor</span><span class="de">Driving After Suspension</span><span class="mn">02444-Zlevor  ·  Open</span></span></button><button class="dict-res" onclick="dictPickMatter(4)"><span class="av">MC</span><span class="bd"><span class="cn">Matthew Joel Coquyt</span><span class="de">3° DWI</span><span class="mn">02584-Coquyt  ·  Open</span></span></button><button class="dict-res" onclick="dictPickMatter(5)"><span class="av">JM</span><span class="bd"><span class="cn">Jody Martone-Olson</span><span class="de">Failure to Notify Police/Owner of Vehicle Collision </span><span class="mn">02407-Martone-Olson  ·  Open</span></span></button><button class="dict-res" onclick="dictPickMatter(6)"><span class="av">TK</span><span class="bd"><span class="cn">Thomas Bruce Klemm</span><span class="de">Fail to Yield to a Pedestrian</span><span class="mn">02480-Klemm  ·  Open</span></span></button><button class="dict-res" onclick="dictPickMatter(7)"><span class="av">HK</span><span class="bd"><span class="cn">Hunter Josephj Kroll</span><span class="de">4th Degree DWI and Underage Drink and Drive - St. Louis County</span><span class="mn">02587-Kroll  ·  Open</span></span></button><button class="dict-res" onclick="dictPickMatter(8)"><span class="av">JO</span><span class="bd"><span class="cn">Jeffery John Olds</span><span class="de">3° DWI - Refusal</span><span class="mn">02210-Olds  ·  Open</span></span></button><button class="dict-res" onclick="dictPickMatter(9)"><span class="av">YB</span><span class="bd"><span class="cn">Yisehak Belay</span><span class="de">3° DWI</span><span class="mn">02446-Belay  ·  Open</span></span></button><button class="dict-res" onclick="dictPickMatter(10)"><span class="av">JS</span><span class="bd"><span class="cn">Jeffery Smith</span><span class="de">4° DWI</span><span class="mn">02279-Smith  ·  Open</span></span></button><button class="dict-res" onclick="dictPickMatter(11)"><span class="av">MM</span><span class="bd"><span class="cn">Marc Christopher Martens</span><span class="de">2° DWI</span><span class="mn">02312-Martens  ·  Open</span></span></button></div>
+      <div id="dictMatterChosen"><div class="dict-chosen"><span class="tick">✔</span><span class="bd"><span class="cn">Tyler Robert Zobel</span><span class="de">02314-Zobel  ·  Open</span></span></div></div>
     </section>
 
     <!-- 2 · DETAILS ------------------------------------------------------ -->
     <section class="dstage" data-s="details">
-      <div id="dictMatterMini"></div>
+      <div id="dictMatterMini"><div class="dict-chosen"><span class="tick">✔</span><span class="bd"><span class="cn">Tyler Robert Zobel</span><span class="de">02314-Zobel</span></span></div></div>
       <div class="dstage-q">Say everything</div>
-      <div class="dstage-h" id="dictDetailsHint"></div>
+      <div class="dstage-h" id="dictDetailsHint">Cover the <b>judge</b>, the <b>prosecutor</b>, what happened, any <b>offer</b>, <b>how long it took</b>, the <b>next court date and time</b>, and <b>what to tell the client</b>.</div>
       <div class="dmic-row">
-        <button class="dict-mic sm" id="dictMic_details" onclick="dictMic(&#39;details&#39;)" aria-label="Dictate the details">
+        <button class="dict-mic sm" id="dictMic_details" onclick="dictMic('details')" aria-label="Dictate the details">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"></rect><path d="M5 10v2a7 7 0 0 0 14 0v-2"></path><line x1="12" y1="19" x2="12" y2="22"></line><line x1="8" y1="22" x2="16" y2="22"></line></svg>
         </button>
-        <div class="dmic-lab" id="dictLab_details">Tap and talk it all through</div>
+        <div class="dmic-lab" id="dictLab_details" data-def="Tap and talk it all through">Tap and talk it all through</div>
       </div>
       <textarea class="dict-ta" id="dictDetails" style="min-height:230px" placeholder="Talk normally and cover it all — the judge, the prosecutor, what happened, any offer, how long it took, the next court date and time, and what you want the client told." oninput="dictTouch()"></textarea>
 
@@ -6603,8 +6646,8 @@ startMicObserver();
             <div><span class="dict-lab">Start time</span><input class="dict-in" id="dictCourtTime" type="time" onchange="dictExtractIn()"></div>
           </div>
           <div class="dict-2">
-            <div><span class="dict-lab">Hearing type</span><select class="dict-sel" id="dictCourtType" onchange="dictExtractIn()"></select></div>
-            <div><span class="dict-lab">County</span><select class="dict-sel" id="dictCourtCounty" onchange="dictExtractIn()"></select></div>
+            <div><span class="dict-lab">Hearing type</span><select class="dict-sel" id="dictCourtType" onchange="dictExtractIn()"><option value="">No hearing type</option><option value="Arraignment Hearing">Arraignment Hearing</option><option value="Bail Hearing">Bail Hearing</option><option value="Contested Omnibus Hearing">Contested Omnibus Hearing</option><option value="Contested Pretrial Hearing">Contested Pretrial Hearing</option><option value="First Appearance Hearing">First Appearance Hearing</option><option value="Implied Consent Evidentiary Hearing">Implied Consent Evidentiary Hearing</option><option value="Implied Consent Scheduling Conference">Implied Consent Scheduling Conference</option><option value="Jury Trial">Jury Trial</option><option value="Omnibus Hearing">Omnibus Hearing</option><option value="Plea Hearing">Plea Hearing</option><option value="Pretrial Hearing">Pretrial Hearing</option><option value="Probation Violation">Probation Violation</option><option value="Rule 20 Review Hearing">Rule 20 Review Hearing</option><option value="Sentencing Hearing">Sentencing Hearing</option><option value="Settlement Conference">Settlement Conference</option><option value="Trial">Trial</option><option value="Trial Management Conference">Trial Management Conference</option></select></div>
+            <div><span class="dict-lab">County</span><select class="dict-sel" id="dictCourtCounty" onchange="dictExtractIn()"><option value="">County…</option><option value="Aitkin">Aitkin</option><option value="Anoka">Anoka</option><option value="Becker">Becker</option><option value="Beltrami">Beltrami</option><option value="Benton">Benton</option><option value="Big Stone">Big Stone</option><option value="Blue Earth">Blue Earth</option><option value="Brown">Brown</option><option value="Carlton">Carlton</option><option value="Carver">Carver</option><option value="Cass">Cass</option><option value="Chippewa">Chippewa</option><option value="Chisago">Chisago</option><option value="Clay">Clay</option><option value="Clearwater">Clearwater</option><option value="Cook">Cook</option><option value="Cottonwood">Cottonwood</option><option value="Crow Wing">Crow Wing</option><option value="Dakota">Dakota</option><option value="Dodge">Dodge</option><option value="Douglas">Douglas</option><option value="Faribault">Faribault</option><option value="Fillmore">Fillmore</option><option value="Freeborn">Freeborn</option><option value="Goodhue">Goodhue</option><option value="Grant">Grant</option><option value="Hennepin">Hennepin</option><option value="Houston">Houston</option><option value="Hubbard">Hubbard</option><option value="Isanti">Isanti</option><option value="Itasca">Itasca</option><option value="Jackson">Jackson</option><option value="Kanabec">Kanabec</option><option value="Kandiyohi">Kandiyohi</option><option value="Kittson">Kittson</option><option value="Koochiching">Koochiching</option><option value="Lac qui Parle">Lac qui Parle</option><option value="Lake">Lake</option><option value="Lake of the Woods">Lake of the Woods</option><option value="Le Sueur">Le Sueur</option><option value="Lincoln">Lincoln</option><option value="Lyon">Lyon</option><option value="McLeod">McLeod</option><option value="Mahnomen">Mahnomen</option><option value="Marshall">Marshall</option><option value="Martin">Martin</option><option value="Meeker">Meeker</option><option value="Mille Lacs">Mille Lacs</option><option value="Morrison">Morrison</option><option value="Mower">Mower</option><option value="Murray">Murray</option><option value="Nicollet">Nicollet</option><option value="Nobles">Nobles</option><option value="Norman">Norman</option><option value="Olmsted">Olmsted</option><option value="Otter Tail">Otter Tail</option><option value="Pennington">Pennington</option><option value="Pine">Pine</option><option value="Pipestone">Pipestone</option><option value="Polk">Polk</option><option value="Pope">Pope</option><option value="Ramsey">Ramsey</option><option value="Red Lake">Red Lake</option><option value="Redwood">Redwood</option><option value="Renville">Renville</option><option value="Rice">Rice</option><option value="Rock">Rock</option><option value="Roseau">Roseau</option><option value="St. Louis">St. Louis</option><option value="Scott">Scott</option><option value="Sherburne">Sherburne</option><option value="Sibley">Sibley</option><option value="Stearns">Stearns</option><option value="Steele">Steele</option><option value="Stevens">Stevens</option><option value="Swift">Swift</option><option value="Todd">Todd</option><option value="Traverse">Traverse</option><option value="Wabasha">Wabasha</option><option value="Wadena">Wadena</option><option value="Waseca">Waseca</option><option value="Washington">Washington</option><option value="Watonwan">Watonwan</option><option value="Wilkin">Wilkin</option><option value="Winona">Winona</option><option value="Wright">Wright</option><option value="Yellow Medicine">Yellow Medicine</option></select></div>
           </div>
           <div id="dictTimeErr"></div>
           <div class="dict-acts" style="margin-top:11px">
@@ -6626,10 +6669,10 @@ startMicObserver();
   <div class="dict-foot">
     <div class="in">
       <div class="dict-nav">
-        <button class="dict-back" id="dictBackBtn" onclick="dictBack()">Back</button>
-        <button class="dict-next" id="dictNextBtn" onclick="dictNext()">Next</button>
+        <button class="dict-back" id="dictBackBtn" onclick="dictBack()" disabled="">Back</button>
+        <button class="dict-next" id="dictNextBtn" onclick="dictNext()" style="">Next</button>
       </div>
-      <div class="dict-note" id="dictFootNote"></div>
+      <div class="dict-note" id="dictFootNote">Matter locked in.</div>
     </div>
   </div>
 </div>
@@ -6638,27 +6681,27 @@ startMicObserver();
 <div class="clio-popbackdrop" id="clioPopBack" onclick="clioClosePop()"></div>
 <div class="clio-selback" id="clioSelBack" onclick="clioCloseSelect()"></div>
 <div class="clio-selpop" id="clioSelPop" role="listbox"></div>
-<div class="clio-pop" id="clioPop" role="listbox" aria-label="Select Clio matter" style="transform: none; left: 26px; width: 620px; top: 270.778px;">
+<div class="clio-pop" id="clioPop" role="listbox" aria-label="Select Clio matter" style="transform: none; left: 26px; width: 620px; top: 282px;">
   <div class="ptools">
     <input id="clioPopSearch" autocomplete="off" spellcheck="false" placeholder="Search every matter — client name, matter number, court file, description, attorney…" fdprocessedid="qqnh3n">
     <div class="pfilters">
       <div class="clio-seg" id="clioPopStatus">
-        <button data-v="all" class="on" onclick="clioPopFilter(&#39;status&#39;,&#39;all&#39;)" fdprocessedid="cvdokf">All</button>
-        <button data-v="open" onclick="clioPopFilter(&#39;status&#39;,&#39;open&#39;)" fdprocessedid="dogu66">Open</button>
-        <button data-v="closed" onclick="clioPopFilter(&#39;status&#39;,&#39;closed&#39;)" fdprocessedid="w5xtn">Closed</button>
+        <button data-v="all" class="on" onclick="clioPopFilter('status','all')" fdprocessedid="cvdokf">All</button>
+        <button data-v="open" onclick="clioPopFilter('status','open')" fdprocessedid="dogu66">Open</button>
+        <button data-v="closed" onclick="clioPopFilter('status','closed')" fdprocessedid="w5xtn">Closed</button>
       </div>
       <div class="clio-seg" id="clioPopScope">
-        <button data-v="all" class="on" onclick="clioPopFilter(&#39;scope&#39;,&#39;all&#39;)" fdprocessedid="7vwvin">Everyone</button>
-        <button data-v="my" onclick="clioPopFilter(&#39;scope&#39;,&#39;my&#39;)" fdprocessedid="2hb8oj">Mine</button>
+        <button data-v="all" class="on" onclick="clioPopFilter('scope','all')" fdprocessedid="7vwvin">Everyone</button>
+        <button data-v="my" onclick="clioPopFilter('scope','my')" fdprocessedid="2hb8oj">Mine</button>
       </div>
       <div class="clio-seg" id="clioPopRecent">
-        <button data-v="0" class="on" onclick="clioPopFilter(&#39;recent&#39;,0)" fdprocessedid="7ih3cb">All</button>
-        <button data-v="1" onclick="clioPopFilter(&#39;recent&#39;,1)" fdprocessedid="07ndmn">Recent</button>
+        <button data-v="0" class="on" onclick="clioPopFilter('recent',0)" fdprocessedid="7ih3cb">All</button>
+        <button data-v="1" onclick="clioPopFilter('recent',1)" fdprocessedid="07ndmn">Recent</button>
       </div>
       <span class="pcount" id="clioPopCount">1 matter</span>
     </div>
   </div>
-  <div class="plist" id="clioPopList"><div class="clio-opt cur" data-i="0" onclick="clioPickMatter(&#39;1880844850&#39;)" onmousemove="clioPopCursor(0)"><div class="av">CM</div><div class="bd"><div class="l1"><span class="cn">Christopher Moen</span><span class="mn">02334-Moen</span></div><div class="de">3° DWI</div><div class="l3"><span class="clio-pill open">Open</span><span class="clio-pill">Gerard Mannion</span></div></div></div></div>
+  <div class="plist" id="clioPopList"><div class="clio-opt cur" data-i="0" onclick="clioPickMatter('1891410220')" onmousemove="clioPopCursor(0)"><div class="av">JC</div><div class="bd"><div class="l1"><span class="cn">Joshua Darrin Conter</span><span class="mn">02422-Conter</span></div><div class="de">3° DWI</div><div class="l3"><span class="clio-pill open">Open</span><span class="clio-pill">Gerard Mannion</span></div></div></div></div>
   <div class="pfoot">
     <span><kbd>↑</kbd><kbd>↓</kbd> move</span>
     <span><kbd>↵</kbd> select</span>
@@ -6684,9 +6727,9 @@ startMicObserver();
       <div class="clio-row">
         <div class="clio-f">
           <span class="clio-fl">Clio Matter</span>
-          <button class="clio-cbtrig has" id="clioComboDrawer" onclick="clioOpenPop(&#39;clioComboDrawer&#39;)" fdprocessedid="svs7bb"><span class="av">HK</span><span class="id"><span class="t">Hunter Josephj Kroll</span><span class="s">02587-Kroll  ·  Open</span></span><span class="car">▾</span></button>
+          <button class="clio-cbtrig has" id="clioComboDrawer" onclick="clioOpenPop('clioComboDrawer')" fdprocessedid="svs7bb"><span class="av">SC</span><span class="id"><span class="t">Steven Allen Chesnut</span><span class="s">02492-Chesnut  ·  Open</span></span><span class="car">▾</span></button>
         </div>
-        <div id="clioMatterSlot"><div class="clio-hint" style="padding:2px 2px 0"><div style="color:var(--dim2);font-size:11.5px;line-height:1.45">4th Degree DWI and Underage Drink and Drive - St. Louis County</div><div style="font-family:var(--mono);font-size:10px;color:var(--dim);letter-spacing:.4px;margin-top:3px">02587-Kroll  ·  Gerard Mannion  ·  Open</div></div></div>
+        <div id="clioMatterSlot"><div class="clio-hint" style="padding:2px 2px 0"><div style="color:var(--dim2);font-size:11.5px;line-height:1.45">Gross Misdemeanor Theft</div><div style="font-family:var(--mono);font-size:10px;color:var(--dim);letter-spacing:.4px;margin-top:3px">02492-Chesnut  ·  Gerard Mannion  ·  Open</div></div></div>
         <div class="clio-grid">
           <div class="clio-f">
             <span class="clio-fl">Note Title <em style="text-transform:none;letter-spacing:0;font-weight:600;color:#4E5765">→ Clio title</em></span>
@@ -6699,22 +6742,10 @@ startMicObserver();
         </div>
         <div class="clio-f">
           <span class="clio-fl">Note Body <em style="text-transform:none;letter-spacing:0;font-weight:600;color:#4E5765">— exactly what Clio will store</em></span>
-          <div id="clioNotePreview" class="clio-hint" style="max-height: 120px; overflow: auto; padding: 9px 11px; background: rgb(10, 13, 18); border: 1px solid var(--line2); border-radius: 6px; color: var(--dim2); line-height: 1.6; white-space: pre-wrap; font-family: var(--mono); font-size: 10.5px;">GWM appeared with Client in person for Client's Pretrial Hearing on September 1, 2026. The Honorable Judge Nicole L. Hopps presided.
-
-OFFER
-  • Plead to 4th Degree DWI
-  • Stayed time
-  • 1 year unsupervised probation
-  • $100 fine
+          <div id="clioNotePreview" class="clio-hint" style="max-height: 120px; overflow: auto; padding: 9px 11px; background: rgb(10, 13, 18); border: 1px solid var(--line2); border-radius: 6px; color: var(--dim2); line-height: 1.6; white-space: pre-wrap; font-family: var(--mono); font-size: 10.5px;">GWM appeared on Client's behalf by Zoom for Client's Pretrial Hearing on September 15, 2026. The Prosecutor was Elizabeth Duel and the Honorable Judge No Judge presided.
 
 DETAILS
-  • GWM met with Prosecutor to discuss the case. Prosecutor gave an offer but also said she will get discovery to us soon. GWM got a new date.
-
-Next Court Date: October 19, 2026 at 1:30 PM for Pretrial Hearing
-
-PMM: Please send Client new court date and verify accuracy in the calendar. Please send client the following note:
-
-"Thank you for taking the time to appear with me in Court. As we discussed, the Prosecutor is working on sending us the rest of the evidence so that we can cover it together. I will keep working with the Prosecutor to get the best offer possible and keep you in the loop. Please let me know if you have any questions. Thanks!"</div>
+GWM met with Prosecutor to receive an updated offer. Initial offer was CFD on the first 2 counts and plead to the speed. Prosecutor today agreed to CFD on all 3 with a $475 fine. Client accepted and case resolved.</div>
         </div>
       </div>
       <datalist id="clioNoteTitles">
@@ -6730,8 +6761,8 @@ PMM: Please send Client new court date and verify accuracy in the calendar. Plea
     <!-- TIME ENTRY -->
     <div class="clio-sec">
       <div class="clio-sh"><span class="t">Time Entry</span><span class="sp"></span>
-        <label class="clio-tog on" id="clioTimeTogWrap">
-          <input type="checkbox" id="clioTimeOn" onchange="clioToggle(&#39;time&#39;,this.checked)">Include
+        <label class="clio-tog" id="clioTimeTogWrap">
+          <input type="checkbox" id="clioTimeOn" onchange="clioToggle('time',this.checked)">Include
         </label>
       </div>
       <div class="clio-row">
@@ -6740,8 +6771,8 @@ PMM: Please send Client new court date and verify accuracy in the calendar. Plea
             <input id="clioHours" type="number" min="0" max="99" step="1" placeholder="0" oninput="clioTimeInput()" fdprocessedid="z6mvcf"></div>
           <div class="clio-f"><span class="clio-fl">Minutes</span>
             <input id="clioMinutes" type="number" min="0" max="59" step="1" placeholder="0" oninput="clioTimeInput()" fdprocessedid="vm6mzf"></div>
-          <div class="clio-total" id="clioTotalBox">
-            <span class="k">Total Time</span><span class="v" id="clioTotalTxt">5 hours</span>
+          <div class="clio-total zero" id="clioTotalBox">
+            <span class="k">Total Time</span><span class="v" id="clioTotalTxt">—</span>
           </div>
         </div>
         <div id="clioTimeErr"></div>
@@ -6760,47 +6791,47 @@ PMM: Please send Client new court date and verify accuracy in the calendar. Plea
     <!-- NEXT HEARING -->
     <div class="clio-sec">
       <div class="clio-sh"><span class="t">Court Date</span>
-        <span class="badge det" id="clioHearBadge" style="">from form</span><span class="sp"></span>
+        <span class="badge low" id="clioHearBadge" style="display: none;">medium confidence</span><span class="sp"></span>
         <button class="clio-btn tiny" onclick="clioRescanNote()" title="Re-read the note for a court date" fdprocessedid="kc796">Re-scan</button>
-        <label class="clio-tog on" id="clioCalTogWrap">
-          <input type="checkbox" id="clioCalOn" onchange="clioToggle(&#39;cal&#39;,this.checked)">Add to Clio Calendar
+        <label class="clio-tog" id="clioCalTogWrap">
+          <input type="checkbox" id="clioCalOn" onchange="clioToggle('cal',this.checked)">Add to Clio Calendar
         </label>
       </div>
-      <div id="clioDetectSlot"><div class="clio-detect"><div class="dt"><b>Court Date Detected</b></div><div class="dl"><span>Hearing</span><b>Pretrial Hearing</b></div><div class="dl"><span>Date</span><b>10/19/2026  ·  October 19, 2026</b></div><div class="dl"><span>Time</span><b>1:30 PM</b></div><div class="dl"><span>County</span><b>St. Louis</b></div><div class="clio-quote">“$100 fine • GWM met with Prosecutor to discuss the case. Prosecutor gave an offer but also said she will get discovery to us soon. GWM got a new date. Next Court Date: October 19, 2026 at 1:30 PM for Pretrial Hearing PMM: Please send Client new court date and verify accuracy in the calendar. Please sen”</div><div class="dacts"><button class="clio-btn blue tiny" onclick="clioAcceptDetection()" fdprocessedid="oupnos">Use these values</button><button class="clio-btn tiny" onclick="clioDismissDetection()" fdprocessedid="a6ldn">Dismiss</button></div></div></div>
+      <div id="clioDetectSlot"></div>
       <div class="clio-row">
         <div class="clio-grid">
           <div class="clio-f"><span class="clio-fl">Hearing Type</span>
-            <button type="button" class="clio-ddtrig" id="clioHearTypeTrig" onclick="clioPickHearType()" fdprocessedid="gyiqhw"><span class="v">Pretrial Hearing</span><span class="car"></span></button>
-            <input id="clioHearType" class="clio-otherin" placeholder="Describe the hearing type" style="display:none" oninput="clioHearInput(&#39;type&#39;,this.value)"></div>
+            <button type="button" class="clio-ddtrig" id="clioHearTypeTrig" onclick="clioPickHearType()" fdprocessedid="gyiqhw"><span class="v">Trial</span><span class="car"></span></button>
+            <input id="clioHearType" class="clio-otherin" placeholder="Describe the hearing type" style="display:none" oninput="clioHearInput('type',this.value)"></div>
           <div class="clio-f"><span class="clio-fl">County</span>
-            <input id="clioHearCounty" list="clioCounties" placeholder="Hennepin" oninput="clioHearInput(&#39;county&#39;,this.value)" fdprocessedid="knn9we"></div>
+            <input id="clioHearCounty" list="clioCounties" placeholder="Hennepin" oninput="clioHearInput('county',this.value)" fdprocessedid="knn9we"></div>
         </div>
         <div class="clio-grid">
           <div class="clio-f"><span class="clio-fl">Date</span>
-            <input id="clioHearDate" type="date" onchange="clioHearInput(&#39;date&#39;,this.value)"></div>
+            <input id="clioHearDate" type="date" onchange="clioHearInput('date',this.value)"></div>
           <div class="clio-f"><span class="clio-fl">Start Time</span>
-            <input id="clioHearStart" type="time" onchange="clioHearInput(&#39;start&#39;,this.value)"></div>
+            <input id="clioHearStart" type="time" onchange="clioHearInput('start',this.value)"></div>
         </div>
         <div class="clio-grid">
-          <div class="clio-f"><span class="clio-fl">End Time <em id="clioEndAutoTag" style="text-transform: none; letter-spacing: 0px; font-weight: 700; color: rgb(143, 182, 238);">— auto</em></span>
-            <input id="clioHearEnd" type="time" onchange="clioHearInput(&#39;end&#39;,this.value)"></div>
+          <div class="clio-f"><span class="clio-fl">End Time <em id="clioEndAutoTag" style="text-transform: none; letter-spacing: 0px; font-weight: 700; color: rgb(143, 182, 238); display: none;">— auto</em></span>
+            <input id="clioHearEnd" type="time" onchange="clioHearInput('end',this.value)"></div>
           <div class="clio-f"><span class="clio-fl">Courtroom</span>
-            <input id="clioHearRoom" placeholder="C-1857" oninput="clioHearInput(&#39;courtroom&#39;,this.value)" fdprocessedid="tnpep"></div>
+            <input id="clioHearRoom" placeholder="C-1857" oninput="clioHearInput('courtroom',this.value)" fdprocessedid="tnpep"></div>
         </div>
         <div class="clio-grid">
           <div class="clio-f"><span class="clio-fl">Judge <em style="text-transform:none;letter-spacing:0;font-weight:600;color:#4E5765">— by county</em></span>
-            <button type="button" class="clio-ddtrig" id="clioHearJudgeTrig" onclick="clioPickJudge()" fdprocessedid="ksw06k"><span class="v">Nicole L. Hopps</span><span class="car"></span></button>
-            <input id="clioHearJudge" class="clio-otherin" placeholder="Type the judge&#39;s name" style="display:none" oninput="clioHearInput(&#39;judge&#39;,this.value)"></div>
+            <button type="button" class="clio-ddtrig" id="clioHearJudgeTrig" onclick="clioPickJudge()" fdprocessedid="ksw06k"><span class="v">Shawn L. Pearson</span><span class="car"></span></button>
+            <input id="clioHearJudge" class="clio-otherin" placeholder="Type the judge's name" style="display:none" oninput="clioHearInput('judge',this.value)"></div>
           <div class="clio-f"><span class="clio-fl">Prosecutor</span>
-            <input id="clioHearPros" placeholder="Assistant County Attorney" oninput="clioHearInput(&#39;prosecutor&#39;,this.value)" fdprocessedid="txu06g"></div>
+            <input id="clioHearPros" placeholder="Assistant County Attorney" oninput="clioHearInput('prosecutor',this.value)" fdprocessedid="txu06g"></div>
         </div>
         <div class="clio-f"><span class="clio-fl">Location</span>
-          <input id="clioHearLoc" placeholder="Hennepin County Government Center" oninput="clioHearInput(&#39;location&#39;,this.value)" fdprocessedid="g1bhj4"></div>
+          <input id="clioHearLoc" placeholder="Hennepin County Government Center" oninput="clioHearInput('location',this.value)" fdprocessedid="g1bhj4"></div>
         <div class="clio-f"><span class="clio-fl">Additional Hearing Information</span>
-          <textarea id="clioHearDesc" rows="2" placeholder="Anything else that belongs on the calendar entry" oninput="clioHearInput(&#39;desc&#39;,this.value)"></textarea></div>
+          <textarea id="clioHearDesc" rows="2" placeholder="Anything else that belongs on the calendar entry" oninput="clioHearInput('desc',this.value)"></textarea></div>
         <div class="clio-f">
           <span class="clio-fl">Calendar Title <em style="text-transform:none;letter-spacing:0;font-weight:600;color:#4E5765">— built automatically</em></span>
-          <div id="clioCalTitle" class="clio-caltitle">GWM: Kroll | PT | St. Louis</div>
+          <div id="clioCalTitle" class="clio-caltitle">GWM: Chesnut | Trial | St. Louis</div>
         </div>
       </div>
       <datalist id="clioHearTypes"><option value="Arraignment Hearing"></option><option value="Bail Hearing"></option><option value="Contested Omnibus Hearing"></option><option value="Contested Pretrial Hearing"></option><option value="First Appearance Hearing"></option><option value="Implied Consent Evidentiary Hearing"></option><option value="Implied Consent Scheduling Conference"></option><option value="Jury Trial"></option><option value="Omnibus Hearing"></option><option value="Plea Hearing"></option><option value="Pretrial Hearing"></option><option value="Probation Violation"></option><option value="Rule 20 Review Hearing"></option><option value="Sentencing Hearing"></option><option value="Settlement Conference"></option><option value="Trial"></option><option value="Trial Management Conference"></option></datalist>
@@ -6810,15 +6841,15 @@ PMM: Please send Client new court date and verify accuracy in the calendar. Plea
     <!-- REVIEW -->
     <div class="clio-sec">
       <div class="clio-sh"><span class="t">Ready to Send</span></div>
-      <div id="clioReviewSlot"><div class="clio-review"><div class="clio-rrow"><span class="mk" style="color:var(--bronze-l)">§</span><span class="bd"><span class="bt">Hunter Josephj Kroll – 02587-Kroll</span><span class="bs">4th Degree DWI and Underage Drink and Drive - St. Louis County</span></span></div><div class="clio-rrow"><span class="mk">☑</span><span class="bd"><span class="bt">Matter Note</span><span class="bs">COURT SUMMARY  ·  09/02/2026</span></span></div><div class="clio-rrow"><span class="mk">☑</span><span class="bd"><span class="bt">Time Entry</span><span class="bs">5 hours  ·  09/02/2026</span></span></div><div class="clio-rrow"><span class="mk">☑</span><span class="bd"><span class="bt">Calendar Entry</span><span class="bs">Pretrial Hearing · October 19, 2026 · 1:30 PM to 2:30 PM (auto)</span></span></div><div class="clio-rrow"><span class="mk"></span><span class="bd"><span class="bs" style="font-family:var(--mono);color:var(--bronze-l)">GWM: Kroll | PT | St. Louis</span></span></div><div class="clio-rrow"><span class="mk"></span><span class="bd"><span class="bs"><b style="color:#6C7686;font-weight:800">Judge:</b> Nicole L. Hopps</span><span class="bs"><b style="color:#6C7686;font-weight:800">County:</b> St. Louis</span><span class="bs"><b style="color:#6C7686;font-weight:800">Location:</b> St. Louis County</span></span></div></div></div>
-      <div id="clioResultSlot"><div class="clio-results allok"><div class="rh">Clio update complete</div><div class="clio-rrow ok"><span class="mk">✔</span><span class="bd"><span class="bt">Matter Note Created</span><span class="bs">Note “COURT SUMMARY” created</span></span></div><div class="clio-rrow ok"><span class="mk">✔</span><span class="bd"><span class="bt">Time Entry Created</span><span class="bs">5 hours logged</span></span></div><div class="clio-rrow ok"><span class="mk">✔</span><span class="bd"><span class="bt">Calendar Entry Created</span><span class="bs">“GWM: Kroll | PT | St. Louis” added to the calendar</span></span></div></div></div>
+      <div id="clioReviewSlot"><div class="clio-review"><div class="clio-rrow"><span class="mk" style="color:var(--bronze-l)">§</span><span class="bd"><span class="bt">Steven Allen Chesnut – 02492-Chesnut</span><span class="bs">Gross Misdemeanor Theft</span></span></div><div class="clio-rrow"><span class="mk">☑</span><span class="bd"><span class="bt">Matter Note</span><span class="bs">PRETRIAL HEARING  ·  09/15/2026</span></span></div><div class="clio-rrow off"><span class="mk">☐</span><span class="bd"><span class="bt">Time Entry</span><span class="bs">no time entered  ·  09/15/2026</span></span></div><div class="clio-rrow off"><span class="mk">☐</span><span class="bd"><span class="bt">Calendar Entry</span><span class="bs">Not being added</span></span></div></div></div>
+      <div id="clioResultSlot"></div>
     </div>
 
   </div>
 
   <div class="clio-dfoot">
-    <button class="clio-save" id="clioSaveBtn" onclick="clioSaveToClio()" fdprocessedid="ntatqs" disabled="">✔ Sent to Clio</button>
-    <div class="clio-savenote" id="clioSaveNote">This note is in Clio. <button class="clio-btn tiny" style="margin-left:4px" onclick="clioUnlock()" fdprocessedid="zms903">Send again</button></div>
+    <button class="clio-save" id="clioSaveBtn" onclick="clioSaveToClio()" fdprocessedid="ntatqs">Send to Clio</button>
+    <div class="clio-savenote" id="clioSaveNote">Sending <b>PRETRIAL HEARING</b> to <b>Steven Allen Chesnut</b> &nbsp;·&nbsp; 02492-Chesnut</div>
   </div>
 </aside>
 
@@ -7161,22 +7192,11 @@ function upTitle(t){ return String(t==null?'':t).toUpperCase(); }
 function autoTitle(m){
   m=m||curMode();
   try{
-    if(m==='court'){
-      var t=(court.hearingType==='Other'?court.hearingTypeOther:court.hearingType)||'';
-      /* dictated notes have no form behind them — read the opening sentence */
-      if(!t){
-        try{
-          var first=(noteBodyText()||'').split('\n')[0]||'';
-          t=findHearType(first.replace(/\[[^\]]*\]/g,' '))||'';
-        }catch(e){}
-      }
-      return upTitle(t || 'Court Summary');
-    }
+    /* Fixed note labels — no hearing type, charge level or charge type appended.
+       The title stays editable; typing in the Note Title field overrides these. */
+    if(m==='court')  return upTitle('Court Summary');
     if(m==='review') return upTitle('Case Review Notes');
-    var lvl=(intake && intake.severity)?intake.severity:'';
-    var typ=(intake && intake.chargeType==='Other'?intake.otherType:(intake&&intake.chargeType))||'';
-    var tail=[lvl,typ].filter(Boolean).join(' ');
-    return upTitle(tail ? ('Intake Notes – '+tail) : 'Intake Notes');
+    return upTitle('Intake Notes');
   }catch(e){}
   return 'NOTE';
 }
@@ -9196,15 +9216,15 @@ document.addEventListener('keydown',function(e){
 <div class="gwm-drawer" id="gwmTray" aria-hidden="true">
   <div class="gwm-dh">
     <span class="tag">Notes Due</span>
-    <h3 id="gwmTrayTitle">Pending Notes</h3>
+    <h3 id="gwmTrayTitle">Pending Notes · 19</h3>
     <span class="sp"></span>
-    <button class="gwm-x" onclick="gwmCloseAll()" title="Close">&times;</button>
+    <button class="gwm-x" onclick="gwmCloseAll()" title="Close">×</button>
   </div>
-  <div class="gwm-db" id="gwmTrayBody"></div>
+  <div class="gwm-db" id="gwmTrayBody"><div class="gwm-card"><div class="t">GWM: Chesnut | PT | Ramsey (SU) (02492-Chesnut)</div><div class="meta"><span class="gwm-chip ok">MATTER LINKED</span>02492-Chesnut<br><b>Tue, Sep 15, 2026</b> · 9:00 AM – 10:00 AM<br><b>Where:</b> Ramsey County Suburban Court<br><b>Calendar:</b> gmannion@geraldmiller.com<br><b>Clio task:</b> #1605611112</div><div class="gwm-acts"><button class="gwm-btn tiny go" onclick="gwmWrite('gmannion@geraldmiller.com|1ad65l13iln7hlg750qfqohoqg|')">Write this note</button><a class="gwm-btn tiny" href="https://www.google.com/calendar/event?eid=MWFkNjVsMTNpbG43aGxnNzUwcWZxb2hvcWcgZ21hbm5pb25AZ2VyYWxkbWlsbGVyLmNvbQ" target="_blank" rel="noopener">Open in Google</a><button class="gwm-btn tiny" onclick="gwmResolve('gmannion@geraldmiller.com|1ad65l13iln7hlg750qfqohoqg|','done')">Already noted</button><button class="gwm-btn tiny" onclick="gwmResolve('gmannion@geraldmiller.com|1ad65l13iln7hlg750qfqohoqg|','dismiss')">Dismiss</button></div></div><div class="gwm-card"><div class="t">GWM: Libby - check in - phone</div><div class="meta"><span class="gwm-chip none">NO MATTER</span><br><b>Mon, Sep 14, 2026</b> · 3:00 PM – 3:30 PM<br><b>Calendar:</b> gmannion@geraldmiller.com<br><b>Clio task:</b> #1605085377</div><div class="gwm-acts"><button class="gwm-btn tiny go" onclick="gwmWrite('gmannion@geraldmiller.com|7ljvta18gc4f90sarg7uruoqtn|')">Write this note</button><a class="gwm-btn tiny" href="https://www.google.com/calendar/event?eid=N2xqdnRhMThnYzRmOTBzYXJnN3VydW9xdG4gZ21hbm5pb25AZ2VyYWxkbWlsbGVyLmNvbQ" target="_blank" rel="noopener">Open in Google</a><button class="gwm-btn tiny" onclick="gwmResolve('gmannion@geraldmiller.com|7ljvta18gc4f90sarg7uruoqtn|','done')">Already noted</button><button class="gwm-btn tiny" onclick="gwmResolve('gmannion@geraldmiller.com|7ljvta18gc4f90sarg7uruoqtn|','dismiss')">Dismiss</button></div></div><div class="gwm-card"><div class="t">GWM: Lee | PV | Hennepin (02439-Lee)</div><div class="meta"><span class="gwm-chip ok">MATTER LINKED</span>02439-Lee<br><b>Mon, Sep 14, 2026</b> · 1:30 PM – 2:30 PM<br><b>Where:</b> Hennepin County<br><b>Calendar:</b> gmannion@geraldmiller.com<br><b>Clio task:</b> #1605020142</div><div class="gwm-acts"><button class="gwm-btn tiny go" onclick="gwmWrite('gmannion@geraldmiller.com|diqlt83254arvtcfvgi59e04ls|')">Write this note</button><a class="gwm-btn tiny" href="https://www.google.com/calendar/event?eid=ZGlxbHQ4MzI1NGFydnRjZnZnaTU5ZTA0bHMgZ21hbm5pb25AZ2VyYWxkbWlsbGVyLmNvbQ" target="_blank" rel="noopener">Open in Google</a><button class="gwm-btn tiny" onclick="gwmResolve('gmannion@geraldmiller.com|diqlt83254arvtcfvgi59e04ls|','done')">Already noted</button><button class="gwm-btn tiny" onclick="gwmResolve('gmannion@geraldmiller.com|diqlt83254arvtcfvgi59e04ls|','dismiss')">Dismiss</button></div></div><div class="gwm-card"><div class="t">GWM: Coquyt - check in - phone</div><div class="meta"><span class="gwm-chip none">NO MATTER</span><br><b>Mon, Sep 14, 2026</b> · 11:00 AM – 11:30 AM<br><b>Calendar:</b> gmannion@geraldmiller.com<br><b>Clio task:</b> #1604819232</div><div class="gwm-acts"><button class="gwm-btn tiny go" onclick="gwmWrite('gmannion@geraldmiller.com|68tv4v295mngtcp3v8mmvp3j5r|')">Write this note</button><a class="gwm-btn tiny" href="https://www.google.com/calendar/event?eid=Njh0djR2Mjk1bW5ndGNwM3Y4bW12cDNqNXIgZ21hbm5pb25AZ2VyYWxkbWlsbGVyLmNvbQ" target="_blank" rel="noopener">Open in Google</a><button class="gwm-btn tiny" onclick="gwmResolve('gmannion@geraldmiller.com|68tv4v295mngtcp3v8mmvp3j5r|','done')">Already noted</button><button class="gwm-btn tiny" onclick="gwmResolve('gmannion@geraldmiller.com|68tv4v295mngtcp3v8mmvp3j5r|','dismiss')">Dismiss</button></div></div><div class="gwm-card"><div class="t">GWM: Martone-Olson Arraign., Henn. RD</div><div class="meta"><span class="gwm-chip none">NO MATTER</span><br><b>Mon, Sep 14, 2026</b> · 9:00 AM – 10:00 AM<br><b>Calendar:</b> gmannion@geraldmiller.com<br><b>Clio task:</b> #1604728797</div><div class="gwm-acts"><button class="gwm-btn tiny go" onclick="gwmWrite('gmannion@geraldmiller.com|4o3hkfgrll4jagvf691vragtds|')">Write this note</button><a class="gwm-btn tiny" href="https://www.google.com/calendar/event?eid=NG8zaGtmZ3JsbDRqYWd2ZjY5MXZyYWd0ZHMgZ21hbm5pb25AZ2VyYWxkbWlsbGVyLmNvbQ" target="_blank" rel="noopener">Open in Google</a><button class="gwm-btn tiny" onclick="gwmResolve('gmannion@geraldmiller.com|4o3hkfgrll4jagvf691vragtds|','done')">Already noted</button><button class="gwm-btn tiny" onclick="gwmResolve('gmannion@geraldmiller.com|4o3hkfgrll4jagvf691vragtds|','dismiss')">Dismiss</button></div></div><div class="gwm-card"><div class="t">GWM: Klemm | PT | Anoka (02480-Klemm)</div><div class="meta"><span class="gwm-chip ok">MATTER LINKED</span>02480-Klemm<br><b>Mon, Sep 14, 2026</b> · 8:30 AM – 9:30 AM<br><b>Where:</b> Anoka County<br><b>Calendar:</b> gmannion@geraldmiller.com<br><b>Clio task:</b> #1604703612</div><div class="gwm-acts"><button class="gwm-btn tiny go" onclick="gwmWrite('gmannion@geraldmiller.com|jlqgk9pq2t44ru3sv3fubkl80o|')">Write this note</button><a class="gwm-btn tiny" href="https://www.google.com/calendar/event?eid=amxxZ2s5cHEydDQ0cnUzc3YzZnVia2w4MG8gZ21hbm5pb25AZ2VyYWxkbWlsbGVyLmNvbQ" target="_blank" rel="noopener">Open in Google</a><button class="gwm-btn tiny" onclick="gwmResolve('gmannion@geraldmiller.com|jlqgk9pq2t44ru3sv3fubkl80o|','done')">Already noted</button><button class="gwm-btn tiny" onclick="gwmResolve('gmannion@geraldmiller.com|jlqgk9pq2t44ru3sv3fubkl80o|','dismiss')">Dismiss</button></div></div><div class="gwm-card"><div class="t">GWM: Adams | Probation Violation Hearing | Winona (Zoom) (02524-Adams)</div><div class="meta"><span class="gwm-chip ok">MATTER LINKED</span>02524-Adams<br><b>Fri, Sep 4, 2026</b> · 3:30 PM – 4:30 PM<br><b>Where:</b> Winona (Zoom)<br><b>Calendar:</b> gmannion@geraldmiller.com<br><b>Clio task:</b> #1599634017</div><div class="gwm-acts"><button class="gwm-btn tiny go" onclick="gwmWrite('gmannion@geraldmiller.com|41hk08daqpvqs5rj8jl4k1kom4|')">Write this note</button><a class="gwm-btn tiny" href="https://www.google.com/calendar/event?eid=NDFoazA4ZGFxcHZxczVyajhqbDRrMWtvbTQgZ21hbm5pb25AZ2VyYWxkbWlsbGVyLmNvbQ" target="_blank" rel="noopener">Open in Google</a><button class="gwm-btn tiny" onclick="gwmResolve('gmannion@geraldmiller.com|41hk08daqpvqs5rj8jl4k1kom4|','done')">Already noted</button><button class="gwm-btn tiny" onclick="gwmResolve('gmannion@geraldmiller.com|41hk08daqpvqs5rj8jl4k1kom4|','dismiss')">Dismiss</button></div></div><div class="gwm-card"><div class="t">GWM: Martin | Sentencing | Stearns County (In Person) (01563-Martin)</div><div class="meta"><span class="gwm-chip ok">MATTER LINKED</span>01563-Martin<br><b>Thu, Sep 3, 2026</b> · 3:30 PM – 4:30 PM<br><b>Where:</b> Stearns County<br><b>Calendar:</b> gmannion@geraldmiller.com<br><b>Clio task:</b> #1598980887</div><div class="gwm-acts"><button class="gwm-btn tiny go" onclick="gwmWrite('gmannion@geraldmiller.com|4ge1gsga9lgoe2np7a5lhn68o0|')">Write this note</button><a class="gwm-btn tiny" href="https://www.google.com/calendar/event?eid=NGdlMWdzZ2E5bGdvZTJucDdhNWxobjY4bzAgZ21hbm5pb25AZ2VyYWxkbWlsbGVyLmNvbQ" target="_blank" rel="noopener">Open in Google</a><button class="gwm-btn tiny" onclick="gwmResolve('gmannion@geraldmiller.com|4ge1gsga9lgoe2np7a5lhn68o0|','done')">Already noted</button><button class="gwm-btn tiny" onclick="gwmResolve('gmannion@geraldmiller.com|4ge1gsga9lgoe2np7a5lhn68o0|','dismiss')">Dismiss</button></div></div><div class="gwm-card"><div class="t">GWM: Martin - case review - phone</div><div class="meta"><span class="gwm-chip none">NO MATTER</span><br><b>Thu, Sep 3, 2026</b> · 1:00 PM – 2:00 PM<br><b>Calendar:</b> gmannion@geraldmiller.com<br><b>Clio task:</b> #1598835747</div><div class="gwm-acts"><button class="gwm-btn tiny go" onclick="gwmWrite('gmannion@geraldmiller.com|6aakh48h6d3jjipvje7vkei18d|')">Write this note</button><a class="gwm-btn tiny" href="https://www.google.com/calendar/event?eid=NmFha2g0OGg2ZDNqamlwdmplN3ZrZWkxOGQgZ21hbm5pb25AZ2VyYWxkbWlsbGVyLmNvbQ" target="_blank" rel="noopener">Open in Google</a><button class="gwm-btn tiny" onclick="gwmResolve('gmannion@geraldmiller.com|6aakh48h6d3jjipvje7vkei18d|','done')">Already noted</button><button class="gwm-btn tiny" onclick="gwmResolve('gmannion@geraldmiller.com|6aakh48h6d3jjipvje7vkei18d|','dismiss')">Dismiss</button></div></div><div class="gwm-card"><div class="t">GWM: Shirk - check in - phone</div><div class="meta"><span class="gwm-chip none">NO MATTER</span><br><b>Thu, Sep 3, 2026</b> · 12:00 PM – 1:00 PM<br><b>Calendar:</b> gmannion@geraldmiller.com<br><b>Clio task:</b> #1598771427</div><div class="gwm-acts"><button class="gwm-btn tiny go" onclick="gwmWrite('gmannion@geraldmiller.com|03cl59pu08kksa9ksqckhl7amj|')">Write this note</button><a class="gwm-btn tiny" href="https://www.google.com/calendar/event?eid=MDNjbDU5cHUwOGtrc2E5a3NxY2tobDdhbWogZ21hbm5pb25AZ2VyYWxkbWlsbGVyLmNvbQ" target="_blank" rel="noopener">Open in Google</a><button class="gwm-btn tiny" onclick="gwmResolve('gmannion@geraldmiller.com|03cl59pu08kksa9ksqckhl7amj|','done')">Already noted</button><button class="gwm-btn tiny" onclick="gwmResolve('gmannion@geraldmiller.com|03cl59pu08kksa9ksqckhl7amj|','dismiss')">Dismiss</button></div></div><div class="gwm-card"><div class="t">GWM: Acuna Nino - case review - phone</div><div class="meta"><span class="gwm-chip none">NO MATTER</span><br><b>Wed, Sep 2, 2026</b> · 5:00 PM – 6:00 PM<br><b>Calendar:</b> gmannion@geraldmiller.com<br><b>Clio task:</b> #1598458167</div><div class="gwm-acts"><button class="gwm-btn tiny go" onclick="gwmWrite('gmannion@geraldmiller.com|10c1g7120avmj9op04m3eage6a|')">Write this note</button><a class="gwm-btn tiny" href="https://www.google.com/calendar/event?eid=MTBjMWc3MTIwYXZtajlvcDA0bTNlYWdlNmEgZ21hbm5pb25AZ2VyYWxkbWlsbGVyLmNvbQ" target="_blank" rel="noopener">Open in Google</a><button class="gwm-btn tiny" onclick="gwmResolve('gmannion@geraldmiller.com|10c1g7120avmj9op04m3eage6a|','done')">Already noted</button><button class="gwm-btn tiny" onclick="gwmResolve('gmannion@geraldmiller.com|10c1g7120avmj9op04m3eage6a|','dismiss')">Dismiss</button></div></div><div class="gwm-card"><div class="t">GWM: Zuniga Alarcon Hearing Officer, Henn. Zoom</div><div class="meta"><span class="gwm-chip none">NO MATTER</span><br><b>Wed, Sep 2, 2026</b> · 3:15 PM – 4:15 PM<br><b>Calendar:</b> gmannion@geraldmiller.com<br><b>Clio task:</b> #1598458152</div><div class="gwm-acts"><button class="gwm-btn tiny go" onclick="gwmWrite('gmannion@geraldmiller.com|4ee5h4d1nb8qm40t9duebjsa0d|')">Write this note</button><a class="gwm-btn tiny" href="https://www.google.com/calendar/event?eid=NGVlNWg0ZDFuYjhxbTQwdDlkdWVianNhMGQgZ21hbm5pb25AZ2VyYWxkbWlsbGVyLmNvbQ" target="_blank" rel="noopener">Open in Google</a><button class="gwm-btn tiny" onclick="gwmResolve('gmannion@geraldmiller.com|4ee5h4d1nb8qm40t9duebjsa0d|','done')">Already noted</button><button class="gwm-btn tiny" onclick="gwmResolve('gmannion@geraldmiller.com|4ee5h4d1nb8qm40t9duebjsa0d|','dismiss')">Dismiss</button></div></div><div class="gwm-card"><div class="t">GWM: Morales | JT Roll Call | Morrison (02453-Morales)</div><div class="meta"><span class="gwm-chip ok">MATTER LINKED</span>02453-Morales<br><b>Wed, Sep 2, 2026</b> · 2:00 PM – 3:00 PM<br><b>Where:</b> Morrison County (In Person)<br><b>Calendar:</b> gmannion@geraldmiller.com<br><b>Clio task:</b> #1598458137</div><div class="gwm-acts"><button class="gwm-btn tiny go" onclick="gwmWrite('gmannion@geraldmiller.com|6euk4obcjlti76ut83o1554qjk|')">Write this note</button><a class="gwm-btn tiny" href="https://www.google.com/calendar/event?eid=NmV1azRvYmNqbHRpNzZ1dDgzbzE1NTRxamsgZ21hbm5pb25AZ2VyYWxkbWlsbGVyLmNvbQ" target="_blank" rel="noopener">Open in Google</a><button class="gwm-btn tiny" onclick="gwmResolve('gmannion@geraldmiller.com|6euk4obcjlti76ut83o1554qjk|','done')">Already noted</button><button class="gwm-btn tiny" onclick="gwmResolve('gmannion@geraldmiller.com|6euk4obcjlti76ut83o1554qjk|','dismiss')">Dismiss</button></div></div><div class="gwm-card"><div class="t">GWM: Palmer - check in - phone</div><div class="meta"><span class="gwm-chip none">NO MATTER</span><br><b>Wed, Sep 2, 2026</b> · 12:30 PM – 1:30 PM<br><b>Calendar:</b> gmannion@geraldmiller.com<br><b>Clio task:</b> #1598458122</div><div class="gwm-acts"><button class="gwm-btn tiny go" onclick="gwmWrite('gmannion@geraldmiller.com|6hg2vv4bk6knaaq79e9gpj35jv|')">Write this note</button><a class="gwm-btn tiny" href="https://www.google.com/calendar/event?eid=NmhnMnZ2NGJrNmtuYWFxNzllOWdwajM1anYgZ21hbm5pb25AZ2VyYWxkbWlsbGVyLmNvbQ" target="_blank" rel="noopener">Open in Google</a><button class="gwm-btn tiny" onclick="gwmResolve('gmannion@geraldmiller.com|6hg2vv4bk6knaaq79e9gpj35jv|','done')">Already noted</button><button class="gwm-btn tiny" onclick="gwmResolve('gmannion@geraldmiller.com|6hg2vv4bk6knaaq79e9gpj35jv|','dismiss')">Dismiss</button></div></div><div class="gwm-card"><div class="t">GWM: Clark | OH | Anoka (02321-Clark)</div><div class="meta"><span class="gwm-chip ok">MATTER LINKED</span>02321-Clark<br><b>Wed, Sep 2, 2026</b> · 8:30 AM – 9:30 AM<br><b>Where:</b> Anoka County<br><b>Calendar:</b> gmannion@geraldmiller.com<br><b>Clio task:</b> #1598458107</div><div class="gwm-acts"><button class="gwm-btn tiny go" onclick="gwmWrite('gmannion@geraldmiller.com|1lsgeg99s5al20e6j2ereciml4|')">Write this note</button><a class="gwm-btn tiny" href="https://www.google.com/calendar/event?eid=MWxzZ2VnOTlzNWFsMjBlNmoyZXJlY2ltbDQgZ21hbm5pb25AZ2VyYWxkbWlsbGVyLmNvbQ" target="_blank" rel="noopener">Open in Google</a><button class="gwm-btn tiny" onclick="gwmResolve('gmannion@geraldmiller.com|1lsgeg99s5al20e6j2ereciml4|','done')">Already noted</button><button class="gwm-btn tiny" onclick="gwmResolve('gmannion@geraldmiller.com|1lsgeg99s5al20e6j2ereciml4|','dismiss')">Dismiss</button></div></div><div class="gwm-card"><div class="t">GWM: B. Vang - check in - phone</div><div class="meta"><span class="gwm-chip none">NO MATTER</span><br><b>Tue, Sep 1, 2026</b> · 5:00 PM – 6:00 PM<br><b>Calendar:</b> gmannion@geraldmiller.com<br><b>Clio task:</b> #1598458092</div><div class="gwm-acts"><button class="gwm-btn tiny go" onclick="gwmWrite('gmannion@geraldmiller.com|6jb76b5oebs4kjl0fium202c2i|')">Write this note</button><a class="gwm-btn tiny" href="https://www.google.com/calendar/event?eid=NmpiNzZiNW9lYnM0a2psMGZpdW0yMDJjMmkgZ21hbm5pb25AZ2VyYWxkbWlsbGVyLmNvbQ" target="_blank" rel="noopener">Open in Google</a><button class="gwm-btn tiny" onclick="gwmResolve('gmannion@geraldmiller.com|6jb76b5oebs4kjl0fium202c2i|','done')">Already noted</button><button class="gwm-btn tiny" onclick="gwmResolve('gmannion@geraldmiller.com|6jb76b5oebs4kjl0fium202c2i|','dismiss')">Dismiss</button></div></div><div class="gwm-card"><div class="t">GWM: Silwal | OH | Blue Earth (Zoom) (02499-Silwal)</div><div class="meta"><span class="gwm-chip ok">MATTER LINKED</span>02499-Silwal<br><b>Tue, Sep 1, 2026</b> · 3:20 PM – 4:20 PM<br><b>Where:</b> Blue Earth County  (Zoom)<br><b>Calendar:</b> gmannion@geraldmiller.com<br><b>Clio task:</b> #1598458077</div><div class="gwm-acts"><button class="gwm-btn tiny go" onclick="gwmWrite('gmannion@geraldmiller.com|p5n4ae1j2s38hd0c3nupus1rig|')">Write this note</button><a class="gwm-btn tiny" href="https://www.google.com/calendar/event?eid=cDVuNGFlMWoyczM4aGQwYzNudXB1czFyaWcgZ21hbm5pb25AZ2VyYWxkbWlsbGVyLmNvbQ" target="_blank" rel="noopener">Open in Google</a><button class="gwm-btn tiny" onclick="gwmResolve('gmannion@geraldmiller.com|p5n4ae1j2s38hd0c3nupus1rig|','done')">Already noted</button><button class="gwm-btn tiny" onclick="gwmResolve('gmannion@geraldmiller.com|p5n4ae1j2s38hd0c3nupus1rig|','dismiss')">Dismiss</button></div></div><div class="gwm-card"><div class="t">GWM: Stewart | Plea Hrg | Pine (02219-Stewart)</div><div class="meta"><span class="gwm-chip ok">MATTER LINKED</span>02219-Stewart<br><b>Tue, Sep 1, 2026</b> · 2:30 PM – 3:30 PM<br><b>Where:</b> Pine County (Zoom)<br><b>Calendar:</b> gmannion@geraldmiller.com<br><b>Clio task:</b> #1598458062</div><div class="gwm-acts"><button class="gwm-btn tiny go" onclick="gwmWrite('gmannion@geraldmiller.com|r3hfvar1mj9i74s4p132kvl470|')">Write this note</button><a class="gwm-btn tiny" href="https://www.google.com/calendar/event?eid=cjNoZnZhcjFtajlpNzRzNHAxMzJrdmw0NzAgZ21hbm5pb25AZ2VyYWxkbWlsbGVyLmNvbQ" target="_blank" rel="noopener">Open in Google</a><button class="gwm-btn tiny" onclick="gwmResolve('gmannion@geraldmiller.com|r3hfvar1mj9i74s4p132kvl470|','done')">Already noted</button><button class="gwm-btn tiny" onclick="gwmResolve('gmannion@geraldmiller.com|r3hfvar1mj9i74s4p132kvl470|','dismiss')">Dismiss</button></div></div><div class="gwm-card"><div class="t">GWM: Peral-Nunez | Rule 20 Eval Hearing | Dakota (HA) (02198-Peral Nunez)</div><div class="meta"><span class="gwm-chip ok">MATTER LINKED</span>02198-Peral Nunez<br><b>Tue, Sep 1, 2026</b> · 1:30 PM – 2:30 PM<br><b>Where:</b> Dakota (HA)<br><b>Calendar:</b> gmannion@geraldmiller.com<br><b>Clio task:</b> #1598458047</div><div class="gwm-acts"><button class="gwm-btn tiny go" onclick="gwmWrite('gmannion@geraldmiller.com|02eg9b6fp40shpvohv5in7bvk8|')">Write this note</button><a class="gwm-btn tiny" href="https://www.google.com/calendar/event?eid=MDJlZzliNmZwNDBzaHB2b2h2NWluN2J2azggZ21hbm5pb25AZ2VyYWxkbWlsbGVyLmNvbQ" target="_blank" rel="noopener">Open in Google</a><button class="gwm-btn tiny" onclick="gwmResolve('gmannion@geraldmiller.com|02eg9b6fp40shpvohv5in7bvk8|','done')">Already noted</button><button class="gwm-btn tiny" onclick="gwmResolve('gmannion@geraldmiller.com|02eg9b6fp40shpvohv5in7bvk8|','dismiss')">Dismiss</button></div></div></div>
   <div class="gwm-df">
-    <button class="gwm-btn tiny" onclick="gwmScanNow()" id="gwmScanBtn">Scan calendar now</button>
+    <button class="gwm-btn tiny" onclick="gwmScanNow()" id="gwmScanBtn" fdprocessedid="93jrtj">Scan calendar now</button>
     <span class="sp"></span>
-    <span id="gwmLastRun" style="font-size:10.5px;color:#5B6472"></span>
+    <span id="gwmLastRun" style="font-size:10.5px;color:#5B6472">last swept 3:45 PM · 0 raised</span>
   </div>
 </div>
 
@@ -9214,7 +9234,7 @@ document.addEventListener('keydown',function(e){
     <span class="tag">Automation</span>
     <h3>Calendar &amp; Note Reminders</h3>
     <span class="sp"></span>
-    <button class="gwm-x" onclick="gwmCloseAll()" title="Close">&times;</button>
+    <button class="gwm-x" onclick="gwmCloseAll()" title="Close">×</button>
   </div>
   <div class="gwm-db" id="gwmSetBody"></div>
   <div class="gwm-df">
@@ -9226,13 +9246,13 @@ document.addEventListener('keydown',function(e){
 </div>
 
 <!-- in-app fallback banner -->
-<div id="gwmBanner">
+<div id="gwmBanner" data-uid="gmannion@geraldmiller.com|65s37j6s7d85ukkes97glrfgl1|" class="">
   <div class="bt">NOTE DUE</div>
-  <div class="bh" id="gwmBannerTitle"></div>
-  <div class="bs" id="gwmBannerSub"></div>
+  <div class="bh" id="gwmBannerTitle">Complete a note for GWM: Zobel PT Duluth in person</div>
+  <div class="bs" id="gwmBannerSub">Wed, Sep 16, 2026 · 2:30 PM – 3:30 PM</div>
   <div class="ba">
-    <button class="gwm-btn tiny go" onclick="gwmBannerOpen()">Write this note</button>
-    <button class="gwm-btn tiny" onclick="gwmBannerHide()">Later</button>
+    <button class="gwm-btn tiny go" onclick="gwmBannerOpen()" fdprocessedid="lhf4p">Write this note</button>
+    <button class="gwm-btn tiny" onclick="gwmBannerHide()" fdprocessedid="3htg5">Later</button>
   </div>
 </div>
 
@@ -9977,4 +9997,4 @@ document.addEventListener('keydown',function(e){
 })();
 </script>
 
-</body></html>
+<span id="PING_IFRAME_FORM_DETECTION" style="display: none;"></span></body></html>
