@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<!-- saved from url=(0063)file:///C:/Users/gerar/Downloads/Clio%20Note%20Generator_4.html -->
+<!-- saved from url=(0040)https://gmannion5149.github.io/GWMNotes/ -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Clio Note Generator</title>
+<title>Notes</title>
 <style>
 
 
@@ -1388,14 +1388,26 @@ select{color-scheme:dark}
   border:1px solid rgba(76,141,246,.34);background:#111925;color:#8FB6EE;transition:all .13s
 }
 .cnb-l .auto:hover{border-color:var(--led);color:#C7DBF5}
-.cnb-f input{
+.cnb-f input,.cnb-f select{
   font-family:inherit;font-size:13px;color:var(--txt);
   background:#0A0D12;border:1px solid var(--line2);border-radius:7px;
   padding:9px 11px;outline:none;width:100%;transition:border-color .14s,box-shadow .18s
 }
-.cnb-f input:focus{border-color:rgba(76,141,246,.55);box-shadow:0 0 0 3px rgba(76,141,246,.10)}
-.cnb-f input.bad{border-color:rgba(180,84,74,.7)}
+.cnb-f input:focus,.cnb-f select:focus{border-color:rgba(76,141,246,.55);box-shadow:0 0 0 3px rgba(76,141,246,.10)}
+.cnb-f input.bad,.cnb-f select.bad{border-color:rgba(180,84,74,.7)}
 .cnb-f input::placeholder{color:#4E5765}
+/* Note Title is a fixed dropdown */
+#clioBarTitle,#clioNoteTitle{
+  appearance:none;-webkit-appearance:none;cursor:pointer;
+  font-weight:700;letter-spacing:.6px;
+  padding-right:26px;
+  background-image:linear-gradient(45deg,transparent 50%,#7E8798 50%),linear-gradient(135deg,#7E8798 50%,transparent 50%);
+  background-position:calc(100% - 15px) calc(50% - 1px),calc(100% - 10px) calc(50% - 1px);
+  background-size:5px 5px,5px 5px;background-repeat:no-repeat;
+}
+#clioBarTitle option,#clioNoteTitle option{font-weight:700;letter-spacing:.4px}
+/* Connect to Clio now lives in the Calendar settings drawer */
+#connectClioBtn{display:none !important}
 
 .clio-send{
   flex:0 0 auto;font-family:inherit;font-size:11.5px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;
@@ -1547,7 +1559,7 @@ select{color-scheme:dark}
 }
 .clio-f textarea{resize:vertical;min-height:52px;line-height:1.5}
 .clio-f input:focus,.clio-f select:focus,.clio-f textarea:focus{border-color:rgba(76,141,246,.55);box-shadow:0 0 0 3px rgba(76,141,246,.10)}
-.clio-f input.bad{border-color:rgba(180,84,74,.7);box-shadow:0 0 0 3px rgba(180,84,74,.12)}
+.clio-f input.bad,.clio-f select.bad{border-color:rgba(180,84,74,.7);box-shadow:0 0 0 3px rgba(180,84,74,.12)}
 .clio-f input::placeholder,.clio-f textarea::placeholder{color:#4E5765}
 .clio-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .clio-hint{font-size:10.5px;color:var(--dim);line-height:1.5}
@@ -2000,28 +2012,22 @@ html{ -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; tex
   gap:10px;
 ">
 
-  <span id="clioStatusLight" style="width: 12px; height: 12px; border-radius: 50%; background: rgb(245, 158, 11); display: inline-block;"></span>
+  <span class="wordmark">Notes</span><span id="clioStatusLight" style="width: 12px; height: 12px; border-radius: 50%; background: rgb(34, 197, 94); display: inline-block;"></span>
 
   <span id="clioStatusText" style="
     font-size:14px;
     font-weight:700;
-  ">Unable to verify Clio</span>
+  ">Clio Connected — Gerard Mannion</span>
 
-  <button id="connectClioBtn" class="clio-3d" style="display: inline-flex;" fdprocessedid="kuy45">
+  <button id="connectClioBtn" class="clio-3d" style="display: none;" fdprocessedid="kuy45">
     <span class="c3-ico"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></span>
     <span class="c3-txt">Connect to Clio</span>
   </button>
 
-<span style="flex: 1 1 0%;"></span><span id="gwmGoogleWrap"><span class="gwm-dot" id="gwmGoogleDot" style="background: rgb(34, 197, 94);"></span><span id="gwmGoogleText">Calendar — gmannion@geraldmiller.com</span></span><button id="gwmBellBtn" class="gwm-btn" title="Notes waiting to be written" style="border-color: rgb(142, 58, 49);" fdprocessedid="pnx2ta"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg><span>Notes Due</span><span class="gwm-badge" id="gwmBadge">19</span></button><button id="gwmGearBtn" class="gwm-btn" title="Calendar and reminder settings" fdprocessedid="fkyi4m"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"></rect><path d="M16 2v4M8 2v4M3 10h18"></path></svg><span>Calendar</span></button></div>
+<span style="flex: 1 1 0%;"></span><span id="gwmGoogleWrap"><span class="gwm-dot" id="gwmGoogleDot" style="background: rgb(34, 197, 94);"></span><span id="gwmGoogleText">Calendar — gmannion@geraldmiller.com</span></span><button id="gwmBellBtn" class="gwm-btn" title="Notes waiting to be written" style="border-color: rgb(142, 58, 49);" fdprocessedid="pnx2ta"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg><span>Notes Due</span><span class="gwm-badge" id="gwmBadge">19</span></button><button id="gwmGearBtn" class="gwm-btn" title="Connections and settings" fdprocessedid="fkyi4m"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"></rect><path d="M16 2v4M8 2v4M3 10h18"></path></svg><span>Settings</span></button></div>
 <div class="led-strip"></div>
 
-<header>
-  <div class="badge">§</div>
-  <div>
-    <h1>Clio Note Generator</h1>
-    <p>Gerald Miller P.A. · Minnesota Criminal Defense</p>
-  </div>
-</header>
+<!-- header removed; the app is identified by the Notes wordmark in the top strip -->
 
 <div class="topbar">
   <span class="tb-lab">Note</span>
@@ -2032,11 +2038,11 @@ html{ -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; tex
       <span class="car">▼</span>
     </button>
     <div class="mode-menu" id="modeMenu">
-      <div class="mode-item sel" data-mode="intake" onclick="pickMode('intake')">
+      <div class="mode-item" data-mode="intake" onclick="pickMode('intake')">
         <div class="mi-ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg></div>
         <div><div class="mi-t">Intake Notes</div><div class="mi-s">New call · charge, court, custody, fee</div></div>
       </div>
-      <div class="mode-item" data-mode="court" onclick="pickMode('court')">
+      <div class="mode-item sel" data-mode="court" onclick="pickMode('court')">
         <div class="mi-ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18"></path><path d="M7.5 21h9"></path><path d="M5 6h14"></path><path d="M12 6l6.5-1.5M12 6L5.5 4.5"></path><path d="M5 6l-2.6 6a3 3 0 0 0 5.2 0L5 6z"></path><path d="M19 6l-2.6 6a3 3 0 0 0 5.2 0L19 6z"></path></svg></div>
         <div><div class="mi-t">Court Summary</div><div class="mi-s">After court · judge, offer, next date</div></div>
       </div>
@@ -2053,9 +2059,9 @@ html{ -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; tex
     <button id="segManual" onclick="setEngine('manual')" fdprocessedid="y2i4c">Manual</button>
   </div>
 
-  <button class="tb-btn" id="bankBtn" onclick="openBank()" title="Attorney contact bank" fdprocessedid="n9ycu">
+  <button class="tb-btn" id="bankBtn" onclick="openBank()" title="Contact bank" fdprocessedid="n9ycu">
     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-    Attorneys <span class="n" id="bankBtnCount">0</span>
+    Contacts <span class="n" id="bankBtnCount">0</span>
   </button>
 
   <button class="dict-open" onclick="dictOpen()" title="Dictate the whole note out loud" fdprocessedid="g6max">
@@ -2075,34 +2081,39 @@ html{ -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; tex
 
 <div class="main">
   <div class="stage" id="stage">
-    <div class="clio-notebar" id="clioNoteBar"><div class="cnb-head"><span class="k">Send to Clio</span><span class="m">Intake Notes</span><span class="sp"></span><span class="warnpill">Clio not connected</span></div><div class="cnb-row"><div class="cnb-f grow"><span class="cnb-l">Clio Matter for this note</span><button class="clio-cbtrig empty" id="clioComboBar" onclick="clioOpenPop('clioComboBar')"><span class="av">?</span><span class="id"><span class="t">Select a Clio matter…</span><span class="s">this note will not send until one is picked</span></span><span class="car">▾</span></button></div><div class="cnb-f title"><span class="cnb-l">Note Title <button class="auto" onclick="clioAutoTitle()" title="Fill the title from this note">auto</button></span><input id="clioBarTitle" placeholder="Pretrial Hearing" oninput="clioNoteTitleInput(this.value,true)"></div><div class="cnb-f date"><span class="cnb-l">Note Date</span><input id="clioBarDate" type="date" onchange="clioNoteDateInput(this.value)"></div></div></div>
-    <div class="wz" id="wizard"><div class="wz-scan"><div class="wz-scan-drop" id="docUploadZone" onclick="document.getElementById('docFileInput').click()" ondragover="event.preventDefault();this.classList.add('drag')" ondragleave="this.classList.remove('drag')" ondrop="docDrop(event)"><input type="file" id="docFileInput" accept="application/pdf,image/*" style="display:none" onchange="docPicked(this.files[0])"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><path d="M14 2v6h6"></path><path d="M12 18v-6"></path><path d="M9 15l3-3 3 3"></path></svg><b>Drop the citation or complaint</b><span>PDF or photo · AI fills the answers for you</span></div><div id="docScanRow" style="display:none"><span class="doc-chip" id="docChip"></span><button class="ai-btn" id="docScanBtn" onclick="scanDocument()">AI Scan &amp; Autofill</button></div><div id="docScanMsg"></div></div><div class="wz-bar"><i style="width:8%"></i></div><div class="wz-meta"><span class="wz-sec">Origin</span><span class="wz-step">Step <b>1</b> / 13</span></div><div class="wz-card" id="wzCard"><div class="wz-q">Who took the call?</div><div class="wz-hint">Optional — press Enter to skip.</div><div class="wz-body"><div class="wz-opts"><div class="wz-opt" data-v="GAM" onclick="wzSetMain(this.dataset.v,true)"><span class="k">1</span>GAM</div><div class="wz-opt" data-v="KJD" onclick="wzSetMain(this.dataset.v,true)"><span class="k">2</span>KJD</div><div class="wz-opt" data-v="BDH" onclick="wzSetMain(this.dataset.v,true)"><span class="k">3</span>BDH</div><div class="wz-opt" data-v="ANB" onclick="wzSetMain(this.dataset.v,true)"><span class="k">4</span>ANB</div><div class="wz-opt" data-v="GWM" onclick="wzSetMain(this.dataset.v,true)"><span class="k">5</span>GWM</div></div></div><div class="wz-nav"><button class="wz-btn pri" onclick="wzGo(1)"><kbd>↵</kbd> Next</button><button class="wz-btn ghost" onclick="wzGo(1)">Skip</button><span class="sp"></span><button class="wz-btn ghost" onclick="wzFinish()"><kbd>⌘↵</kbd> Finish now</button></div></div><div class="wz-rail"><div class="wz-tick cur" title="Who took the call?" onclick="wzJump('i_orig')"></div><div class="wz-tick " title="Who is calling?" onclick="wzJump('i_caller')"></div><div class="wz-tick " title="What is the potential client's name?" onclick="wzJump('i_pcname')"></div><div class="wz-tick " title="What level is the charge?" onclick="wzJump('i_sev')"></div><div class="wz-tick " title="What kind of case is it?" onclick="wzJump('i_cat')"></div><div class="wz-tick " title="Court file or citation number?" onclick="wzJump('i_file')"></div><div class="wz-tick " title="What is the offense date?" onclick="wzJump('i_odate')"></div><div class="wz-tick " title="Where did it happen?" onclick="wzJump('i_loc')"></div><div class="wz-tick " title="Is a court date already set?" onclick="wzJump('i_cdq')"></div><div class="wz-tick " title="What is the custody status?" onclick="wzJump('x_cust')"></div><div class="wz-tick " title="What else came out of the call?" onclick="wzJump('w_det')"></div><div class="wz-tick " title="What is the flat fee?" onclick="wzJump('w_fee')"></div><div class="wz-tick " title="Next Steps" onclick="wzJump('w_next')"></div></div></div>
+    <div class="clio-notebar" id="clioNoteBar"><div class="cnb-head"><span class="k">Send to Clio</span><span class="m">Court Summary</span><span class="sp"></span></div><div class="cnb-row"><div class="cnb-f grow"><span class="cnb-l">Clio Matter for this note</span><button class="clio-cbtrig has" id="clioComboBar" onclick="clioOpenPop('clioComboBar')"><span class="av">SC</span><span class="id"><span class="t">Steven Allen Chesnut</span><span class="s">02492-Chesnut  ·  Open</span></span><span class="car">▾</span></button></div><div class="cnb-f title"><span class="cnb-l">Note Title <button class="auto" onclick="clioAutoTitle()" title="Fill the title from this note">auto</button></span><select id="clioBarTitle" onchange="clioNoteTitleInput(this.value,true)"><option value="INTAKE NOTES">INTAKE NOTES</option><option value="COURT SUMMARY">COURT SUMMARY</option><option value="CASE REVIEW NOTES">CASE REVIEW NOTES</option><option value="CHECK IN NOTES">CHECK IN NOTES</option></select></div><div class="cnb-f date"><span class="cnb-l">Note Date</span><input id="clioBarDate" type="date" onchange="clioNoteDateInput(this.value)"></div></div></div>
+    <div class="wz" id="wizard"><div class="wz-bar"><i style="width:100%"></i></div><div class="wz-meta"><span class="wz-sec">Review</span><span class="wz-step">Step <b>13</b> / 13</span></div><div class="wz-done"><h3>Note ready</h3><p class="sub">Everything you answered is below. Click any line to jump back and change it — the note on the right updates instantly.</p><div class="wz-ans"><div class="wz-ans-row" onclick="wzJump('c_county')"><span class="k">Which county</span><span class="v">Ramsey</span><span class="e">edit</span></div><div class="wz-ans-row" onclick="wzJump('c_judge')"><span class="k">Who was the judge</span><span class="v">No Judge</span><span class="e">edit</span></div><div class="wz-ans-row" onclick="wzJump('c_pros')"><span class="k">Who was the prosecutor</span><span class="v">Elizabeth Duel</span><span class="e">edit</span></div><div class="wz-ans-row" onclick="wzJump('c_office')"><span class="k">Which office is Elizabeth Duel with</span><span class="v">Office: Chestnut Cambronne</span><span class="e">edit</span></div><div class="wz-ans-row" onclick="wzJump('c_htype')"><span class="k">What kind of hearing was it</span><span class="v">Pretrial Hearing</span><span class="e">edit</span></div><div class="wz-ans-row" onclick="wzJump('c_date')"><span class="k">What day was the hearing</span><span class="v">September 15, 2026</span><span class="e">edit</span></div><div class="wz-ans-row" onclick="wzJump('c_appear')"><span class="k">Who appeared, and how</span><span class="v">Attorney: GWM
+Appearance: by Zoom
+With client?: On Client's behalf</span><span class="e">edit</span></div><div class="wz-ans-row" onclick="wzJump('c_wit')"><span class="k">Was there witness testimony</span><span class="v">No</span><span class="e">edit</span></div><div class="wz-ans-row" onclick="wzJump('c_details')"><span class="k">What happened at the hearing</span><span class="v">GWM met with Prosecutor to receive an updated offer. Initial offer was CFD on the first 2 counts and plead to the speed. Prosecutor today agreed to CFD on all 3 with a $475 fine. Client accepted and case resolved. </span><span class="e">edit</span></div><div class="wz-ans-row" onclick="wzJump('c_offerq')"><span class="k">Was an offer made</span><span class="v">No</span><span class="e">edit</span></div><div class="wz-ans-row" onclick="wzJump('c_nextq')"><span class="k">Is there a next court date</span><span class="v">No</span><span class="e">edit</span></div><div class="wz-ans-row" onclick="wzJump('c_briefq')"><span class="k">Is a brief or motion due</span><span class="v">No</span><span class="e">edit</span></div><div class="wz-ans-row" onclick="wzJump('c_pmmq')"><span class="k">Add a PMM directive for staff</span><span class="v">No</span><span class="e">edit</span></div></div><div class="wz-nav" style="margin-top:0"><button class="wz-btn fin" onclick="copyNote()">Copy note</button><button class="wz-btn" onclick="wzGo(-1)">Back to last question</button><span class="sp"></span><button class="wz-btn ghost" onclick="wzResetMode()">Clear and start over</button></div></div></div>
     <div class="form-panel" id="formPanel" style="display:none"></div>
   </div>
 
   <div class="output-panel">
     <div class="output-header">
       <span class="out-dot"></span>
-      <span id="outputLabel" class="output-label-text">Intake Notes</span>
+      <span id="outputLabel" class="output-label-text">Court Summary</span>
       <span class="out-live" id="outLive">Live</span>
       <div class="out-actions">
-        <button class="out-btn" id="headerPrintBtn" onclick="printNote()" style="" fdprocessedid="fyejt">Print</button>
-        <button class="out-btn go" id="headerCopyBtn" onclick="copyNote()" style="" fdprocessedid="jklg1">Copy</button>
+        <button class="out-btn build" id="aiCleanBtn" onclick="aiCleanup()" title="Write the note up into finished prose">Build</button>
+        <button class="out-btn go" id="headerExportBtn" onclick="clioOpenDrawer()" title="Send this note to Clio">Export</button>
+        <button class="out-btn" id="headerCopyBtn" onclick="copyNote()">Copy</button>
+        <button class="out-btn" id="headerPrintBtn" onclick="printNote()">Print</button>
+        <button class="out-btn rev" id="aiRevertBtn" onclick="revertNote()" style="display:none" title="Undo the Build">Revert</button>
       </div>
     </div>
-    <div class="output-body" id="outputBody"><div class="note-output" id="noteRendered" contenteditable="false" spellcheck="true"><p class="note-intro">Potential Client called regarding their [LEVEL] [TYPE] case.</p><div class="note-spacer"></div><div class="note-spacer"></div><p><strong><u>Caller:</u></strong> [ENTER]</p><div class="note-spacer"></div></div><div class="ai-btn-row"><button class="ai-btn" id="aiCleanBtn" onclick="aiCleanup()">Optimize</button><button class="ai-btn ai-btn-edit" id="noteEditBtn" onclick="toggleNoteEdit()" title="Edit the note by hand">Edit Note</button><button class="copy-btn-below" id="copyBtnBelow" onclick="copyNote()">Copy Note</button><button class="clio-send-btm" onclick="clioOpenDrawer()" title="Send this note to Clio">Send to Clio</button><button class="ai-btn ai-btn-revert" id="aiRevertBtn" onclick="revertNote()" style="display:none">↩ Revert</button><span class="note-edit-hint" id="noteEditHint" style="display:none">Editing on — your changes are kept for Copy, Print and Send to Clio.</span></div></div>
+    <div class="output-body" id="outputBody"><div class="note-output" id="noteRendered"><p class="note-intro">GWM appeared on Client's behalf by Zoom for Client's Pretrial Hearing on September 15, 2026. The Prosecutor was Elizabeth Duel and the Honorable Judge No Judge presided.</p><div class="note-spacer"></div><p style="margin:0 0 4px 0;padding-left:6px;">• GWM met with Prosecutor to receive an updated offer. Initial offer was CFD on the first 2 counts and plead to the speed. Prosecutor today agreed to CFD on all 3 with a $475 fine. Client accepted and case resolved.</p></div></div></div>
   </div>
 </div>
 
 <div class="modal" id="bankModal">
   <div class="modal-box">
     <div class="modal-head">
-      <h3>Attorney Bank</h3>
+      <h3>Contacts</h3>
       <span class="cnt" id="bankCount">0 contacts</span>
       <button class="modal-x" onclick="closeBank()" title="Close">×</button>
     </div>
     <div class="modal-tabs">
-      <button id="bankTabPeople" class="on" onclick="bankTab('people')">Attorneys <span>0</span></button>
+      <button id="bankTabPeople" class="on" onclick="bankTab('people')">Contacts <span>0</span></button>
       <button id="bankTabOffices" onclick="bankTab('offices')">Offices <span>0</span></button>
     </div>
     <div class="modal-tools">
@@ -2408,7 +2419,7 @@ function showOutput() {
   el('outputBody').innerHTML = `
     <div class="note-output" id="noteRendered">${generatedHTML}</div>
     <div class="ai-btn-row">
-      <button class="ai-btn" id="aiCleanBtn" onclick="aiCleanup()">Optimize</button>
+      <button class="ai-btn" id="aiCleanBtn" onclick="aiCleanup()" title="Write the note up into finished prose">Build</button>
       <button class="copy-btn-below" id="copyBtnBelow" onclick="copyNote()">Copy Note</button>
       <button class="ai-btn ai-btn-revert" id="aiRevertBtn" onclick="revertNote()" style="display:none">↩ Revert</button>
     </div>`;
@@ -2438,26 +2449,50 @@ function textToNoteHTML(text) {
   });
   return out;
 }
+/* ── BUILD ───────────────────────────────────────────────────────────────────
+   Build takes whatever is in the note — including shorthand typed straight in —
+   and writes it up as a finished Clio note: full sentences, flowing prose under
+   each heading, professional wording. It expands what is there. It never adds a
+   fact, date, name, number or conclusion that was not already written. */
+function BUILD_SYSTEM_PROMPT(){
+  return [
+    "You write up internal case notes for a Minnesota DWI and criminal-defense attorney in Clio.",
+    "You are given rough working notes: shorthand, abbreviations, fragments, sentence pieces, occasionally just a few words under a heading. Return the finished note, written the way a careful attorney would write it up for the file.",
+
+    "ABSOLUTE LIMIT — this is a legal case file. Never add, infer, assume, estimate or embellish any fact. Do not invent or alter a name, date, time, dollar amount, statute number, case or file number, test reading, county, court, hearing type, charge, offer term, deadline or outcome. Do not add a conclusion, opinion, recommendation or next step that is not already written. Do not add boilerplate the note does not contain. If something is sparse, leave it sparse. If something is ambiguous or you cannot tell what was meant, keep the original wording verbatim rather than guessing. Every proper noun, number and date in your output must appear in the input.",
+
+    "WHAT TO DO. Expand shorthand and abbreviations into plain professional English (for example: 'pros' to 'the Prosecutor', 'ct' to 'the Court', 'CL' to 'Client', 'PT' to 'Pretrial Hearing', 'CFD' stays 'CFD', 'neg' to 'negotiated'). Turn fragments into complete, properly punctuated sentences. Fix spelling, grammar, verb tense, subject-verb agreement and capitalization. Tighten wording and make it read in one clear voice. Keep the attorney's own terms of art exactly as written — CFD, DANCO, implied consent, Fast Track, stay of adjudication, and the like.",
+
+    "STRUCTURE. Keep every heading exactly as given, each on its own line, in the order given — a heading is a short phrase ending in a colon, such as 'Details:', 'Offer:', 'Next Steps:', 'Court Date:', \"Attorney's Advice:\". Do not rename, merge, reorder, add or drop a heading. Put each piece of information under the heading it already sits under; do not move content between sections.",
+
+    "Under narrative headings — Details, Evidence and Strategy Review, Attorney's Advice — and under any unlabeled body text, merge the fragments into ONE flowing paragraph of complete sentences and remove the bullet characters. Under Offer, Next Steps, Aggravating Factors and Prior Impaired Driving Offense(s), keep one item per line and do not merge them, but still write each as a clean phrase or sentence. A labeled line with a single value stays on one line. The opening sentence stays its own standalone line.",
+
+    "Leave any line beginning with 'PMM:' exactly as written, word for word.",
+
+    "Return ONLY the finished note text. No preamble, no commentary, no explanation of what you changed, no markdown, no asterisks, and no bullet characters except on the one-per-line sections above."
+  ].join(" ");
+}
+
 function aiCleanup() {
   var box = document.getElementById('noteRendered');
   var btn = document.getElementById('aiCleanBtn');
   if (!box) return;
   if (!AI_PROXY_URL || AI_PROXY_URL.indexOf('YOUR-WORKER-SUBDOMAIN') !== -1) {
     box.insertAdjacentHTML('afterend',
-      '<div class="ai-msg" id="aiMsg">Optimize needs your Claude proxy. Set <strong>AI_PROXY_URL</strong> at the top of the file to your Cloudflare Worker URL, then reload.</div>');
+      '<div class="ai-msg" id="aiMsg">Build needs your Claude proxy. Set <strong>AI_PROXY_URL</strong> at the top of the file to your Cloudflare Worker URL, then reload.</div>');
     setTimeout(function(){ var m=document.getElementById('aiMsg'); if(m) m.remove(); }, 7000);
     return;
   }
   var noteText = box.innerText.replace(/\n{3,}/g,'\n\n').trim();
   var original = generatedHTML;
-  btn.disabled = true; btn.textContent = 'Optimizing…';
-  var sys = "You are a copy editor for a criminal-defense attorney's internal case notes in Clio. Polish the note. Do NOT change what it says. FORBIDDEN: adding, removing, inferring or embellishing any fact, opinion, conclusion or recommendation; altering any name, date, time, statute number, dollar amount, case or file number, test reading, or county; changing any line that begins with 'PMM:'. If something is ambiguous, leave it as written. ALLOWED AND REQUIRED: fix spelling, grammar, punctuation, verb tense, subject-verb agreement and capitalization; expand shorthand and abbreviations into plain professional English; tighten wording; and improve flow. STRUCTURE. Keep every heading (a short phrase ending in a colon, e.g. 'Details:', 'Offer:', 'Next Steps:', 'Court Date:') on its own line, worded exactly as given, and keep the sections in the order given. Under narrative headings - Details, Evidence and Strategy Review, Attorney's Advice - and under any unlabeled body text, merge the bullet fragments into ONE flowing paragraph of complete, properly punctuated sentences and delete the bullet characters. Under Offer, Next Steps, Aggravating Factors, and Prior Impaired Driving Offense(s), keep one item per line and do not merge them. Single-value labeled lines stay one per line. The opening sentence stays its own standalone line. Return ONLY the finished note text: no preamble, no commentary, no markdown, no asterisks, no bullet characters except where required above."
+  btn.disabled = true; btn.textContent = 'Building…';
+  var sys = BUILD_SYSTEM_PROMPT()
   fetch(AI_PROXY_URL, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       model: 'claude-sonnet-4-6',
-      max_tokens: 1000,
+      max_tokens: 2000,
       system: sys,
       messages: [{ role: 'user', content: noteText }]
     })
@@ -2474,13 +2509,13 @@ function aiCleanup() {
     var nb = document.getElementById('noteRendered');
     if (nb) nb.innerHTML = generatedHTML;
     var rv = document.getElementById('aiRevertBtn'); if (rv) rv.style.display = 'inline-flex';
-    btn.disabled = false; btn.textContent = 'Optimize';
+    btn.disabled = false; btn.textContent = 'Build';
   })
   .catch(function(){
-    btn.disabled = false; btn.textContent = 'Optimize';
+    btn.disabled = false; btn.textContent = 'Build';
     var nb = document.getElementById('noteRendered');
     if (nb) nb.insertAdjacentHTML('afterend',
-      '<div class="ai-msg" id="aiMsg">Optimize could not reach the proxy. Check that your Worker is deployed and AI_PROXY_URL is correct.</div>');
+      '<div class="ai-msg" id="aiMsg">Build could not reach the proxy. Check that your Worker is deployed and AI_PROXY_URL is correct.</div>');
     setTimeout(function(){ var m=document.getElementById('aiMsg'); if(m) m.remove(); }, 7000);
   });
 }
@@ -3498,164 +3533,147 @@ function renderWitnessList() {
   cont.innerHTML = html;
 }
 function renderCourtForm() {
+  const isIC = ['Implied Consent Evidentiary Hearing','Implied Consent Scheduling Conference'].includes(court.hearingType);
+  const yn = (v,on,off,extra) => sel(['Yes','No'], v?'Yes':'No',
+        `${on}=(this.value==='Yes');${extra||''}`, '');
   return `
-    <div class="section-label">Attorney</div>
-    <div class="field" style="max-width:200px">
-      <label>Appearing Attorney</label>
-      ${sel(TEAM, court.attorney || 'GWM', "court.attorney=this.value; generate();", '')}
-    </div>
-
     <div class="section-label">Hearing</div>
-    <div class="row-2">
-      <div class="field">
-        <label>Hearing Date</label>
-        <input type="date" value="${court.hearingDate}" onchange="court.hearingDate=this.value">
-      </div>
-      <div class="field">
-        <label>Hearing Type</label>
-        ${sel(HEARING_TYPES, court.hearingType, "court.hearingType=this.value; var o=document.getElementById('courtHearingOther'); if(o) o.style.display=this.value==='Other'?'block':'none'; if(this.value!=='Other') court.hearingTypeOther=''; var ic=['Implied Consent Evidentiary Hearing','Implied Consent Scheduling Conference'].includes(this.value); var ps=document.getElementById('prosecutorRow'); var as=document.getElementById('aagRow'); if(ps)ps.style.display=ic?'none':'block'; if(as)as.style.display=ic?'block':'none';", "Select type")}
-        <div id="courtHearingOther" style="display:${court.hearingType==='Other'?'block':'none'};margin-top:8px">
-          <input type="text" value="${escHtml(court.hearingTypeOther)}" placeholder="Describe hearing type..." oninput="court.hearingTypeOther=this.value">
-        </div>
-      </div>
-    </div>
-    <div class="row-2" style="margin-bottom:14px;max-width:480px">
-      <div class="field" style="margin-bottom:0">
-        <label>Appearance</label>
+    <div class="fgrid">
+      <div class="field"><label>Attorney</label>
+        ${sel(TEAM, court.attorney || 'GWM', "court.attorney=this.value; generate();", '')}</div>
+      <div class="field"><label>Date</label>
+        <input type="date" value="${court.hearingDate}" onchange="court.hearingDate=this.value"></div>
+      <div class="field w2"><label>Hearing Type</label>
+        ${sel(HEARING_TYPES, court.hearingType, "court.hearingType=this.value; renderForm(); generate();", "Select type")}</div>
+      ${court.hearingType==='Other' ? `<div class="field w2"><label>Describe</label>
+        <input type="text" value="${escHtml(court.hearingTypeOther)}" placeholder="Hearing type" oninput="court.hearingTypeOther=this.value"></div>` : ''}
+      <div class="field"><label>Appearance</label>
         <select onchange="court.appearedWith=this.value">
           <option value="with"${court.appearedWith==='with'?' selected':''}>With Client</option>
           <option value="behalf"${court.appearedWith==='behalf'?' selected':''}>On Client's Behalf</option>
-        </select>
-      </div>
-      <div class="field" style="margin-bottom:0">
-        <label>Mode</label>
+        </select></div>
+      <div class="field"><label>Mode</label>
         <select onchange="court.appearance=this.value">
           <option value="in person"${court.appearance==='in person'?' selected':''}>In Person</option>
           <option value="by Zoom"${court.appearance==='by Zoom'?' selected':''}>By Zoom</option>
           <option value="by phone"${court.appearance==='by phone'?' selected':''}>By Phone</option>
-        </select>
-      </div>
+        </select></div>
     </div>
 
     <div class="section-label">Courtroom</div>
-    <div class="field" style="max-width:280px;margin-bottom:12px">
-      <label>County</label>
-      ${sel(MN_COUNTIES, court.county, "onCourtCountyChange(this.value)", "Select county")}
-    </div>
-    <div class="row-2">
+    <div class="fgrid">
+      <div class="field"><label>County</label>
+        ${sel(MN_COUNTIES, court.county, "onCourtCountyChange(this.value)", "Select county")}</div>
       <div class="field" id="judgeFieldHost"></div>
-      <div class="field" id="prosecutorRow" style="display:${['Implied Consent Evidentiary Hearing','Implied Consent Scheduling Conference'].includes(court.hearingType)?'none':'block'}"><label>Prosecutor</label><input type="text" value="${escHtml(court.prosecutor)}" placeholder="Prosecutor name" oninput="court.prosecutor=this.value"></div>
-      <div class="field" id="aagRow" style="display:${['Implied Consent Evidentiary Hearing','Implied Consent Scheduling Conference'].includes(court.hearingType)?'block':'none'}"><label>Assistant Attorney General</label><input type="text" value="${escHtml(court.aag)}" placeholder="AAG name" oninput="court.aag=this.value"></div>
       <div class="field">
-        <label class="factor-pill${court.witnessTestimony?' factor-pill-on':''}" style="margin-bottom:8px;display:inline-flex">
-          <input type="checkbox" ${court.witnessTestimony?'checked':''} style="width:14px;height:14px;cursor:pointer;margin:0"
-            onchange="court.witnessTestimony=this.checked;this.closest('label').classList.toggle('factor-pill-on',this.checked);var s=document.getElementById('witnessIdentitySub');if(s)s.style.display=this.checked?'block':'none';if(this.checked&&!court.witnessList.length){court.witnessList=[''];renderWitnessList();}"> Witness Testimony
-        </label>
-        <div id="witnessIdentitySub" style="display:${court.witnessTestimony?'block':'none'}">
-          <div id="witnessListContainer"></div>
-          <button onclick="court.witnessList.push('');renderWitnessList();" style="margin-top:6px;padding:5px 14px;background:#B8873B;color:#E4E9F0;border:none;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer">+ Witness</button>
-        </div>
+        <label>${isIC ? 'Assistant Attorney General' : 'Prosecutor'}</label>
+        ${isIC
+          ? contactField({id:'cfAag', value:court.aag, placeholder:'AAG name',
+              role:'Assistant Attorney General',
+              set:function(v){ court.aag=v; }})
+          : contactField({id:'cfPros', value:court.prosecutor, placeholder:'Prosecutor name',
+              role:'Prosecutor',
+              jur:function(){ return court.county ? countyKey(court.county)+' County' : ''; },
+              set:function(v){ court.prosecutor=v; }})}
       </div>
+      <div class="field"><label>Witness Testimony</label>
+        ${yn(court.witnessTestimony,'court.witnessTestimony',null,
+          "var s=document.getElementById('witnessIdentitySub');if(s)s.style.display=this.value==='Yes'?'':'none';if(this.value==='Yes'&&!court.witnessList.length){court.witnessList=[''];renderWitnessList();}")}</div>
+    </div>
+    <div id="witnessIdentitySub" style="display:${court.witnessTestimony?'':'none'}">
+      <div id="witnessListContainer"></div>
+      <button class="mini-btn" onclick="court.witnessList.push('');renderWitnessList();">+ Witness</button>
     </div>
 
     <div class="section-label">Substance</div>
-    <div class="field" style="margin-bottom:8px">
-      <label class="factor-pill${court.offerMade?' factor-pill-on':''}" style="display:inline-flex">
-        <input type="checkbox" ${court.offerMade?'checked':''} style="width:14px;height:14px;cursor:pointer;margin:0"
-          onchange="court.offerMade=this.checked;this.closest('label').classList.toggle('factor-pill-on',this.checked);var s=document.getElementById('offerSub');if(s)s.style.display=this.checked?'block':'none';"> Offer Made
-      </label>
-      <div id="offerSub" style="display:${court.offerMade?'block':'none'};margin-top:8px">
-        <textarea placeholder="Plead to 3rd Degree DWI&#10;90 days stayed&#10;2 years probation" oninput="court.offer=this.value">${escHtml(court.offer)}</textarea>
-      </div>
+    <div class="fgrid">
+      <div class="field"><label>Offer Made</label>
+        ${yn(court.offerMade,'court.offerMade',null,
+          "var s=document.getElementById('offerSub');if(s)s.style.display=this.value==='Yes'?'':'none';")}</div>
+    </div>
+    <div id="offerSub" style="display:${court.offerMade?'':'none'}">
+      <div class="field"><label>Offer Terms <span class="hint">one per line</span></label>
+        <textarea rows="3" placeholder="Plead to 3rd Degree DWI&#10;90 days stayed&#10;2 years probation" oninput="court.offer=this.value">${escHtml(court.offer)}</textarea></div>
     </div>
     <div class="field">
       <label>Details</label>
-      <textarea placeholder="Omnibus hearing held on suppression motion&#10;Motion denied — state argued RAS based on weaving&#10;Issue preserved for appeal" rows="5" oninput="court.details=this.value">${escHtml(court.details)}</textarea>
+      <textarea placeholder="Omnibus hearing held on suppression motion&#10;Motion denied — state argued RAS based on weaving&#10;Issue preserved for appeal" rows="4" oninput="court.details=this.value">${escHtml(court.details)}</textarea>
     </div>
 
     <div class="section-label">Next Steps</div>
-    <div style="margin-bottom:10px">
-      <label class="factor-pill${court.hasNextCourtDate?' factor-pill-on':''}" style="display:inline-flex">
-        <input type="checkbox" ${court.hasNextCourtDate?'checked':''} style="width:14px;height:14px;cursor:pointer;margin:0"
-          onchange="court.hasNextCourtDate=this.checked;this.closest('label').classList.toggle('factor-pill-on',this.checked);var s=document.getElementById('nextCourtSub');if(s)s.style.display=this.checked?'grid':'none';"> Additional Court Date
-      </label>
-      <div id="nextCourtSub" style="display:${court.hasNextCourtDate?'grid':'none'};grid-template-columns:1fr 1fr 1fr;gap:12px;margin-top:8px;max-width:620px">
-        <div class="field" style="margin-bottom:0"><label>Hearing Type</label>
-          ${sel(HEARING_TYPES, court.nextHearingType, "court.nextHearingType=this.value; generate();", "Select type")}
-        </div>
-        <div class="field" style="margin-bottom:0"><label>Date</label>
-          <input type="date" value="${court.nextCourtDate}" onchange="court.nextCourtDate=this.value; generate();">
-        </div>
-        <div class="field" style="margin-bottom:0"><label>Time</label>
-          <input type="time" value="${court.nextCourtTime}" onchange="court.nextCourtTime=this.value; generate();">
-        </div>
+    <div class="fgrid">
+      <div class="field"><label>Additional Court Date</label>
+        ${yn(court.hasNextCourtDate,'court.hasNextCourtDate',null,
+          "var s=document.getElementById('nextCourtSub');if(s)s.style.display=this.value==='Yes'?'':'none';")}</div>
+      <div class="field"><label>Brief Due</label>
+        ${yn(court.hasBriefDue,'court.hasBriefDue',null,
+          "var s=document.getElementById('briefDueSub');if(s)s.style.display=this.value==='Yes'?'':'none';")}</div>
+      <div class="field"><label>PMM Directive</label>
+        ${yn(court.hasPmm,'court.hasPmm',null,
+          "var s=document.getElementById('pmmSub');if(s)s.style.display=this.value==='Yes'?'':'none';")}</div>
+    </div>
+    <div id="nextCourtSub" style="display:${court.hasNextCourtDate?'':'none'}">
+      <div class="fgrid">
+        <div class="field"><label>Hearing Type</label>
+          ${sel(HEARING_TYPES, court.nextHearingType, "court.nextHearingType=this.value; generate();", "Select type")}</div>
+        <div class="field"><label>Date</label>
+          <input type="date" value="${court.nextCourtDate}" onchange="court.nextCourtDate=this.value; generate();"></div>
+        <div class="field"><label>Time</label>
+          <input type="time" value="${court.nextCourtTime}" onchange="court.nextCourtTime=this.value; generate();"></div>
       </div>
     </div>
-    <div style="margin-bottom:10px">
-      <label class="factor-pill${court.hasBriefDue?' factor-pill-on':''}" style="display:inline-flex">
-        <input type="checkbox" ${court.hasBriefDue?'checked':''} style="width:14px;height:14px;cursor:pointer;margin:0"
-          onchange="court.hasBriefDue=this.checked;this.closest('label').classList.toggle('factor-pill-on',this.checked);var s=document.getElementById('briefDueSub');if(s)s.style.display=this.checked?'block':'none';"> Brief Due
-      </label>
-      <div id="briefDueSub" style="display:${court.hasBriefDue?'block':'none'};margin-top:8px;max-width:200px">
-        <input type="date" value="${court.briefDue}" onchange="court.briefDue=this.value">
-      </div>
+    <div id="briefDueSub" style="display:${court.hasBriefDue?'':'none'}">
+      <div class="fgrid"><div class="field"><label>Brief Due Date</label>
+        <input type="date" value="${court.briefDue}" onchange="court.briefDue=this.value"></div></div>
     </div>
-    <div class="field" style="margin-bottom:8px">
-      <label class="factor-pill${court.hasPmm?' factor-pill-on':''}" style="display:inline-flex">
-        <input type="checkbox" ${court.hasPmm?'checked':''} style="width:14px;height:14px;cursor:pointer;margin:0"
-          onchange="court.hasPmm=this.checked;this.closest('label').classList.toggle('factor-pill-on',this.checked);var s=document.getElementById('pmmSub');if(s)s.style.display=this.checked?'block':'none';"> PMM Directive + Client Note
-      </label>
-      <div id="pmmSub" style="display:${court.hasPmm?'block':'none'};margin-top:8px">
-        <div class="pmm-directive-hint">PMM: Please send Client new court date and verify accuracy in the calendar. Please send client the following note:</div>
-        <textarea placeholder="The note to send to the client (appears right after the directive above)" rows="4" oninput="court.clientEmail=this.value">${escHtml(court.clientEmail)}</textarea>
-      </div>
+    <div id="pmmSub" style="display:${court.hasPmm?'':'none'}">
+      <div class="pmm-directive-hint">PMM: Please send Client new court date and verify accuracy in the calendar. Please send client the following note:</div>
+      <div class="field"><textarea placeholder="The note to send to the client" rows="3" oninput="court.clientEmail=this.value">${escHtml(court.clientEmail)}</textarea></div>
     </div>
-    <button class="generate-btn" onclick="generate()">⚡ Generate Clio Note</button>`;
+    <button class="generate-btn" onclick="generate()">Generate Clio Note</button>`;
 }
 
 function renderReviewForm() {
   return `
-    <div class="section-label">Attorney</div>
-    <div class="field" style="max-width:200px;margin-bottom:4px">
-      <div class="locked-atty">GWM <span class="locked-atty-tag">assigned</span></div>
-    </div>
-
-    <div class="section-label">How Did You Meet?</div>
-    <div class="field" style="max-width:180px;margin-bottom:14px">
-      ${sel(['In Person','Phone','Zoom','Jail Visit'], review.meetType, 'review.meetType=this.value', 'Select')}
+    <div class="section-label">Meeting</div>
+    <div class="fgrid">
+      <div class="field"><label>Attorney</label>
+        <div class="locked-atty">GWM <span class="locked-atty-tag">assigned</span></div></div>
+      <div class="field"><label>How Did You Meet?</label>
+        ${sel(['In Person','Phone','Zoom','Jail Visit'], review.meetType, 'review.meetType=this.value', 'Select')}</div>
     </div>
 
     <div class="section-label">Evidence &amp; Strategy Review</div>
     <div class="field">
-      <label>Case Discussion Points <span class="hint">— one per line</span></label>
-      <textarea rows="5" placeholder="Reviewed body cam — officer narrative inconsistent with video at 2:14&#10;Discussed suppression motion viability&#10;Reviewed lab report chain of custody&#10;Explained trial vs. plea risk at current guidelines range" oninput="review.discussion=this.value">${escHtml(review.discussion)}</textarea>
+      <label>Case Discussion Points <span class="hint">one per line</span></label>
+      <textarea rows="4" placeholder="Reviewed body cam — officer narrative inconsistent with video at 2:14&#10;Discussed suppression motion viability&#10;Reviewed lab report chain of custody" oninput="review.discussion=this.value">${escHtml(review.discussion)}</textarea>
     </div>
 
     <div class="section-label">Offer</div>
-    <div class="field" style="margin-bottom:8px">
-      <label class="factor-pill${review.offerRelayed?' factor-pill-on':''}" style="display:inline-flex">
-        <input type="checkbox" ${review.offerRelayed?'checked':''} style="width:14px;height:14px;cursor:pointer;margin:0"
-          onchange="review.offerRelayed=this.checked;this.closest('label').classList.toggle('factor-pill-on',this.checked);var s=document.getElementById('reviewOfferSub');if(s)s.style.display=this.checked?'block':'none';"> Offer Relayed
-      </label>
-      <div id="reviewOfferSub" style="display:${review.offerRelayed?'block':'none'};margin-top:8px">
+    <div class="fgrid">
+      <div class="field"><label>Offer Relayed</label>
+        ${sel(['Yes','No'], review.offerRelayed?'Yes':(review.offerRelayed===false?'No':''),
+              "review.offerRelayed=(this.value==='Yes');var s=document.getElementById('reviewOfferSub');if(s)s.style.display=this.value==='Yes'?'':'none';", 'Select')}</div>
+      <div class="field"><label>Client Position</label>
+        ${sel(['Accepted','Rejected','Counter'], review.clientPosition, 'review.clientPosition=this.value', 'Select')}</div>
+    </div>
+    <div id="reviewOfferSub" style="display:${review.offerRelayed?'':'none'}">
+      <div class="field">
+        <label>Offer Terms <span class="hint">one per line</span></label>
         <textarea rows="3" placeholder="Plead to 4th Degree DWI&#10;90-day stayed sentence&#10;1 year probation" oninput="review.offer=this.value">${escHtml(review.offer)}</textarea>
-        <div class="field" style="max-width:180px;margin-top:8px;margin-bottom:0">
-          <label>Client Position</label>
-          ${sel(['Accepted','Rejected','Counter'], review.clientPosition, 'review.clientPosition=this.value', 'Select position')}
-        </div>
       </div>
     </div>
 
-    <div class="section-label">Advice &amp; Decision</div>
+    <div class="section-label">Advice &amp; Next Steps</div>
     <div class="field">
-      <label>Attorney's Advice <span class="hint">— one point per line</span></label>
-      <textarea rows="4" placeholder="Suppression motion has strong merit&#10;Advised of trial risk and guidelines exposure&#10;Recommend developing suppression record before plea decision" oninput="review.advice=this.value">${escHtml(review.advice)}</textarea>
+      <label>Attorney's Advice <span class="hint">one point per line</span></label>
+      <textarea rows="3" placeholder="Suppression motion has strong merit&#10;Advised of trial risk and guidelines exposure" oninput="review.advice=this.value">${escHtml(review.advice)}</textarea>
     </div>
     <div class="field">
-      <label>Next Steps <span class="hint">— one per line</span></label>
+      <label>Next Steps <span class="hint">one per line</span></label>
       <textarea rows="3" placeholder="Draft suppression motion&#10;Send case summary to client&#10;Calendar omnibus" oninput="review.nextSteps=this.value">${escHtml(review.nextSteps)}</textarea>
     </div>
-    <button class="generate-btn" onclick="generate()">⚡ Generate Clio Note</button>`;
+    <button class="generate-btn" onclick="generate()">Generate Clio Note</button>`;
 }
 
 function renderPleaForm() {
@@ -4436,34 +4454,351 @@ function onCourtCountyChange(val) {
   court.judgeOther = '';
   renderJudgeField();
 }
+/* ── SEEDED CONTACTS ─────────────────────────────────────────────────────────
+   Minnesota private firms, city attorney offices, and all 87 county attorneys,
+   as of 2026-10-06. Loaded once per browser; anything already on file wins, and
+   edits and deletions are never undone by a later load. */
+var CONTACT_SEED_VERSION = 'mn-2026-10-06';
+/* Name|Office|Position|Email|Phone|Jurisdiction */
+var CONTACT_SEED = [
+  "Petra Asani|Campbell Knutson, P.A.|Attorney|pasani@ck-law.com|651-234-6212|",
+  "Ben Colburn|Campbell Knutson, P.A.|Attorney|bcolburn@ck-law.com|651-234-6231|",
+  "Sharda Enslin|Campbell Knutson, P.A.|Attorney|senslin@ck-law.com|651-234-6230|",
+  "Travis Glampe|Campbell Knutson, P.A.|Attorney||651-452-5000|",
+  "Richard Hansen|Campbell Knutson, P.A.|Attorney|rhansen@ck-law.com|651-234-6213|",
+  "Corrine Heine|Campbell Knutson, P.A.|Attorney|cheine@ck-law.com|651-234-6226|",
+  "Meagan Kelley|Campbell Knutson, P.A.|Attorney|mkelley@ck-law.com|651-234-6227|",
+  "David S. Kendall|Campbell Knutson, P.A.|Attorney|dkendall@ck-law.com|651-234-6207|",
+  "Soren M. Mattick|Campbell Knutson, P.A.|Attorney|smattick@ck-law.com|651-234-6217|",
+  "Cara McDonald|Campbell Knutson, P.A.|Attorney|cmcdonald@ck-law.com|651-234-6203|",
+  "James J. Mongé, III|Campbell Knutson, P.A.|Attorney|jmonge@ck-law.com|651-234-6201|",
+  "Andrea McDowell Poehler|Campbell Knutson, P.A.|Attorney|apoehler@ck-law.com|651-234-6224|",
+  "Jerome M. Porter|Campbell Knutson, P.A.|Attorney|jporter@ck-law.com|651-234-6206|",
+  "Henry Schaeffer|Campbell Knutson, P.A.|Attorney|hschaeffer@ck-law.com|651-234-6214|",
+  "Amy Schmidt|Campbell Knutson, P.A.|Attorney|aschmidt@ck-law.com|651-234-6232|",
+  "Alina Schwartz|Campbell Knutson, P.A.|Attorney|aschwartz@ck-law.com|651-234-6220|",
+  "Jared Shepherd|Campbell Knutson, P.A.|Attorney|jshepherd@ck-law.com|651-234-6218|",
+  "Conor Tobin|Campbell Knutson, P.A.|Attorney|ctobin@ck-law.com|651-234-6233|",
+  "Nicole J. Appelbaum|Chestnut Cambronne PA|Partner|nappelbaum@chestnutcambronne.com|612-339-7300|",
+  "Tara D. Baker|Chestnut Cambronne PA|Attorney|tdbaker@chestnutcambronne.com|612-336-1285|",
+  "Téa I. Baker|Chestnut Cambronne PA|Attorney|tbaker@chestnutcambronne.com|612-767-3606|",
+  "Stuart C. Bear|Chestnut Cambronne PA|Partner|sbear@chestnutcambronne.com|612-339-7300|",
+  "Harrison E. Berg|Chestnut Cambronne PA|Attorney|hberg@chestnutcambronne.com|612-336-1281|",
+  "Bryan L. Bleichner|Chestnut Cambronne PA|Partner|bbleichner@chestnutcambronne.com|612-339-7300|",
+  "Jeffrey D. Bores|Chestnut Cambronne PA|Partner|jbores@chestnutcambronne.com|612-336-2910|",
+  "Lena J. Brakel|Chestnut Cambronne PA|Attorney|lbrakel@chestnutcambronne.com|612-336-1287|",
+  "Spencer C. Butts|Chestnut Cambronne PA|Partner|sbutts@chestnutcambronne.com|612-339-7300|",
+  "Andrew C. Case|Chestnut Cambronne PA|Partner|acase@chestnutcambronne.com|612-336-2937|",
+  "Jennifer J. Crancer|Chestnut Cambronne PA|Partner|jcrancer@chestnutcambronne.com|612-339-7300|",
+  "Wynn C. Curtiss|Chestnut Cambronne PA|Partner|wcurtiss@chestnutcambronne.com|612-339-7300|",
+  "Elizabeth R. Duel|Chestnut Cambronne PA|Attorney|eduel@chestnutcambronne.com|612-339-7300|",
+  "Emeric J. Dwyer|Chestnut Cambronne PA|Partner|edwyer@chestnutcambronne.com|612-339-7300|",
+  "Becky L. Erickson|Chestnut Cambronne PA|Attorney|berickson@chestnutcambronne.com|612-339-7300|",
+  "Tia J. Erickson|Chestnut Cambronne PA|Attorney|terickson@chestnutcambronne.com|612-339-7300|",
+  "Annaliisa P. Gifford|Chestnut Cambronne PA|Attorney|agifford@chestnutcambronne.com|612-339-7300|",
+  "Dana R. Hansen|Chestnut Cambronne PA|Attorney|dohman@chestnutcambronne.com|612-767-3604|",
+  "Elizabeth C. Henry|Chestnut Cambronne PA|Partner|lhenry@chestnutcambronne.com|612-336-2944|",
+  "Dennis B. Johnson|Chestnut Cambronne PA|Partner|djohnson@chestnutcambronne.com|612-339-7300|",
+  "Karly A. Kauf|Chestnut Cambronne PA|Partner|kkauf@chestnutcambronne.com|612-336-2932|",
+  "Nick R. Kaylor|Chestnut Cambronne PA|Attorney|nkaylor@chestnutcambronne.com|612-339-7300|",
+  "Katie E.C. Kelley|Chestnut Cambronne PA|Partner|kkelley@chestnutcambronne.com|612-336-2913|",
+  "Phil J. Krzeski|Chestnut Cambronne PA|Partner|pkrzeski@chestnutcambronne.com|612-767-3613|",
+  "Calvin T. Lee|Chestnut Cambronne PA|Attorney|clee@chestnutcambronne.com|612-336-2917|",
+  "Erica J. Lindquist|Chestnut Cambronne PA|Partner|elindquist@chestnutcambronne.com|612-336-2935|",
+  "Gary K. Luloff|Chestnut Cambronne PA|Partner|gluloff@chestnutcambronne.com|612-336-2931|",
+  "Kendal K. O'Keefe|Chestnut Cambronne PA|Partner|kokeefe@chestnutcambronne.com|612-339-7300|",
+  "Elizabeth Orrick|Chestnut Cambronne PA|Attorney|eorrick@chestnutcambronne.com|612-339-7300|",
+  "Jeong Su Park|Chestnut Cambronne PA|Attorney|jpark@chestnutcambronne.com|612-767-3617|",
+  "Ryan M. Prochaska|Chestnut Cambronne PA|Partner|rprochaska@chestnutcambronne.com|612-339-7300|",
+  "Christopher P. Renz|Chestnut Cambronne PA|Partner|crenz@chestnutcambronne.com|612-339-7300|",
+  "David A. Rephan|Chestnut Cambronne PA|Partner|drephan@chestnutcambronne.com|612-336-2942|",
+  "Evan D. Robert|Chestnut Cambronne PA|Attorney|erobert@chestnutcambronne.com|612-767-3603|",
+  "Francis J. Rondoni|Chestnut Cambronne PA|Partner|frondoni@chestnutcambronne.com|612-339-7300|",
+  "Jay Salmen|Chestnut Cambronne PA|Of Counsel|jsalmen@chestnutcambronne.com|612-998-9900|",
+  "Gretchen S. Schellhas|Chestnut Cambronne PA|Partner|gschellhas@chestnutcambronne.com|612-339-7300|",
+  "Charles R. Shafer|Chestnut Cambronne PA|Partner|cshafer@chestnutcambronne.com|612-767-3616|",
+  "Brian N. Toder|Chestnut Cambronne PA|Of Counsel|btoder@chestnutcambronne.com|612-336-2918|",
+  "Matt P. Yost|Chestnut Cambronne PA|Attorney|myost@chestnutcambronne.com|612-339-7300|",
+  "Tom Weidner|Eckberg Lammers, P.C.|Attorney|tweidner@eckberglammers.com|651-439-2878|",
+  "Nicholas Vivian|Eckberg Lammers, P.C.|Attorney|nvivian@eckberglammers.com|651-439-2878|",
+  "Kevin Sandstrom|Eckberg Lammers, P.C.|Attorney|ksandstrom@eckberglammers.com|651-439-2878|",
+  "Joe Van Thomme|Eckberg Lammers, P.C.|Attorney|jvanthomme@eckberglammers.com|651-439-2878|",
+  "Lida Bannink|Eckberg Lammers, P.C.|Attorney|lbannink@eckberglammers.com|651-439-2878|",
+  "Christina Benson|Eckberg Lammers, P.C.|Attorney|cbenson@eckberglammers.com|651-439-2878|",
+  "Patrick Boley, LL.M.|Eckberg Lammers, P.C.|Attorney|pboley@eckberglammers.com|651-439-2878|",
+  "Michael Dixon|Eckberg Lammers, P.C.|Attorney|mdixon@eckberglammers.com|651-439-2878|",
+  "Taylor Kerkela|Eckberg Lammers, P.C.|Attorney|tkerkela@eckberglammers.com|651-439-2878|",
+  "Jade Klemmensen|Eckberg Lammers, P.C.|Attorney|jklemmensen@eckberglammers.com|651-439-2878|",
+  "Eric Larson|Eckberg Lammers, P.C.|Attorney|elarson@eckberglammers.com|651-439-2878|",
+  "Tom Loonan|Eckberg Lammers, P.C.|Attorney|tloonan@eckberglammers.com|651-439-2878|",
+  "Anneliese McCahery|Eckberg Lammers, P.C.|Attorney|amccahery@eckberglammers.com|651-439-2878|",
+  "Alexis McKim|Eckberg Lammers, P.C.|Attorney|amckim@eckberglammers.com|651-439-2878|",
+  "Adrian LaFavor-Montez|Eckberg Lammers, P.C.|Attorney|amontez@eckberglammers.com|651-439-2878|",
+  "Amanda Johnson|Eckberg Lammers, P.C.|Attorney|ajohnson@eckberglammers.com|651-439-2878|",
+  "Jacob Saufley|Eckberg Lammers, P.C.|Attorney|jsaufley@eckberglammers.com|651-439-2878|",
+  "Jon Dalager|Eckberg Lammers, P.C.|Attorney|jdalager@eckberglammers.com|651-439-2878|",
+  "Kaitlyn Schammel|Eckberg Lammers, P.C.|Attorney|kschammel@eckberglammers.com|651-439-2878|",
+  "Kyle Schaffer|Eckberg Lammers, P.C.|Attorney|kschaffer@eckberglammers.com|651-439-2878|",
+  "Laura Isenor|Eckberg Lammers, P.C.|Attorney|Lisenor@eckberglammers.com|651-439-2878|",
+  "Leah Boeve|Eckberg Lammers, P.C.|Attorney|lboeve@eckberglammers.com|651-439-2878|",
+  "Meredith Dworsky|Eckberg Lammers, P.C.|Attorney|mdworsky@eckberglammers.com|651-439-2878|",
+  "Rebecca Baack|Eckberg Lammers, P.C.|Attorney|rbaack@eckberglammers.com|651-439-2878|",
+  "Samuel Pilney|Eckberg Lammers, P.C.|Attorney|spilney@eckberglammers.com|651-439-2878|",
+  "Robert B. Bauer|Dougherty, Molenda, Solfest, Hills & Bauer P.A.|Shareholder|rbauer@dmshb.com|952-953-8847|",
+  "Ashley M. Beard|Dougherty, Molenda, Solfest, Hills & Bauer P.A.|Associate|abeard@dmshb.com|952-953-8821|",
+  "Christine J. Cassellius|Dougherty, Molenda, Solfest, Hills & Bauer P.A.|Shareholder|ccassellius@dmshb.com|952-953-8813|",
+  "Brian J. Clausen|Dougherty, Molenda, Solfest, Hills & Bauer P.A.|Shareholder|bclausen@dmshb.com|952-953-8837|",
+  "Michael G. Dougherty|Dougherty, Molenda, Solfest, Hills & Bauer P.A.|Of Counsel|mdougherty@dmshb.com|952-953-8820|",
+  "Melanie R. Finley|Dougherty, Molenda, Solfest, Hills & Bauer P.A.|Associate|mfinley@dmshb.com|952-953-8811|",
+  "Sharon K. Hills|Dougherty, Molenda, Solfest, Hills & Bauer P.A.|Shareholder|shills@dmshb.com|952-953-8844|",
+  "Sara A. Hunemiller|Dougherty, Molenda, Solfest, Hills & Bauer P.A.|Associate|shunemiller@dmshb.com|952-953-8822|",
+  "Terence G. O'Brien, Jr.|Dougherty, Molenda, Solfest, Hills & Bauer P.A.|Shareholder|tobrien@dmshb.com|952-953-8835|",
+  "John R. Ose|Dougherty, Molenda, Solfest, Hills & Bauer P.A.|Associate|jose@dmshb.com|952-953-8830|",
+  "Adam P. Richard|Dougherty, Molenda, Solfest, Hills & Bauer P.A.|Associate|arichard@dmshb.com|952-953-8825|",
+  "Matthew J. Schaap|Dougherty, Molenda, Solfest, Hills & Bauer P.A.|Shareholder|mschaap@dmshb.com|952-953-8816|",
+  "Loren M. Solfest|Dougherty, Molenda, Solfest, Hills & Bauer P.A.|Shareholder|lsolfest@dmshb.com|952-953-8838|",
+  "Kesang T. Steinmetz|Dougherty, Molenda, Solfest, Hills & Bauer P.A.|Associate|ksteinmetz@dmshb.com|952-953-8848|",
+  "Cassie Wolfgram|Dougherty, Molenda, Solfest, Hills & Bauer P.A.|Senior Associate|cwolfgram@dmshb.com|952-953-8839|",
+  "Stacy A. Woods|Dougherty, Molenda, Solfest, Hills & Bauer P.A.|Shareholder|swoods@dmshb.com|952-953-8843|",
+  "David H. Gregerson|Gregerson, Rosow, Johnson & Nilan, Ltd.|Shareholder|dgregerson@grjn.com|612-436-7474|",
+  "Joseph A. Nilan|Gregerson, Rosow, Johnson & Nilan, Ltd.|Shareholder|jnilan@grjn.com|612-436-7470|",
+  "Daniel R. Gregerson|Gregerson, Rosow, Johnson & Nilan, Ltd.|Shareholder|dangregerson@grjn.com|612-436-7492|",
+  "Joshua A. Dorothy|Gregerson, Rosow, Johnson & Nilan, Ltd.|Shareholder|jdorothy@grjn.com|612-436-7475|",
+  "Daniel A. Ellerbrock|Gregerson, Rosow, Johnson & Nilan, Ltd.|Shareholder|dellerbrock@grjn.com|612-436-7476|",
+  "Margaret L. Neuville|Gregerson, Rosow, Johnson & Nilan, Ltd.|Shareholder|mneuville@grjn.com|612-436-7463|",
+  "Jacob T. Merkel|Gregerson, Rosow, Johnson & Nilan, Ltd.|Shareholder|jmerkel@grjn.com|612-436-7487|",
+  "Nicholas J. Sideras|Gregerson, Rosow, Johnson & Nilan, Ltd.|Associate Attorney|nsideras@grjn.com|612-436-7472|",
+  "Maya V. Ortiz|Gregerson, Rosow, Johnson & Nilan, Ltd.|Associate Attorney|mortiz@grjn.com|612-436-7478|",
+  "David C. Schinas|Gregerson, Rosow, Johnson & Nilan, Ltd.|Associate Attorney|dschinas@grjn.com|612-436-7465|",
+  "Abigail S. Taylor|Gregerson, Rosow, Johnson & Nilan, Ltd.|Associate Attorney|ataylor@grjn.com|612-436-7471|",
+  "Kristyn Anderson|Minneapolis City Attorney's Office|City Attorney||612-673-3000|Minneapolis",
+  "Irene Kao|Saint Paul City Attorney's Office|City Attorney|irene.kao@ci.stpaul.mn.us|651-266-8710|Saint Paul",
+  "Therese Skarda|Saint Paul City Attorney's Office|Deputy City Attorney||651-266-8710|Saint Paul",
+  "Portia Hampton-Flowers|Saint Paul City Attorney's Office|Supervising Attorney, Civil Litigation||651-266-8989|Saint Paul",
+  "Judy Hanson|Saint Paul City Attorney's Office|Assistant City Attorney||651-266-8989|Saint Paul",
+  "Lawrence Hayes|Saint Paul City Attorney's Office|Assistant City Attorney||651-266-8989|Saint Paul",
+  "Louise Toscano Seeba|Saint Paul City Attorney's Office|Assistant City Attorney||651-266-8989|Saint Paul",
+  "Cheri Sisk|Saint Paul City Attorney's Office|Assistant City Attorney||651-266-8989|Saint Paul",
+  "Kelsey McElveen|Saint Paul City Attorney's Office|Assistant City Attorney||651-266-8710|Saint Paul",
+  "Anthony Edwards|Saint Paul City Attorney's Office|Assistant City Attorney||651-266-8710|Saint Paul",
+  "Sarah Sullivan|Saint Paul City Attorney's Office|Assistant City Attorney||651-266-8710|Saint Paul",
+  "Alex Dumke|Saint Paul City Attorney's Office|Assistant City Attorney||651-266-8710|Saint Paul",
+  "Edmundo Lijo|Saint Paul City Attorney's Office|Assistant City Attorney||651-266-8710|Saint Paul",
+  "Dave Hunt|Saint Paul City Attorney's Office|Assistant City Attorney||651-266-8710|Saint Paul",
+  "Tammie Larsen|Saint Paul City Attorney's Office|Assistant City Attorney||651-266-8710|Saint Paul",
+  "Jonica Carr|Saint Paul City Attorney's Office|Assistant City Attorney||651-266-8710|Saint Paul",
+  "Jessica McConaughey|Saint Paul City Attorney's Office|Assistant City Attorney||651-266-8710|Saint Paul",
+  "Lyndsey Olson|Saint Paul City Attorney's Office|Assistant City Attorney||651-266-8710|Saint Paul",
+  "James P. Ratz|Aitkin County Attorney's Office|County Attorney||218-927-7347|Aitkin County",
+  "Brad Johnson|Anoka County Attorney's Office|County Attorney||763-324-5550|Anoka County",
+  "Brian W. McDonald|Becker County Attorney's Office|County Attorney||218-847-6590|Becker County",
+  "David Hanson|Beltrami County Attorney's Office|County Attorney||218-333-4219|Beltrami County",
+  "Kathleen Reuter|Benton County Attorney's Office|County Attorney||320-968-5175|Benton County",
+  "Rebecca Trapp|Big Stone County Attorney's Office|County Attorney||320-487-1206|Big Stone County",
+  "Patrick McDermott|Blue Earth County Attorney's Office|County Attorney||507-304-4600|Blue Earth County",
+  "Chuck Hanson|Brown County Attorney's Office|County Attorney||507-233-6688|Brown County",
+  "Jeffrey Boucher|Carlton County Attorney's Office|County Attorney||218-384-9166|Carlton County",
+  "Mark Metz|Carver County Attorney's Office|County Attorney||952-361-1400|Carver County",
+  "Ben Lindstrom|Cass County Attorney's Office|County Attorney||218-547-7255|Cass County",
+  "Matthew Haugen|Chippewa County Attorney's Office|County Attorney||320-269-7138|Chippewa County",
+  "Janet Reiter|Chisago County Attorney's Office|County Attorney||651-257-1300|Chisago County",
+  "Brian J. Melton|Clay County Attorney's Office|County Attorney||218-299-5035|Clay County",
+  "Karin Hughes|Clearwater County Attorney's Office|County Attorney||218-694-6566|Clearwater County",
+  "Jeanne Peterson|Cook County Attorney's Office|County Attorney||218-387-3670|Cook County",
+  "Nick Anderson|Cottonwood County Attorney's Office|County Attorney||507-831-5040|Cottonwood County",
+  "Kelsey Hopps|Crow Wing County Attorney's Office|County Attorney||218-824-1025|Crow Wing County",
+  "Kathryn M. Keena|Dakota County Attorney's Office|County Attorney||651-438-4438|Dakota County",
+  "Paul Kiltinen|Dodge County Attorney's Office|County Attorney||507-635-6275|Dodge County",
+  "Chad Larson|Douglas County Attorney's Office|County Attorney||320-762-3856|Douglas County",
+  "Cameron Davis|Faribault County Attorney's Office|County Attorney||507-526-4564|Faribault County",
+  "Brett Corson|Fillmore County Attorney's Office|County Attorney||507-765-2530|Fillmore County",
+  "David J. Walker|Freeborn County Attorney's Office|County Attorney||507-377-5192|Freeborn County",
+  "Stephen F. O'Keefe|Goodhue County Attorney's Office|County Attorney||651-267-4950|Goodhue County",
+  "Justin R. Anderson|Grant County Attorney's Office|County Attorney||218-685-5353|Grant County",
+  "Mary F. Moriarty|Hennepin County Attorney's Office|County Attorney|citizeninfo@hennepin.us|612-348-5550|Hennepin County",
+  "Suzanne Bublitz|Houston County Attorney's Office|County Attorney||507-725-5802|Houston County",
+  "John Olson|Hubbard County Attorney's Office|County Attorney||218-732-4133|Hubbard County",
+  "Jeffrey R. Edblad|Isanti County Attorney's Office|County Attorney||763-689-2253|Isanti County",
+  "Jacob Fauchald|Itasca County Attorney's Office|County Attorney||218-327-2867|Itasca County",
+  "Kristi Meyeraan|Jackson County Attorney's Office|County Attorney||507-847-2850|Jackson County",
+  "Barbara McFadden|Kanabec County Attorney's Office|County Attorney||320-679-6425|Kanabec County",
+  "Shane D. Baker|Kandiyohi County Attorney's Office|County Attorney||320-231-2440|Kandiyohi County",
+  "Robert Albrecht|Kittson County Attorney's Office|County Attorney||218-843-3686|Kittson County",
+  "Jeffrey Naglosky|Koochiching County Attorney's Office|County Attorney||218-283-1131|Koochiching County",
+  "Richard Stulz|Lac Qui Parle County Attorney's Office|County Attorney||320-598-7578|Lac Qui Parle County",
+  "Lara Nygaard|Lake County Attorney's Office|County Attorney||218-834-8375|Lake County",
+  "Michelle Moren|Lake of the Woods County Attorney's Office|County Attorney||218-634-1190|Lake of the Woods County",
+  "Brent Christian|Le Sueur County Attorney's Office|County Attorney||507-357-2278|Le Sueur County",
+  "Glen A. Petersen|Lincoln County Attorney's Office|County Attorney||507-247-5515|Lincoln County",
+  "Abby Wikelius|Lyon County Attorney's Office|County Attorney||507-537-6755|Lyon County",
+  "Isaac Lees|Mahnomen County Attorney's Office|County Attorney||218-935-2378|Mahnomen County",
+  "Christopher Rokke|Marshall County Attorney's Office|County Attorney||218-745-4321|Marshall County",
+  "Taylor L. McGowan|Martin County Attorney's Office|County Attorney||507-238-1594|Martin County",
+  "Ryan Hansch|McLeod County Attorney's Office|County Attorney||320-864-1265|McLeod County",
+  "Brandi Schiefelbein|Meeker County Attorney's Office|County Attorney||320-693-5220|Meeker County",
+  "Corey Haller|Mille Lacs County Attorney's Office|County Attorney||320-983-8305|Mille Lacs County",
+  "Brian Middendorf|Morrison County Attorney's Office|County Attorney||320-632-0190|Morrison County",
+  "Kristen Nelsen|Mower County Attorney's Office|County Attorney||507-437-9428|Mower County",
+  "Travis Smith|Murray County Attorney's Office|County Attorney||507-836-6541|Murray County",
+  "Michelle M. Zehnder Fischer|Nicollet County Attorney's Office|County Attorney||507-934-7890|Nicollet County",
+  "Braden Hoefert|Nobles County Attorney's Office|County Attorney||507-295-5298|Nobles County",
+  "Elizabeth Brainard|Norman County Attorney's Office|County Attorney||218-784-5456|Norman County",
+  "Michael Walters|Olmsted County Attorney's Office|County Attorney||507-328-7600|Olmsted County",
+  "Michelle Eldien|Otter Tail County Attorney's Office|County Attorney||218-998-8400|Otter Tail County",
+  "Nathan Haase|Pennington County Attorney's Office|County Attorney (Interim)||218-681-0773|Pennington County",
+  "Reese Frederickson|Pine County Attorney's Office|County Attorney||320-591-1560|Pine County",
+  "Damain D. Sandy|Pipestone County Attorney's Office|County Attorney||507-825-4266|Pipestone County",
+  "Gregory A. Widseth|Polk County Attorney's Office|County Attorney||218-281-4344|Polk County",
+  "Neil Nelson|Pope County Attorney's Office|County Attorney||320-634-4581|Pope County",
+  "John Choi|Ramsey County Attorney's Office|County Attorney||651-266-8500|Ramsey County",
+  "Alex Dillabough|Red Lake County Attorney's Office|County Attorney||218-253-2780|Red Lake County",
+  "Shannon Ness|Redwood County Attorney's Office|County Attorney||507-637-4010|Redwood County",
+  "Kelsie Kingstrom|Renville County Attorney's Office|County Attorney||320-523-2661|Renville County",
+  "Brian Mortenson|Rice County Attorney's Office|County Attorney||507-332-6103|Rice County",
+  "Jeffrey L. Haubrich|Rock County Attorney's Office|County Attorney||507-283-9111|Rock County",
+  "Kristy Kjos|Roseau County Attorney's Office|County Attorney||218-463-4100|Roseau County",
+  "Kim Maki|St. Louis County Attorney's Office|County Attorney||218-726-2323|St. Louis County",
+  "Ronald Hocevar|Scott County Attorney's Office|County Attorney||952-496-8240|Scott County",
+  "Dawn Nyhus|Sherburne County Attorney's Office|County Attorney||763-765-4725|Sherburne County",
+  "Donald Lannoye|Sibley County Attorney's Office|County Attorney||507-237-4144|Sibley County",
+  "Janelle P. Kendall|Stearns County Attorney's Office|County Attorney||320-656-3880|Stearns County",
+  "Robert Jarrett|Steele County Attorney's Office|County Attorney||507-444-7780|Steele County",
+  "Joseph Glasrud|Stevens County Attorney's Office|County Attorney||320-208-6590|Stevens County",
+  "Debora Gerads|Swift County Attorney's Office|County Attorney (Interim)||320-843-2134|Swift County",
+  "John Lindemann|Todd County Attorney's Office|County Attorney||320-732-6039|Todd County",
+  "Matthew Franzese|Traverse County Attorney's Office|County Attorney||320-422-7795|Traverse County",
+  "Matthew Stinson|Wabasha County Attorney's Office|County Attorney||651-565-3064|Wabasha County",
+  "Kyra L. Ladd|Wadena County Attorney's Office|County Attorney||218-631-7739|Wadena County",
+  "Rachel V. Cornelius|Waseca County Attorney's Office|County Attorney||507-835-0520|Waseca County",
+  "Kevin Magnuson|Washington County Attorney's Office|County Attorney||651-430-6115|Washington County",
+  "Julie Kelley|Watonwan County Attorney's Office|County Attorney||507-375-3373|Watonwan County",
+  "Jason Hastings|Wilkin County Attorney's Office|County Attorney||218-643-8950|Wilkin County",
+  "Karin Sonneman|Winona County Attorney's Office|County Attorney||507-457-6310|Winona County",
+  "Brian Lutes|Wright County Attorney's Office|County Attorney||763-682-7340|Wright County",
+  "Mark Gruenes|Yellow Medicine County Attorney's Office|County Attorney||320-564-5832|Yellow Medicine County"
+];
+function seedContacts(){
+  var db=bankLoad();
+  if(db.seeded===CONTACT_SEED_VERSION) return;
+  var added=0;
+  CONTACT_SEED.forEach(function(row){
+    var f=row.split('|');
+    var name=f[0];
+    if(!name || entFind(db,'people',name)) return;   /* his own card wins */
+    var p=blankPerson(name);
+    p.office=f[1]||''; p.position=f[2]||''; p.email=f[3]||''; p.phone=f[4]||'';
+    if(f[5]) jurPush(p,f[5]);
+    db.people.push(p);
+    if(p.office) officeEnsure(db,p.office,p.jurisdictions);
+    added++;
+  });
+  db.seeded=CONTACT_SEED_VERSION;
+  bankStore(db);
+  if(added && typeof refreshBankBtn==='function') refreshBankBtn();
+}
+
+/* ── CONTACT FIELD ───────────────────────────────────────────────────────────
+   A name box that completes from Contacts as you type. When what you have typed
+   is not on file, a + appears beside it and files them in one click. */
+var _CF = {};
+function contactField(cfg){
+  var id = cfg.id;
+  _CF[id] = { set:cfg.set, role:cfg.role||'', jur:cfg.jur||'' };
+  var v = cfg.value || '';
+  return '<div class="cf" id="'+id+'_w">'+
+    '<input class="cf-in" id="'+id+'" autocomplete="off" spellcheck="false" value="'+escHtml(v)+'" '+
+      'placeholder="'+escHtml(cfg.placeholder||'Name')+'" '+
+      'oninput="cfInput(\''+id+'\')" onfocus="cfInput(\''+id+'\')" '+
+      'onkeydown="cfKey(\''+id+'\',event)">'+
+    '<button type="button" class="cf-add" id="'+id+'_add" tabindex="-1" '+
+      'title="Add to Contacts" onclick="cfAdd(\''+id+'\')">+</button>'+
+    '<div class="cf-pop" id="'+id+'_p"></div>'+
+  '</div>';
+}
+function cfVal(id){ var i=el(id); return i ? i.value : ''; }
+function cfMatches(q){
+  var db=bankLoad(), k=nkey(q);
+  if(!k) return db.people.filter(function(p){ return nkey(p.name); }).slice(0,8);
+  return db.people.filter(function(p){
+    var n=nkey(p.name); return n && n.indexOf(k)!==-1;
+  }).slice(0,8);
+}
+function cfInput(id){
+  var cfg=_CF[id]; if(!cfg) return;
+  var v=cfVal(id);
+  if(cfg.set) cfg.set(v);
+  var exact = !!bankFind(v);
+  var addBtn=el(id+'_add');
+  if(addBtn) addBtn.classList.toggle('show', !!v.trim() && !exact);
+  var pop=el(id+'_p'); if(!pop) return;
+  var hits=cfMatches(v);
+  if(!hits.length || exact){ pop.classList.remove('open'); pop.innerHTML=''; return; }
+  pop.innerHTML = hits.map(function(p){
+    var meta=[p.position,p.office].filter(Boolean).join(' · ');
+    return '<div class="cf-item" onmousedown="cfPick(\''+id+'\',this.getAttribute(\'data-n\'))" '+
+           'data-n="'+escHtml(p.name)+'"><b>'+esc(p.name)+'</b>'+(meta?'<span>'+esc(meta)+'</span>':'')+'</div>';
+  }).join('');
+  pop.classList.add('open');
+}
+function cfPick(id,name){
+  var cfg=_CF[id]; var i=el(id);
+  if(i) i.value=name;
+  if(cfg && cfg.set) cfg.set(name);
+  var pop=el(id+'_p'); if(pop){ pop.classList.remove('open'); pop.innerHTML=''; }
+  var addBtn=el(id+'_add'); if(addBtn) addBtn.classList.remove('show');
+  try{ bankTouch(name); }catch(e){}
+  if(typeof generate==='function') generate();
+}
+function cfKey(id,ev){
+  if(ev.key==='Escape'){ var pop=el(id+'_p'); if(pop) pop.classList.remove('open'); return; }
+  if(ev.key==='Enter'){
+    var pop2=el(id+'_p');
+    var first = pop2 && pop2.classList.contains('open') ? pop2.querySelector('.cf-item') : null;
+    if(first){ ev.preventDefault(); cfPick(id, first.getAttribute('data-n')); }
+  }
+}
+/* bump the use count so the ones he picks most float up */
+function bankTouch(name){
+  var db=bankLoad(), rec=entFind(db,'people',name);
+  if(rec){ rec.uses=(rec.uses||0)+1; rec.updated=Date.now(); bankStore(db); }
+}
+function cfAdd(id){
+  var cfg=_CF[id]||{}; var name=(cfVal(id)||'').trim();
+  if(!name) return;
+  if(bankFind(name)){ toast(name+' is already in Contacts'); return; }
+  var db=bankLoad();
+  var p=blankPerson(name);
+  if(cfg.role) p.position=cfg.role;
+  var j = typeof cfg.jur==='function' ? cfg.jur() : cfg.jur;
+  if(j) jurPush(p, j);
+  db.people.push(p);
+  bankStore(db);
+  var addBtn=el(id+'_add'); if(addBtn) addBtn.classList.remove('show');
+  toast(name+' added to Contacts');
+  if(typeof refreshBankBtn==='function') refreshBankBtn();
+}
+/* close any open suggestion list on an outside click */
+document.addEventListener('click', function(e){
+  document.querySelectorAll('.cf-pop.open').forEach(function(pop){
+    if(!pop.parentNode.contains(e.target)) pop.classList.remove('open');
+  });
+});
+
 function renderJudgeField() {
   var host = document.getElementById('judgeFieldHost');
   if (!host) return;
   var county = court.county;
-  if (!county) {
-    host.innerHTML = '<label>Judge</label>'
-      + '<input type="text" value="' + escHtml(court.judge) + '" placeholder="Select county first, or type a name" oninput="court.judge=this.value">';
-    return;
-  }
-  var current = court.judge || '';
-  var otherOpen = (!current && !!court.judgeOther);
   host.innerHTML =
-    '<label>Judge <span style="font-weight:600;color:#7E889C">(' + escHtml(countyKey(county)) + ')</span></label>'
-    + '<div class="srch-wrap" id="judgeWrap" style="display:block">'
-    +   '<div class="srch-val" onclick="toggleJudgeDrop()">'
-    +     (current ? escHtml(current) : (otherOpen ? '<span style="color:#7E889C">Other (typed below)</span>' : '<span style="color:#7E889C">Select judge...</span>'))
-    +     '<span class="sarr">&#9660;</span>'
-    +   '</div>'
-    +   '<div id="judgeDrop" style="display:none;position:absolute;z-index:200;left:0;right:0">'
-    +     '<input type="text" id="judgeSearch" placeholder="Search judges..." autocomplete="off" oninput="filterJudges(this.value)" onclick="event.stopPropagation()">'
-    +     '<div class="srch-list" id="judgeList"></div>'
-    +   '</div>'
-    + '</div>'
-    + '<div id="judgeOtherWrap" style="display:' + (otherOpen ? 'block' : 'none') + ';margin-top:8px">'
-    +   '<input type="text" value="' + escHtml(court.judgeOther) + '" placeholder="Type judge name (visiting / new judge)" oninput="court.judgeOther=this.value;court.judge=this.value">'
-    + '</div>';
-  renderJudgeList(judgesForCounty(county), '');
+    '<label>Judge' + (county ? ' <span class="hint">'+escHtml(countyKey(county))+'</span>' : '') + '</label>' +
+    contactField({
+      id:'cfJudge', value: court.judge || court.judgeOther || '',
+      placeholder: county ? 'Judge name' : 'Select county first, or type a name',
+      role:'Judge',
+      jur: function(){ return court.county ? countyKey(court.county)+' County' : ''; },
+      set: function(v){ court.judge=v; court.judgeOther=''; }
+    });
 }
+
 function judgeListItems(judges, q) {
   var lq = (q || '').toLowerCase();
   var hits = judges.filter(function(j) { return j.toLowerCase().includes(lq); });
@@ -4869,7 +5204,7 @@ function bankCommitFromNote(){
   p.uses=(p.uses||0)+1; p.updated=Date.now();
   if(p.office) officeEnsure(db,p.office,p.jurisdictions);
   bankDedupe(db); bankStore(db);
-  return n+(isNew?' added to the Attorney Bank':' updated in the Attorney Bank');
+  return n+(isNew?' added to Contacts':' updated in Contacts');
 }
 
 /* ── EDITING ───────────────────────────────────────────────────────────────── */
@@ -4943,7 +5278,7 @@ function bankDelete(kind,id){
   if(kind==='offices'){
     var n=bankRoster(rec&&rec.name).length;
     if(!confirm('Delete '+label+'?'+(n?('\n\n'+n+' attorney card'+(n===1?'':'s')+' will keep the office name but lose this card.'):''))) return;
-  } else if(!confirm('Delete '+label+' from the Attorney Bank?')) return;
+  } else if(!confirm('Delete '+label+' from Contacts?')) return;
   var db=bankLoad();
   if(kind==='offices') db.offices=db.offices.filter(function(x){ return x.id!==id; });
   else db.people=db.people.filter(function(x){ return x.id!==id; });
@@ -5053,7 +5388,7 @@ function officeHeadInner(o){
   var n=bankRoster(o.name).length;
   return '<div class="ab-av office"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 21V7l7-4 7 4v14"/><path d="M9 21v-5h6v5"/><path d="M9 10h.01M15 10h.01M9 13h.01M15 13h.01"/></svg></div>'+
     '<div class="ab-id"><div class="ab-nm">'+esc(o.name||'Untitled office')+'</div>'+
-      '<div class="ab-sub">'+(n? (n+' attorney'+(n===1?'':'s')+' on file') : '<i>no attorneys yet</i>')+'</div></div>'+
+      '<div class="ab-sub">'+(n? (n+' contact'+(n===1?'':'s')+' on file') : '<i>no contacts yet</i>')+'</div></div>'+
     chipRow(o)+'<span class="ab-car">&#9662;</span>';
 }
 
@@ -5121,7 +5456,7 @@ function officeCardHTML(o){
             '<span class="ab-rid"><b>'+esc(p.name)+'</b>'+(meta?'<i>'+esc(meta)+'</i>':'')+'</span>'+
             '<span class="ab-rgo">open &rsaquo;</span></div>';
         }).join('')+'</div>'
-      : '<div class="ab-jur-none">No attorneys filed under this office yet.</div>';
+      : '<div class="ab-jur-none">No contacts filed under this office yet.</div>';
     body='<div class="ab-body"><div class="ab-grid">'+
       abF('offices',o,'name','Office name',"Hennepin County Attorney's Office",'text','abOffices',true)+
       abF('offices',o,'phone','Main phone','(612) 555-0100','tel')+
@@ -5233,12 +5568,14 @@ WIZ.court = [
   { id:'c_judge', sec:'Court', q:'Who was the judge?',
     hint:function(){ var j=judgesForCounty(court.county); return j.length? (j.length+' judges on file for '+countyKey(court.county)+' County. Type a name to add one that is not listed.') : 'No roster for this county — type the name.'; },
     type:'combo', free:true, prefix:'',
+    contact:'Judge', jur:function(){ return court.county ? countyKey(court.county)+' County' : ''; },
     opts:function(){ return judgesForCounty(court.county); },
     get:function(){ return court.judge; }, set:function(v){ court.judge=v; } },
 
   { id:'c_pros', sec:'Court', q:'Who was the prosecutor?',
-    hint:'Saved to your Attorney Bank when you copy the note. For Implied Consent matters this is recorded as the Assistant Attorney General.',
+    hint:'Saved to your Contacts when you copy the note. For Implied Consent matters this is recorded as the Assistant Attorney General.',
     type:'combo', free:true,
+    contact:'Prosecutor', jur:function(){ return court.county ? countyKey(court.county)+' County' : ''; },
     opts:function(){ return bankOpts(court.county); },
     get:function(){ return court.prosecutor; },
     set:function(v){ court.prosecutor=v; court.aag=v; },
@@ -5250,7 +5587,7 @@ WIZ.court = [
 
   { id:'c_office', sec:'Court',
     q:function(){ var n=(court.prosecutor||'').trim(); return n ? ('Which office is '+n+' with?') : 'Which prosecuting office?'; },
-    hint:'Saved to their Attorney Bank card when you copy the note, so next time it fills itself in.',
+    hint:'Saved to their contact card when you copy the note, so next time it fills itself in.',
     type:'group',
     when:function(){ return !!(court.prosecutor||'').trim(); },
     fields:[
@@ -5825,30 +6162,36 @@ function wzTA(s){
     'oninput="wzMainInput(this.value)">'+escHtml(s.get()||'')+'</textarea>';
 }
 
-/* scope: 'main' (advances) or 'group' (in-place, gk = field index) */
-function wzPills(opts,val,scope,gk){
+/* Choices are dropdowns. scope 'main' picks and advances; scope 'group' sets in
+   place. The number in each option label is the keyboard shortcut, which still
+   works without opening the list. */
+function wzSelect(opts,val,scope,gk,extraCls){
   opts = opts||[];
-  var wide = opts.some(function(o){ return optT(o).length>16; });
-  var grid = (opts.length>6 || wide) ? ' grid' : '';
-  var h='<div class="wz-opts'+grid+'">';
+  var has = opts.some(function(o){ return optV(o)===val; });
+  var onCh = scope==='main' ? 'wzSelMain(this.value)' : 'wzGroupSel('+gk+',this.value)';
+  var h='<select class="wz-sel'+(extraCls?' '+extraCls:'')+'" '+(scope==='main'?'id="wzIn" ':'')+'onchange="'+onCh+'">';
+  h+='<option value=""'+(has?'':' selected')+'>'+(scope==='main'?'Select…':'—')+'</option>';
   opts.forEach(function(o,k){
-    var v=optV(o), t=optT(o), on=(v===val);
-    var click = scope==='main'
-      ? "wzSetMain(this.dataset.v,true)"
-      : "wzGroupPill("+gk+",this)";
-    var badge = scope==='main'
-      ? '<span class="k">'+(k<9?(k+1):'&middot;')+'</span>'
-      : '';
-    h+='<div class="wz-opt'+(on?' on':'')+'" data-v="'+escHtml(v)+'" onclick="'+click+'">'+badge+esc(t)+'</div>';
+    var v=optV(o), t=optT(o);
+    var lead = (scope==='main' && k<9) ? (k+1)+' · ' : '';
+    h+='<option value="'+escHtml(v)+'"'+(v===val?' selected':'')+'>'+esc(lead+t)+'</option>';
   });
-  return h+'</div>';
+  return h+'</select>';
+}
+/* kept so any older call site still renders something sane */
+function wzPills(opts,val,scope,gk){ return wzSelect(opts,val,scope,gk); }
+
+function wzSelMain(v){
+  if(v==='') { var s=curStep(); if(s){ s.set(''); wzLive(); } return; }
+  wzSetMain(v,true);
+}
+function wzGroupSel(k,v){
+  var f=_wzGroupFields[k]; if(!f) return;
+  f.set(v); wzLive();
 }
 
 function wzYesNo(val){
-  return '<div class="wz-opts" data-pillns="yn">'+
-    '<div class="wz-opt yes'+(val==='Yes'?' on':'')+'" data-v="Yes" onclick="wzSetMain(\'Yes\',true)"><span class="k">Y</span>Yes</div>'+
-    '<div class="wz-opt no'+(val==='No'?' on':'')+'" data-v="No" onclick="wzSetMain(\'No\',true)"><span class="k">N</span>No</div>'+
-  '</div>';
+  return wzSelect([['Yes','Yes'],['No','No']], val, 'main', -1, 'yn'+(val==='Yes'?' is-yes':val==='No'?' is-no':''));
 }
 
 function wzFlags(s){
@@ -5870,15 +6213,40 @@ function wzToggleFlag(k){
 /* ── COMBO ─────────────────────────────────────────────────────────────────── */
 function wzCombo(id,s,val,cb,extraAttr){
   var opts = typeof s.opts==='function' ? s.opts() : (s.opts||[]);
-  _wzCombo[id]={opts:opts, cb:cb, idx:-1, free:!!s.free, key:s.key};
-  return '<div class="wz-combo" id="'+id+'_w">'+
+  _wzCombo[id]={opts:opts, cb:cb, idx:-1, free:!!s.free, key:s.key, contact:s.contact||'', jur:s.jur};
+  var addBtn = s.contact
+    ? '<button type="button" class="cf-add wzc-add'+(val&&!bankFind(val)?' show':'')+'" id="'+id+'_add" tabindex="-1" '+
+      'title="Add to Contacts" onclick="wzComboAdd(\''+id+'\')">+</button>'
+    : '';
+  return '<div class="wz-combo'+(s.contact?' has-add':'')+'" id="'+id+'_w">'+
     '<input class="wz-in" id="'+id+'" autocomplete="off" value="'+escHtml(val||'')+'" '+
       'placeholder="'+escHtml(s.placeholder||'Type to search…')+'" '+
       'onfocus="wzComboOpen(\''+id+'\')" '+
       'oninput="wzComboFilter(\''+id+'\',this.value)" '+
       (extraAttr||'')+'>'+
+    addBtn+
     '<div class="wz-pop" id="'+id+'_p"></div>'+
   '</div>';
+}
+/* file the typed name straight into Contacts from the wizard */
+function wzComboAdd(id){
+  var c=_wzCombo[id]||{}; var inp=el(id);
+  var name=(inp?inp.value:'').trim();
+  if(!name) return;
+  if(bankFind(name)){ toast(name+' is already in Contacts'); return; }
+  var db=bankLoad(), rec=blankPerson(name);
+  if(c.contact) rec.position=c.contact;
+  var j = typeof c.jur==='function' ? c.jur() : c.jur;
+  if(j) jurPush(rec,j);
+  db.people.push(rec); bankStore(db);
+  var b=el(id+'_add'); if(b) b.classList.remove('show');
+  toast(name+' added to Contacts');
+}
+function wzComboAddState(id,q){
+  var c=_wzCombo[id]; if(!c||!c.contact) return;
+  var b=el(id+'_add'); if(!b) return;
+  var v=(q||'').trim();
+  b.classList.toggle('show', !!v && !bankFind(v));
 }
 /* the popup is fixed-position, so it has to be placed by hand */
 function wzPopPosition(id){
@@ -5919,6 +6287,7 @@ function wzComboFilter(id,q){
   /* free-typed value counts immediately so the live note keeps up */
   if(c.free){ wzComboCommit(id,q,false); }
   c.idx=-1;
+  wzComboAddState(id,q);
   wzComboList(id,q);
   var p=el(id+'_p'); if(p){ p.classList.add('open'); wzPopPosition(id); }
 }
@@ -5985,7 +6354,7 @@ function wzGroupField(f,k){
   var val=f.get?f.get():'';
   if(f.type==='pills'){
     var opts = typeof f.opts==='function'?f.opts():f.opts;
-    return wzPills(opts,val,'group',k);
+    return wzSelect(opts,val,'group',k);
   }
   if(f.type==='combo'){
     var id='wzG'+k;
@@ -6123,7 +6492,7 @@ function wzDoneHTML(v){
 
 /* ── FOCUS + KEYBOARD ──────────────────────────────────────────────────────── */
 function wzFocus(s){
-  var f=document.querySelector('#wzCard .wz-in, #wzCard .wz-ta');
+  var f=document.querySelector('#wzCard .wz-sel, #wzCard .wz-in, #wzCard .wz-ta');
   if(f){ f.focus(); if(f.setSelectionRange && f.type!=='date' && f.type!=='time'){ try{ f.setSelectionRange(f.value.length,f.value.length); }catch(e){} } }
 }
 function inTextField(e){
@@ -6243,7 +6612,7 @@ function setEngine(mode){
   applyEngine();
 }
 function applyEngine(){
-  noteEditing=false;   /* new mode / engine — start from the generated note */
+  noteDirty=false;   /* new mode / engine — start from the generated note */
   var wzHost=el('wizard'), fp=el('formPanel');
   if(wz.engine==='guided'){
     fp.style.display='none'; fp.innerHTML='';   /* avoid duplicate element ids */
@@ -6293,7 +6662,7 @@ function noteIsEmpty(html){
 }
 function clearOutput(){
   generatedHTML='';
-  noteEditing=false;
+  noteDirty=false;
   var c=el('headerCopyBtn'), p=el('headerPrintBtn');
   if(c) c.style.display='none'; if(p) p.style.display='none';
   el('outputBody').innerHTML =
@@ -6302,52 +6671,33 @@ function clearOutput(){
     '<p>Answer the questions on the left.<br>The note writes itself as you go.</p></div>';
 }
 
-/* ── MANUAL EDITING OF THE FINISHED NOTE ───────────────────────────────────── */
-var noteEditing=false;
-function syncEditedNote(){
-  var box=el('noteRendered'); if(!box) return;
-  generatedHTML=box.innerHTML;
-}
-function setNoteEdit(on){
-  noteEditing=!!on;
-  var box=el('noteRendered'), btn=el('noteEditBtn'), hint=el('noteEditHint');
-  if(box){
-    box.setAttribute('contenteditable', noteEditing?'true':'false');
-    box.spellcheck=true;
-    if(noteEditing){ try{ box.focus(); }catch(e){} }
-    else { syncEditedNote(); }
-  }
-  if(btn){ btn.textContent = noteEditing?'Done Editing':'Edit Note'; btn.classList.toggle('on',noteEditing); }
-  if(hint) hint.style.display = noteEditing?'':'none';
-}
-function toggleNoteEdit(){
-  setNoteEdit(!noteEditing);
-  toast(noteEditing ? 'Edit the note directly — click Done Editing when finished' : 'Edits saved');
-}
+/* true once he has typed into the note himself; cleared when the note is reset */
+var noteDirty = false;
 
 function showOutput(){
-  var c=el('headerCopyBtn'), p=el('headerPrintBtn');
-  if(c) c.style.display=''; if(p) p.style.display='';
+  var c=el('headerCopyBtn'), pr=el('headerPrintBtn'), ex=el('headerExportBtn'), bd=el('aiCleanBtn');
+  [c,pr,ex,bd].forEach(function(b){ if(b) b.style.display=''; });
   el('outputBody').innerHTML =
-    '<div class="note-output" id="noteRendered">'+generatedHTML+'</div>'+
-    '<div class="ai-btn-row">'+
-      '<button class="ai-btn" id="aiCleanBtn" onclick="aiCleanup()">Optimize</button>'+
-      '<button class="ai-btn ai-btn-edit" id="noteEditBtn" onclick="toggleNoteEdit()" title="Edit the note by hand">Edit Note</button>'+
-      '<button class="copy-btn-below" id="copyBtnBelow" onclick="copyNote()">Copy Note</button>'+
-      '<button class="clio-send-btm" onclick="clioOpenDrawer()" title="Send this note to Clio">Send to Clio</button>'+
-      '<button class="ai-btn ai-btn-revert" id="aiRevertBtn" onclick="revertNote()" style="display:none">&#8617; Revert</button>'+
-      '<span class="note-edit-hint" id="noteEditHint" style="display:none">Editing on — your changes are kept for Copy, Print and Send to Clio.</span>'+
-    '</div>';
+    '<div class="note-output" id="noteRendered" contenteditable="true" spellcheck="true"></div>';
   var nb=el('noteRendered');
-  if(nb){
-    nb.addEventListener('input', syncEditedNote);
-    nb.addEventListener('blur', syncEditedNote);
-  }
-  setNoteEdit(noteEditing);
+  nb.innerHTML = generatedHTML;
+  nb.addEventListener('input', onNoteTyped);
+  nb.addEventListener('blur', syncEditedNote);
+}
+/* the note is a live document — click in and type, no mode to turn on */
+function onNoteTyped(){
+  noteDirty = true;
+  var nb=el('noteRendered');
+  if(nb) nb.classList.add('edited');
+  syncEditedNote();
+}
+function syncEditedNote(){
+  var box=el('noteRendered'); if(!box) return;
+  generatedHTML = box.innerHTML;
 }
 function generate(){
-  /* hand edits in progress — never overwrite what he just typed */
-  if(noteEditing) return;
+  /* he has typed into the note by hand — his words win until the note is reset */
+  if(noteDirty) return;
   if(wz.mode==='intake') generatedHTML=buildIntakeHTML();
   else if(wz.mode==='court') generatedHTML=buildCourtHTML();
   else generatedHTML=buildReviewHTML();
@@ -6420,6 +6770,7 @@ currentTab='intake';
 el('outputLabel').textContent = MODE_LABEL.intake;
 document.querySelectorAll('.mode-item').forEach(function(it){ it.classList.toggle('sel', it.dataset.mode==='intake'); });
 setEngine('guided');
+try{ seedContacts(); }catch(e){}
 refreshBankBtn();
 startMicObserver();
 
@@ -6451,6 +6802,8 @@ startMicObserver();
   function clioSetLight(color, text, showBtn, btnLabel) {
     if (statusLight) statusLight.style.background = color;
     if (statusText)  statusText.textContent = text;
+    /* the Connect button now lives in the Calendar settings drawer */
+    if (typeof window.gwmPaintClio === "function") { try { window.gwmPaintClio(); } catch (e) {} }
     if (connectBtn) {
       connectBtn.style.display = showBtn ? "inline-flex" : "none";
       const lab = connectBtn.querySelector(".c3-txt");
@@ -6464,6 +6817,7 @@ startMicObserver();
       const data = await response.json();
 
       window.__clioConnected = !!data.connected;
+      window.__clioUser = (data.connected && data.user && data.user.name) ? data.user.name : '';
       if (data.connected) {
         _clioSeenConnected = true;
         clioSetLight("#22c55e", "Clio Connected — " + (data.user?.name || "Clio"), false);
@@ -6636,7 +6990,7 @@ startMicObserver();
       </div>
       <textarea class="dict-ta" id="dictDetails" style="min-height:230px" placeholder="Talk normally and cover it all — the judge, the prosecutor, what happened, any offer, how long it took, the next court date and time, and what you want the client told." oninput="dictTouch()"></textarea>
 
-      <!-- revealed by Optimize -->
+      <!-- revealed by Build -->
       <div id="dictOut" style="display:none;flex-direction:column;gap:13px">
         <div class="dict-ex" id="dictExtract">
           <div class="dict-exh">Picked out of what you said — correct anything before pushing</div>
@@ -6655,7 +7009,7 @@ startMicObserver();
           </div>
           <div id="dictTimeErr"></div>
           <div class="dict-acts" style="margin-top:11px">
-            <button class="clio-btn" id="dictRebuild" onclick="dictOptimize()">Optimize again</button>
+            <button class="clio-btn" id="dictRebuild" onclick="dictOptimize()">Build again</button>
           </div>
         </div>
 
@@ -6719,7 +7073,7 @@ startMicObserver();
 <aside class="clio-drawer" id="clioDrawer" aria-hidden="true">
   <div class="clio-dhead">
     <span class="tag">Clio</span>
-    <h3 id="clioDrawerTitle">Send Intake Notes to Clio</h3>
+    <h3 id="clioDrawerTitle">Send Court Summary to Clio</h3>
     <button class="modal-x" style="margin-left:auto" onclick="clioCloseDrawer()" title="Close" fdprocessedid="x2w3a">×</button>
   </div>
 
@@ -6731,13 +7085,13 @@ startMicObserver();
       <div class="clio-row">
         <div class="clio-f">
           <span class="clio-fl">Clio Matter</span>
-          <button class="clio-cbtrig empty" id="clioComboDrawer" onclick="clioOpenPop('clioComboDrawer')" fdprocessedid="svs7bb"><span class="av">?</span><span class="id"><span class="t">Select a Clio matter…</span><span class="s">this note will not send until one is picked</span></span><span class="car">▾</span></button>
+          <button class="clio-cbtrig has" id="clioComboDrawer" onclick="clioOpenPop('clioComboDrawer')" fdprocessedid="svs7bb"><span class="av">SC</span><span class="id"><span class="t">Steven Allen Chesnut</span><span class="s">02492-Chesnut  ·  Open</span></span><span class="car">▾</span></button>
         </div>
-        <div id="clioMatterSlot"></div>
+        <div id="clioMatterSlot"><div class="clio-hint" style="padding:2px 2px 0"><div style="color:var(--dim2);font-size:11.5px;line-height:1.45">Gross Misdemeanor Theft</div><div style="font-family:var(--mono);font-size:10px;color:var(--dim);letter-spacing:.4px;margin-top:3px">02492-Chesnut  ·  Gerard Mannion  ·  Open</div></div></div>
         <div class="clio-grid">
           <div class="clio-f">
             <span class="clio-fl">Note Title <em style="text-transform:none;letter-spacing:0;font-weight:600;color:#4E5765">→ Clio title</em></span>
-            <input id="clioNoteTitle" list="clioNoteTitles" placeholder="Pretrial Hearing" oninput="clioNoteTitleInput(this.value)" fdprocessedid="2yamr3">
+            <select id="clioNoteTitle" onchange="clioNoteTitleInput(this.value)"><option value="INTAKE NOTES">INTAKE NOTES</option><option value="COURT SUMMARY">COURT SUMMARY</option><option value="CASE REVIEW NOTES">CASE REVIEW NOTES</option><option value="CHECK IN NOTES">CHECK IN NOTES</option></select>
           </div>
           <div class="clio-f">
             <span class="clio-fl">Note Date</span>
@@ -6746,17 +7100,13 @@ startMicObserver();
         </div>
         <div class="clio-f">
           <span class="clio-fl">Note Body <em style="text-transform:none;letter-spacing:0;font-weight:600;color:#4E5765">— exactly what Clio will store</em></span>
-          <div id="clioNotePreview" class="clio-hint clio-rich-preview" style="max-height: 120px; overflow: auto; padding: 9px 11px; background: rgb(10, 13, 18); border: 1px solid var(--line2); border-radius: 6px; color: var(--dim2); line-height: 1.6; white-space: normal; font-family: var(--mono); font-size: 10.5px;"><p>Potential Client called regarding their [LEVEL] [TYPE] case.</p><p><br></p><p><strong><u>Caller:</u></strong> [ENTER]</p></div>
+          <div id="clioNotePreview" class="clio-hint" style="max-height: 120px; overflow: auto; padding: 9px 11px; background: rgb(10, 13, 18); border: 1px solid var(--line2); border-radius: 6px; color: var(--dim2); line-height: 1.6; white-space: pre-wrap; font-family: var(--mono); font-size: 10.5px;">GWM appeared on Client's behalf by Zoom for Client's Pretrial Hearing on September 15, 2026. The Prosecutor was Elizabeth Duel and the Honorable Judge No Judge presided.
+
+DETAILS
+GWM met with Prosecutor to receive an updated offer. Initial offer was CFD on the first 2 counts and plead to the speed. Prosecutor today agreed to CFD on all 3 with a $475 fine. Client accepted and case resolved.</div>
         </div>
       </div>
-      <datalist id="clioNoteTitles">
-        <option value="Pretrial Hearing"></option><option value="Omnibus Hearing"></option>
-        <option value="Sentencing"></option><option value="Arraignment"></option>
-        <option value="Client Call"></option><option value="Client Meeting"></option>
-        <option value="Prosecutor Negotiation"></option><option value="Case Review"></option>
-        <option value="Trial"></option><option value="Plea Hearing"></option>
-        <option value="Settlement Conference"></option><option value="Intake Call"></option>
-      </datalist>
+      <!-- note titles are a fixed dropdown now; the old free-text datalist is gone -->
     </div>
 
     <!-- TIME ENTRY -->
@@ -6802,7 +7152,7 @@ startMicObserver();
       <div class="clio-row">
         <div class="clio-grid">
           <div class="clio-f"><span class="clio-fl">Hearing Type</span>
-            <button type="button" class="clio-ddtrig empty" id="clioHearTypeTrig" onclick="clioPickHearType()" fdprocessedid="gyiqhw"><span class="v">Select hearing type…</span><span class="car"></span></button>
+            <button type="button" class="clio-ddtrig" id="clioHearTypeTrig" onclick="clioPickHearType()" fdprocessedid="gyiqhw"><span class="v">Trial</span><span class="car"></span></button>
             <input id="clioHearType" class="clio-otherin" placeholder="Describe the hearing type" style="display:none" oninput="clioHearInput('type',this.value)"></div>
           <div class="clio-f"><span class="clio-fl">County</span>
             <input id="clioHearCounty" list="clioCounties" placeholder="Hennepin" oninput="clioHearInput('county',this.value)" fdprocessedid="knn9we"></div>
@@ -6821,7 +7171,7 @@ startMicObserver();
         </div>
         <div class="clio-grid">
           <div class="clio-f"><span class="clio-fl">Judge <em style="text-transform:none;letter-spacing:0;font-weight:600;color:#4E5765">— by county</em></span>
-            <button type="button" class="clio-ddtrig empty" id="clioHearJudgeTrig" onclick="clioPickJudge()" fdprocessedid="ksw06k"><span class="v">Set the county first, or use Other</span><span class="car"></span></button>
+            <button type="button" class="clio-ddtrig" id="clioHearJudgeTrig" onclick="clioPickJudge()" fdprocessedid="ksw06k"><span class="v">Shawn L. Pearson</span><span class="car"></span></button>
             <input id="clioHearJudge" class="clio-otherin" placeholder="Type the judge's name" style="display:none" oninput="clioHearInput('judge',this.value)"></div>
           <div class="clio-f"><span class="clio-fl">Prosecutor</span>
             <input id="clioHearPros" placeholder="Assistant County Attorney" oninput="clioHearInput('prosecutor',this.value)" fdprocessedid="txu06g"></div>
@@ -6832,7 +7182,7 @@ startMicObserver();
           <textarea id="clioHearDesc" rows="2" placeholder="Anything else that belongs on the calendar entry" oninput="clioHearInput('desc',this.value)"></textarea></div>
         <div class="clio-f">
           <span class="clio-fl">Calendar Title <em style="text-transform:none;letter-spacing:0;font-weight:600;color:#4E5765">— built automatically</em></span>
-          <div id="clioCalTitle" class="clio-caltitle">Select a matter to build the calendar title</div>
+          <div id="clioCalTitle" class="clio-caltitle">GWM: Chesnut | Trial | St. Louis</div>
         </div>
       </div>
       <datalist id="clioHearTypes"><option value="Arraignment Hearing"></option><option value="Bail Hearing"></option><option value="Contested Omnibus Hearing"></option><option value="Contested Pretrial Hearing"></option><option value="First Appearance Hearing"></option><option value="Implied Consent Evidentiary Hearing"></option><option value="Implied Consent Scheduling Conference"></option><option value="Jury Trial"></option><option value="Omnibus Hearing"></option><option value="Plea Hearing"></option><option value="Pretrial Hearing"></option><option value="Probation Violation"></option><option value="Rule 20 Review Hearing"></option><option value="Sentencing Hearing"></option><option value="Settlement Conference"></option><option value="Trial"></option><option value="Trial Management Conference"></option></datalist>
@@ -6842,15 +7192,15 @@ startMicObserver();
     <!-- REVIEW -->
     <div class="clio-sec">
       <div class="clio-sh"><span class="t">Ready to Send</span></div>
-      <div id="clioReviewSlot"><div class="clio-review"><div class="clio-rrow"><span class="mk" style="color:var(--bronze-l)">§</span><span class="bd"><span class="bt">No matter selected</span></span></div><div class="clio-rrow"><span class="mk">☑</span><span class="bd"><span class="bt">Matter Note</span><span class="bs">INTAKE NOTES  ·  09/16/2026</span></span></div><div class="clio-rrow off"><span class="mk">☐</span><span class="bd"><span class="bt">Time Entry</span><span class="bs">no time entered  ·  09/16/2026</span></span></div><div class="clio-rrow off"><span class="mk">☐</span><span class="bd"><span class="bt">Calendar Entry</span><span class="bs">Not being added</span></span></div></div></div>
+      <div id="clioReviewSlot"><div class="clio-review"><div class="clio-rrow"><span class="mk" style="color:var(--bronze-l)">§</span><span class="bd"><span class="bt">Steven Allen Chesnut – 02492-Chesnut</span><span class="bs">Gross Misdemeanor Theft</span></span></div><div class="clio-rrow"><span class="mk">☑</span><span class="bd"><span class="bt">Matter Note</span><span class="bs">PRETRIAL HEARING  ·  09/15/2026</span></span></div><div class="clio-rrow off"><span class="mk">☐</span><span class="bd"><span class="bt">Time Entry</span><span class="bs">no time entered  ·  09/15/2026</span></span></div><div class="clio-rrow off"><span class="mk">☐</span><span class="bd"><span class="bt">Calendar Entry</span><span class="bs">Not being added</span></span></div></div></div>
       <div id="clioResultSlot"></div>
     </div>
 
   </div>
 
   <div class="clio-dfoot">
-    <button class="clio-save" id="clioSaveBtn" onclick="clioSaveToClio()" fdprocessedid="ntatqs" disabled="">Send to Clio</button>
-    <div class="clio-savenote" id="clioSaveNote"><span style="color:#E9A9A2">Pick the Clio matter this note belongs to.</span></div>
+    <button class="clio-save" id="clioSaveBtn" onclick="clioSaveToClio()" fdprocessedid="ntatqs">Send to Clio</button>
+    <div class="clio-savenote" id="clioSaveNote">Sending <b>PRETRIAL HEARING</b> to <b>Steven Allen Chesnut</b> &nbsp;·&nbsp; 02492-Chesnut</div>
   </div>
 </aside>
 
@@ -7190,6 +7540,20 @@ function clearMatter(){ var n=N(); n.matter=null; n.locked=false; n.results=null
 
 /* ── 9 · TITLE / DATE ────────────────────────────────────────────────────── */
 function upTitle(t){ return String(t==null?'':t).toUpperCase(); }
+
+/* The Note Title is a fixed dropdown. These four are the only titles that may
+   reach Clio, so anything arriving from elsewhere (a dictation, a calendar
+   reminder, a restored draft) is snapped to the closest one. */
+var NOTE_TITLES = ['INTAKE NOTES','COURT SUMMARY','CASE REVIEW NOTES','CHECK IN NOTES'];
+function normalizeTitle(v,modeHint){
+  var t=upTitle(v).trim();
+  if(NOTE_TITLES.indexOf(t)!==-1) return t;
+  if(/INTAKE/.test(t))                       return 'INTAKE NOTES';
+  if(/CHECK\s*-?\s*IN/.test(t))              return 'CHECK IN NOTES';
+  if(/CASE\s+REVIEW|REVIEW\s+NOTES/.test(t)) return 'CASE REVIEW NOTES';
+  if(/COURT|HEARING|TRIAL|OMNIBUS|PRETRIAL|PLEA|SENTENC|ARRAIGN/.test(t)) return 'COURT SUMMARY';
+  return autoTitle(modeHint);
+}
 function autoTitle(m){
   m=m||curMode();
   try{
@@ -7981,7 +8345,7 @@ function renderBar(){
       '</div>'+
       '<div class="cnb-f title">'+
         '<span class="cnb-l">Note Title <button class="auto" onclick="clioAutoTitle()" title="Fill the title from this note">auto</button></span>'+
-        '<input id="clioBarTitle" placeholder="Pretrial Hearing" oninput="clioNoteTitleInput(this.value,true)">'+
+        '<select id="clioBarTitle" onchange="clioNoteTitleInput(this.value,true)"><option value="INTAKE NOTES">INTAKE NOTES</option><option value="COURT SUMMARY">COURT SUMMARY</option><option value="CASE REVIEW NOTES">CASE REVIEW NOTES</option><option value="CHECK IN NOTES">CHECK IN NOTES</option></select>'+
       '</div>'+
       '<div class="cnb-f date">'+
         '<span class="cnb-l">Note Date</span>'+
@@ -8269,11 +8633,10 @@ window.clioToggle = function(key,val){
   syncDrawerFields(); renderReview();
 };
 window.clioNoteTitleInput = function(v,fromBar){
-  var n=N(); v=upTitle(v); n.title=v; n.titleTouched=true;
-  var src=fromBar?$('clioBarTitle'):$('clioNoteTitle');
-  if(src && src.value!==v){ var c=src.selectionStart; src.value=v; try{ src.setSelectionRange(c,c); }catch(e){} }
-  var other=fromBar?$('clioNoteTitle'):$('clioBarTitle');
-  if(other && other.value!==v) other.value=v;
+  var n=N(); v=normalizeTitle(v); n.title=v; n.titleTouched=true;
+  ['clioBarTitle','clioNoteTitle'].forEach(function(id){
+    var f=$(id); if(f && f.value!==v) f.value=v;
+  });
   if(!n.time.descTouched){ n.time.desc=v; var d=$('clioTimeDesc'); if(d) d.value=v; }
   renderReview();
 };
@@ -8362,7 +8725,7 @@ window.clioAbbrevHearing = function(t){ try{ return abbrevHearing(t); }catch(e){
 window.clioDictApply = function(o){
   var n=N();
   o=o||{};
-  if(o.title!=null){ n.title=upTitle(o.title); n.titleTouched=true; }
+  if(o.title!=null){ n.title=normalizeTitle(o.title); n.titleTouched=true; }
   if(o.date) n.date=o.date;
   if(o.hours!=null)   n.time.hours=String(o.hours);
   if(o.minutes!=null) n.time.minutes=String(o.minutes);
@@ -8619,11 +8982,11 @@ function paintNav(){
     return;
   }
   if(!D.html){
-    next.textContent = D.busy ? 'Optimizing…' : 'Optimize';
+    next.textContent = D.busy ? 'Building…' : 'Build';
     next.disabled = D.busy || detailsText().length<12;
     next.style.cssText='';
     if(note) note.textContent = D.busy ? 'Writing the note and pulling out the dates…'
-      : (detailsText().length<12 ? 'Say what happened, then Optimize.' : 'Optimize turns this into a Clio note.');
+      : (detailsText().length<12 ? 'Say what happened, then Build.' : 'Build turns this into a Clio note.');
   }else{
     next.textContent = D.busy ? 'Pushing…' : 'Push to Clio';
     next.disabled = D.busy;
@@ -8723,7 +9086,7 @@ function runSearch(q){
 }
 window.dictRetrySearch = function(){ runSearch((($('dictMatterQ')||{}).value||'').trim()); };
 window.dictReconnect = function(){
-  if(typeof window.clioConnect!=='function'){ say('Reconnect from the top of the main screen'); return; }
+  if(typeof window.clioConnect!=='function'){ say('Reconnect under Calendar \u2192 Clio Connection'); return; }
   try{ window.clioConnect(); }catch(e){}
   say('Approve in the Clio window — this picks up automatically');
 };
@@ -8843,11 +9206,11 @@ function optimize(){
   var raw=detailsText();
   if(raw.length<12){ say('Say a bit more first'); return; }
   if(typeof AI_PROXY_URL!=='string' || !AI_PROXY_URL || AI_PROXY_URL.indexOf('YOUR-WORKER-SUBDOMAIN')!==-1){
-    say('Optimize needs the AI proxy URL set at the top of the file'); return;
+    say('Build needs the AI proxy URL set at the top of the file'); return;
   }
   stopMicAll();
   D.busy=true; paintNav();
-  var rb=$('dictRebuild'); if(rb){ rb.disabled=true; rb.textContent='Optimizing…'; }
+  var rb=$('dictRebuild'); if(rb){ rb.disabled=true; rb.textContent='Building…'; }
 
   fetch(AI_PROXY_URL,{
     method:'POST', headers:{ 'Content-Type':'application/json' },
@@ -8867,10 +9230,10 @@ function optimize(){
     var out=$('dictOut'); if(out) out.style.display='flex';
     say('Note written — check the dates, then push');
   })
-  .catch(function(){ say('Optimize could not reach the AI proxy — check the Worker and try again'); })
+  .catch(function(){ say('Build could not reach the AI proxy — check the Worker and try again'); })
   .then(function(){
     D.busy=false; paintNav();
-    var rb2=$('dictRebuild'); if(rb2){ rb2.disabled=false; rb2.textContent='Optimize again'; }
+    var rb2=$('dictRebuild'); if(rb2){ rb2.disabled=false; rb2.textContent='Build again'; }
   });
 }
 /* take the model's extraction, and fall back to reading it ourselves */
@@ -9269,6 +9632,202 @@ document.addEventListener('keydown',function(e){
 #gwmBanner .bs{font-size:11.5px;color:#7A8494;line-height:1.6}
 #gwmBanner .ba{display:flex;gap:7px;margin-top:11px}
 @media (max-width:640px){ .gwm-drawer{width:100vw} .gwm-row > label{min-width:100%} }
+
+/* ══════════════════════════════════════════════════════════════════════════
+   CONDENSED LAYOUT — dropdown-first, tight, no decorative chrome
+   ══════════════════════════════════════════════════════════════════════════ */
+
+/* — top strip: wordmark, then connection state folded into Settings — */
+#clioStatusBar{padding:5px 12px !important;gap:9px !important;min-height:0 !important}
+#clioStatusLight{width:7px !important;height:7px !important}
+#clioStatusText{display:none !important}
+#gwmGoogleText{display:none !important}
+#gwmGoogleWrap{gap:0 !important}
+.wordmark{
+  font-size:13px;font-weight:800;letter-spacing:1.4px;text-transform:uppercase;
+  color:var(--bronze-l);margin-right:2px;white-space:nowrap;
+}
+.led-strip{display:none !important}
+.gwm-btn{padding:4px 9px !important;font-size:11px !important}
+
+/* — toolbar — */
+.topbar{padding:6px 12px !important;gap:7px !important}
+.tb-lab{font-size:8.5px !important;letter-spacing:1.2px !important}
+.tb-btn{padding:5px 9px !important;font-size:11.5px !important}
+.mode-trig{padding:5px 10px !important;font-size:12px !important}
+.seg button{padding:5px 11px !important;font-size:11.5px !important}
+.dict-open{padding:5px 10px !important;font-size:11.5px !important}
+
+/* — form panel — */
+.form-panel{padding:12px 16px 28px !important}
+.section-label{
+  font-size:8.5px !important;letter-spacing:1.5px !important;
+  margin:14px 0 7px !important;padding-bottom:4px !important;
+}
+.section-label:first-of-type{margin-top:0 !important}
+.section-label::before{display:none !important}
+.field{margin-bottom:9px !important}
+.field label{font-size:10.5px !important;font-weight:700 !important;margin-bottom:3px !important;display:block}
+.field .hint{font-size:9.5px;font-weight:600;color:#5C6675;letter-spacing:.2px;margin-left:5px}
+
+/* inputs sized to their content, not to the panel */
+.form-panel input[type=text],.form-panel input[type=number],
+.form-panel input[type=date],.form-panel input[type=time],
+.form-panel select,.form-panel textarea{
+  padding:5px 8px !important;font-size:12.5px !important;border-radius:5px !important;
+}
+.form-panel input[type=date],.form-panel input[type=time]{max-width:150px}
+.form-panel select{max-width:260px}
+.form-panel textarea{min-height:0 !important;line-height:1.45 !important}
+
+/* two/three-up field grid — the default layout for short fields */
+.fgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(168px,1fr));gap:8px 12px;margin-bottom:4px;max-width:720px}
+.fgrid .field{margin-bottom:0 !important}
+.fgrid .field.w2{grid-column:span 2}
+@media(max-width:620px){.fgrid .field.w2{grid-column:span 1}}
+.row-2{gap:10px !important}
+
+.mini-btn{padding:4px 10px;background:#15120C;border:1px solid #6E5A2A;border-radius:5px;
+  color:#C9A05A;font-size:11px;font-weight:700;cursor:pointer;font-family:inherit;margin-top:4px}
+.mini-btn:hover{border-color:var(--bronze-l);color:#E2C285}
+.generate-btn{padding:8px 16px !important;font-size:12.5px !important;margin-top:10px !important}
+
+/* — guided wizard — */
+.wz-card{padding:14px 15px 12px !important;border-radius:8px !important}
+.wz-card::after{display:none !important}
+.wz-q{font-size:15px !important;margin-bottom:3px !important;letter-spacing:-.1px !important}
+.wz-hint{font-size:11px !important;margin-bottom:9px !important;line-height:1.4 !important}
+.wz-body{gap:8px !important}
+.wz-in,.wz-ta{padding:7px 10px !important;font-size:13px !important;border-radius:5px !important}
+.wz-ta{min-height:66px !important;font-size:12.5px !important;line-height:1.5 !important}
+.wz-in[type=date],.wz-in[type=time]{max-width:170px}
+.wz-flab{font-size:9px !important;letter-spacing:.9px !important;margin-bottom:3px !important}
+.wz-row{gap:8px !important}
+.wz-meta,.wz-step{font-size:10px !important}
+.wz-sec{font-size:8.5px !important;letter-spacing:1.4px !important}
+
+/* the dropdown that replaced the option tiles */
+.wz-sel{
+  width:100%;max-width:340px;font-family:inherit;font-size:13px;font-weight:600;
+  color:var(--txt);background:#0A0D12;border:1px solid var(--line2);border-radius:5px;
+  padding:7px 28px 7px 10px;outline:none;cursor:pointer;
+  appearance:none;-webkit-appearance:none;
+  background-image:linear-gradient(45deg,transparent 50%,#6B7584 50%),linear-gradient(135deg,#6B7584 50%,transparent 50%) !important;
+  background-position:calc(100% - 15px) calc(50% - 1px),calc(100% - 10px) calc(50% - 1px) !important;
+  background-size:5px 5px,5px 5px !important;background-repeat:no-repeat !important;
+  background-color:#0A0D12 !important;
+  transition:border-color .13s,box-shadow .16s;
+}
+.wz-sel:focus{border-color:var(--led);box-shadow:0 0 0 2px rgba(76,141,246,.14)}
+.wz-sel.yn{max-width:150px}
+.wz-sel.is-yes{border-color:var(--go);color:#CDE8D6}
+.wz-sel.is-no{border-color:#4E5766;color:#B7BFCB}
+.wz-sel option{background:#0E1217;color:var(--txt)}
+
+/* multi-select flags stay chips, but tight */
+.wz-opts{gap:5px !important}
+.wz-opts.grid{grid-template-columns:repeat(auto-fill,minmax(146px,1fr)) !important}
+.wz-opt{padding:5px 9px 5px 7px !important;font-size:11.5px !important;gap:6px !important;border-radius:5px !important}
+.wz-opt .k{min-width:14px !important;height:14px !important;font-size:8.5px !important}
+.wz-opt.on::after{display:none !important}
+
+/* — output pane — */
+.output-header{padding:7px 14px !important}
+.output-body{padding:12px !important}
+.note-output{padding:16px 18px !important;border-radius:7px !important;font-size:13px !important;line-height:1.62 !important}
+.note-output::before{display:none !important}
+.ai-btn-row{gap:6px !important;margin-top:10px !important}
+.ai-btn{padding:6px 12px !important;font-size:11.5px !important;border-radius:5px !important}
+.copy-btn-below,.clio-send-btm{padding:6px 13px !important;font-size:11.5px !important}
+
+/* — send-to-clio bar and drawer — */
+.clio-notebar{padding:7px 12px !important}
+.cnb-l{font-size:8.5px !important;letter-spacing:1.1px !important}
+.cnb-f input,.cnb-f select{padding:5px 8px !important;font-size:12px !important}
+.cnb-f.title{max-width:210px}
+.cnb-f.date{max-width:150px}
+.clio-f input,.clio-f select,.clio-f textarea{padding:5px 8px !important;font-size:12px !important}
+.clio-sec{padding:9px 12px !important}
+
+/* — search fields: as wide as what they hold, no wider — */
+#bankSearch{max-width:300px}
+#countySearchInput{max-width:210px}
+.wz-combo{max-width:340px}
+.wz-combo .wz-in{max-width:340px}
+
+/* kill the ambient animations — they cost paint and add nothing here */
+header,.badge,.ai-btn,.placeholder .icon{animation:none !important}
+
+/* — contact field: completes from Contacts, + files a new name — */
+.cf{position:relative;display:block;max-width:260px}
+.cf-in{
+  width:100%;font-family:inherit;font-size:12.5px;color:var(--txt);
+  background:#0A0D12;border:1px solid var(--line2);border-radius:5px;
+  padding:5px 26px 5px 8px;outline:none;transition:border-color .13s,box-shadow .16s;
+}
+.cf-in:focus{border-color:var(--led);box-shadow:0 0 0 2px rgba(76,141,246,.14)}
+.cf-in::placeholder{color:#454E5C}
+.cf-add{
+  position:absolute;right:4px;top:50%;transform:translateY(-50%);
+  width:18px;height:18px;line-height:1;padding:0;display:none;
+  align-items:center;justify-content:center;cursor:pointer;
+  background:#15120C;border:1px solid #6E5A2A;border-radius:4px;
+  color:#C9A05A;font-size:14px;font-weight:700;font-family:inherit;
+}
+.cf-add.show{display:flex}
+.cf-add:hover{border-color:var(--bronze-l);color:#E8CF9B;background:#1C1710}
+.cf-pop{
+  display:none;position:absolute;z-index:320;top:calc(100% + 3px);left:0;right:0;
+  max-height:208px;overflow-y:auto;
+  background:#0E1217;border:1px solid var(--line2);border-radius:6px;
+  box-shadow:0 14px 34px rgba(0,0,0,.6);
+}
+.cf-pop.open{display:block}
+.cf-item{padding:5px 9px;cursor:pointer;font-size:12px;display:flex;align-items:baseline;gap:7px}
+.cf-item:hover{background:#151C26}
+.cf-item b{color:var(--txt);font-weight:600}
+.cf-item span{font-size:10px;color:#5C6675}
+
+.wz-combo.has-add .wz-in{padding-right:52px}
+.wz-combo.has-add::after{right:30px}
+.wzc-add{right:28px}
+
+/* every dropdown reads as one — same caret everywhere */
+.form-panel select,.cnb-f select,.clio-f select,.gwm-sel{
+  appearance:none;-webkit-appearance:none;cursor:pointer;
+  padding-right:24px !important;
+  background-image:linear-gradient(45deg,transparent 50%,#6B7584 50%),linear-gradient(135deg,#6B7584 50%,transparent 50%);
+  background-position:calc(100% - 14px) calc(50% - 1px),calc(100% - 9px) calc(50% - 1px);
+  background-size:5px 5px,5px 5px;background-repeat:no-repeat;
+}
+.form-panel select:hover{border-color:rgba(76,141,246,.4)}
+.form-panel select option{background:#0E1217;color:var(--txt)}
+
+/* action button sits at its natural size, not across the panel */
+.generate-btn{width:auto !important;display:inline-block !important;min-width:170px}
+
+/* the dictate mic shrinks with everything else */
+/* a later shared 'pressable' rule reset this to relative, which dropped the
+   dictate button out of its textarea and down the left edge */
+.mic-wrap .mic-btn{position:absolute !important;width:22px !important;height:22px !important;right:6px !important;bottom:6px !important;left:auto !important;top:auto !important}
+.mic-wrap .mic-btn svg{width:12px !important;height:12px !important}
+.mic-wrap textarea{padding-right:32px !important}
+
+/* — note actions live above the note, one row — */
+.out-actions{display:flex;gap:6px;align-items:center}
+.out-btn{padding:5px 12px !important;font-size:11.5px !important;border-radius:5px !important;font-weight:700}
+.out-btn.build{border-color:rgba(76,141,246,.42) !important;color:#C7DBF5 !important;
+  background:linear-gradient(180deg,#18273C,#111925) !important}
+.out-btn.build:hover{border-color:var(--led) !important}
+.out-btn.rev{color:#97A2B2 !important;border-color:#34405C !important;background:#131C30 !important}
+
+/* — the note is the editor: click in and type — */
+.note-output[contenteditable="true"]{outline:none;cursor:text}
+.note-output[contenteditable="true"]:focus{
+  border-color:rgba(184,135,59,.45);
+  box-shadow:0 20px 50px rgba(0,0,0,.6),0 0 0 2px rgba(184,135,59,.18);
+}
+.note-output.edited{border-left:2px solid rgba(184,135,59,.55)}
 </style>
 
 <div class="gwm-scrim" id="gwmScrim" onclick="gwmCloseAll()"></div>
@@ -9285,14 +9844,14 @@ document.addEventListener('keydown',function(e){
   <div class="gwm-df">
     <button class="gwm-btn tiny" onclick="gwmScanNow()" id="gwmScanBtn" fdprocessedid="93jrtj">Scan calendar now</button>
     <span class="sp"></span>
-    <span id="gwmLastRun" style="font-size:10.5px;color:#5B6472">last swept 10:40 PM · 0 raised</span>
+    <span id="gwmLastRun" style="font-size:10.5px;color:#5B6472">last swept 3:45 PM · 0 raised</span>
   </div>
 </div>
 
 <!-- settings -->
 <div class="gwm-drawer" id="gwmSet" aria-hidden="true">
   <div class="gwm-dh">
-    <span class="tag">Automation</span>
+    <span class="tag">Settings</span>
     <h3>Calendar &amp; Note Reminders</h3>
     <span class="sp"></span>
     <button class="gwm-x" onclick="gwmCloseAll()" title="Close">×</button>
@@ -9412,12 +9971,12 @@ document.addEventListener('keydown',function(e){
     var gear = document.createElement('button');
     gear.id = 'gwmGearBtn';
     gear.className = 'gwm-btn';
-    gear.title = 'Calendar and reminder settings';
+    gear.title = 'Connections and settings';
     gear.onclick = openSettings;
     gear.innerHTML =
       '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" ' +
       'stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"></rect>' +
-      '<path d="M16 2v4M8 2v4M3 10h18"></path></svg><span>Calendar</span>';
+      '<path d="M16 2v4M8 2v4M3 10h18"></path></svg><span>Settings</span>';
 
     bar.appendChild(spacer);
     bar.appendChild(gw);
@@ -9595,7 +10154,7 @@ document.addEventListener('keydown',function(e){
     /* the note header — title and date */
     try {
       if (typeof window.clioNoteTitleInput === 'function')
-        window.clioNoteTitleInput(guessHearing(p.title) || p.title, true);
+        window.clioNoteTitleInput(looksLikeCourt(p) ? 'COURT SUMMARY' : '', true);
       if (typeof window.clioNoteDateInput === 'function' && p.dayISO)
         window.clioNoteDateInput(p.dayISO);
     } catch (e) {}
@@ -9775,6 +10334,43 @@ document.addEventListener('keydown',function(e){
   }
   function paintPreview() { var el2 = q('gwmPreview'); if (el2) el2.textContent = previewName(); }
 
+  /* ── Clio connection ───────────────────────────────────────────────────────
+     The Connect to Clio button used to sit in the status bar. It lives here
+     now; the hidden original still carries the authorize flow, so this row
+     drives it rather than duplicating it. */
+  function clioBlock() {
+    var c = (typeof window.__clioConnected === 'undefined') ? null : window.__clioConnected;
+    var who = window.__clioUser || '';
+    var label = (document.getElementById('connectClioBtn') &&
+                 document.getElementById('connectClioBtn').querySelector('.c3-txt'));
+    var btnText = (label && label.textContent.trim()) || 'Connect to Clio';
+
+    if (c === true) {
+      return '<div class="gwm-row"><span class="gwm-dot" style="background:#22c55e"></span>' +
+        '<span style="font-size:12.5px;color:#C4CCD8;flex:1">Connected' +
+        (who ? ' as <b>' + E(who) + '</b>' : '') + '</span>' +
+        '<button class="gwm-btn tiny" onclick="gwmReconnectClio()">Reconnect</button></div>' +
+        '<div class="gwm-hint">Notes, time entries and calendar entries all save under this login.</div>';
+    }
+    var dot = (c === false) ? '#ef4444' : '#f59e0b';
+    var msg = (c === false) ? 'Not connected' : 'Checking Clio\u2026';
+    return '<div class="gwm-row"><span class="gwm-dot" style="background:' + dot + '"></span>' +
+      '<span style="font-size:12.5px;color:#C4CCD8;flex:1">' + msg + '</span>' +
+      '<button class="gwm-btn go tiny" onclick="gwmReconnectClio()">' + E(btnText) + '</button></div>' +
+      '<div class="gwm-hint">Nothing can save to Clio until this is connected.</div>';
+  }
+  /* repaint just this section when the Clio light changes */
+  window.gwmPaintClio = function () {
+    var sec = q('gwmClioSec');
+    if (sec) sec.innerHTML = '<h4>Clio Connection</h4>' + clioBlock();
+  };
+  window.gwmReconnectClio = function () {
+    var btn = document.getElementById('connectClioBtn');
+    if (btn) { btn.click(); return; }
+    if (typeof window.clioConnect === 'function') { window.clioConnect(); return; }
+    say('Clio connect is unavailable on this page');
+  };
+
   function renderSettings() {
     var host = q('gwmSetBody');
     if (!host) return;
@@ -9802,6 +10398,8 @@ document.addEventListener('keydown',function(e){
           : '<div class="gwm-hint">No calendars came back. Try Reconnect.</div>');
 
     host.innerHTML =
+      '<div class="gwm-sec" id="gwmClioSec"><h4>Clio Connection</h4>' + clioBlock() + '</div>' +
+
       '<div class="gwm-note">Every five minutes the Worker looks at the calendars you tick below. ' +
       'When an event has finished it creates a <b>Clio task</b> — "Complete a note for &lt;event&gt;" with the date and time — ' +
       'and raises a reminder here. Writing the note ticks the Clio task off for you. ' +
