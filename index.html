@@ -2057,6 +2057,7 @@ html{ -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; tex
   <div class="seg" id="engineSeg">
     <button id="segGuided" class="on" onclick="setEngine('guided')" fdprocessedid="rmhosi">Guided</button>
     <button id="segManual" onclick="setEngine('manual')" fdprocessedid="y2i4c">Manual</button>
+    <button id="segSmart" onclick="setEngine('smart')" title="Dictate once, build the whole note">Smart</button>
   </div>
 
   <button class="tb-btn" id="bankBtn" onclick="openBank()" title="Contact bank" fdprocessedid="n9ycu">
@@ -2084,6 +2085,7 @@ html{ -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; tex
 <div class="main m-form" id="mainPane">
   <div class="stage" id="stage">
     <div class="clio-notebar" id="clioNoteBar"><div class="cnb-head"><span class="k">Send to Clio</span><span class="m">Court Summary</span><span class="sp"></span></div><div class="cnb-row"><div class="cnb-f grow"><span class="cnb-l">Clio Matter for this note</span><button class="clio-cbtrig has" id="clioComboBar" onclick="clioOpenPop('clioComboBar')"><span class="av">SC</span><span class="id"><span class="t">Steven Allen Chesnut</span><span class="s">02492-Chesnut  ·  Open</span></span><span class="car">▾</span></button></div><div class="cnb-f title"><span class="cnb-l">Note Title <button class="auto" onclick="clioAutoTitle()" title="Fill the title from this note">auto</button></span><select id="clioBarTitle" onchange="clioNoteTitleInput(this.value,true)"><option value="INTAKE NOTES">INTAKE NOTES</option><option value="COURT SUMMARY">COURT SUMMARY</option><option value="CASE REVIEW NOTES">CASE REVIEW NOTES</option><option value="CHECK IN NOTES">CHECK IN NOTES</option></select></div><div class="cnb-f date"><span class="cnb-l">Note Date</span><input id="clioBarDate" type="date" onchange="clioNoteDateInput(this.value)"></div></div></div>
+    <div class="smart-panel" id="smartPanel" style="display:none"></div>
     <div class="wz" id="wizard"><div class="wz-bar"><i style="width:100%"></i></div><div class="wz-meta"><span class="wz-sec">Review</span><span class="wz-step">Step <b>13</b> / 13</span></div><div class="wz-done"><h3>Note ready</h3><p class="sub">Everything you answered is below. Click any line to jump back and change it — the note on the right updates instantly.</p><div class="wz-ans"><div class="wz-ans-row" onclick="wzJump('c_county')"><span class="k">Which county</span><span class="v">Ramsey</span><span class="e">edit</span></div><div class="wz-ans-row" onclick="wzJump('c_judge')"><span class="k">Who was the judge</span><span class="v">No Judge</span><span class="e">edit</span></div><div class="wz-ans-row" onclick="wzJump('c_pros')"><span class="k">Who was the prosecutor</span><span class="v">Elizabeth Duel</span><span class="e">edit</span></div><div class="wz-ans-row" onclick="wzJump('c_office')"><span class="k">Which office is Elizabeth Duel with</span><span class="v">Office: Chestnut Cambronne</span><span class="e">edit</span></div><div class="wz-ans-row" onclick="wzJump('c_htype')"><span class="k">What kind of hearing was it</span><span class="v">Pretrial Hearing</span><span class="e">edit</span></div><div class="wz-ans-row" onclick="wzJump('c_date')"><span class="k">What day was the hearing</span><span class="v">September 15, 2026</span><span class="e">edit</span></div><div class="wz-ans-row" onclick="wzJump('c_appear')"><span class="k">Who appeared, and how</span><span class="v">Attorney: GWM
 Appearance: by Zoom
 With client?: On Client's behalf</span><span class="e">edit</span></div><div class="wz-ans-row" onclick="wzJump('c_wit')"><span class="k">Was there witness testimony</span><span class="v">No</span><span class="e">edit</span></div><div class="wz-ans-row" onclick="wzJump('c_details')"><span class="k">What happened at the hearing</span><span class="v">GWM met with Prosecutor to receive an updated offer. Initial offer was CFD on the first 2 counts and plead to the speed. Prosecutor today agreed to CFD on all 3 with a $475 fine. Client accepted and case resolved. </span><span class="e">edit</span></div><div class="wz-ans-row" onclick="wzJump('c_offerq')"><span class="k">Was an offer made</span><span class="v">No</span><span class="e">edit</span></div><div class="wz-ans-row" onclick="wzJump('c_nextq')"><span class="k">Is there a next court date</span><span class="v">No</span><span class="e">edit</span></div><div class="wz-ans-row" onclick="wzJump('c_briefq')"><span class="k">Is a brief or motion due</span><span class="v">No</span><span class="e">edit</span></div><div class="wz-ans-row" onclick="wzJump('c_pmmq')"><span class="k">Add a PMM directive for staff</span><span class="v">No</span><span class="e">edit</span></div></div><div class="wz-nav" style="margin-top:0"><button class="wz-btn fin" onclick="copyNote()">Copy note</button><button class="wz-btn" onclick="wzGo(-1)">Back to last question</button><span class="sp"></span><button class="wz-btn ghost" onclick="wzResetMode()">Clear and start over</button></div></div></div>
@@ -6628,12 +6630,26 @@ function setEngine(mode){
   el('segGuided').classList.toggle('on', mode==='guided');
   el('segManual').classList.toggle('on', mode==='manual');
   el('segManual').classList.toggle('amber', mode==='manual');
+  var sm=el('segSmart');
+  if(sm){ sm.classList.toggle('on', mode==='smart'); sm.classList.toggle('bronze', mode==='smart'); }
   el('tbKeys').style.visibility = mode==='guided'?'visible':'hidden';
   applyEngine();
 }
 function applyEngine(){
   noteDirty=false;   /* new mode / engine — start from the generated note */
-  var wzHost=el('wizard'), fp=el('formPanel');
+  var wzHost=el('wizard'), fp=el('formPanel'), sp=el('smartPanel');
+  if(sp) sp.style.display='none';
+  var bar=el('clioNoteBar');
+  if(wz.engine==='smart'){
+    fp.style.display='none'; fp.innerHTML='';
+    wzHost.style.display='none'; wzHost.innerHTML='';
+    /* Smart Build carries its own matter button — the Send-to-Clio bar would
+       push the dictation box off the first screen */
+    if(bar) bar.style.display='none';
+    if(sp){ sp.style.display=''; if(typeof smartRender==='function') smartRender(); }
+    return;
+  }
+  if(bar) bar.style.display='';
   if(wz.engine==='guided'){
     fp.style.display='none'; fp.innerHTML='';   /* avoid duplicate element ids */
     wzHost.style.display='';
@@ -8581,6 +8597,8 @@ function finish(mode,results){
   if(parts.length && ok===parts.length){
     rec.locked=true;
     if(rec.matter) recentPush(rec.matter.id);
+    /* Smart Build's proposed contacts are written only now, never at Build */
+    try{ if(typeof window.smartFlushPending==='function') window.smartFlushPending(); }catch(e){}
     say('Sent to Clio — '+ok+' of '+parts.length+' created');
   } else if(ok){ say('Partly sent — '+ok+' of '+parts.length+' created'); }
   else { say('Nothing reached Clio — see the errors'); }
@@ -10083,6 +10101,147 @@ header,.badge,.ai-btn,.placeholder .icon{animation:none !important}
   .output-header{position:static}
   .mtabs{position:static}
 }
+
+/* ══════════════════════════════════════════════════════════════════════════
+   SMART BUILD
+   ══════════════════════════════════════════════════════════════════════════ */
+#segSmart.on.bronze{
+  background:linear-gradient(180deg,#2C2214,#1A140C);
+  color:#F2D9A6;border-color:var(--bronze-l);
+}
+.smart-panel{padding:14px 16px 40px;max-width:720px}
+.sb-wrap{display:flex;flex-direction:column;gap:10px}
+
+.sb-head{display:flex;align-items:center;gap:10px;font-size:9.5px;font-weight:800;
+  letter-spacing:1.9px;text-transform:uppercase;color:var(--bronze);margin-bottom:2px}
+.sb-head span{flex:1}
+.sb-back{appearance:none;background:none;border:0;color:#6B7584;font-family:inherit;
+  font-size:11px;font-weight:700;cursor:pointer;padding:6px 2px}
+.sb-back:hover{color:var(--led-l)}
+
+.sb-matter{
+  display:flex;flex-direction:column;gap:2px;text-align:left;width:100%;
+  background:#0F141A;border:1px solid var(--line2);border-radius:8px;
+  padding:10px 12px;cursor:pointer;font-family:inherit;
+}
+.sb-matter:hover{border-color:rgba(76,141,246,.4)}
+.sb-mt{font-size:14px;font-weight:700;color:var(--txt)}
+.sb-ms{font-family:var(--mono);font-size:10px;color:#5C6675;letter-spacing:.4px}
+
+.sb-capture{position:relative}
+.sb-ta{
+  width:100%;min-height:140px;font-family:inherit;font-size:16px;line-height:1.55;
+  color:var(--txt);background:#0A0D12;border:1px solid var(--line2);border-radius:9px;
+  padding:14px 14px 56px;outline:none;resize:none;
+  transition:border-color .15s,box-shadow .2s;
+}
+.sb-ta:focus{border-color:var(--led);box-shadow:0 0 0 3px rgba(76,141,246,.12)}
+.sb-ta::placeholder{color:#454E5C}
+.sb-ta.listening{border-color:rgba(180,84,74,.5);box-shadow:0 0 0 3px rgba(180,84,74,.12)}
+
+.sb-mic{
+  position:absolute;left:12px;bottom:12px;width:40px;height:40px;padding:0;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;cursor:pointer;
+  background:linear-gradient(180deg,#1A212B,#0E1218);
+  border:1px solid rgba(184,135,59,.45);color:var(--bronze-l);
+  box-shadow:0 2px 10px rgba(0,0,0,.5);transition:all .14s;
+}
+.sb-mic svg{width:18px;height:18px}
+.sb-mic.sm{width:32px;height:32px;left:auto;right:10px;bottom:10px}
+.sb-mic.sm svg{width:14px;height:14px}
+.sb-mic:hover{border-color:var(--bronze-l);color:#E8CF9B}
+.sb-mic.mic-live{
+  background:linear-gradient(180deg,#3A1714,#24100E);border-color:var(--stop);color:#F0B5AC;
+  box-shadow:0 0 0 3px rgba(180,84,74,.22),0 0 18px rgba(180,84,74,.45);
+  animation:micPulse 1.1s ease-in-out infinite;
+}
+.sb-hint{font-size:11.5px;line-height:1.5;color:#5C6675;padding:0 2px}
+
+.sb-go{
+  width:100%;min-height:52px;font-family:inherit;font-size:15px;font-weight:800;
+  letter-spacing:1.6px;border-radius:9px;cursor:pointer;color:#0B0D10;
+  background:linear-gradient(180deg,#E8CF9B,#B8873B);
+  border:1px solid #E8CF9B;border-bottom-width:3px;
+  box-shadow:0 8px 22px rgba(0,0,0,.5);transition:all .14s;margin-top:2px;
+}
+.sb-go:hover{background:linear-gradient(180deg,#F2DCAE,#C9A05A)}
+.sb-go:active{transform:translateY(2px);border-bottom-width:1px}
+.sb-go:disabled{opacity:.6;cursor:default}
+
+/* review rows */
+.sb-row,.sb-ev{
+  position:relative;background:#0F141A;border:1px solid var(--line2);border-radius:8px;
+  padding:9px 30px 10px 12px;
+}
+.sb-row[onclick]{cursor:pointer}
+.sb-row[onclick]:hover{border-color:rgba(76,141,246,.38)}
+.sb-lab{font-size:8.5px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;
+  color:#5C6675;margin-bottom:4px}
+.sb-val{display:flex;align-items:baseline;gap:7px;font-size:14px;line-height:1.45;color:var(--txt)}
+.sb-val span{flex:1;min-width:0}
+.sb-sub{font-size:10.5px;color:#5C6675;margin-top:3px;line-height:1.4}
+.sb-warn{font-size:11px;color:#E9A9A2;margin-top:4px;font-weight:600}
+.sb-car{position:absolute;right:11px;top:50%;transform:translateY(-50%);color:#3D4855;font-size:12px}
+
+.sb-ok{color:var(--go-l);font-weight:800;flex:0 0 auto}
+.sb-mid{color:var(--bronze-l);font-weight:800;flex:0 0 auto}
+.sb-bad{color:#E9A9A2;font-weight:800;flex:0 0 auto}
+
+.sb-choice{display:flex;gap:6px;flex-wrap:wrap;margin:-4px 0 0;padding:0 2px}
+.sb-cbtn{
+  font-family:inherit;font-size:11.5px;font-weight:700;padding:8px 12px;border-radius:6px;
+  cursor:pointer;background:#131C30;border:1px solid #34405C;color:#C7DBF5;
+}
+.sb-cbtn:hover{border-color:var(--led)}
+.sb-cbtn.new{background:#15120C;border-color:#6E5A2A;color:#C9A05A}
+.sb-new{font-size:11px;font-weight:700;color:#C9A05A;background:#15120C;
+  border:1px solid #6E5A2A;border-radius:6px;padding:7px 10px;display:flex;gap:8px;flex-wrap:wrap}
+.sb-new span{color:#6B7584;font-weight:600}
+
+.sb-ev{border-color:rgba(184,135,59,.35);display:flex;flex-direction:column;gap:4px;align-items:flex-start}
+.sb-ev .sb-cbtn{margin-top:4px}
+
+.sb-unclear{background:#15120C;border:1px solid #4A3E1E;border-radius:8px;padding:9px 12px;
+  font-size:11.5px;color:#C9A05A;display:flex;flex-direction:column;gap:3px}
+.sb-unclear b{font-size:8.5px;letter-spacing:1.4px;text-transform:uppercase;color:#8A7435}
+.sb-unclear span{color:#9AA4B2}
+
+.sb-raw{appearance:none;background:none;border:0;color:#5C6675;font-family:inherit;
+  font-size:11px;font-weight:600;cursor:pointer;text-align:left;padding:2px}
+.sb-raw:hover{color:var(--led-l)}
+
+.sb-fix{position:relative}
+.sb-fixta{
+  width:100%;min-height:62px;font-family:inherit;font-size:16px;line-height:1.5;
+  color:var(--txt);background:#0A0D12;border:1px solid var(--line2);border-radius:8px;
+  padding:10px 46px 10px 12px;outline:none;resize:none;
+}
+.sb-fixta:focus{border-color:var(--led)}
+.sb-fixta::placeholder{color:#454E5C}
+.sb-fixta.listening{border-color:rgba(180,84,74,.5)}
+.sb-upd{width:100%;margin-top:6px;min-height:40px;font-family:inherit;font-size:12px;
+  font-weight:800;letter-spacing:1.2px;border-radius:7px;cursor:pointer;
+  background:#131C30;border:1px solid #34405C;color:#C7DBF5}
+.sb-upd:hover{border-color:var(--led)}
+
+.sb-foot{font-size:10.5px;color:#5C6675;text-align:center;padding:2px 0 0}
+
+@media (max-width:760px){
+  /* the primary action is pinned to the bottom of the screen, and the panel
+     reserves the space so it never sits on top of a row */
+  .smart-panel{padding:12px 12px calc(96px + env(safe-area-inset-bottom))}
+  .sb-ta{min-height:170px;font-size:16px}
+  .sb-go{
+    min-height:56px;font-size:16px;
+    position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));
+    width:auto;z-index:120;margin:0;
+  }
+  .sb-row,.sb-ev{padding:11px 30px 12px 13px}
+  .sb-val{font-size:15px}
+  .sb-cbtn{min-height:40px;font-size:12.5px;flex:1 1 auto}
+  .sb-mic{width:46px;height:46px}
+  .sb-mic svg{width:20px;height:20px}
+}
 </style>
 
 <div class="gwm-scrim" id="gwmScrim" onclick="gwmCloseAll()"></div>
@@ -10928,4 +11087,812 @@ header,.badge,.ai-btn,.placeholder .icon{animation:none !important}
 })();
 </script>
 
-<span id="PING_IFRAME_FORM_DETECTION" style="display: none;"></span></body></html>
+<span id="PING_IFRAME_FORM_DETECTION" style="display: none;"></span><script>
+/* ══════════════════════════════════════════════════════════════════════════════
+   SMART BUILD — one dictation in, a staged Clio note out.
+
+   Capture → Parse → Resolve → Review → Stage → Confirm → Execute
+
+   Nothing here writes to Clio, the calendar or Contacts. Parsing proposes,
+   resolution matches against what is already on file, and the existing
+   Send-to-Clio drawer remains the only thing that executes. New contacts are
+   staged and created only after that confirmation succeeds.
+   ══════════════════════════════════════════════════════════════════════════════ */
+(function(){
+'use strict';
+
+var ALIAS_KEY = 'gwm_name_aliases_v1';
+
+var SB = {
+  stage:'capture',      /* capture | review */
+  raw:'',               /* what he actually said */
+  parsed:null,          /* validated structure from the model */
+  fields:null,          /* resolved, ready to stage */
+  pending:[],           /* contacts to create on export */
+  busy:false,
+  rec:null              /* live SpeechRecognition */
+};
+window.SB = SB;
+
+function $id(i){ return document.getElementById(i); }
+function esc(t){ return String(t==null?'':t).replace(/&/g,'&amp;').replace(/</g,'&lt;')
+  .replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function say(m){ try{ toast(m); }catch(e){ } }
+/* pad2 and the spoken-date normaliser live inside other modules' closures,
+   so this module carries its own. */
+function pad2(n){ return String(n).padStart(2,'0'); }
+var SPOKEN_NUM = {one:1,two:2,three:3,four:4,five:5,six:6,seven:7,eight:8,nine:9,ten:10,
+  eleven:11,twelve:12,thirteen:13,fourteen:14,fifteen:15,sixteen:16,seventeen:17,eighteen:18,
+  nineteen:19,twenty:20,thirty:30,first:1,second:2,third:3,fourth:4,fifth:5,sixth:6,seventh:7,
+  eighth:8,ninth:9,tenth:10,eleventh:11,twelfth:12,thirteenth:13,fourteenth:14,fifteenth:15,
+  sixteenth:16,seventeenth:17,eighteenth:18,nineteenth:19,twentieth:20,thirtieth:30};
+function spokenToDigits(text){
+  var t=String(text||'');
+  /* "twenty third" / "twenty-third" */
+  t=t.replace(/\b(twenty|thirty)[\s-](first|second|third|fourth|fifth|sixth|seventh|eighth|ninth)\b/gi,
+    function(_,a,b){ return String(SPOKEN_NUM[a.toLowerCase()]+SPOKEN_NUM[b.toLowerCase()]); });
+  t=t.replace(/\b([a-z]+)\b/gi, function(w){
+    var k=w.toLowerCase();
+    return SPOKEN_NUM.hasOwnProperty(k) ? String(SPOKEN_NUM[k]) : w;
+  });
+  /* "8 30" after a month-day reads as a time */
+  t=t.replace(/\b(\d{1,2})\s+thirty\b/gi,'$1:30');
+  t=t.replace(/\b(\d{1,2})\s+(15|30|45)\b/g,'$1:$2');
+  return t;
+}
+
+/* ── ALIASES ────────────────────────────────────────────────────────────────
+   Deterministic corrections he has confirmed before. "simma franka" → the real
+   contact. These beat every fuzzy score. */
+function aliasLoad(){
+  try{ return JSON.parse(localStorage.getItem(ALIAS_KEY)||'{}') || {}; }catch(e){ return {}; }
+}
+function aliasSave(a){ try{ localStorage.setItem(ALIAS_KEY, JSON.stringify(a)); }catch(e){} }
+function aliasKey(s){ return nkey(s); }
+function aliasRemember(heard, name){
+  if(!heard || !name) return;
+  if(nkey(heard)===nkey(name)) return;          /* nothing to learn */
+  var a=aliasLoad(); a[aliasKey(heard)] = name; aliasSave(a);
+}
+function aliasLookup(heard){
+  var a=aliasLoad(); return a[aliasKey(heard)] || '';
+}
+
+/* ── NAME SIMILARITY ────────────────────────────────────────────────────────── */
+function lev(a,b){
+  a=a||''; b=b||'';
+  if(a===b) return 0;
+  if(!a.length) return b.length;
+  if(!b.length) return a.length;
+  var prev=[], cur=[], i, j;
+  for(j=0;j<=b.length;j++) prev[j]=j;
+  for(i=1;i<=a.length;i++){
+    cur[0]=i;
+    for(j=1;j<=b.length;j++){
+      cur[j]=Math.min(prev[j]+1, cur[j-1]+1, prev[j-1]+(a[i-1]===b[j-1]?0:1));
+    }
+    prev=cur.slice();
+  }
+  return prev[b.length];
+}
+function ratio(a,b){
+  a=nkey(a); b=nkey(b);
+  var m=Math.max(a.length,b.length);
+  if(!m) return 0;
+  return 1 - (lev(a,b)/m);
+}
+/* a deliberately loose phonetic key — dictation mangles spelling, not sound */
+function phon(s){
+  s = nkey(s).replace(/[^a-z\s]/g,'');
+  return s.split(/\s+/).map(function(w){
+    if(!w) return '';
+    var t = w
+      .replace(/^(kn|gn|pn|wr)/,'n')
+      .replace(/^x/,'s')
+      .replace(/ph/g,'f').replace(/gh/g,'g')
+      .replace(/ck/g,'k').replace(/sch/g,'sk')
+      .replace(/[szc]/g,'s').replace(/[kqg]/g,'k')
+      .replace(/[dt]/g,'t').replace(/[mn]/g,'n')
+      .replace(/[bpv]/g,'p').replace(/[fw]/g,'f')
+      .replace(/[aeiouyh]/g,'')
+      .replace(/(.)\1+/g,'$1');
+    return w.charAt(0) + t;
+  }).join(' ').trim();
+}
+function lastName(n){
+  var w=String(n||'').trim().split(/\s+/).filter(Boolean);
+  return w.length ? w[w.length-1] : '';
+}
+function firstName(n){
+  var w=String(n||'').trim().split(/\s+/).filter(Boolean);
+  return w.length ? w[0] : '';
+}
+
+/* ── CANDIDATE POOL ─────────────────────────────────────────────────────────
+   Judges come from the county roster plus any judge cards on file. Prosecutors
+   come from Contacts. Both get a county/office boost below. */
+function candidates(role, county){
+  var out=[], seen={};
+  function push(name, rec){
+    var k=nkey(name);
+    if(!k || seen[k]) return;
+    seen[k]=true;
+    out.push({ name:name, rec:rec||null });
+  }
+  var db;
+  try{ db=bankLoad(); }catch(e){ db={people:[]}; }
+
+  if(role==='judge'){
+    try{ (judgesForCounty(county)||[]).forEach(function(j){ push(j,null); }); }catch(e){}
+    db.people.forEach(function(p){ if(/judge|referee/i.test(p.position||'')) push(p.name,p); });
+  } else {
+    db.people.forEach(function(p){
+      if(/judge|referee/i.test(p.position||'')) return;
+      push(p.name,p);
+    });
+  }
+  return out;
+}
+
+/* ── RESOLUTION ─────────────────────────────────────────────────────────────
+   Returns { name, id, confidence, action, from, note }.
+   action: use_existing | needs_review | create_new | none            */
+function resolvePerson(heardRaw, role, ctx){
+  var heard = String(heardRaw||'').trim();
+  var res = { raw:heard, name:'', id:'', confidence:0, action:'none', from:'', note:'' };
+  if(!heard) return res;
+
+  /* 1 · a correction he has already confirmed wins outright */
+  var al = aliasLookup(heard);
+  if(al){
+    var rec = null;
+    try{ rec = bankFind(al); }catch(e){}
+    res.name=al; res.id=rec?rec.id:''; res.confidence=0.99;
+    res.action='use_existing'; res.from=heard; res.note='learned correction';
+    return res;
+  }
+
+  var pool = candidates(role, ctx.county);
+  var best=null;
+
+  pool.forEach(function(c){
+    var s = 0, why='';
+    var hn=nkey(heard), cn=nkey(c.name);
+
+    if(hn===cn){ s=1.0; why='exact'; }
+    else {
+      var r = ratio(heard, c.name);
+      var hLast=lastName(heard), cLast=lastName(c.name);
+      var hFirst=firstName(heard), cFirst=firstName(c.name);
+      var bothFull = /\s/.test(heard.trim()) && /\s/.test(c.name.trim());
+
+      var lnEq = nkey(hLast) === nkey(cLast);
+      var lnR  = ratio(hLast, cLast);
+      var phLn = phon(hLast) === phon(cLast);
+      var phEq = phon(heard) === phon(c.name);
+
+      /* Do the given names agree? A shared surname means nothing on its own —
+         John Smith is not Travis Smith, however well "Smith" matches. */
+      var fiEq   = nkey(hFirst).charAt(0) === nkey(cFirst).charAt(0);
+      var fnR    = ratio(hFirst, cFirst);
+      var phFn   = phon(hFirst) === phon(cFirst);
+      var firstCompat = !bothFull || fiEq || fnR>=0.7 || phFn;
+
+      if(lnEq && (fiEq || fnR>=0.7 || phFn)) { s=Math.max(s,0.94); why='surname and given name'; }
+      else if(lnEq && !bothFull)             { s=Math.max(s,0.9);  why='surname'; }
+      if(phLn && lnR>0.6 && firstCompat)     { s=Math.max(s,0.88); why='sounds like the name on file'; }
+      if(phEq)                               { s=Math.max(s,0.85); why='sounds alike'; }
+      if(r>=0.86)                            { s=Math.max(s,r);    why='spelling'; }
+      else if(r>=0.74)                       { s=Math.max(s,r*0.95); why='close spelling'; }
+      /* only a surname was spoken, and it lands on a full name already on file */
+      if(!/\s/.test(heard.trim()) && (lnEq || phLn)) { s=Math.max(s,0.9); why='surname only'; }
+
+      /* two full names whose given names disagree are two different people */
+      if(bothFull && !firstCompat) { s=Math.min(s,0.6); why='different given name'; }
+    }
+    if(!s) return;
+
+    /* context lifts a match; it never creates one */
+    var p=c.rec;
+    if(p){
+      var jurs=(p.jurisdictions||[]).join(' ').toLowerCase();
+      if(ctx.county && jurs.indexOf(String(ctx.county).toLowerCase())!==-1) s+=0.05;
+      if(ctx.office && nkey(p.office)===nkey(ctx.office)) s+=0.05;
+      if((p.uses||0)>0) s+=0.01;
+    } else if(role==='judge' && ctx.county){
+      s+=0.05;                                  /* on this county's bench */
+    }
+    s=Math.min(s,1);
+    if(!best || s>best.s) best={ s:s, c:c, why:why };
+  });
+
+  if(best && best.s>=0.72){
+    res.name = best.c.name;
+    res.id   = best.c.rec ? best.c.rec.id : '';
+    res.confidence = best.s;
+    res.action = 'use_existing';
+    res.from = (nkey(heard)===nkey(best.c.name)) ? '' : heard;
+    res.note = best.why;
+    return res;
+  }
+
+  /* nothing close enough — never guess, never silently create */
+  res.name = heard;
+  res.confidence = best ? best.s : 0;
+  res.action = 'needs_review';
+  res.note = best ? ('closest on file: '+best.c.name) : 'not on file';
+  res.near = best ? best.c.name : '';
+  return res;
+}
+
+function resolveOffice(heardRaw, ctx){
+  var heard=String(heardRaw||'').trim();
+  var res={ raw:heard, name:'', confidence:0, action:'none', from:'', note:'' };
+  if(!heard) return res;
+  var db; try{ db=bankLoad(); }catch(e){ db={offices:[]}; }
+  var best=null;
+  (db.offices||[]).forEach(function(o){
+    var r=ratio(heard,o.name);
+    if(nkey(heard)===nkey(o.name)) r=1;
+    /* "Hennepin County" should find "Hennepin County Attorney's Office" */
+    if(nkey(o.name).indexOf(nkey(heard))===0) r=Math.max(r,0.93);
+    if(!best || r>best.r) best={ r:r, o:o };
+  });
+  if(best && best.r>=0.78){
+    res.name=best.o.name; res.confidence=best.r; res.action='use_existing';
+    res.from = nkey(heard)===nkey(best.o.name) ? '' : heard;
+    return res;
+  }
+  res.name=heard; res.confidence=best?best.r:0; res.action='needs_review';
+  res.note='not on file'; res.near=best?best.o.name:'';
+  return res;
+}
+
+/* ── CONTEXT ────────────────────────────────────────────────────────────────── */
+function ctxNow(){
+  var c={ matter:null, county:'', office:'', judge:'', prosecutor:'' };
+  try{
+    var k = window.clioContext ? window.clioContext() : null;
+    if(k){ c.matter=k.matter; c.county=k.county||''; }
+  }catch(e){}
+  try{ if(!c.county && court && court.county) c.county=countyKey(court.county); }catch(e){}
+  try{ c.judge=court.judge||''; c.prosecutor=court.prosecutor||''; c.office=court.prosOffice||''; }catch(e){}
+  return c;
+}
+function knownNamesForPrompt(ctx){
+  var j=[], p=[], o=[];
+  try{ j=(judgesForCounty(ctx.county)||[]).slice(0,40); }catch(e){}
+  try{
+    var db=bankLoad(), seenJ={};
+    j.forEach(function(n){ seenJ[nkey(n)]=1; });
+    db.people.forEach(function(x){
+      if(/judge|referee/i.test(x.position||'')){
+        var jur=(x.jurisdictions||[]).join(' ');
+        if(!seenJ[nkey(x.name)] && (!ctx.county || !jur || jur.toLowerCase().indexOf(ctx.county.toLowerCase())!==-1)){
+          seenJ[nkey(x.name)]=1; j.push(x.name);
+        }
+        return;
+      }
+      var jur=(x.jurisdictions||[]).join(' ');
+      if(!ctx.county || !jur || jur.toLowerCase().indexOf(ctx.county.toLowerCase())!==-1) p.push(x.name);
+    });
+    p=p.slice(0,60);
+    o=(db.offices||[]).map(function(x){ return x.name; }).slice(0,40);
+  }catch(e){}
+  return { judges:j, prosecutors:p, offices:o };
+}
+
+/* ── PARSE ──────────────────────────────────────────────────────────────────── */
+function parsePrompt(ctx){
+  var known=knownNamesForPrompt(ctx);
+  var today=new Date();
+  return [
+    'You turn a Minnesota criminal-defense attorney\'s spoken account of a court hearing into structured data.',
+    'Today is '+today.toDateString()+'. The matter is in '+(ctx.county?ctx.county+' County':'an unstated county')+'.',
+    ctx.matter&&ctx.matter.client_name ? ('The client is '+ctx.matter.client_name+'.') : '',
+    'Judges known on this bench: '+(known.judges.join('; ')||'none on file')+'.',
+    'Prosecutors on file: '+(known.prosecutors.join('; ')||'none on file')+'.',
+    'Prosecuting offices on file: '+(known.offices.join('; ')||'none on file')+'.',
+    'Use those lists ONLY to spell a name he clearly meant. If what he said is not plainly one of them, return exactly what you heard and let the application decide.',
+
+    'Return ONE JSON object and nothing else. No prose, no markdown, no code fence. Schema:',
+    '{"judge":string,"prosecutor":string,"prosecutingOffice":string,"offer":string,"details":string,'+
+      '"clientPosition":string,"advice":string,"outcome":string,'+
+      '"nextEvent":{"dateText":string,"date":"YYYY-MM-DD","time":"HH:MM","type":string},'+
+      '"hearingType":string,"appearance":"in person|by Zoom|by phone","unclear":[string]}',
+
+    'Every field is optional. Use "" for anything he did not say. NEVER invent a name, a date, a time, a dollar amount, a charge, an offer term or a hearing type. If you cannot tell, leave it empty and add a short note to "unclear".',
+    'judge / prosecutor: the person\'s name only, no title.',
+    'offer: the State\'s offer in his words, cleaned up, terms separated by semicolons.',
+    'details: what happened at the hearing, in clean flowing prose, third person, past tense, "Client" for the client and his initials as spoken. Do not repeat the offer, the next court date or the client\'s position here.',
+    'clientPosition: what the client said about the offer.',
+    'advice: what he advised or recommended.',
+    'outcome: how the hearing ended, if he said.',
+    'nextEvent.dateText: the date exactly as he said it. date: resolve it to YYYY-MM-DD only when the day and month are unambiguous; pick the next future occurrence when he gave no year. Leave date empty if you are unsure. time: 24-hour. A court time between 1 and 7 with no am/pm is afternoon; 8 through 12 is morning. type: the hearing type he named, otherwise "".',
+    'Expand his shorthand: pros = Prosecutor, CL = Client, PT = Pretrial Hearing, OH = Omnibus Hearing, SC = Settlement Conference, CFD = CFD (leave as is), cont = continuance. Keep CFD, DANCO, implied consent, Fast Track, stay of adjudication, RAS and PBT exactly as spoken.',
+    'Fix dictation artefacts: duplicated words, filler, missing punctuation, run-on fragments, miscapitalisation.'
+  ].filter(Boolean).join(' ');
+}
+
+function extractJSON(txt){
+  if(!txt) return null;
+  var t=String(txt).trim().replace(/^```(?:json)?\s*/i,'').replace(/```\s*$/,'');
+  var a=t.indexOf('{'), b=t.lastIndexOf('}');
+  if(a===-1||b===-1||b<a) return null;
+  try{ return JSON.parse(t.slice(a,b+1)); }catch(e){ return null; }
+}
+/* the model proposes; this decides what is usable */
+function validateParsed(o){
+  function s(v){ return (typeof v==='string') ? v.trim() : ''; }
+  var ne=(o && typeof o.nextEvent==='object' && o.nextEvent) ? o.nextEvent : {};
+  var out={
+    judge:s(o&&o.judge), prosecutor:s(o&&o.prosecutor), prosecutingOffice:s(o&&o.prosecutingOffice),
+    offer:s(o&&o.offer), details:s(o&&o.details), clientPosition:s(o&&o.clientPosition),
+    advice:s(o&&o.advice), outcome:s(o&&o.outcome),
+    hearingType:s(o&&o.hearingType), appearance:s(o&&o.appearance),
+    nextEvent:{ dateText:s(ne.dateText), date:'', time:'', type:s(ne.type) },
+    unclear: Array.isArray(o&&o.unclear) ? o.unclear.filter(function(x){ return typeof x==='string'; }).slice(0,6) : []
+  };
+  var d=s(ne.date);
+  if(/^\d{4}-\d{2}-\d{2}$/.test(d)){
+    var dt=new Date(d+'T12:00:00');
+    if(!isNaN(dt.getTime())) out.nextEvent.date=d;
+  }
+  var t=s(ne.time);
+  if(/^\d{1,2}:\d{2}$/.test(t)){
+    var hh=parseInt(t.split(':')[0],10), mm=parseInt(t.split(':')[1],10);
+    if(hh>=0&&hh<=23&&mm>=0&&mm<=59) out.nextEvent.time=pad2(hh)+':'+pad2(mm);
+  }
+  if(['in person','by Zoom','by phone'].indexOf(out.appearance)===-1) out.appearance='';
+  return out;
+}
+
+/* a second pass over the date, in our own code, so a model slip cannot calendar
+   the wrong day unnoticed */
+function reconcileDate(p, raw){
+  var ev=p.nextEvent, flag='';
+  var src = ev.dateText || raw;
+  var own='';
+  try{
+    var norm = spokenToDigits(src);
+    var res = (typeof window.clioParseHearing==='function') ? window.clioParseHearing(norm) : null;
+    if(res && res.iso) own=res.iso;
+    if(!ev.time && res && res.time) ev.time=res.time;
+    if(!ev.type && res && res.type) ev.type=res.type;
+  }catch(e){}
+
+  if(ev.date && own && ev.date!==own) flag='two readings of that date — check it';
+  if(!ev.date && own) ev.date=own;
+  if(ev.date){
+    var dt=new Date(ev.date+'T12:00:00');
+    var today=new Date(); today.setHours(0,0,0,0);
+    if(dt<today) flag='that date is in the past';
+  }
+  if((ev.dateText||ev.date) && !ev.time) flag = flag || 'no time given';
+  if((ev.dateText||ev.date) && !ev.type) flag = flag || 'hearing type not detected';
+  ev.flag=flag;
+  return p;
+}
+
+/* ── BUILD ──────────────────────────────────────────────────────────────────── */
+function smartBuild(){
+  if(SB.busy) return;
+  var raw=(($id('sbInput')||{}).value||'').trim();
+  if(raw.length<12){ say('Say a bit more first'); return; }
+  if(typeof AI_PROXY_URL!=='string' || !AI_PROXY_URL || AI_PROXY_URL.indexOf('YOUR-WORKER-SUBDOMAIN')!==-1){
+    say('Smart Build needs the AI proxy set at the top of the file'); return;
+  }
+  stopDictation();
+  SB.raw=raw; SB.busy=true; paintCapture();
+
+  var ctx=ctxNow();
+  fetch(AI_PROXY_URL,{
+    method:'POST', headers:{ 'Content-Type':'application/json' },
+    body:JSON.stringify({ model:'claude-sonnet-4-6', max_tokens:2000,
+      system:parsePrompt(ctx), messages:[{ role:'user', content:raw }] })
+  })
+  .then(function(r){ return r.json(); })
+  .then(function(d){
+    var txt='';
+    if(d && Array.isArray(d.content)) txt=d.content.filter(function(b){ return b.type==='text'; })
+      .map(function(b){ return b.text; }).join('\n');
+    var obj=extractJSON(txt);
+    if(!obj) throw new Error('unreadable');
+    var p=validateParsed(obj);
+    p=reconcileDate(p, raw);
+    SB.parsed=p;
+    SB.fields=resolveAll(p, ctx);
+    SB.stage='review';
+    SB.busy=false;
+    renderSmart();
+  })
+  .catch(function(err){
+    SB.busy=false; paintCapture();
+    try{ console.error('Smart Build failed:', err); }catch(e){}
+    say(err && err.message==='unreadable'
+      ? 'The parser returned something unreadable — try saying it again'
+      : 'Smart Build could not reach the AI proxy — check the Worker and try again');
+  });
+}
+
+function resolveAll(p, ctx){
+  var f={
+    judge: resolvePerson(p.judge,'judge',ctx),
+    prosecutor: resolvePerson(p.prosecutor,'prosecutor',ctx),
+    office: resolveOffice(p.prosecutingOffice,ctx),
+    offer:p.offer, details:p.details, clientPosition:p.clientPosition,
+    advice:p.advice, outcome:p.outcome,
+    hearingType:p.hearingType, appearance:p.appearance,
+    next:{ date:p.nextEvent.date, time:p.nextEvent.time, type:p.nextEvent.type,
+           dateText:p.nextEvent.dateText, flag:p.nextEvent.flag },
+    unclear:p.unclear
+  };
+  /* the office he named can firm up the prosecutor, and the other way round */
+  if(f.office.action==='use_existing' && f.prosecutor.action==='needs_review'){
+    var ctx2=Object.assign({},ctx,{office:f.office.name});
+    var again=resolvePerson(p.prosecutor,'prosecutor',ctx2);
+    if(again.action==='use_existing') f.prosecutor=again;
+  }
+  if(!p.prosecutingOffice && f.prosecutor.action==='use_existing' && f.prosecutor.id){
+    try{
+      var rec=bankLoad().people.filter(function(x){ return x.id===f.prosecutor.id; })[0];
+      if(rec && rec.office){ f.office={ raw:'', name:rec.office, confidence:0.9,
+        action:'use_existing', from:'', note:'from their contact card' }; }
+    }catch(e){}
+  }
+  return f;
+}
+
+/* ── UI ─────────────────────────────────────────────────────────────────────── */
+function statusMark(r){
+  if(!r || r.action==='none') return '';
+  if(r.action==='use_existing') return r.confidence>=0.88
+    ? '<span class="sb-ok">&#10003;</span>' : '<span class="sb-mid">~</span>';
+  return '<span class="sb-bad">!</span>';
+}
+function renderSmart(){
+  var host=$id('smartPanel'); if(!host) return;
+  host.innerHTML = SB.stage==='review' ? reviewHTML() : captureHTML();
+  if(SB.stage==='capture'){
+    var ta=$id('sbInput'); if(ta){ ta.value=SB.raw||''; autoGrow(ta); }
+  }
+}
+function captureHTML(){
+  var ctx=ctxNow();
+  var m=ctx.matter;
+  var who = m ? esc(m.client_name||m.description||'Clio matter') : 'No matter selected';
+  var sub = m ? esc([m.display_number,m.court_file,ctx.county?ctx.county+' County':''].filter(Boolean).join('  ·  ')) : 'pick one before exporting';
+  return ''+
+  '<div class="sb-wrap">'+
+    '<button class="sb-matter" onclick="clioOpenPop(\'sbMatter\')" id="sbMatter">'+
+      '<span class="sb-mt">'+who+'</span><span class="sb-ms">'+sub+'</span>'+
+    '</button>'+
+
+    '<div class="sb-capture">'+
+      '<textarea id="sbInput" class="sb-ta" placeholder="Tell me what happened in court..." '+
+        'oninput="SBui.grow(this)"></textarea>'+
+      '<button class="sb-mic" id="sbMic" onclick="SBui.mic()" title="Dictate">'+MIC_SVG+'</button>'+
+    '</div>'+
+    '<div class="sb-hint" id="sbHint">Tap the mic and talk. Judge, prosecutor, the offer, what the client said, the next date — in any order.</div>'+
+
+    '<button class="sb-go" id="sbGo" onclick="SBui.build()"'+(SB.busy?' disabled':'')+'>'+
+      (SB.busy?'Building&hellip;':'BUILD')+'</button>'+
+  '</div>';
+}
+
+function row(label, mark, value, sub, edit){
+  if(!value && !sub) return '';
+  return '<div class="sb-row"'+(edit?' onclick="'+edit+'"':'')+'>'+
+    '<div class="sb-lab">'+esc(label)+'</div>'+
+    '<div class="sb-val">'+(mark||'')+'<span>'+esc(value)+'</span></div>'+
+    (sub?'<div class="sb-sub">'+esc(sub)+'</div>':'')+
+    (edit?'<span class="sb-car">&#9656;</span>':'')+
+  '</div>';
+}
+function personRow(label, r, role){
+  if(!r || !r.raw) return '';
+  var sub='';
+  if(r.action==='use_existing' && r.from) sub='matched from "'+r.from+'"'+(r.note?' · '+r.note:'');
+  else if(r.action==='needs_review') sub = r.near ? ('not on file · closest is '+r.near) : 'not on file';
+  else if(r.note) sub=r.note;
+  var h = row(label, statusMark(r), r.name, sub, 'SBui.editPerson(\''+role+'\')');
+  if(r.action==='needs_review'){
+    h += '<div class="sb-choice">'+
+      (r.near?'<button class="sb-cbtn" onclick="SBui.useNear(\''+role+'\')">Use '+esc(r.near)+'</button>':'')+
+      '<button class="sb-cbtn" onclick="SBui.pickExisting(\''+role+'\')">Select existing</button>'+
+      '<button class="sb-cbtn new" onclick="SBui.markNew(\''+role+'\')">Create new</button>'+
+    '</div>';
+  }
+  if(r.action==='create_new'){
+    h += '<div class="sb-new">NEW CONTACT &middot; '+esc(r.name)+
+         (r.position?' &middot; '+esc(r.position):'')+'<span>created on export</span></div>';
+  }
+  return h;
+}
+function reviewHTML(){
+  var f=SB.fields, ctx=ctxNow(), m=ctx.matter;
+  var ev=f.next;
+  var evVal = ev.date ? fmtDate(ev.date) : (ev.dateText||'');
+  var evSub = [ev.time?fmtTime12(ev.time):'', ev.type||''].filter(Boolean).join('  ·  ');
+  var evMark = !evVal ? '' : (ev.flag ? '<span class="sb-bad">!</span>'
+              : (ev.date&&ev.time&&ev.type ? '<span class="sb-ok">&#10003;</span>' : '<span class="sb-mid">~</span>'));
+
+  return ''+
+  '<div class="sb-wrap">'+
+    '<div class="sb-head"><span>Smart Build</span>'+
+      '<button class="sb-back" onclick="SBui.back()">&#8592; Edit dictation</button></div>'+
+
+    '<button class="sb-matter" onclick="clioOpenPop(\'sbMatter\')" id="sbMatter">'+
+      '<span class="sb-mt">'+(m?esc(m.client_name||m.description):'No matter selected')+'</span>'+
+      '<span class="sb-ms">'+(m?esc(m.display_number||''):'pick one before exporting')+'</span></button>'+
+
+    personRow('Judge', f.judge, 'judge')+
+    personRow('Prosecutor', f.prosecutor, 'prosecutor')+
+    personRow('Office', f.office, 'office')+
+
+    row('Offer', f.offer?'<span class="sb-ok">&#10003;</span>':'', f.offer, '', 'SBui.editText(\'offer\',\'Offer\')')+
+    row('Client position', '', f.clientPosition, '', 'SBui.editText(\'clientPosition\',\'Client position\')')+
+    row('Advice', '', f.advice, '', 'SBui.editText(\'advice\',\'Advice\')')+
+    row('Outcome', '', f.outcome, '', 'SBui.editText(\'outcome\',\'Outcome\')')+
+    row('Details', '', f.details, '', 'SBui.editText(\'details\',\'Details\')')+
+
+    (evVal ? '<div class="sb-ev">'+
+      '<div class="sb-lab">Next court date</div>'+
+      '<div class="sb-val">'+evMark+'<span>'+esc(evVal)+'</span></div>'+
+      (evSub?'<div class="sb-sub">'+esc(evSub)+'</div>':'')+
+      (ev.flag?'<div class="sb-warn">'+esc(ev.flag)+'</div>':'')+
+      '<button class="sb-cbtn" onclick="SBui.editEvent()">Edit date / time / type</button>'+
+    '</div>' : '')+
+
+    (f.unclear&&f.unclear.length ?
+      '<div class="sb-unclear"><b>Not sure about</b>'+f.unclear.map(function(u){
+        return '<span>'+esc(u)+'</span>'; }).join('')+'</div>' : '')+
+
+    '<button class="sb-raw" onclick="SBui.showRaw()">View original dictation</button>'+
+
+    '<div class="sb-fix">'+
+      '<textarea id="sbFix" class="sb-fixta" placeholder="Change anything? e.g. &quot;prosecutor is John Robertson and the client rejected the offer&quot;"></textarea>'+
+      '<button class="sb-mic sm" id="sbFixMic" onclick="SBui.mic(\'sbFix\')" title="Dictate a correction">'+MIC_SVG+'</button>'+
+      '<button class="sb-upd" onclick="SBui.update()">UPDATE</button>'+
+    '</div>'+
+
+    '<button class="sb-go" onclick="SBui.export()">EXPORT</button>'+
+    '<div class="sb-foot">Nothing is written to Clio until you confirm on the next screen.</div>'+
+  '</div>';
+}
+
+/* ── EDITS ──────────────────────────────────────────────────────────────────── */
+function fieldOf(role){ return role==='office' ? SB.fields.office : SB.fields[role]; }
+
+var SBui = {
+  grow:function(t){ autoGrow(t); },
+  mic:function(target){ dictateTo(target||'sbInput'); },
+  build:smartBuild,
+  back:function(){ SB.stage='capture'; renderSmart(); },
+  showRaw:function(){
+    var v=prompt('Original dictation (read-only — press Cancel to close):', SB.raw);
+    if(v!==null && v.trim() && v!==SB.raw){ SB.raw=v.trim(); }
+  },
+  editPerson:function(role){
+    var r=fieldOf(role);
+    var v=prompt('Name', r.name||r.raw);
+    if(v===null) return;
+    v=v.trim(); if(!v) return;
+    var ctx=ctxNow();
+    var again = role==='office' ? resolveOffice(v,ctx) : resolvePerson(v, role==='judge'?'judge':'prosecutor', ctx);
+    if(again.action==='use_existing' && nkey(again.name)!==nkey(v)){ again.from=v; }
+    SB.fields[role]=again;
+    if(r.raw) aliasRemember(r.raw, again.name);
+    renderSmart();
+  },
+  useNear:function(role){
+    var r=fieldOf(role);
+    if(!r.near) return;
+    aliasRemember(r.raw, r.near);
+    var ctx=ctxNow();
+    SB.fields[role] = role==='office' ? resolveOffice(r.near,ctx)
+                    : resolvePerson(r.near, role==='judge'?'judge':'prosecutor', ctx);
+    SB.fields[role].from = r.raw;
+    SB.fields[role].note = 'confirmed correction';
+    renderSmart();
+  },
+  pickExisting:function(role){
+    var pool = role==='office'
+      ? (function(){ try{ return bankLoad().offices.map(function(o){ return o.name; }); }catch(e){ return []; } })()
+      : candidates(role==='judge'?'judge':'prosecutor', ctxNow().county).map(function(c){ return c.name; });
+    if(!pool.length){ say('Nothing on file to pick from'); return; }
+    var q=prompt('Type part of the name ('+pool.length+' on file):','');
+    if(q===null) return;
+    var hits=pool.filter(function(n){ return nkey(n).indexOf(nkey(q))!==-1; }).slice(0,12);
+    if(!hits.length){ say('No match'); return; }
+    var pickTxt=hits.map(function(n,i){ return (i+1)+'. '+n; }).join('\n');
+    var sel=prompt('Which one?\n\n'+pickTxt, '1');
+    if(sel===null) return;
+    var idx=parseInt(sel,10)-1;
+    if(isNaN(idx)||!hits[idx]) return;
+    var r=fieldOf(role);
+    aliasRemember(r.raw, hits[idx]);
+    var ctx=ctxNow();
+    SB.fields[role] = role==='office' ? resolveOffice(hits[idx],ctx)
+                    : resolvePerson(hits[idx], role==='judge'?'judge':'prosecutor', ctx);
+    SB.fields[role].from=r.raw; SB.fields[role].note='you picked this';
+    renderSmart();
+  },
+  markNew:function(role){
+    var r=fieldOf(role);
+    r.action='create_new';
+    r.position = role==='judge' ? 'Judge' : (role==='prosecutor' ? 'Prosecutor' : '');
+    renderSmart();
+  },
+  editText:function(key,label){
+    var v=prompt(label, SB.fields[key]||'');
+    if(v===null) return;
+    SB.fields[key]=v.trim();
+    renderSmart();
+  },
+  editEvent:function(){
+    var ev=SB.fields.next;
+    var d=prompt('Date (YYYY-MM-DD)', ev.date||'');
+    if(d!==null){ d=d.trim(); ev.date = /^\d{4}-\d{2}-\d{2}$/.test(d) ? d : ''; }
+    var t=prompt('Time (HH:MM, 24-hour)', ev.time||'');
+    if(t!==null){ t=t.trim(); ev.time = /^\d{1,2}:\d{2}$/.test(t) ? pad2(parseInt(t,10))+':'+t.split(':')[1] : ''; }
+    var y=prompt('Hearing type', ev.type||'');
+    if(y!==null) ev.type=y.trim();
+    ev.flag = (ev.date&&ev.time&&ev.type) ? '' : 'still incomplete';
+    if(ev.date){
+      var dt=new Date(ev.date+'T12:00:00'), today=new Date(); today.setHours(0,0,0,0);
+      if(dt<today) ev.flag='that date is in the past';
+    }
+    renderSmart();
+  },
+  update:function(){
+    var instr=(($id('sbFix')||{}).value||'').trim();
+    if(!instr){ say('Say what to change first'); return; }
+    SB.raw = SB.raw + '\n\nCorrection: ' + instr;
+    var ta=$id('sbFix'); if(ta) ta.value='';
+    say('Rebuilding with your correction');
+    SB.stage='capture'; renderSmart();
+    var box=$id('sbInput'); if(box) box.value=SB.raw;
+    smartBuild();
+  },
+  export:smartExport
+};
+window.SBui = SBui;
+
+/* ── STAGE → the existing Clio drawer ──────────────────────────────────────── */
+function smartExport(){
+  var f=SB.fields;
+  if(!f){ return; }
+
+  /* 1 · fill the Court Summary fields this app already owns */
+  try{
+    if(f.judge && f.judge.name) court.judge=f.judge.name;
+    if(f.prosecutor && f.prosecutor.name) court.prosecutor=f.prosecutor.name;
+    if(f.office && f.office.name) court.prosOffice=f.office.name;
+    if(f.hearingType) court.hearingType=f.hearingType;
+    if(f.appearance) court.appearance=f.appearance;
+    if(f.offer){ court.offerMade=true; court.offer=f.offer; }
+    var body=[f.details, f.clientPosition, f.advice, f.outcome].filter(Boolean).join('\n');
+    if(body) court.details=body;
+    if(f.next.date){
+      court.hasNextCourtDate=true;
+      court.nextCourtDate=f.next.date;
+      court.nextCourtTime=f.next.time||'';
+      court.nextHearingType=f.next.type||'';
+    }
+  }catch(e){}
+
+  /* 2 · regenerate the note from those fields */
+  try{ noteDirty=false; generate(); }catch(e){}
+
+  /* 3 · stage the calendar event through the existing staging API — no writes */
+  try{
+    if(typeof window.clioDictApply==='function'){
+      window.clioDictApply({
+        hearing:{
+          type:f.next.type||'', date:f.next.date||'', start:f.next.time||'',
+          county: ctxNow().county||'',
+          judge: f.judge?f.judge.name:'', prosecutor: f.prosecutor?f.prosecutor.name:''
+        }
+      });
+    }
+  }catch(e){}
+
+  /* 4 · queue any genuinely new contacts; they are created after Confirm */
+  SB.pending=[];
+  ['judge','prosecutor'].forEach(function(role){
+    var r=SB.fields[role];
+    if(r && r.action==='create_new' && r.name){
+      SB.pending.push({ kind:'person', name:r.name,
+        position: role==='judge'?'Judge':'Prosecutor',
+        office: (role==='prosecutor' && SB.fields.office) ? SB.fields.office.name : '',
+        jur: ctxNow().county ? ctxNow().county+' County' : '' });
+    }
+  });
+  if(SB.fields.office && SB.fields.office.action==='create_new' && SB.fields.office.name){
+    SB.pending.push({ kind:'office', name:SB.fields.office.name,
+      jur: ctxNow().county ? ctxNow().county+' County' : '' });
+  }
+
+  /* 5 · hand over to the existing Export → Confirm */
+  try{ clioOpenDrawer(); }catch(e){ say('Could not open the export drawer'); }
+}
+
+/* called by the Clio layer once a send has actually succeeded */
+window.smartFlushPending = function(){
+  if(!SB.pending || !SB.pending.length) return;
+  var db, made=0;
+  try{ db=bankLoad(); }catch(e){ return; }
+  SB.pending.forEach(function(p){
+    if(p.kind==='office'){
+      if(entFind(db,'offices',p.name)) return;
+      var o=blankOffice(p.name); if(p.jur) jurPush(o,p.jur);
+      db.offices.push(o); made++;
+    } else {
+      if(entFind(db,'people',p.name)) return;
+      var x=blankPerson(p.name);
+      x.position=p.position||''; x.office=p.office||'';
+      if(p.jur) jurPush(x,p.jur);
+      db.people.push(x); made++;
+      if(x.office) officeEnsure(db,x.office,x.jurisdictions);
+    }
+  });
+  if(made){ bankStore(db); say(made+' contact'+(made===1?'':'s')+' added'); }
+  SB.pending=[];
+};
+
+/* ── DICTATION ──────────────────────────────────────────────────────────────── */
+function dictateTo(id){
+  var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  var ta=$id(id); if(!ta) return;
+  if(!SR){ say('Dictation needs Chrome or Edge'); return; }
+  if(SB.rec){ stopDictation(); return; }
+
+  var btn = id==='sbFix' ? $id('sbFixMic') : $id('sbMic');
+  var base=(ta.value||'').replace(/\s+$/,''); if(base) base+=' ';
+  var finalText='';
+  SB.rec=new SR();
+  SB.rec.lang='en-US'; SB.rec.continuous=true; SB.rec.interimResults=true;
+  if(btn) btn.classList.add('mic-live');
+  ta.classList.add('listening');
+  var hint=$id('sbHint'); if(hint) hint.textContent='Listening — tap the mic again when you are done.';
+
+  SB.rec.onresult=function(e){
+    var interim='';
+    for(var i=e.resultIndex;i<e.results.length;i++){
+      var t=e.results[i][0].transcript;
+      if(e.results[i].isFinal) finalText+=t+' '; else interim+=t;
+    }
+    ta.value=(base+finalText+interim).replace(/[ \t]{2,}/g,' ');
+    autoGrow(ta);
+  };
+  SB.rec.onerror=function(){ stopDictation(); };
+  SB.rec.onend=function(){ stopDictation(); };
+  try{ SB.rec.start(); }catch(e){ stopDictation(); }
+}
+function stopDictation(){
+  if(SB.rec){ try{ SB.rec.stop(); }catch(e){} }
+  SB.rec=null;
+  ['sbMic','sbFixMic'].forEach(function(i){ var b=$id(i); if(b) b.classList.remove('mic-live'); });
+  ['sbInput','sbFix'].forEach(function(i){ var t=$id(i); if(t) t.classList.remove('listening'); });
+  var hint=$id('sbHint');
+  if(hint) hint.textContent='Tap the mic and talk. Judge, prosecutor, the offer, what the client said, the next date — in any order.';
+}
+function autoGrow(t){
+  if(!t) return;
+  t.style.height='auto';
+  t.style.height=Math.min(Math.max(t.scrollHeight,140),420)+'px';
+}
+function paintCapture(){
+  var b=$id('sbGo');
+  if(b){ b.disabled=SB.busy; b.innerHTML = SB.busy?'Building&hellip;':'BUILD'; }
+}
+
+/* ── ENTRY ──────────────────────────────────────────────────────────────────── */
+window.smartRender = renderSmart;
+window.smartReset = function(){ SB.stage='capture'; SB.raw=''; SB.parsed=null; SB.fields=null; SB.pending=[]; };
+})();
+
+</script>
+
+</body></html>
