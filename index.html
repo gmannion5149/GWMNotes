@@ -2342,6 +2342,20 @@ function noteSpacer() {
   return `<p style="margin:0;padding:0;line-height:1.8;">&nbsp;</p>`;
 }
 // Format multi-line text into bullet HTML paragraphs
+/* ── PMM ─────────────────────────────────────────────────────────────────────
+   The request to Paula is always worded the same way. Only the note to the
+   client changes, and that note is written in the first person because she
+   sends it to the client on his behalf. */
+var PMM_LEAD = 'PMM: Please send Client the new court date and verify accuracy in the calendar. Please include the following note: ';
+function pmmNoteText(note){
+  var t=String(note||'').trim().replace(/\s+/g,' ').replace(/^["\u201c]+|["\u201d]+$/g,'').trim();
+  return t;
+}
+function pmmBlockHTML(note){
+  var t=pmmNoteText(note);
+  return '<p>'+esc(PMM_LEAD)+'&ldquo;'+esc(t||'[NOTE TO CLIENT]')+'&rdquo;</p>';
+}
+
 function bulletHTML(text) {
   return text.split('\n').map(l=>l.trim()).filter(Boolean)
     .map(l=>`<p style="margin:0 0 4px 0;padding-left:6px;">&bull; ${esc(l)}</p>`).join('');
@@ -2921,14 +2935,10 @@ function buildCourtHTML() {
     if (f.hasBriefDue && f.briefDue) html += `<p>${lbl('Brief Due:')} ${esc(fmtDate(f.briefDue))}</p>`;
   }
 
-  // ── PMM directive + headingless client note ──
+  // ── PMM directive — fixed wording, the client note quoted inside it ──
   if (f.hasPmm) {
     html += `<div class="note-spacer"></div>`;
-    html += `<p>PMM: Please send Client new court date and verify accuracy in the calendar. Please send client the following note:</p>`;
-    if (f.clientEmail?.trim()) {
-      html += `<div class="note-spacer"></div>`;
-      html += proseHTML(f.clientEmail);
-    }
+    html += pmmBlockHTML(f.clientEmail);
   }
 
   return html;
@@ -2937,7 +2947,8 @@ function buildCourtHTML() {
 function buildReviewHTML() {
   const f = review;
 
-  let html = `<p class="note-intro">Client meeting \u2014 ${esc(f.meetType||'[MEETING TYPE]')}.</p>`;
+  const lead = (f.meetLead || 'Client meeting');
+  let html = `<p class="note-intro">${esc(lead)} \u2014 ${esc(f.meetType||'[MEETING TYPE]')}.</p>`;
 
   if (f.discussion?.trim()) {
     html += `<div class="note-spacer"></div>`;
@@ -3648,8 +3659,11 @@ function renderCourtForm() {
         <input type="date" value="${court.briefDue}" onchange="court.briefDue=this.value"></div></div>
     </div>
     <div id="pmmSub" style="display:${court.hasPmm?'':'none'}">
-      <div class="pmm-directive-hint">PMM: Please send Client new court date and verify accuracy in the calendar. Please send client the following note:</div>
-      <div class="field"><textarea placeholder="The note to send to the client" rows="3" oninput="court.clientEmail=this.value">${escHtml(court.clientEmail)}</textarea></div>
+      <div class="pmm-directive-hint">${escHtml(PMM_LEAD)}&ldquo;&hellip;&rdquo;</div>
+      <div class="field">
+        <label>Note to Client <span class="hint">write it to the client, in your own voice &mdash; Paula sends it as you</span></label>
+        <textarea placeholder="Your next court date is November 2 at 9:00 AM. Please plan to arrive fifteen minutes early and let me know if anything comes up." rows="3" oninput="court.clientEmail=this.value">${escHtml(court.clientEmail)}</textarea>
+      </div>
     </div>
     <button class="generate-btn" onclick="generate();mShowNote()">Generate Clio Note</button>`;
 }
@@ -6680,7 +6694,7 @@ function wzResetMode(){
       offerMade:false, offer:'', details:'', hasNextCourtDate:false, nextCourtDate:'', nextCourtTime:'', nextHearingType:'',
       hasBriefDue:false, briefDue:'', hasPmm:false, pmm:'', hasClientEmail:false, clientEmail:'' };
   } else if(wz.mode==='review'){
-    review = { attorney:'', meetType:'In Person', discussion:'', offer:'', offerRelayed:false,
+    review = { attorney:'', meetType:'In Person', meetLead:'', discussion:'', offer:'', offerRelayed:false,
       clientPosition:'', advice:'', decision:'', nextSteps:'' };
   } else {
     intake = JSON.parse(JSON.stringify(INTAKE_BLANK));
@@ -10263,6 +10277,14 @@ header,.badge,.ai-btn,.placeholder .icon{animation:none !important}
   .sb-types{grid-template-columns:repeat(2,1fr);gap:6px}
   .sb-type{min-height:44px;font-size:12.5px}
 }
+
+.sb-pmm{background:#15120C;border:1px solid #4A3E1E;border-radius:8px;padding:9px 12px;
+  display:flex;flex-direction:column;gap:5px}
+.sb-pmm .sb-lab{color:#8A7435}
+.sb-pmmlead{font-size:10.5px;line-height:1.45;color:#6B7584}
+.sb-pmmnote{font-size:14px;line-height:1.5;color:#E2C285;cursor:pointer;
+  border-left:2px solid rgba(184,135,59,.5);padding-left:9px}
+.sb-pmmnote:hover{color:#F2D9A6}
 </style>
 
 <div class="gwm-scrim" id="gwmScrim" onclick="gwmCloseAll()"></div>
@@ -11127,14 +11149,16 @@ var ALIAS_KEY = 'gwm_name_aliases_v1';
 /* Which kind of note he is dictating decides what is even worth extracting.
    A check-in has no prosecutor; an intake has no judge. */
 var TYPE_SPEC = {
+  /* minimal:true means the note is just how they met and what was discussed —
+     no judge, no prosecutor, no offer, no court date. */
   court:   { mode:'court',  title:'COURT SUMMARY',     label:'Court Summary',
-             people:true,  offer:true,  meet:false, intake:false },
+             people:true,  meet:false, minimal:false, lead:'' },
   review:  { mode:'review', title:'CASE REVIEW NOTES', label:'Case Review',
-             people:false, offer:true,  meet:true,  intake:false },
+             people:false, meet:true,  minimal:true,  lead:'Client meeting' },
   checkin: { mode:'review', title:'CHECK IN NOTES',    label:'Client Check In',
-             people:false, offer:false, meet:true,  intake:false },
-  intake:  { mode:'intake', title:'INTAKE NOTES',      label:'Intake',
-             people:false, offer:false, meet:false, intake:true }
+             people:false, meet:true,  minimal:true,  lead:'Client check in' },
+  intake:  { mode:'review', title:'INTAKE NOTES',      label:'Intake',
+             people:false, meet:true,  minimal:true,  lead:'Client intake' }
 };
 var TYPE_ORDER = ['court','review','checkin','intake'];
 function specOf(t){ return TYPE_SPEC[t] || TYPE_SPEC.court; }
@@ -11304,7 +11328,7 @@ function resolvePerson(heardRaw, role, ctx){
   var best=null;
 
   pool.forEach(function(c){
-    var s = 0, why='';
+    var s = 0, why='', cap=0;
     var hn=nkey(heard), cn=nkey(c.name);
 
     if(hn===cn){ s=1.0; why='exact'; }
@@ -11336,7 +11360,11 @@ function resolvePerson(heardRaw, role, ctx){
       if(!/\s/.test(heard.trim()) && (lnEq || phLn)) { s=Math.max(s,0.9); why='surname only'; }
 
       /* two full names whose given names disagree are two different people */
-      if(bothFull && !firstCompat) { s=Math.min(s,0.6); why='different given name'; }
+      if(bothFull && !firstCompat) { cap=0.6; why='different given name'; }
+      /* same surname, same initial, but a different given name — Jane against
+         Jamie — is a likely dictation fix, not a certainty. Hold it in the
+         "probable" band so it shows as matched rather than silently taken. */
+      else if(bothFull && nkey(hFirst)!==nkey(cFirst)) { cap=0.87; why='given name differs slightly'; }
     }
     if(!s) return;
 
@@ -11350,6 +11378,7 @@ function resolvePerson(heardRaw, role, ctx){
     } else if(role==='judge' && ctx.county){
       s+=0.05;                                  /* on this county's bench */
     }
+    if(cap) s=Math.min(s,cap);                  /* context cannot lift a shaky name */
     s=Math.min(s,1);
     if(!best || s>best.s) best={ s:s, c:c, why:why };
   });
@@ -11458,18 +11487,16 @@ function parsePrompt(ctx, forcedType){
     'Return ONE JSON object and nothing else. No prose, no markdown, no code fence. Schema:',
     '{"noteType":"court|review|checkin|intake","judge":string,"prosecutor":string,"prosecutingOffice":string,'+
       '"meetType":"In Person|Phone|Zoom|Jail Visit","offer":string,"details":string,'+
-      '"clientPosition":string,"advice":string,"outcome":string,"nextSteps":string,'+
+      '"clientPosition":string,"advice":string,"outcome":string,"nextSteps":string,"pmmNote":string,'+
       '"intake":{"caller":string,"clientName":string,"chargeType":string,"severity":string,"offenseDate":string},'+
       '"nextEvent":{"dateText":string,"date":"YYYY-MM-DD","time":"HH:MM","type":string},'+
       '"hearingType":string,"appearance":"in person|by Zoom|by phone","unclear":[string]}',
 
     'Every field is optional. Use "" for anything he did not say. NEVER invent a name, a date, a time, a dollar amount, a charge, an offer term or a hearing type. If you cannot tell, leave it empty and add a short note to "unclear".',
 
-    'ONLY fill the fields that belong to the type you chose:',
-    'court — judge, prosecutor, prosecutingOffice, offer, details, clientPosition, advice, outcome, hearingType, appearance, nextEvent.',
-    'review — meetType, details, offer, clientPosition, advice, nextSteps, nextEvent. Leave judge, prosecutor and prosecutingOffice EMPTY even if a name is mentioned in passing.',
-    'checkin — meetType, details, nextSteps, nextEvent. Leave judge, prosecutor, prosecutingOffice and offer EMPTY.',
-    'intake — intake.caller, intake.clientName, intake.chargeType, intake.severity, intake.offenseDate, details, nextSteps, nextEvent. Leave judge, prosecutor and prosecutingOffice EMPTY.',
+    'ONLY fill the fields that belong to the type you chose. Everything else stays "".',
+    'court — judge, prosecutor, prosecutingOffice, offer, details, clientPosition, advice, outcome, hearingType, appearance, nextEvent, pmmNote.',
+    'review, checkin and intake — ONLY meetType and details. Nothing else. Leave judge, prosecutor, prosecutingOffice, offer, clientPosition, advice, outcome, nextSteps, pmmNote, hearingType, appearance, intake and nextEvent completely empty, even if he mentions a name, an offer or a date. Everything he said about the conversation, including any offer discussed, where the client landed, what you advised and what happens next, goes into "details" as one flowing account. Do not return a court date for these three types under any circumstances.',
 
     'judge / prosecutor: the person\'s name only, no title.',
     'meetType: how he and the client spoke — exactly one of In Person, Phone, Zoom, Jail Visit.',
@@ -11480,6 +11507,8 @@ function parsePrompt(ctx, forcedType){
     'nextEvent.dateText: the date exactly as he said it. date: resolve it to YYYY-MM-DD only when the day and month are unambiguous; pick the next future occurrence when he gave no year. Leave date empty if you are unsure. time: 24-hour. A court time between 1 and 7 with no am/pm is afternoon; 8 through 12 is morning. type: the hearing or event type he named, otherwise "".',
 
     'VOICE. He dictates in the first person but the note is written in the third person for his team. "'+ATTY+'" are his initials. Rewrite every first-person reference: "I" and "me" become "'+ATTY+'", "my" becomes "'+ATTY+'\'s", and "we" becomes "'+ATTY+'" when he means himself or "'+ATTY+' and Client" when he plainly means both. "my client", "the client" and "he/she" for the client all become "Client". So "I had a court appearance today with Client" becomes "'+ATTY+' appeared with Client today", and "I told him I think it is a good deal" becomes "'+ATTY+' advised Client that the offer appears to be a favorable resolution." Never leave a first-person pronoun in the output.',
+    'PMM. PMM is Paula, his assistant. When he asks for a note to go to the client — "have PMM send a note to Client", "tell Paula to let him know", "PMM send client a message saying..." — put ONLY the message meant for the client in "pmmNote", and leave that message out of "details". If he asks for nothing to go to the client, return "".',
+    'pmmNote is the one place the first person stays. Paula sends it to the client as him, so write it exactly as he would say it straight to the client: "I" for himself, "you" and "your" for the client. Never "GWM", never "Client", never the third person. Clean it into a short, warm, professional message and keep every instruction and date he gave. "tell him the new date and to get me the paperwork" becomes "Your next court date is December 8 at 8:30 AM. Please get me the paperwork we discussed before then." No greeting, no sign-off.',
     'Expand his shorthand: pros = Prosecutor, CL = Client, PT = Pretrial Hearing, OH = Omnibus Hearing, SC = Settlement Conference, cont = continuance. Keep CFD, DANCO, implied consent, Fast Track, stay of adjudication, RAS and PBT exactly as spoken.',
     'Fix dictation artefacts: duplicated words, filler, missing punctuation, run-on fragments, miscapitalisation.'
   ].filter(Boolean).join(' ');
@@ -11504,7 +11533,7 @@ function validateParsed(o){
     judge:s(o&&o.judge), prosecutor:s(o&&o.prosecutor), prosecutingOffice:s(o&&o.prosecutingOffice),
     meetType:s(o&&o.meetType),
     offer:s(o&&o.offer), details:s(o&&o.details), clientPosition:s(o&&o.clientPosition),
-    advice:s(o&&o.advice), outcome:s(o&&o.outcome), nextSteps:s(o&&o.nextSteps),
+    advice:s(o&&o.advice), outcome:s(o&&o.outcome), nextSteps:s(o&&o.nextSteps), pmmNote:s(o&&o.pmmNote),
     intake:{ caller:s(ik.caller), clientName:s(ik.clientName), chargeType:s(ik.chargeType),
              severity:s(ik.severity), offenseDate:'' },
     hearingType:s(o&&o.hearingType), appearance:s(o&&o.appearance),
@@ -11606,6 +11635,19 @@ function smartBuild(){
 function resolveAll(p, ctx){
   var spec=specOf(SB.type);
   var none={ raw:'', name:'', id:'', confidence:0, action:'none', from:'', note:'' };
+
+  /* a check-in, case review or intake is two fields. Whatever the model sent
+     back for the rest is dropped here so it can never reach the screen. */
+  if(spec.minimal){
+    return {
+      judge:none, prosecutor:none, office:none,
+      meetType:p.meetType, details:p.details,
+      offer:'', clientPosition:'', advice:'', outcome:'', nextSteps:'', pmmNote:'',
+      intake:null, hearingType:'', appearance:'',
+      next:{ date:'', time:'', type:'', dateText:'', flag:'' },
+      unclear:p.unclear
+    };
+  }
   var f={
     judge:      spec.people ? resolvePerson(p.judge,'judge',ctx)        : none,
     prosecutor: spec.people ? resolvePerson(p.prosecutor,'prosecutor',ctx) : none,
@@ -11614,6 +11656,7 @@ function resolveAll(p, ctx){
     offer:      spec.offer  ? p.offer : '',
     clientPosition: spec.offer ? p.clientPosition : '',
     details:p.details, advice:p.advice, outcome:p.outcome, nextSteps:p.nextSteps,
+    pmmNote: spec.people ? p.pmmNote : '',
     intake: spec.intake ? p.intake : null,
     hearingType:p.hearingType, appearance:p.appearance,
     next:{ date:p.nextEvent.date, time:p.nextEvent.time, type:p.nextEvent.type,
@@ -11734,39 +11777,39 @@ function reviewHTML(){
 
     '<div class="sb-typerow">'+typeChooserHTML()+'</div>'+
 
-    (spec.people ? (
-      personRow('Judge', f.judge, 'judge')+
-      personRow('Prosecutor', f.prosecutor, 'prosecutor')+
-      personRow('Office', f.office, 'office')) : '')+
-
     (spec.meet ? row('How you met',
         f.meetType?'<span class="sb-ok">&#10003;</span>':'<span class="sb-mid">~</span>',
         f.meetType||'not stated', '', 'SBui.editMeet()') : '')+
 
-    (spec.intake && f.intake ? (
-      row('Caller', '', f.intake.caller, '', 'SBui.editIntake(\'caller\',\'Caller\')')+
-      row('Client', '', f.intake.clientName, '', 'SBui.editIntake(\'clientName\',\'Client name\')')+
-      row('Charge', '', [f.intake.severity,f.intake.chargeType].filter(Boolean).join(' '), '',
-          'SBui.editIntake(\'chargeType\',\'Charge type\')')+
-      row('Offense date', '', f.intake.offenseDate?fmtDate(f.intake.offenseDate):'', '',
-          'SBui.editIntake(\'offenseDate\',\'Offense date (YYYY-MM-DD)\')')) : '')+
-
-    (spec.offer ? (
-      row('Offer', f.offer?'<span class="sb-ok">&#10003;</span>':'', f.offer, '', 'SBui.editText(\'offer\',\'Offer\')')+
-      row('Client position', '', f.clientPosition, '', 'SBui.editText(\'clientPosition\',\'Client position\')')) : '')+
-
-    row('Advice', '', f.advice, '', 'SBui.editText(\'advice\',\'Advice\')')+
-    row('Outcome', '', f.outcome, '', 'SBui.editText(\'outcome\',\'Outcome\')')+
     row('Details', '', f.details, '', 'SBui.editText(\'details\',\'Details\')')+
-    row('Next steps', '', f.nextSteps, '', 'SBui.editText(\'nextSteps\',\'Next steps\')')+
 
-    (evVal ? '<div class="sb-ev">'+
-      '<div class="sb-lab">Next court date</div>'+
-      '<div class="sb-val">'+evMark+'<span>'+esc(evVal)+'</span></div>'+
-      (evSub?'<div class="sb-sub">'+esc(evSub)+'</div>':'')+
-      (ev.flag?'<div class="sb-warn">'+esc(ev.flag)+'</div>':'')+
-      '<button class="sb-cbtn" onclick="SBui.editEvent()">Edit date / time / type</button>'+
-    '</div>' : '')+
+    (spec.minimal ? '' : (
+      (spec.people ? (
+        personRow('Judge', f.judge, 'judge')+
+        personRow('Prosecutor', f.prosecutor, 'prosecutor')+
+        personRow('Office', f.office, 'office')) : '')+
+
+      row('Offer', f.offer?'<span class="sb-ok">&#10003;</span>':'', f.offer, '', 'SBui.editText(\'offer\',\'Offer\')')+
+      row('Client position', '', f.clientPosition, '', 'SBui.editText(\'clientPosition\',\'Client position\')')+
+      row('Advice', '', f.advice, '', 'SBui.editText(\'advice\',\'Advice\')')+
+      row('Outcome', '', f.outcome, '', 'SBui.editText(\'outcome\',\'Outcome\')')+
+      row('Next steps', '', f.nextSteps, '', 'SBui.editText(\'nextSteps\',\'Next steps\')')+
+
+      (f.pmmNote ? '<div class="sb-pmm">'+
+        '<div class="sb-lab">PMM &mdash; note to Client</div>'+
+        '<div class="sb-pmmlead">'+esc(PMM_LEAD)+'</div>'+
+        '<div class="sb-pmmnote" onclick="SBui.editText(\'pmmNote\',\'Note to Client \u2014 first person, as you would say it to them\')">'+
+          '&ldquo;'+esc(f.pmmNote)+'&rdquo;</div>'+
+      '</div>' : '')+
+
+      (evVal ? '<div class="sb-ev">'+
+        '<div class="sb-lab">Next court date</div>'+
+        '<div class="sb-val">'+evMark+'<span>'+esc(evVal)+'</span></div>'+
+        (evSub?'<div class="sb-sub">'+esc(evSub)+'</div>':'')+
+        (ev.flag?'<div class="sb-warn">'+esc(ev.flag)+'</div>':'')+
+        '<button class="sb-cbtn" onclick="SBui.editEvent()">Edit date / time / type</button>'+
+      '</div>' : '')
+    ))+
 
     (f.unclear&&f.unclear.length ?
       '<div class="sb-unclear"><b>Not sure about</b>'+f.unclear.map(function(u){
@@ -11934,44 +11977,15 @@ function smartExport(){
         court.nextCourtTime=f.next.time||'';
         court.nextHearingType=f.next.type||'';
       }
+      if(f.pmmNote){ court.hasPmm=true; court.clientEmail=f.pmmNote; }
     }
     else if(spec.mode==='review'){
-      if(f.meetType) review.meetType=f.meetType;
-      var rbody=[f.details, f.outcome].filter(Boolean).join('\n');
-      if(rbody) review.discussion=rbody;
-      if(spec.offer && f.offer){ review.offerRelayed=true; review.offer=f.offer; }
-      else if(!spec.offer){ review.offerRelayed=false; review.offer=''; }
-      if(f.clientPosition) review.clientPosition=f.clientPosition;
-      if(f.advice) review.advice=f.advice;
-      var rnext=[f.nextSteps].filter(Boolean).join('\n');
-      if(f.next.date){
-        rnext = (rnext?rnext+'\n':'') +
-          ((f.next.type||'Next court date')+' on '+fmtDate(f.next.date)+
-           (f.next.time?(' at '+fmtTime12(f.next.time)):''));
-      }
-      if(rnext) review.nextSteps=rnext;
-    }
-    else if(spec.mode==='intake'){
-      var ik=f.intake||{};
-      if(ik.caller) intake.caller=ik.caller;
-      if(ik.clientName) intake.pcName=ik.clientName;
-      if(ik.chargeType) intake.chargeType=ik.chargeType;
-      if(ik.severity) intake.severity=ik.severity;
-      if(ik.offenseDate) intake.offenseDate=ik.offenseDate;
-      var ibody=[f.details, f.advice, f.outcome].filter(Boolean).join('\n');
-      if(ibody) intake.details=ibody;
-      if(f.nextSteps) intake.nextSteps=f.nextSteps;
-      if(f.next.date){
-        intake.hasCourtDate='Yes';
-        intake.courtDate=f.next.date;
-        if(f.next.type) intake.hearingType=f.next.type;
-        if(f.next.time){
-          var hh=parseInt(f.next.time.split(':')[0],10), mm=f.next.time.split(':')[1];
-          intake.courtAmPm = hh>=12 ? 'PM' : 'AM';
-          intake.courtHour = String(((hh%12)===0)?12:(hh%12));
-          intake.courtMinute = mm;
-        }
-      }
+      review.meetType = f.meetType || review.meetType || '';
+      review.meetLead = spec.lead || '';
+      review.discussion = f.details || '';
+      /* a minimal note carries nothing else — clear anything left from before */
+      review.offerRelayed=false; review.offer=''; review.clientPosition='';
+      review.advice=''; review.nextSteps='';
     }
   }catch(e){}
 
