@@ -10242,6 +10242,27 @@ header,.badge,.ai-btn,.placeholder .icon{animation:none !important}
   .sb-mic{width:46px;height:46px}
   .sb-mic svg{width:20px;height:20px}
 }
+
+/* note-type chooser */
+.sb-types{display:grid;grid-template-columns:repeat(4,1fr);gap:5px}
+.sb-type{
+  font-family:inherit;font-size:11px;font-weight:700;letter-spacing:.2px;
+  padding:9px 4px;border-radius:7px;cursor:pointer;line-height:1.25;
+  background:#0F141A;border:1px solid var(--line2);color:#7E8798;transition:all .13s;
+}
+.sb-type:hover{border-color:rgba(76,141,246,.4);color:var(--txt)}
+.sb-type.on{
+  background:linear-gradient(180deg,#2C2214,#1A140C);
+  border-color:var(--bronze-l);color:#F2D9A6;
+  box-shadow:0 0 0 1px rgba(184,135,59,.25);
+}
+.sb-tsub{font-size:10px;color:#5C6675;padding:1px 2px;line-height:1.4}
+.sb-typerow{display:flex;flex-direction:column;gap:5px;margin-bottom:2px}
+
+@media (max-width:760px){
+  .sb-types{grid-template-columns:repeat(2,1fr);gap:6px}
+  .sb-type{min-height:44px;font-size:12.5px}
+}
 </style>
 
 <div class="gwm-scrim" id="gwmScrim" onclick="gwmCloseAll()"></div>
@@ -11103,12 +11124,39 @@ header,.badge,.ai-btn,.placeholder .icon{animation:none !important}
 
 var ALIAS_KEY = 'gwm_name_aliases_v1';
 
+/* Which kind of note he is dictating decides what is even worth extracting.
+   A check-in has no prosecutor; an intake has no judge. */
+var TYPE_SPEC = {
+  court:   { mode:'court',  title:'COURT SUMMARY',     label:'Court Summary',
+             people:true,  offer:true,  meet:false, intake:false },
+  review:  { mode:'review', title:'CASE REVIEW NOTES', label:'Case Review',
+             people:false, offer:true,  meet:true,  intake:false },
+  checkin: { mode:'review', title:'CHECK IN NOTES',    label:'Client Check In',
+             people:false, offer:false, meet:true,  intake:false },
+  intake:  { mode:'intake', title:'INTAKE NOTES',      label:'Intake',
+             people:false, offer:false, meet:false, intake:true }
+};
+var TYPE_ORDER = ['court','review','checkin','intake'];
+function specOf(t){ return TYPE_SPEC[t] || TYPE_SPEC.court; }
+
+/* He usually says it outright. Take him at his word before asking the model. */
+function typeFromSpeech(raw){
+  var t=' '+String(raw||'').toLowerCase().replace(/[^a-z0-9\s]/g,' ').replace(/\s+/g,' ')+' ';
+  if(/\b(check ?in|checking in|check up|status call|touch base)\b/.test(t)) return 'checkin';
+  if(/\b(case review|review (?:meeting|with (?:the )?client)|strategy (?:meeting|session))\b/.test(t)) return 'review';
+  if(/\b(intake|new client|potential client|pc called|consult(?:ation)?)\b/.test(t)) return 'intake';
+  if(/\b(court summary|hearing|pretrial|omnibus|sentencing|arraignment|appeared|judge|prosecutor|courtroom)\b/.test(t)) return 'court';
+  return '';
+}
+
 var SB = {
   stage:'capture',      /* capture | review */
   raw:'',               /* what he actually said */
   parsed:null,          /* validated structure from the model */
   fields:null,          /* resolved, ready to stage */
   pending:[],           /* contacts to create on export */
+  type:'court',         /* court | review | checkin | intake */
+  typeLocked:false,     /* true once he picks it by hand */
   busy:false,
   rec:null              /* live SpeechRecognition */
 };
@@ -11383,33 +11431,56 @@ function knownNamesForPrompt(ctx){
 }
 
 /* ── PARSE ──────────────────────────────────────────────────────────────────── */
-function parsePrompt(ctx){
+function parsePrompt(ctx, forcedType){
   var known=knownNamesForPrompt(ctx);
   var today=new Date();
+  var ATTY='GWM';
+  try{ if(court && court.attorney) ATTY=court.attorney; }catch(e){}
+  var spec = forcedType ? specOf(forcedType) : null;
   return [
-    'You turn a Minnesota criminal-defense attorney\'s spoken account of a court hearing into structured data.',
+    'You turn a Minnesota criminal-defense attorney\'s spoken account into structured data for his case-management system.',
     'Today is '+today.toDateString()+'. The matter is in '+(ctx.county?ctx.county+' County':'an unstated county')+'.',
     ctx.matter&&ctx.matter.client_name ? ('The client is '+ctx.matter.client_name+'.') : '',
+
+    'FIRST decide which of his four note types this is and return it as "noteType":',
+    '"court" — a Court Summary. He was at a hearing: a judge, a prosecutor, an offer, what happened in the courtroom.',
+    '"review" — a Case Review. He met or spoke with the client to go over the evidence, the offer and strategy. No courtroom.',
+    '"checkin" — a Client Check In. A short status call or catch-up with the client. No offer, no courtroom.',
+    '"intake" — an Intake. A new or potential client describing a charge for the first time.',
+    'If he names the type out loud ("this is a case review", "client check in"), that wins over anything you infer.',
+    spec ? ('He has already set the type to "'+forcedType+'". Use that and do not change it.') : '',
+
     'Judges known on this bench: '+(known.judges.join('; ')||'none on file')+'.',
     'Prosecutors on file: '+(known.prosecutors.join('; ')||'none on file')+'.',
     'Prosecuting offices on file: '+(known.offices.join('; ')||'none on file')+'.',
     'Use those lists ONLY to spell a name he clearly meant. If what he said is not plainly one of them, return exactly what you heard and let the application decide.',
 
     'Return ONE JSON object and nothing else. No prose, no markdown, no code fence. Schema:',
-    '{"judge":string,"prosecutor":string,"prosecutingOffice":string,"offer":string,"details":string,'+
-      '"clientPosition":string,"advice":string,"outcome":string,'+
+    '{"noteType":"court|review|checkin|intake","judge":string,"prosecutor":string,"prosecutingOffice":string,'+
+      '"meetType":"In Person|Phone|Zoom|Jail Visit","offer":string,"details":string,'+
+      '"clientPosition":string,"advice":string,"outcome":string,"nextSteps":string,'+
+      '"intake":{"caller":string,"clientName":string,"chargeType":string,"severity":string,"offenseDate":string},'+
       '"nextEvent":{"dateText":string,"date":"YYYY-MM-DD","time":"HH:MM","type":string},'+
       '"hearingType":string,"appearance":"in person|by Zoom|by phone","unclear":[string]}',
 
     'Every field is optional. Use "" for anything he did not say. NEVER invent a name, a date, a time, a dollar amount, a charge, an offer term or a hearing type. If you cannot tell, leave it empty and add a short note to "unclear".',
+
+    'ONLY fill the fields that belong to the type you chose:',
+    'court — judge, prosecutor, prosecutingOffice, offer, details, clientPosition, advice, outcome, hearingType, appearance, nextEvent.',
+    'review — meetType, details, offer, clientPosition, advice, nextSteps, nextEvent. Leave judge, prosecutor and prosecutingOffice EMPTY even if a name is mentioned in passing.',
+    'checkin — meetType, details, nextSteps, nextEvent. Leave judge, prosecutor, prosecutingOffice and offer EMPTY.',
+    'intake — intake.caller, intake.clientName, intake.chargeType, intake.severity, intake.offenseDate, details, nextSteps, nextEvent. Leave judge, prosecutor and prosecutingOffice EMPTY.',
+
     'judge / prosecutor: the person\'s name only, no title.',
+    'meetType: how he and the client spoke — exactly one of In Person, Phone, Zoom, Jail Visit.',
     'offer: the State\'s offer in his words, cleaned up, terms separated by semicolons.',
-    'details: what happened at the hearing, in clean flowing prose, third person, past tense, "Client" for the client and his initials as spoken. Do not repeat the offer, the next court date or the client\'s position here.',
-    'clientPosition: what the client said about the offer.',
-    'advice: what he advised or recommended.',
-    'outcome: how the hearing ended, if he said.',
-    'nextEvent.dateText: the date exactly as he said it. date: resolve it to YYYY-MM-DD only when the day and month are unambiguous; pick the next future occurrence when he gave no year. Leave date empty if you are unsure. time: 24-hour. A court time between 1 and 7 with no am/pm is afternoon; 8 through 12 is morning. type: the hearing type he named, otherwise "".',
-    'Expand his shorthand: pros = Prosecutor, CL = Client, PT = Pretrial Hearing, OH = Omnibus Hearing, SC = Settlement Conference, CFD = CFD (leave as is), cont = continuance. Keep CFD, DANCO, implied consent, Fast Track, stay of adjudication, RAS and PBT exactly as spoken.',
+    'details: what happened, in clean flowing prose, third person, past tense, "Client" for the client and his initials as spoken. Do not repeat the offer, the next court date, the client\'s position or the next steps here.',
+    'clientPosition: what the client said about the offer. advice: what he advised. outcome: how it ended. nextSteps: what he or the client will do next.',
+    'intake.chargeType: one of DWI, Drugs, Domestic, Traffic, Theft, Assault, Other — whichever he described. intake.severity: Felony, Gross Misdemeanor, Misdemeanor or Petty Misdemeanor if he said. intake.offenseDate: YYYY-MM-DD if he gave one.',
+    'nextEvent.dateText: the date exactly as he said it. date: resolve it to YYYY-MM-DD only when the day and month are unambiguous; pick the next future occurrence when he gave no year. Leave date empty if you are unsure. time: 24-hour. A court time between 1 and 7 with no am/pm is afternoon; 8 through 12 is morning. type: the hearing or event type he named, otherwise "".',
+
+    'VOICE. He dictates in the first person but the note is written in the third person for his team. "'+ATTY+'" are his initials. Rewrite every first-person reference: "I" and "me" become "'+ATTY+'", "my" becomes "'+ATTY+'\'s", and "we" becomes "'+ATTY+'" when he means himself or "'+ATTY+' and Client" when he plainly means both. "my client", "the client" and "he/she" for the client all become "Client". So "I had a court appearance today with Client" becomes "'+ATTY+' appeared with Client today", and "I told him I think it is a good deal" becomes "'+ATTY+' advised Client that the offer appears to be a favorable resolution." Never leave a first-person pronoun in the output.',
+    'Expand his shorthand: pros = Prosecutor, CL = Client, PT = Pretrial Hearing, OH = Omnibus Hearing, SC = Settlement Conference, cont = continuance. Keep CFD, DANCO, implied consent, Fast Track, stay of adjudication, RAS and PBT exactly as spoken.',
     'Fix dictation artefacts: duplicated words, filler, missing punctuation, run-on fragments, miscapitalisation.'
   ].filter(Boolean).join(' ');
 }
@@ -11425,14 +11496,24 @@ function extractJSON(txt){
 function validateParsed(o){
   function s(v){ return (typeof v==='string') ? v.trim() : ''; }
   var ne=(o && typeof o.nextEvent==='object' && o.nextEvent) ? o.nextEvent : {};
+  var ik=(o && typeof o.intake==='object' && o.intake) ? o.intake : {};
+  var nt=s(o&&o.noteType).toLowerCase();
+  if(TYPE_ORDER.indexOf(nt)===-1) nt='';
   var out={
+    noteType:nt,
     judge:s(o&&o.judge), prosecutor:s(o&&o.prosecutor), prosecutingOffice:s(o&&o.prosecutingOffice),
+    meetType:s(o&&o.meetType),
     offer:s(o&&o.offer), details:s(o&&o.details), clientPosition:s(o&&o.clientPosition),
-    advice:s(o&&o.advice), outcome:s(o&&o.outcome),
+    advice:s(o&&o.advice), outcome:s(o&&o.outcome), nextSteps:s(o&&o.nextSteps),
+    intake:{ caller:s(ik.caller), clientName:s(ik.clientName), chargeType:s(ik.chargeType),
+             severity:s(ik.severity), offenseDate:'' },
     hearingType:s(o&&o.hearingType), appearance:s(o&&o.appearance),
     nextEvent:{ dateText:s(ne.dateText), date:'', time:'', type:s(ne.type) },
     unclear: Array.isArray(o&&o.unclear) ? o.unclear.filter(function(x){ return typeof x==='string'; }).slice(0,6) : []
   };
+  if(['In Person','Phone','Zoom','Jail Visit'].indexOf(out.meetType)===-1) out.meetType='';
+  var od=s(ik.offenseDate);
+  if(/^\d{4}-\d{2}-\d{2}$/.test(od)) out.intake.offenseDate=od;
   var d=s(ne.date);
   if(/^\d{4}-\d{2}-\d{2}$/.test(d)){
     var dt=new Date(d+'T12:00:00');
@@ -11486,10 +11567,15 @@ function smartBuild(){
   SB.raw=raw; SB.busy=true; paintCapture();
 
   var ctx=ctxNow();
+  /* if he said the type out loud, or picked it by hand, that settles it */
+  var spoken = typeFromSpeech(raw);
+  var forced = SB.typeLocked ? SB.type : '';
+  if(!forced && spoken) forced = spoken;
+
   fetch(AI_PROXY_URL,{
     method:'POST', headers:{ 'Content-Type':'application/json' },
     body:JSON.stringify({ model:'claude-sonnet-4-6', max_tokens:2000,
-      system:parsePrompt(ctx), messages:[{ role:'user', content:raw }] })
+      system:parsePrompt(ctx, forced), messages:[{ role:'user', content:raw }] })
   })
   .then(function(r){ return r.json(); })
   .then(function(d){
@@ -11500,6 +11586,8 @@ function smartBuild(){
     if(!obj) throw new Error('unreadable');
     var p=validateParsed(obj);
     p=reconcileDate(p, raw);
+    /* his own words beat the model's guess; a hand pick beats both */
+    SB.type = SB.typeLocked ? SB.type : (spoken || p.noteType || SB.type || 'court');
     SB.parsed=p;
     SB.fields=resolveAll(p, ctx);
     SB.stage='review';
@@ -11516,17 +11604,23 @@ function smartBuild(){
 }
 
 function resolveAll(p, ctx){
+  var spec=specOf(SB.type);
+  var none={ raw:'', name:'', id:'', confidence:0, action:'none', from:'', note:'' };
   var f={
-    judge: resolvePerson(p.judge,'judge',ctx),
-    prosecutor: resolvePerson(p.prosecutor,'prosecutor',ctx),
-    office: resolveOffice(p.prosecutingOffice,ctx),
-    offer:p.offer, details:p.details, clientPosition:p.clientPosition,
-    advice:p.advice, outcome:p.outcome,
+    judge:      spec.people ? resolvePerson(p.judge,'judge',ctx)        : none,
+    prosecutor: spec.people ? resolvePerson(p.prosecutor,'prosecutor',ctx) : none,
+    office:     spec.people ? resolveOffice(p.prosecutingOffice,ctx)    : none,
+    meetType:   spec.meet   ? p.meetType : '',
+    offer:      spec.offer  ? p.offer : '',
+    clientPosition: spec.offer ? p.clientPosition : '',
+    details:p.details, advice:p.advice, outcome:p.outcome, nextSteps:p.nextSteps,
+    intake: spec.intake ? p.intake : null,
     hearingType:p.hearingType, appearance:p.appearance,
     next:{ date:p.nextEvent.date, time:p.nextEvent.time, type:p.nextEvent.type,
            dateText:p.nextEvent.dateText, flag:p.nextEvent.flag },
     unclear:p.unclear
   };
+  if(!spec.people) return f;
   /* the office he named can firm up the prosecutor, and the other way round */
   if(f.office.action==='use_existing' && f.prosecutor.action==='needs_review'){
     var ctx2=Object.assign({},ctx,{office:f.office.name});
@@ -11568,16 +11662,28 @@ function captureHTML(){
       '<span class="sb-mt">'+who+'</span><span class="sb-ms">'+sub+'</span>'+
     '</button>'+
 
+    typeChooserHTML()+
+
     '<div class="sb-capture">'+
       '<textarea id="sbInput" class="sb-ta" placeholder="Tell me what happened in court..." '+
         'oninput="SBui.grow(this)"></textarea>'+
       '<button class="sb-mic" id="sbMic" onclick="SBui.mic()" title="Dictate">'+MIC_SVG+'</button>'+
     '</div>'+
-    '<div class="sb-hint" id="sbHint">Tap the mic and talk. Judge, prosecutor, the offer, what the client said, the next date — in any order.</div>'+
+    '<div class="sb-hint" id="sbHint">Tap the mic and talk. Say what kind of note it is and it picks the type for you. Speak as you would to a colleague — &ldquo;I&rdquo; is written up as you.</div>'+
 
     '<button class="sb-go" id="sbGo" onclick="SBui.build()"'+(SB.busy?' disabled':'')+'>'+
       (SB.busy?'Building&hellip;':'BUILD')+'</button>'+
   '</div>';
+}
+
+function typeChooserHTML(){
+  return '<div class="sb-types">'+ TYPE_ORDER.map(function(t){
+    return '<button class="sb-type'+(SB.type===t?' on':'')+'" onclick="SBui.setType(\''+t+'\')">'+
+      esc(TYPE_SPEC[t].label)+'</button>';
+  }).join('') + '</div>'+
+  '<div class="sb-tsub">'+ (SB.typeLocked
+      ? 'Type set by hand &mdash; it will not change when you build.'
+      : 'Auto &mdash; say &ldquo;case review&rdquo;, &ldquo;check in&rdquo; or &ldquo;intake&rdquo;, or just describe the hearing.') +'</div>';
 }
 
 function row(label, mark, value, sub, edit){
@@ -11610,7 +11716,7 @@ function personRow(label, r, role){
   return h;
 }
 function reviewHTML(){
-  var f=SB.fields, ctx=ctxNow(), m=ctx.matter;
+  var f=SB.fields, ctx=ctxNow(), m=ctx.matter, spec=specOf(SB.type);
   var ev=f.next;
   var evVal = ev.date ? fmtDate(ev.date) : (ev.dateText||'');
   var evSub = [ev.time?fmtTime12(ev.time):'', ev.type||''].filter(Boolean).join('  ·  ');
@@ -11626,15 +11732,33 @@ function reviewHTML(){
       '<span class="sb-mt">'+(m?esc(m.client_name||m.description):'No matter selected')+'</span>'+
       '<span class="sb-ms">'+(m?esc(m.display_number||''):'pick one before exporting')+'</span></button>'+
 
-    personRow('Judge', f.judge, 'judge')+
-    personRow('Prosecutor', f.prosecutor, 'prosecutor')+
-    personRow('Office', f.office, 'office')+
+    '<div class="sb-typerow">'+typeChooserHTML()+'</div>'+
 
-    row('Offer', f.offer?'<span class="sb-ok">&#10003;</span>':'', f.offer, '', 'SBui.editText(\'offer\',\'Offer\')')+
-    row('Client position', '', f.clientPosition, '', 'SBui.editText(\'clientPosition\',\'Client position\')')+
+    (spec.people ? (
+      personRow('Judge', f.judge, 'judge')+
+      personRow('Prosecutor', f.prosecutor, 'prosecutor')+
+      personRow('Office', f.office, 'office')) : '')+
+
+    (spec.meet ? row('How you met',
+        f.meetType?'<span class="sb-ok">&#10003;</span>':'<span class="sb-mid">~</span>',
+        f.meetType||'not stated', '', 'SBui.editMeet()') : '')+
+
+    (spec.intake && f.intake ? (
+      row('Caller', '', f.intake.caller, '', 'SBui.editIntake(\'caller\',\'Caller\')')+
+      row('Client', '', f.intake.clientName, '', 'SBui.editIntake(\'clientName\',\'Client name\')')+
+      row('Charge', '', [f.intake.severity,f.intake.chargeType].filter(Boolean).join(' '), '',
+          'SBui.editIntake(\'chargeType\',\'Charge type\')')+
+      row('Offense date', '', f.intake.offenseDate?fmtDate(f.intake.offenseDate):'', '',
+          'SBui.editIntake(\'offenseDate\',\'Offense date (YYYY-MM-DD)\')')) : '')+
+
+    (spec.offer ? (
+      row('Offer', f.offer?'<span class="sb-ok">&#10003;</span>':'', f.offer, '', 'SBui.editText(\'offer\',\'Offer\')')+
+      row('Client position', '', f.clientPosition, '', 'SBui.editText(\'clientPosition\',\'Client position\')')) : '')+
+
     row('Advice', '', f.advice, '', 'SBui.editText(\'advice\',\'Advice\')')+
     row('Outcome', '', f.outcome, '', 'SBui.editText(\'outcome\',\'Outcome\')')+
     row('Details', '', f.details, '', 'SBui.editText(\'details\',\'Details\')')+
+    row('Next steps', '', f.nextSteps, '', 'SBui.editText(\'nextSteps\',\'Next steps\')')+
 
     (evVal ? '<div class="sb-ev">'+
       '<div class="sb-lab">Next court date</div>'+
@@ -11724,6 +11848,31 @@ var SBui = {
     r.position = role==='judge' ? 'Judge' : (role==='prosecutor' ? 'Prosecutor' : '');
     renderSmart();
   },
+  setType:function(t){
+    if(!TYPE_SPEC[t]) return;
+    if(SB.type===t && SB.typeLocked){ SB.typeLocked=false; renderSmart(); return; }  /* tap again for auto */
+    SB.type=t; SB.typeLocked=true;
+    if(SB.stage==='review' && SB.parsed){ SB.fields=resolveAll(SB.parsed, ctxNow()); }
+    renderSmart();
+  },
+  editMeet:function(){
+    var opts=['In Person','Phone','Zoom','Jail Visit'];
+    var sel=prompt('How did you meet?\n\n'+opts.map(function(o,i){ return (i+1)+'. '+o; }).join('\n'),
+      String(Math.max(1,opts.indexOf(SB.fields.meetType)+1)));
+    if(sel===null) return;
+    var i=parseInt(sel,10)-1;
+    if(opts[i]) SB.fields.meetType=opts[i];
+    renderSmart();
+  },
+  editIntake:function(key,label){
+    if(!SB.fields.intake) SB.fields.intake={caller:'',clientName:'',chargeType:'',severity:'',offenseDate:''};
+    var v=prompt(label, SB.fields.intake[key]||'');
+    if(v===null) return;
+    v=v.trim();
+    if(key==='offenseDate' && v && !/^\d{4}-\d{2}-\d{2}$/.test(v)){ say('Use YYYY-MM-DD'); return; }
+    SB.fields.intake[key]=v;
+    renderSmart();
+  },
   editText:function(key,label){
     var v=prompt(label, SB.fields[key]||'');
     if(v===null) return;
@@ -11762,60 +11911,111 @@ window.SBui = SBui;
 /* ── STAGE → the existing Clio drawer ──────────────────────────────────────── */
 function smartExport(){
   var f=SB.fields;
-  if(!f){ return; }
+  if(!f) return;
+  var spec=specOf(SB.type);
 
-  /* 1 · fill the Court Summary fields this app already owns */
+  /* 1 · put the app in the right note type before touching anything */
+  try{ if(typeof pickMode==='function' && curModeSafe()!==spec.mode) pickMode(spec.mode); }catch(e){}
+
+  /* 2 · fill the fields that note type already owns */
   try{
-    if(f.judge && f.judge.name) court.judge=f.judge.name;
-    if(f.prosecutor && f.prosecutor.name) court.prosecutor=f.prosecutor.name;
-    if(f.office && f.office.name) court.prosOffice=f.office.name;
-    if(f.hearingType) court.hearingType=f.hearingType;
-    if(f.appearance) court.appearance=f.appearance;
-    if(f.offer){ court.offerMade=true; court.offer=f.offer; }
-    var body=[f.details, f.clientPosition, f.advice, f.outcome].filter(Boolean).join('\n');
-    if(body) court.details=body;
-    if(f.next.date){
-      court.hasNextCourtDate=true;
-      court.nextCourtDate=f.next.date;
-      court.nextCourtTime=f.next.time||'';
-      court.nextHearingType=f.next.type||'';
+    if(spec.mode==='court'){
+      if(f.judge && f.judge.name) court.judge=f.judge.name;
+      if(f.prosecutor && f.prosecutor.name) court.prosecutor=f.prosecutor.name;
+      if(f.office && f.office.name) court.prosOffice=f.office.name;
+      if(f.hearingType) court.hearingType=f.hearingType;
+      if(f.appearance) court.appearance=f.appearance;
+      if(f.offer){ court.offerMade=true; court.offer=f.offer; }
+      var cbody=[f.details, f.clientPosition, f.advice, f.outcome, f.nextSteps].filter(Boolean).join('\n');
+      if(cbody) court.details=cbody;
+      if(f.next.date){
+        court.hasNextCourtDate=true;
+        court.nextCourtDate=f.next.date;
+        court.nextCourtTime=f.next.time||'';
+        court.nextHearingType=f.next.type||'';
+      }
+    }
+    else if(spec.mode==='review'){
+      if(f.meetType) review.meetType=f.meetType;
+      var rbody=[f.details, f.outcome].filter(Boolean).join('\n');
+      if(rbody) review.discussion=rbody;
+      if(spec.offer && f.offer){ review.offerRelayed=true; review.offer=f.offer; }
+      else if(!spec.offer){ review.offerRelayed=false; review.offer=''; }
+      if(f.clientPosition) review.clientPosition=f.clientPosition;
+      if(f.advice) review.advice=f.advice;
+      var rnext=[f.nextSteps].filter(Boolean).join('\n');
+      if(f.next.date){
+        rnext = (rnext?rnext+'\n':'') +
+          ((f.next.type||'Next court date')+' on '+fmtDate(f.next.date)+
+           (f.next.time?(' at '+fmtTime12(f.next.time)):''));
+      }
+      if(rnext) review.nextSteps=rnext;
+    }
+    else if(spec.mode==='intake'){
+      var ik=f.intake||{};
+      if(ik.caller) intake.caller=ik.caller;
+      if(ik.clientName) intake.pcName=ik.clientName;
+      if(ik.chargeType) intake.chargeType=ik.chargeType;
+      if(ik.severity) intake.severity=ik.severity;
+      if(ik.offenseDate) intake.offenseDate=ik.offenseDate;
+      var ibody=[f.details, f.advice, f.outcome].filter(Boolean).join('\n');
+      if(ibody) intake.details=ibody;
+      if(f.nextSteps) intake.nextSteps=f.nextSteps;
+      if(f.next.date){
+        intake.hasCourtDate='Yes';
+        intake.courtDate=f.next.date;
+        if(f.next.type) intake.hearingType=f.next.type;
+        if(f.next.time){
+          var hh=parseInt(f.next.time.split(':')[0],10), mm=f.next.time.split(':')[1];
+          intake.courtAmPm = hh>=12 ? 'PM' : 'AM';
+          intake.courtHour = String(((hh%12)===0)?12:(hh%12));
+          intake.courtMinute = mm;
+        }
+      }
     }
   }catch(e){}
 
-  /* 2 · regenerate the note from those fields */
+  /* 3 · regenerate the note from those fields */
   try{ noteDirty=false; generate(); }catch(e){}
 
-  /* 3 · stage the calendar event through the existing staging API — no writes */
+  /* 4 · stage the title and the calendar event — still no writes */
   try{
     if(typeof window.clioDictApply==='function'){
       window.clioDictApply({
+        title: spec.title,
         hearing:{
           type:f.next.type||'', date:f.next.date||'', start:f.next.time||'',
           county: ctxNow().county||'',
-          judge: f.judge?f.judge.name:'', prosecutor: f.prosecutor?f.prosecutor.name:''
+          judge: (spec.people&&f.judge)?f.judge.name:'',
+          prosecutor: (spec.people&&f.prosecutor)?f.prosecutor.name:''
         }
       });
     }
   }catch(e){}
 
-  /* 4 · queue any genuinely new contacts; they are created after Confirm */
+  /* 5 · queue genuinely new contacts; created only after Confirm succeeds */
   SB.pending=[];
-  ['judge','prosecutor'].forEach(function(role){
-    var r=SB.fields[role];
-    if(r && r.action==='create_new' && r.name){
-      SB.pending.push({ kind:'person', name:r.name,
-        position: role==='judge'?'Judge':'Prosecutor',
-        office: (role==='prosecutor' && SB.fields.office) ? SB.fields.office.name : '',
+  if(spec.people){
+    ['judge','prosecutor'].forEach(function(role){
+      var r=SB.fields[role];
+      if(r && r.action==='create_new' && r.name){
+        SB.pending.push({ kind:'person', name:r.name,
+          position: role==='judge'?'Judge':'Prosecutor',
+          office: (role==='prosecutor' && SB.fields.office) ? SB.fields.office.name : '',
+          jur: ctxNow().county ? ctxNow().county+' County' : '' });
+      }
+    });
+    if(SB.fields.office && SB.fields.office.action==='create_new' && SB.fields.office.name){
+      SB.pending.push({ kind:'office', name:SB.fields.office.name,
         jur: ctxNow().county ? ctxNow().county+' County' : '' });
     }
-  });
-  if(SB.fields.office && SB.fields.office.action==='create_new' && SB.fields.office.name){
-    SB.pending.push({ kind:'office', name:SB.fields.office.name,
-      jur: ctxNow().county ? ctxNow().county+' County' : '' });
   }
 
-  /* 5 · hand over to the existing Export → Confirm */
+  /* 6 · hand over to the existing Export → Confirm */
   try{ clioOpenDrawer(); }catch(e){ say('Could not open the export drawer'); }
+}
+function curModeSafe(){
+  try{ return (typeof wz!=='undefined' && wz && wz.mode) ? wz.mode : ''; }catch(e){ return ''; }
 }
 
 /* called by the Clio layer once a send has actually succeeded */
@@ -11876,7 +12076,7 @@ function stopDictation(){
   ['sbMic','sbFixMic'].forEach(function(i){ var b=$id(i); if(b) b.classList.remove('mic-live'); });
   ['sbInput','sbFix'].forEach(function(i){ var t=$id(i); if(t) t.classList.remove('listening'); });
   var hint=$id('sbHint');
-  if(hint) hint.textContent='Tap the mic and talk. Judge, prosecutor, the offer, what the client said, the next date — in any order.';
+  if(hint) hint.textContent='Tap the mic and talk. Say what kind of note it is and it picks the type for you.';
 }
 function autoGrow(t){
   if(!t) return;
@@ -11890,7 +12090,8 @@ function paintCapture(){
 
 /* ── ENTRY ──────────────────────────────────────────────────────────────────── */
 window.smartRender = renderSmart;
-window.smartReset = function(){ SB.stage='capture'; SB.raw=''; SB.parsed=null; SB.fields=null; SB.pending=[]; };
+window.smartReset = function(){ SB.stage='capture'; SB.raw=''; SB.parsed=null; SB.fields=null;
+  SB.pending=[]; SB.typeLocked=false; };
 })();
 
 </script>
