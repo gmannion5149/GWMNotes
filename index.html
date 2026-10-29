@@ -2025,6 +2025,7 @@ html{ -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; tex
 .ik-f > span{font-size:9px;font-weight:800;letter-spacing:1.1px;color:#5C6675;text-transform:uppercase}
 .ik input[type=text]{min-width:190px;max-width:320px}
 .ik textarea{width:100%}
+.out-btn.clr:hover{border-color:#B5524A !important;color:#F1B8B1 !important}
 .ik-sub > textarea{flex:1 1 100%;width:100% !important;max-width:none !important}
 .ik-sub > .ik-row{flex:1 1 100%}
 .ik-note{font-size:11px;color:#7A8494}
@@ -2133,6 +2134,7 @@ html{ -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; tex
       <span class="out-live" id="outLive">Live</span>
       <div class="out-actions">
         <button class="out-btn build" id="aiCleanBtn" onclick="aiCleanup()" title="Write the note up into finished prose">Build</button>
+        <button class="out-btn clr" id="headerClearBtn" onclick="notesClearAll()" title="Clear the client and everything selected or typed">Clear</button>
         <button class="out-btn go" id="headerExportBtn" onclick="clioOpenDrawer()" title="Send this note to Clio">Export</button>
         <button class="out-btn" id="headerCopyBtn" onclick="copyNote()">Copy</button>
         <button class="out-btn" id="headerPrintBtn" onclick="printNote()">Print</button>
@@ -7720,6 +7722,27 @@ function buildReviewHTML(){
 }
 
 
+
+/* ── CLEAR: client, every box, every typed field, every note type ── */
+function notesClearAll(opts){
+  opts=opts||{};
+  intake=JSON.parse(JSON.stringify(INTAKE_BLANK)); ikEnsure();
+  court={ attorney:(court&&court.attorney)||'GWM' }; ckEnsure();
+  review={ attorney:(review&&review.attorney)||'GWM' }; rvEnsure();
+  seedDefaults();
+  noteDirty=false; _docFile=null;
+  try{ _preAIHTML=null; }catch(e){}
+  document.querySelectorAll('#aiRevertBtn').forEach(function(b){ b.style.display='none'; });
+  try{ if(typeof window.smartReset==='function') window.smartReset(); }catch(e){}
+  try{ if(typeof window.clioClearAll==='function') window.clioClearAll(); }catch(e){}
+  if(!opts.fromDue){ try{ if(typeof window.gwmClearActive==='function') window.gwmClearActive(); }catch(e){} }
+  wz.done=false; wz.curId=null; wz.fallbackIdx=0;
+  applyEngine();
+  var st=el('stage'); if(st) st.scrollTop=0;
+  if(!opts.fromDue) toast('Cleared');
+}
+window.notesClearAll=notesClearAll;
+
 /* ── INIT ──────────────────────────────────────────────────────────────────── */
 var INTAKE_BLANK = JSON.parse(JSON.stringify(intake));
 seedDefaults();
@@ -8477,21 +8500,45 @@ function pickMatter(id){
   /* recents hold IDs only — refresh the authoritative record from Clio */
   var mode=curMode();
   api('/matters/'+encodeURIComponent(m.id)).then(function(d){
-    var rec=C.byMode[mode];
-    if(d&&d.matter&&rec.matter&&String(rec.matter.id)===String(d.matter.id)){
-      rec.matter=d.matter; if(curMode()===mode) renderAll();
-    }
+    if(d&&d.matter) refreshMatterAll(d.matter);
   }).catch(function(){});
 }
+/* The matter is shared by Intake, Court Summary and Case Review: picking a
+   client holds it on every note type until a new one is picked or Clear is hit. */
+var NOTE_MODES=['intake','court','review'];
 function setMatter(m){
-  var n=N();
-  if(!n.matter || String(n.matter.id)!==String(m&&m.id)){ n.locked=false; n.results=null; }
-  n.matter=m;
-  if(!n.date) n.date=todayISO();
-  if(!n.time.dateTouched) n.time.date=n.date;
+  NOTE_MODES.forEach(function(k){
+    var n=C.byMode[k];
+    if(!n.matter || String(n.matter.id)!==String(m&&m.id)){ n.locked=false; n.results=null; }
+    n.matter=m;
+    if(!n.date) n.date=todayISO();
+    if(!n.time.dateTouched) n.time.date=n.date;
+  });
   renderAll();
 }
-function clearMatter(){ var n=N(); n.matter=null; n.locked=false; n.results=null; renderAll(); }
+function refreshMatterAll(fresh){
+  if(!fresh) return;
+  NOTE_MODES.forEach(function(k){
+    var n=C.byMode[k];
+    if(n.matter && String(n.matter.id)===String(fresh.id)) n.matter=fresh;
+  });
+  renderAll();
+}
+function clearMatter(){
+  NOTE_MODES.forEach(function(k){ var n=C.byMode[k]; n.matter=null; n.locked=false; n.results=null; });
+  renderAll();
+}
+/* everything on the Clio side back to a blank note */
+function clioClearAll(){
+  NOTE_MODES.forEach(function(k){
+    var n=blankNote(); n.date=todayISO(); n.time.date=n.date;
+    try{ n.title=autoTitle(k); }catch(e){}
+    C.byMode[k]=n;
+  });
+  try{ closePop(); }catch(e){}
+  C.pop.q=''; var s=$('clioPopSearch'); if(s) s.value='';
+  renderAll();
+}
 
 /* ── 9 · TITLE / DATE ────────────────────────────────────────────────────── */
 function upTitle(t){ return String(t==null?'':t).toUpperCase(); }
@@ -9558,6 +9605,7 @@ window.clioOpenPop      = openPop;
 window.clioClosePop     = closePop;
 window.clioPickMatter   = pickMatter;
 window.clioClearMatter  = clearMatter;
+window.clioClearAll    = clioClearAll;
 window.clioReloadMatters= loadMatters;
 window.clioSaveToClio   = send;
 window.clioRetry        = retry;
@@ -9658,7 +9706,7 @@ window.clioDictSetMatter = function(m){
   });
   setMatter(m); recentPush(m.id);
   api('/matters/'+encodeURIComponent(m.id)).then(function(d){
-    if(d&&d.matter&&N().matter&&String(N().matter.id)===String(d.matter.id)){ N().matter=d.matter; renderAll(); }
+    if(d&&d.matter) refreshMatterAll(d.matter);
   }).catch(function(){});
 };
 window.clioDictGetMatter = function(){ return N().matter; };
@@ -11426,6 +11474,8 @@ header,.badge,.ai-btn,.placeholder .icon{animation:none !important}
   function write(uid) {
     var p = GWM.pending.filter(function (x) { return x.uid === uid; })[0];
     if (!p) return;
+    /* a fresh note for this client: nothing carries over from the last one */
+    try { if (typeof window.notesClearAll === 'function') window.notesClearAll({ fromDue: true }); } catch (e) {}
     GWM.activeUid = uid;
     closeAll();
     hideBanner();
@@ -11453,16 +11503,19 @@ header,.badge,.ai-btn,.placeholder .icon{animation:none !important}
         var cty = guessCounty(p.location + ' ' + p.title);
         if (cty) court.county = cty;
       }
+      if (typeof renderForm === 'function') renderForm();
       if (typeof wzRender === 'function') wzRender();
       if (typeof generate === 'function') generate();
     } catch (e) {}
 
-    /* the Clio matter */
+    /* the Clio matter: only if this is still the note being written */
     if (p.matterId) {
       gapi('/matters?ids=' + encodeURIComponent(p.matterId)).then(function (d) {
+        if (GWM.activeUid !== uid) return;
         var m = (d && d.matters && d.matters[0]) || null;
         if (m && typeof window.clioDictSetMatter === 'function') window.clioDictSetMatter(m);
-      }).catch(function () {});
+        else say('Could not find the linked matter in Clio; pick the client');
+      }).catch(function () { if (GWM.activeUid === uid) say('Could not load the matter from Clio; pick the client'); });
     }
 
     say(p.matterId
@@ -11942,6 +11995,7 @@ header,.badge,.ai-btn,.placeholder .icon{animation:none !important}
   window.gwmOpenTray        = openTray;
   window.gwmOpenSettings    = openSettings;
   window.gwmWrite           = write;
+  window.gwmClearActive     = function () { GWM.activeUid = null; };
   window.gwmResolve         = resolve;
   window.gwmScanNow         = scanNow;
   window.gwmSaveSettings    = saveSettings;
