@@ -2025,7 +2025,8 @@ html{ -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; tex
 .ik-f > span{font-size:9px;font-weight:800;letter-spacing:1.1px;color:#5C6675;text-transform:uppercase}
 .ik input[type=text]{min-width:190px;max-width:320px}
 .ik textarea{width:100%}
-.ik-sub > textarea{flex:1 1 100%}
+.ik-sub > textarea{flex:1 1 100%;width:100% !important;max-width:none !important}
+.ik-sub > .ik-row{flex:1 1 100%}
 .ik-note{font-size:11px;color:#7A8494}
 .ik-warn{font-size:11.5px;font-weight:700;color:#E9A9A2}
 .ik-foot{padding:14px 0 4px}
@@ -7019,7 +7020,12 @@ function ikPick(path,val,on){
   if(on) r.o[r.k]=val; else if(r.o[r.k]===val) r.o[r.k]='';
   ikHooks(path); ikAfter(true);
 }
-function ikText(path,val){ var r=ikRef(path); r.o[r.k]=val; ikAfter(false); }
+function ikIcDlTxt(){ var d=intake.offenseDate; return /^\d{4}-\d{2}-\d{2}$/.test(d||'') ? 'Implied consent deadline: '+esc(fmtDate(addDaysISO(d,60))) : ''; }
+function ikText(path,val){
+  var r=ikRef(path); r.o[r.k]=val;
+  if(path==='offenseDate'){ var n=el('ikIcDl'); if(n) n.innerHTML=ikIcDlTxt(); }
+  ikAfter(false);
+}
 function ikSel(path,val){ var r=ikRef(path); r.o[r.k]=val; ikHooks(path); ikAfter(true); }
 function ikMoney(path,input){ formatCurrency(input); var r=ikRef(path); r.o[r.k]=rawCurrency(input.value); ikAfter(false); }
 function ikReset(){
@@ -7043,7 +7049,8 @@ function ikOpt(path,val,label,cur){
 function ikIn(path,val,ph,type,lab){
   var t=type||'text';
   var inp='<input type="'+t+'" value="'+escHtml(val||'')+'" placeholder="'+escHtml(ph||'')+'"'+
-    (t==='date'||t==='time' ? ' onchange="ikSel(' : ' oninput="ikText(')+ikQ(path)+',this.value)">';
+    (t==='date'?' max="9999-12-31"':'')+
+    (t==='date'||t==='time' ? ' onchange="ikText(' : ' oninput="ikText(')+ikQ(path)+',this.value)">';
   return lab ? '<div class="ik-f"><span>'+esc(lab)+'</span>'+inp+'</div>' : inp;
 }
 function ikMoneyIn(path,raw,lab){
@@ -7111,7 +7118,7 @@ function renderIntakeForm(){
     (f.citOn ? ikSub(ikIn('citNo',f.citNo,'Citation number','text','Citation number')) : ''));
 
   h+=ikRow('Offense date', ikIn('offenseDate',f.offenseDate,'','date')+
-    (f.chargeType==='DWI' && f.offenseDate ? '<div class="ik-note">Implied consent deadline: '+esc(fmtDate(addDaysISO(f.offenseDate,60)))+'</div>' : ''));
+    (f.chargeType==='DWI' ? '<div class="ik-note" id="ikIcDl">'+ikIcDlTxt()+'</div>' : ''));
 
   h+=ikRow('Location',
     '<div class="ik-row">'+
@@ -7370,8 +7377,20 @@ var CK_DEF = {
   witnessTestimony:false, witnessList:[],
   details:'', offerMade:false, offer:'',
   hasNextCourtDate:false, nextCourtDate:'', nextCourtTime:'', nextHearingType:'',
-  hasBriefDue:false, briefDue:'', hasPmm:false, clientEmail:''
+  hasBriefDue:false, briefDue:'', hasPmm:false, clientEmail:'',
+  offRla:false, offNoSame:false, offCua:false, offMadd:false, offNoUse:false, offRandom:false, offPc:false,
+  offFine:false, offFineAmt:'', offSurch:false, offPros:false, offProsAmt:''
 };
+var CK_OFFER_TERMS = [
+  ['offRla','Remain Law Abiding'], ['offNoSame','No Same or Similar Offenses'], ['offCua','CUA and Follow Recs'],
+  ['offMadd','MADD Panel'], ['offNoUse','No Use or Possession'], ['offRandom','Random Testing'], ['offPc','Probable Cause Testing']
+];
+function ckMoney(k,input){ formatCurrency(input); court[k]=rawCurrency(input.value); ckAfter(false); }
+function ckMoneyIn(k,raw,lab){
+  var disp = raw ? ('$'+Number(String(raw).replace(/,/g,'')).toLocaleString('en-US')) : '';
+  return '<div class="ik-f"><span>'+esc(lab)+'</span><input type="text" inputmode="decimal" class="currency-input" value="'+escHtml(disp)+
+    '" placeholder="$0" oninput="ckMoney('+ikQ(k)+',this)"></div>';
+}
 function ckEnsure(){
   Object.keys(CK_DEF).forEach(function(k){
     if(court[k]===undefined || court[k]===null) court[k]=JSON.parse(JSON.stringify(CK_DEF[k]));
@@ -7432,7 +7451,8 @@ function ckIn(k,val,ph,type,lab,list){
   var t=type||'text';
   var inp='<input type="'+t+'" value="'+escHtml(val||'')+'" placeholder="'+escHtml(ph||'')+'"'+
     (list?' list="'+list+'" autocomplete="off"':'')+
-    (t==='date'||t==='time' ? ' onchange="ckSel(' : ' oninput="ckText(')+ikQ(k)+',this.value)">';
+    (t==='date'?' max="9999-12-31"':'')+
+    (t==='date'||t==='time' ? ' onchange="ckText(' : ' oninput="ckText(')+ikQ(k)+',this.value)">';
   return lab ? '<div class="ik-f"><span>'+esc(lab)+'</span>'+inp+'</div>' : inp;
 }
 function ckSelect(k,opts,cur,ph){
@@ -7519,7 +7539,14 @@ function renderCourtForm(){
     '<textarea rows="4" placeholder="What happened at the hearing" oninput="ckText(\'details\',this.value)">'+escHtml(f.details||'')+'</textarea>');
 
   h+=ikRow('Offer', '<div class="ik-row">'+ckBox('offerMade','Offer',f.offerMade)+'</div>'+
-    (f.offerMade ? ikSub('<textarea rows="3" placeholder="One term per line" oninput="ckText(\'offer\',this.value)">'+escHtml(f.offer||'')+'</textarea>') : ''));
+    (f.offerMade ? ikSub(
+      '<textarea rows="3" placeholder="One term per line" oninput="ckText(\'offer\',this.value)">'+escHtml(f.offer||'')+'</textarea>'+
+      '<div class="ik-row">'+CK_OFFER_TERMS.map(function(t){ return ckBox(t[0],t[1],f[t[0]]); }).join('')+'</div>'+
+      '<div class="ik-row">'+ckBox('offFine','Fine',f.offFine)+ckBox('offSurch','Surcharge/Fees',f.offSurch)+ckBox('offPros','Prosecution Costs',f.offPros)+'</div>'+
+      ((f.offFine||f.offPros) ? '<div class="ik-row">'+
+        (f.offFine ? ckMoneyIn('offFineAmt',f.offFineAmt,'Fine amount') : '')+
+        (f.offPros ? ckMoneyIn('offProsAmt',f.offProsAmt,'Prosecution costs') : '')+'</div>' : '')
+    ) : ''));
 
   /* ── NEXT ── */
   h+='<div class="ik-sec">Next</div>';
@@ -7583,7 +7610,21 @@ function buildCourtHTML(){
   }
 
   if((f.details||'').trim()) block([proseHTML(f.details)]);
-  if(f.offerMade) block(['<p>'+lbl('Offer:')+((f.offer||'').trim()?'':' [ENTER]')+'</p>', (f.offer||'').trim()?proseHTML(f.offer):'']);
+  if(f.offerMade){
+    var terms=CK_OFFER_TERMS.filter(function(t){ return f[t[0]]; }).map(function(t){ return t[1]; });
+    var money=[];
+    if(f.offFine)  money.push((ikMoneyTxt(f.offFineAmt)||'[ENTER]')+' fine');
+    if(f.offSurch) money.push('surcharge/fees');
+    if(f.offPros)  money.push((ikMoneyTxt(f.offProsAmt)||'[ENTER]')+' prosecution costs');
+    var typed=(f.offer||'').trim();
+    var empty=!typed && !terms.length && !money.length;
+    block([
+      '<p>'+lbl('Offer:')+(empty?' [ENTER]':'')+'</p>',
+      typed ? proseHTML(f.offer) : '',
+      terms.length ? ikKV('Conditions:',terms.join('; ')) : '',
+      money.length ? ikKV('Fines and Costs:',money.join('; ')) : ''
+    ]);
+  }
 
   var next='';
   if(f.hasNextCourtDate){
