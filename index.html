@@ -2027,6 +2027,8 @@ html{ -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; tex
 .ik textarea{width:100%}
 .out-btn.clr:hover{border-color:#B5524A !important;color:#F1B8B1 !important}
 .ik-sub > textarea{flex:1 1 100%;width:100% !important;max-width:none !important}
+.ik-sub > .mic-wrap{display:block;flex:1 1 100%;width:100%}
+.ik-sub > .mic-wrap > textarea{width:100% !important;max-width:none !important}
 .ik-sub > .ik-row{flex:1 1 100%}
 .ik-note{font-size:11px;color:#7A8494}
 .ik-warn{font-size:11.5px;font-weight:700;color:#E9A9A2}
@@ -2085,7 +2087,11 @@ html{ -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; tex
       </div>
       <div class="mode-item" data-mode="review" onclick="pickMode('review')">
         <div class="mi-ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg></div>
-        <div><div class="mi-t">Case Review Notes</div><div class="mi-s">Client meeting · advice, next steps</div></div>
+        <div><div class="mi-t">Case Review Notes</div><div class="mi-s">Client meeting · discovery, offer</div></div>
+      </div>
+      <div class="mode-item" data-mode="checkin" onclick="pickMode('checkin')">
+        <div class="mi-ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path><path d="M8 10l2.5 2.5L16 7"></path></svg></div>
+        <div><div class="mi-t">Check In Notes</div><div class="mi-s">Quick client update · how and what</div></div>
       </div>
     </div>
   </div>
@@ -2252,6 +2258,9 @@ let court = {
   offerMade:false, offer:'', details:'', hasNextCourtDate:false, nextCourtDate:'', nextCourtTime:'', nextHearingType:'',
   hasBriefDue:false, briefDue:'', hasPmm:false, pmm:'', hasClientEmail:false, clientEmail:''
 };
+
+// Check In state
+let checkin = { attorney:'GWM', meetType:'', discussion:'' };
 
 // Review state
 let review = {
@@ -5104,8 +5113,8 @@ function renderForm() {
    ══════════════════════════════════════════════════════════════════════════════ */
 
 var wz = { mode:'intake', engine:'guided', curId:null, fallbackIdx:0, done:false, back:false };
-var MODE_LABEL = { intake:'Intake Notes', court:'Court Summary', review:'Case Review Notes' };
-var MODE_CAP   = { intake:'Intake Notes',  court:'Court Summary', review:'Case Review Notes' };
+var MODE_LABEL = { intake:'Intake Notes', court:'Court Summary', review:'Case Review Notes', checkin:'Check In Notes' };
+var MODE_CAP   = { intake:'Intake Notes',  court:'Court Summary', review:'Case Review Notes', checkin:'Check In Notes' };
 
 function isoToday(){ var d=new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
 function toast(m){ var t=el('toast'); if(!t) return; t.textContent=m; t.classList.add('show'); clearTimeout(t._t); t._t=setTimeout(function(){t.classList.remove('show');},1900); }
@@ -6730,6 +6739,8 @@ function wzResetMode(){
       judge:'', judgeOther:'', prosecutor:'', prosOffice:'', prosCity:'', aag:'', witness:'', witnessTestimony:false, witnessList:[],
       offerMade:false, offer:'', details:'', hasNextCourtDate:false, nextCourtDate:'', nextCourtTime:'', nextHearingType:'',
       hasBriefDue:false, briefDue:'', hasPmm:false, pmm:'', hasClientEmail:false, clientEmail:'' };
+  } else if(wz.mode==='checkin'){
+    checkin = { attorney:'GWM', meetType:'', discussion:'' };
   } else if(wz.mode==='review'){
     review = { attorney:'', meetType:'In Person', meetLead:'', discussion:'', offer:'', offerRelayed:false,
       clientPosition:'', advice:'', decision:'', nextSteps:'' };
@@ -6864,6 +6875,7 @@ function generate(){
   if(noteDirty) return;
   if(wz.mode==='intake') generatedHTML=buildIntakeHTML();
   else if(wz.mode==='court') generatedHTML=buildCourtHTML();
+  else if(wz.mode==='checkin') generatedHTML=buildCheckinHTML();
   else generatedHTML=buildReviewHTML();
   showOutput();
 }
@@ -6876,6 +6888,7 @@ function renderForm(){
   if(wz.mode==='intake'){ panel.innerHTML=renderIntakeForm(); generate(); return; }
   if(wz.mode==='court'){ panel.innerHTML=renderCourtForm(); generate(); return; }
   if(wz.mode==='review'){ panel.innerHTML=renderReviewForm(); generate(); return; }
+  if(wz.mode==='checkin'){ panel.innerHTML=renderCheckinForm(); generate(); return; }
   if(wz.mode==='court')  panel.innerHTML=renderCourtForm();
   if(wz.mode==='review') panel.innerHTML=renderReviewForm();
   if(wz.mode==='court'){ renderJudgeField(); if(court.witnessTestimony) renderWitnessList(); }
@@ -7368,7 +7381,7 @@ function buildIntakeHTML(){
    own text into the note. Field names match what the Clio drawer, Smart Build
    and the contact bank already read from `court`.
    ══════════════════════════════════════════════════════════════════════════════ */
-function isCk(){ return wz.mode==='intake' || wz.mode==='court' || wz.mode==='review'; }
+function isCk(){ return wz.mode==='intake' || wz.mode==='court' || wz.mode==='review' || wz.mode==='checkin'; }
 
 var CK_DEF = {
   attorney:'GWM', county:'', judge:'', judgeOtherMode:false,
@@ -7387,6 +7400,37 @@ var CK_OFFER_TERMS = [
   ['offRla','Remain Law Abiding'], ['offNoSame','No Same or Similar Offenses'], ['offCua','CUA and Follow Recs'],
   ['offMadd','MADD Panel'], ['offNoUse','No Use or Possession'], ['offRandom','Random Testing'], ['offPc','Probable Cause Testing']
 ];
+/* the offer terms, shared by Court Summary (P='ck') and Case Review (P='rv') */
+function offMoneyIn(P,k,raw,lab){
+  var disp = raw ? ('$'+Number(String(raw).replace(/,/g,'')).toLocaleString('en-US')) : '';
+  return '<div class="ik-f"><span>'+esc(lab)+'</span><input type="text" inputmode="decimal" class="currency-input" value="'+escHtml(disp)+
+    '" placeholder="$0" oninput="'+P+'Money('+ikQ(k)+',this)"></div>';
+}
+function offerSubHTML(f,box,P){
+  return '<textarea rows="3" placeholder="One term per line" oninput="'+P+'Text(\'offer\',this.value)">'+escHtml(f.offer||'')+'</textarea>'+
+    '<div class="ik-row">'+CK_OFFER_TERMS.map(function(t){ return box(t[0],t[1],f[t[0]]); }).join('')+'</div>'+
+    '<div class="ik-row">'+box('offFine','Fine',f.offFine)+box('offSurch','Surcharge/Fees',f.offSurch)+box('offPros','Prosecution Costs',f.offPros)+'</div>'+
+    ((f.offFine||f.offPros) ? '<div class="ik-row">'+
+      (f.offFine ? offMoneyIn(P,'offFineAmt',f.offFineAmt,'Fine amount') : '')+
+      (f.offPros ? offMoneyIn(P,'offProsAmt',f.offProsAmt,'Prosecution costs') : '')+'</div>' : '');
+}
+function offerNoteLines(f){
+  var terms=CK_OFFER_TERMS.filter(function(t){ return f[t[0]]; }).map(function(t){ return t[1]; });
+  var money=[];
+  if(f.offFine)  money.push((ikMoneyTxt(f.offFineAmt)||'[ENTER]')+' fine');
+  if(f.offSurch) money.push('surcharge/fees');
+  if(f.offPros)  money.push((ikMoneyTxt(f.offProsAmt)||'[ENTER]')+' prosecution costs');
+  var typed=(f.offer||'').trim();
+  var empty=!typed && !terms.length && !money.length;
+  return [
+    '<p>'+lbl('Offer:')+(empty?' [ENTER]':'')+'</p>',
+    typed ? proseHTML(f.offer) : '',
+    terms.length ? ikKV('Conditions:',terms.join('; ')) : '',
+    money.length ? ikKV('Fines and Costs:',money.join('; ')) : ''
+  ];
+}
+var OFFER_BLANK={ offer:'', offRla:false, offNoSame:false, offCua:false, offMadd:false, offNoUse:false, offRandom:false, offPc:false,
+  offFine:false, offFineAmt:'', offSurch:false, offPros:false, offProsAmt:'' };
 function ckMoney(k,input){ formatCurrency(input); court[k]=rawCurrency(input.value); ckAfter(false); }
 function ckMoneyIn(k,raw,lab){
   var disp = raw ? ('$'+Number(String(raw).replace(/,/g,'')).toLocaleString('en-US')) : '';
@@ -7541,14 +7585,7 @@ function renderCourtForm(){
     '<textarea rows="4" placeholder="What happened at the hearing" oninput="ckText(\'details\',this.value)">'+escHtml(f.details||'')+'</textarea>');
 
   h+=ikRow('Offer', '<div class="ik-row">'+ckBox('offerMade','Offer',f.offerMade)+'</div>'+
-    (f.offerMade ? ikSub(
-      '<textarea rows="3" placeholder="One term per line" oninput="ckText(\'offer\',this.value)">'+escHtml(f.offer||'')+'</textarea>'+
-      '<div class="ik-row">'+CK_OFFER_TERMS.map(function(t){ return ckBox(t[0],t[1],f[t[0]]); }).join('')+'</div>'+
-      '<div class="ik-row">'+ckBox('offFine','Fine',f.offFine)+ckBox('offSurch','Surcharge/Fees',f.offSurch)+ckBox('offPros','Prosecution Costs',f.offPros)+'</div>'+
-      ((f.offFine||f.offPros) ? '<div class="ik-row">'+
-        (f.offFine ? ckMoneyIn('offFineAmt',f.offFineAmt,'Fine amount') : '')+
-        (f.offPros ? ckMoneyIn('offProsAmt',f.offProsAmt,'Prosecution costs') : '')+'</div>' : '')
-    ) : ''));
+    (f.offerMade ? ikSub(offerSubHTML(f,ckBox,'ck')) : ''));
 
   /* ── NEXT ── */
   h+='<div class="ik-sec">Next</div>';
@@ -7612,21 +7649,7 @@ function buildCourtHTML(){
   }
 
   if((f.details||'').trim()) block([proseHTML(f.details)]);
-  if(f.offerMade){
-    var terms=CK_OFFER_TERMS.filter(function(t){ return f[t[0]]; }).map(function(t){ return t[1]; });
-    var money=[];
-    if(f.offFine)  money.push((ikMoneyTxt(f.offFineAmt)||'[ENTER]')+' fine');
-    if(f.offSurch) money.push('surcharge/fees');
-    if(f.offPros)  money.push((ikMoneyTxt(f.offProsAmt)||'[ENTER]')+' prosecution costs');
-    var typed=(f.offer||'').trim();
-    var empty=!typed && !terms.length && !money.length;
-    block([
-      '<p>'+lbl('Offer:')+(empty?' [ENTER]':'')+'</p>',
-      typed ? proseHTML(f.offer) : '',
-      terms.length ? ikKV('Conditions:',terms.join('; ')) : '',
-      money.length ? ikKV('Fines and Costs:',money.join('; ')) : ''
-    ]);
-  }
+  if(f.offerMade) block(offerNoteLines(f));
 
   var next='';
   if(f.hasNextCourtDate){
@@ -7649,9 +7672,12 @@ function buildCourtHTML(){
 var RV_MEET = [ {v:'In Person',t:'In Person'}, {v:'Phone',t:'Phone'}, {v:'Zoom',t:'Zoom'}, {v:'Jail Visit',t:'Jail'} ];
 var RV_MEET_PHRASE = { 'In Person':'in person', 'Phone':'by phone', 'Zoom':'by Zoom', 'Jail Visit':'at the jail' };
 var RV_POS = ['Accepted','Rejected','Considering'];
+var RV_DISC = [ ['dStop','Reason for Stop'], ['dArrest','Reason for Arrest'], ['dCharges','Reason for Charges'], ['dIssues','Potential Legal Issues'] ];
 
 function rvEnsure(){
-  var def={ attorney:'GWM', meetType:'', meetLead:'', discovery:false, offerRelayed:false, clientPosition:'', discussion:'' };
+  var def=Object.assign({ attorney:'GWM', meetType:'', meetLead:'', discovery:false,
+    dStop:'', dArrest:'', dCharges:'', dIssues:'',
+    offerRelayed:false, clientPosition:'', discussion:'' }, OFFER_BLANK);
   Object.keys(def).forEach(function(k){ if(review[k]===undefined || review[k]===null) review[k]=def[k]; });
   if(!review.attorney) review.attorney='GWM';
   if(review.clientPosition && RV_POS.indexOf(review.clientPosition)===-1) review.clientPosition='';
@@ -7667,6 +7693,7 @@ function rvAfter(re){
 function rvBool(k,on){ review[k]=!!on; if(k==='offerRelayed' && !on) review.clientPosition=''; rvAfter(true); }
 function rvPick(k,v,on){ if(on) review[k]=v; else if(review[k]===v) review[k]=''; rvAfter(true); }
 function rvText(k,v){ review[k]=v; rvAfter(false); }
+function rvMoney(k,input){ formatCurrency(input); review[k]=rawCurrency(input.value); rvAfter(false); }
 function rvReset(){
   review={ attorney:review.attorney||'GWM' };
   rvEnsure(); noteDirty=false;
@@ -7682,6 +7709,10 @@ function rvOpt(k,val,label,cur){
   return '<label class="ck'+(on?' on':'')+'"><input type="checkbox"'+(on?' checked':'')+
     ' onchange="rvPick('+ikQ(k)+','+ikQ(val)+',this.checked)"><span>'+esc(label||val)+'</span></label>';
 }
+function rvArea(k,label,val,ph){
+  return '<div class="ik-f" style="flex:1 1 100%"><span>'+esc(label)+'</span>'+
+    '<textarea rows="2" placeholder="'+escHtml(ph||'')+'" oninput="rvText('+ikQ(k)+',this.value)">'+escHtml(val||'')+'</textarea></div>';
+}
 
 function renderReviewForm(){
   rvEnsure();
@@ -7689,23 +7720,37 @@ function renderReviewForm(){
   h+='<div class="ik-sec">Meeting</div>';
   h+=ikRow('Meeting', '<div class="ik-row">'+RV_MEET.map(function(o){ return rvOpt('meetType',o.v,o.t,f.meetType); }).join('')+'</div>');
   h+='<div class="ik-sec">Covered</div>';
-  h+=ikRow('Discovery', '<div class="ik-row">'+rvBox('discovery','Discovery',f.discovery)+'</div>');
+  h+=ikRow('Discovery', '<div class="ik-row">'+rvBox('discovery','Discovery',f.discovery)+'</div>'+
+    (f.discovery ? ikSub(
+      rvArea('dStop','Reason for Stop',f.dStop,'e.g., Speeding 74 in a 55')+
+      rvArea('dArrest','Reason for Arrest',f.dArrest,'e.g., Odor, slurred speech, failed FSTs, PBT .11')+
+      rvArea('dCharges','Reason for Charges',f.dCharges,'e.g., DMT .12; prior within 10 years')+
+      rvArea('dIssues','Potential Legal Issues',f.dIssues,'e.g., Basis for the stop; Miranda; breath test certification')
+    ) : ''));
   h+=ikRow('Offer', '<div class="ik-row">'+rvBox('offerRelayed','Offer',f.offerRelayed)+'</div>'+
-    (f.offerRelayed ? ikSub('<div class="ik-row">'+RV_POS.map(function(p){ return rvOpt('clientPosition',p,p,f.clientPosition); }).join('')+'</div>') : ''));
+    (f.offerRelayed ? ikSub(
+      offerSubHTML(f,rvBox,'rv')+
+      '<div class="ik-f" style="flex:1 1 100%"><span>Client position</span><div class="ik-row">'+
+        RV_POS.map(function(p){ return rvOpt('clientPosition',p,p,f.clientPosition); }).join('')+'</div></div>'
+    ) : ''));
   h+=ikRow('Details',
     '<textarea rows="5" placeholder="What you went over with Client" oninput="rvText(\'discussion\',this.value)">'+escHtml(f.discussion||'')+'</textarea>');
   h+='<div class="ik-foot"><button class="mini-btn" onclick="rvReset()">Clear case review</button></div>';
   return h+'</div>';
 }
 
+function noteField(label,text){
+  text=(text||'').trim();
+  if(!text) return '';
+  if(text.indexOf('\n')===-1) return ikKV(label,text);
+  return '<p>'+lbl(esc(label))+'</p>'+proseHTML(text);
+}
+
 function buildReviewHTML(){
   rvEnsure();
   var f=review, atty=(f.attorney||'GWM').trim();
   var mode=RV_MEET_PHRASE[f.meetType]||'';
-  var intro = (f.meetLead==='Client check in')
-    ? atty+' checked in with Client'+(mode?' '+mode:'')+'.'
-    : atty+' met with Client'+(mode?' '+mode:'')+'.';
-
+  var intro=atty+' met with Client'+(mode?' '+mode:'')+'.';
   var covered=[];
   if(f.discovery) covered.push('Reviewed discovery with Client.');
   if(f.offerRelayed){
@@ -7717,11 +7762,63 @@ function buildReviewHTML(){
   if(covered.length) intro+=' '+covered.join(' ');
 
   var html='<p class="note-intro">'+esc(intro)+'</p>';
-  if((f.discussion||'').trim()) html+='<div class="note-spacer"></div><p>'+lbl('Details:')+'</p>'+proseHTML(f.discussion);
+  function block(lines){
+    lines=lines.filter(Boolean);
+    if(lines.length) html+='<div class="note-spacer"></div>'+lines.join('');
+  }
+  if(f.discovery) block(RV_DISC.map(function(d){ return noteField(d[1]+':',f[d[0]]); }));
+  if(f.offerRelayed) block(offerNoteLines(f));
+  if((f.discussion||'').trim()) block(['<p>'+lbl('Details:')+'</p>',proseHTML(f.discussion)]);
   return html;
 }
 
-
+/* ══════════════════════════════════════════════════════════════════════════════
+   CHECK IN CHECKLIST — how they spoke and what was said
+   ══════════════════════════════════════════════════════════════════════════════ */
+function ciEnsure(){
+  if(typeof checkin!=='object' || !checkin) checkin={};
+  if(!checkin.attorney) checkin.attorney='GWM';
+  if(checkin.meetType===undefined) checkin.meetType='';
+  if(checkin.discussion===undefined) checkin.discussion='';
+}
+function ciAfter(re){
+  if(re){
+    var st=el('stage'), y=st?st.scrollTop:0;
+    var p=el('formPanel'); if(p) p.innerHTML=renderCheckinForm();
+    if(st) st.scrollTop=y;
+  }
+  wzLive();
+}
+function ciPick(k,v,on){ if(on) checkin[k]=v; else if(checkin[k]===v) checkin[k]=''; ciAfter(true); }
+function ciText(k,v){ checkin[k]=v; ciAfter(false); }
+function ciReset(){
+  checkin={ attorney:checkin.attorney||'GWM' }; ciEnsure(); noteDirty=false;
+  var p=el('formPanel'); if(p) p.innerHTML=renderCheckinForm();
+  generate(); toast('Check in cleared');
+}
+function renderCheckinForm(){
+  ciEnsure();
+  var f=checkin, h='<div class="ik">';
+  h+='<div class="ik-sec">Check In</div>';
+  h+=ikRow('Meeting', '<div class="ik-row">'+RV_MEET.map(function(o){
+    var on=(f.meetType===o.v);
+    return '<label class="ck'+(on?' on':'')+'"><input type="checkbox"'+(on?' checked':'')+
+      ' onchange="ciPick(\'meetType\','+ikQ(o.v)+',this.checked)"><span>'+esc(o.t)+'</span></label>';
+  }).join('')+'</div>');
+  h+=ikRow('Details',
+    '<textarea rows="6" placeholder="What Client asked or told you; what you told Client" oninput="ciText(\'discussion\',this.value)">'+escHtml(f.discussion||'')+'</textarea>');
+  h+='<div class="ik-foot"><button class="mini-btn" onclick="ciReset()">Clear check in</button></div>';
+  return h+'</div>';
+}
+function buildCheckinHTML(){
+  ciEnsure();
+  var f=checkin, atty=(f.attorney||'GWM').trim();
+  var mode=RV_MEET_PHRASE[f.meetType]||'';
+  var html='<p class="note-intro">'+esc(atty+' checked in with Client'+(mode?' '+mode:'')+'.')+'</p>';
+  if((f.discussion||'').trim()) html+='<div class="note-spacer"></div><p>'+lbl('Details:')+'</p>'+proseHTML(f.discussion);
+  return html;
+}
+WIZ.checkin = WIZ.checkin || [];
 
 /* ── CLEAR: client, every box, every typed field, every note type ── */
 function notesClearAll(opts){
@@ -7729,6 +7826,7 @@ function notesClearAll(opts){
   intake=JSON.parse(JSON.stringify(INTAKE_BLANK)); ikEnsure();
   court={ attorney:(court&&court.attorney)||'GWM' }; ckEnsure();
   review={ attorney:(review&&review.attorney)||'GWM' }; rvEnsure();
+  checkin={ attorney:(checkin&&checkin.attorney)||'GWM' }; ciEnsure();
   seedDefaults();
   noteDirty=false; _docFile=null;
   try{ _preAIHTML=null; }catch(e){}
@@ -7944,6 +8042,7 @@ startMicObserver();
         <button data-m="court" class="on" onclick="dictSetMode('court')">Court Summary</button>
         <button data-m="intake" onclick="dictSetMode('intake')">Intake Notes</button>
         <button data-m="review" onclick="dictSetMode('review')">Case Review Notes</button>
+        <button data-m="checkin" onclick="dictSetMode('checkin')">Check In Notes</button>
       </div>
       <div class="dstage-q">Which matter?</div>
       <div id="dictConnBanner"></div>
@@ -8235,7 +8334,7 @@ var CLIO_CFG = {
   PAGE_LIMIT: 200
 };
 
-var MODE_NOTE_LABEL = { intake:'Intake Notes', court:'Court Summary', review:'Case Review Notes' };
+var MODE_NOTE_LABEL = { intake:'Intake Notes', court:'Court Summary', review:'Case Review Notes', checkin:'Check In Notes' };
 
 function apiBase(){
   try { if (typeof CLIO_API === 'string' && CLIO_API) return CLIO_API; } catch(e){}
@@ -8255,7 +8354,7 @@ function blankNote(){
   };
 }
 var C = {
-  byMode:  { intake:blankNote(), court:blankNote(), review:blankNote() },
+  byMode:  { intake:blankNote(), court:blankNote(), review:blankNote(), checkin:blankNote() },
   matters: [], loading:false, loadErr:'',
   meta:    { user:null, attorneys:[], practice_areas:[] },
   pop:     { open:false, anchor:'', q:'', status:'all', scope:'all', recent:0, cursor:0 },
@@ -8505,7 +8604,7 @@ function pickMatter(id){
 }
 /* The matter is shared by Intake, Court Summary and Case Review: picking a
    client holds it on every note type until a new one is picked or Clear is hit. */
-var NOTE_MODES=['intake','court','review'];
+var NOTE_MODES=['intake','court','review','checkin'];
 function setMatter(m){
   NOTE_MODES.forEach(function(k){
     var n=C.byMode[k];
@@ -8563,6 +8662,7 @@ function autoTitle(m){
        The title stays editable; typing in the Note Title field overrides these. */
     if(m==='court')  return upTitle('Court Summary');
     if(m==='review') return upTitle('Case Review Notes');
+    if(m==='checkin') return upTitle('Check In Notes');
     return upTitle('Intake Notes');
   }catch(e){}
   return 'NOTE';
@@ -8600,6 +8700,7 @@ function noteAttorney(){
   try{
     if(curMode()==='court')  return (court  && court.attorney)  || '';
     if(curMode()==='review') return (review && review.attorney) || '';
+    if(curMode()==='checkin') return (checkin && checkin.attorney) || '';
     return (intake && intake.assignedAtty) || '';
   }catch(e){ return ''; }
 }
@@ -9806,7 +9907,7 @@ function boot(){
       cd.innerHTML=MN_COUNTIES.map(function(c){ return '<option value="'+E(countyKey(c))+'"></option>'; }).join('');
   }catch(e){}
 
-  ['intake','court','review'].forEach(function(m){
+  ['intake','court','review','checkin'].forEach(function(m){
     var n=C.byMode[m];
     n.date=todayISO(); n.time.date=n.date; n.title=autoTitle(m);
   });
@@ -9865,7 +9966,7 @@ else boot();
 
 var STAGES = ['matter','details'];
 var LABELS = { matter:'Matter', details:'Details' };
-var MODE_NAME = { court:'Court Summary', intake:'Intake Notes', review:'Case Review Notes' };
+var MODE_NAME = { court:'Court Summary', intake:'Intake Notes', review:'Case Review Notes', checkin:'Check In Notes' };
 
 var D = {
   mode:'court', stage:0, matter:null,
@@ -9891,6 +9992,7 @@ function attorneyNow(){
   try{
     if(D.mode==='court')  return court.attorney  || 'GWM';
     if(D.mode==='review') return review.attorney || 'GWM';
+    if(D.mode==='checkin') return checkin.attorney || 'GWM';
     return intake.assignedAtty || 'GWM';
   }catch(e){ return 'GWM'; }
 }
@@ -11481,7 +11583,8 @@ header,.badge,.ai-btn,.placeholder .icon{animation:none !important}
     hideBanner();
 
     var isCourt = looksLikeCourt(p);
-    var mode = isCourt ? 'court' : 'review';
+    var isCheckin = !isCourt && /check\s*-?\s*in|status call|touch base/i.test(p.title || '');
+    var mode = isCourt ? 'court' : (isCheckin ? 'checkin' : 'review');
     try {
       if (typeof wz !== 'undefined' && wz.mode !== mode && typeof pickMode === 'function') pickMode(mode);
     } catch (e) {}
@@ -11502,6 +11605,12 @@ header,.badge,.ai-btn,.placeholder .icon{animation:none !important}
         if (ht) court.hearingType = ht;
         var cty = guessCounty(p.location + ' ' + p.title);
         if (cty) court.county = cty;
+      }
+      if (!isCourt) {
+        var tt = (p.title || '') + ' ' + (p.location || '');
+        var mt = /\bjail\b/i.test(tt) ? 'Jail Visit' : /\bzoom\b/i.test(tt) ? 'Zoom' : /\bphone|\bcall\b/i.test(tt) ? 'Phone' : /in\s*person|office/i.test(tt) ? 'In Person' : '';
+        var obj = isCheckin ? checkin : review;
+        if (mt && obj) obj.meetType = mt;
       }
       if (typeof renderForm === 'function') renderForm();
       if (typeof wzRender === 'function') wzRender();
@@ -12037,7 +12146,7 @@ var TYPE_SPEC = {
              people:true,  meet:false, minimal:false, lead:'' },
   review:  { mode:'review', title:'CASE REVIEW NOTES', label:'Case Review',
              people:false, meet:true,  minimal:true,  lead:'Client meeting' },
-  checkin: { mode:'review', title:'CHECK IN NOTES',    label:'Client Check In',
+  checkin: { mode:'checkin', title:'CHECK IN NOTES',    label:'Client Check In',
              people:false, meet:true,  minimal:true,  lead:'Client check in' },
   intake:  { mode:'review', title:'INTAKE NOTES',      label:'Intake',
              people:false, meet:true,  minimal:true,  lead:'Client intake' }
@@ -12862,12 +12971,17 @@ function smartExport(){
       if(f.pmmNote){ court.hasPmm=true; court.clientEmail=f.pmmNote; }
     }
     else if(spec.mode==='review'){
-      review.meetType = f.meetType || review.meetType || '';
+      /* a minimal note carries nothing else — start from a blank review */
+      var keepAtty=review.attorney||'GWM', keepMeet=review.meetType||'';
+      review={ attorney:keepAtty };
+      if(typeof rvEnsure==='function') rvEnsure();
+      review.meetType = f.meetType || keepMeet;
       review.meetLead = spec.lead || '';
       review.discussion = f.details || '';
-      /* a minimal note carries nothing else — clear anything left from before */
-      review.offerRelayed=false; review.offer=''; review.clientPosition='';
-      review.advice=''; review.nextSteps='';
+    }
+    else if(spec.mode==='checkin'){
+      checkin.meetType = f.meetType || checkin.meetType || '';
+      checkin.discussion = f.details || '';
     }
   }catch(e){}
 
